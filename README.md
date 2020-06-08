@@ -1,2 +1,3 @@
-# xpath31
-Port of Eclipse XPath to C#
+# XPath-CSharp
+
+Port of Eclipse XPath to C#.
