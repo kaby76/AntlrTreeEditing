@@ -118,7 +118,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 
 			try
 			{
-				new URI(uri);
+				new Uri(uri);
 			}
 			catch (URISyntaxException)
 			{
@@ -131,7 +131,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 			}
 
 
-			URI resolved = ec.DynamicContext.resolveUri(uri);
+			Uri resolved = ec.DynamicContext.resolveUri(uri);
 			if (resolved == null)
 			{
 				throw DynamicError.invalid_doc(null);

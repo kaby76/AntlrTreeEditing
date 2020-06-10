@@ -15,6 +15,7 @@
 
 namespace org.eclipse.wst.xml.xpath2.api.typesystem
 {
+	using org.eclipse.wst.xml.xpath2.processor.@internal.types;
 
 	/// <summary>
 	/// @since 2.0

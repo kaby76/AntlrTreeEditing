@@ -177,14 +177,14 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 			}
 		}
 
-		public virtual URI BaseUri
+		public virtual Uri BaseUri
 		{
 			get
 			{
 				// TODO Auto-generated method stub
 				try
 				{
-					return new URI(sc.base_uri().StringValue);
+					return new Uri(sc.base_uri().StringValue);
 				}
 				catch (URISyntaxException e)
 				{
@@ -279,7 +279,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 			}
 		}
 
-		public virtual org.eclipse.wst.xml.xpath2.api.typesystem.ItemType getDocumentType(URI documentUri)
+		public virtual org.eclipse.wst.xml.xpath2.api.typesystem.ItemType getDocumentType(Uri documentUri)
 		{
 			return new NodeItemTypeImpl(org.eclipse.wst.xml.xpath2.api.typesystem.ItemType_Fields.OCCURRENCE_OPTIONAL, Node.DOCUMENT_NODE);
 		}

@@ -129,7 +129,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 			string resolved = null;
 			try
 			{
-				URI baseURI = new URI(@base);
+				Uri baseURI = new Uri(@base);
 				resolved = baseURI.resolve(relative).ToString();
 			}
 			catch (Exception)

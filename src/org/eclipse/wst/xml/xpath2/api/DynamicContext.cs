@@ -18,8 +18,9 @@
 
 namespace org.eclipse.wst.xml.xpath2.api
 {
-
-
+	using System;
+	using org.w3c.dom;
+	using org.eclipse.wst.xml.xpath2.processor.@internal.types;
 
 	using Document = org.w3c.dom.Document;
 	using Node = org.w3c.dom.Node;
@@ -53,7 +54,7 @@ namespace org.eclipse.wst.xml.xpath2.api
 		/// <param name="uri">
 		///            is the possibly relative URI to resolve </param>
 		/// <returns> the absolutized, resolved URI. </returns>
-		URI resolveUri(string uri);
+		Uri resolveUri(string uri);
 
 		/// <summary>
 		/// [Definition: Current dateTime. This
@@ -95,7 +96,7 @@ namespace org.eclipse.wst.xml.xpath2.api
 		/// <param name="uri">
 		///            is the URI of the document. </param>
 		/// <returns> document. </returns>
-		Document getDocument(URI uri);
+		Document getDocument(Uri uri);
 
 		/// <summary>
 		/// [Definition: Available collections. This is a mapping of

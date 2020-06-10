@@ -119,7 +119,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		/// <returns> document.
 		/// @since 1.1 </returns>
 		// available doc
-		ResultSequence get_doc(URI uri);
+		ResultSequence get_doc(Uri uri);
 
 		/// <summary>
 		/// Resolve an URI
@@ -128,7 +128,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		///            is the possibly relative URI to resolve </param>
 		/// <returns> the absolutized, resolved URI.
 		/// @since 1.1 </returns>
-		URI resolve_uri(string uri);
+		Uri resolve_uri(string uri);
 
 		// available collections
 

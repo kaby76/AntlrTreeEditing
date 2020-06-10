@@ -96,7 +96,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 			string uri = ((XSString) arg1.item(0)).value();
 
 			DynamicContext dc = ec.DynamicContext;
-			URI resolved = dc.resolveUri(uri);
+			Uri resolved = dc.resolveUri(uri);
 			if (resolved == null)
 			{
 				throw DynamicError.invalid_doc(null);

@@ -20,7 +20,8 @@ using System.Collections.Generic;
 
 namespace org.eclipse.wst.xml.xpath2.processor.ast
 {
-
+	using org.eclipse.wst.xml.xpath2.processor.@internal.types;
+	using org.eclipse.wst.xml.xpath2.api;
 
 	using DynamicContext = org.eclipse.wst.xml.xpath2.api.DynamicContext;
 	using ResultSequence = org.eclipse.wst.xml.xpath2.api.ResultSequence;

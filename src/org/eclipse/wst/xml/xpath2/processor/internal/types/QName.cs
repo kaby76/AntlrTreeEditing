@@ -21,6 +21,10 @@
 
 namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 {
+	using org.eclipse.wst.xml.xpath2.api;
+	using org.eclipse.wst.xml.xpath2.api.typesystem;
+	using org.eclipse.wst.xml.xpath2.processor.@internal.function;
+	using org.eclipse.wst.xml.xpath2.processor.@internal.types.builtin;
 
 	using DynamicContext = org.eclipse.wst.xml.xpath2.api.DynamicContext;
 	using ResultSequence = org.eclipse.wst.xml.xpath2.api.ResultSequence;

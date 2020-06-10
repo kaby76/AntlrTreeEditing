@@ -17,8 +17,6 @@ using System.Collections;
 /// </summary>
 namespace org.eclipse.wst.xml.xpath2.processor.@internal.types.builtin
 {
-
-
 	using ResultSequence = org.eclipse.wst.xml.xpath2.api.ResultSequence;
 	using TypeDefinition = org.eclipse.wst.xml.xpath2.api.typesystem.TypeDefinition;
 	using Attr = org.w3c.dom.Attr;

@@ -18,7 +18,8 @@
 namespace org.eclipse.wst.xml.xpath2.api
 {
 
-
+	using System;
+	using org.eclipse.wst.xml.xpath2.processor.@internal.types;
 
 	using ItemType = org.eclipse.wst.xml.xpath2.api.typesystem.ItemType;
 	using TypeDefinition = org.eclipse.wst.xml.xpath2.api.typesystem.TypeDefinition;
@@ -81,7 +82,7 @@ namespace org.eclipse.wst.xml.xpath2.api
 		/// function.)] The URI value is whitespace normalized according to the
 		/// rules for the xs:anyURI type in [XML Schema].
 		/// </summary>
-		URI BaseUri {get;}
+		Uri BaseUri {get;}
 
 		/// <summary>
 		/// [Definition: Statically known documents. This is a mapping from strings

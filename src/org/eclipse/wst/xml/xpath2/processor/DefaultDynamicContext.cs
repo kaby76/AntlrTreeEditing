@@ -29,6 +29,7 @@ using System.Collections;
 namespace org.eclipse.wst.xml.xpath2.processor
 {
 
+	using System;
 
 	using XSModel = org.apache.xerces.xs.XSModel;
 	using DefaultStaticContext = org.eclipse.wst.xml.xpath2.processor.@internal.DefaultStaticContext;
@@ -207,7 +208,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		/// </summary>
 		/// <returns> a ResultSequence from ResultSequenceFactory.create_new()
 		/// @since 1.1 </returns>
-		public virtual ResultSequence get_doc(URI resolved)
+		public virtual ResultSequence get_doc(Uri resolved)
 		{
 			Document doc = null;
 			if (_loaded_documents.Contains(resolved))
@@ -231,18 +232,18 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		/// <summary>
 		/// @since 1.1
 		/// </summary>
-		public virtual URI resolve_uri(string uri)
+		public virtual Uri resolve_uri(string uri)
 		{
 			try
 			{
-				URI realURI = URI.create(uri);
+				Uri realURI = Uri.create(uri);
 				if (realURI.Absolute)
 				{
 					return realURI;
 				}
 				else
 				{
-					URI baseURI = URI.create(base_uri().StringValue);
+					Uri baseURI = Uri.create(base_uri().StringValue);
 					return baseURI.resolve(uri);
 				}
 			}
@@ -253,7 +254,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		}
 
 		// XXX make it nice, and move it out as a utility function
-		private Document retrieve_doc(URI uri)
+		private Document retrieve_doc(Uri uri)
 		{
 			try
 			{

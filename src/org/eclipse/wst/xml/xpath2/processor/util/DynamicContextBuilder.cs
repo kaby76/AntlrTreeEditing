@@ -72,7 +72,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.util
 
 		private IDictionary<string, IList<Document>> _collections;
 
-		private IDictionary<URI, Document> _loaded_documents = new Dictionary<URI, Document>();
+		private IDictionary<Uri, Document> _loaded_documents = new Dictionary<Uri, Document>();
 
 		public DynamicContextBuilder(StaticContext sc)
 		{
@@ -124,7 +124,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.util
 			return _variables[name];
 		}
 
-		public virtual Document getDocument(URI resolved)
+		public virtual Document getDocument(Uri resolved)
 		{
 			Document doc = null;
 			if (_loaded_documents.ContainsKey(resolved))
@@ -141,7 +141,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.util
 		}
 
 		// XXX make it nice, and move it out as a utility function
-		private Document retrieve_doc(URI uri)
+		private Document retrieve_doc(Uri uri)
 		{
 			try
 			{
@@ -166,11 +166,11 @@ namespace org.eclipse.wst.xml.xpath2.processor.util
 			}
 		}
 
-		public virtual URI resolveUri(string uri)
+		public virtual Uri resolveUri(string uri)
 		{
 			try
 			{
-				URI realURI = URI.create(uri);
+				Uri realURI = Uri.create(uri);
 				if (realURI.Absolute)
 				{
 					return realURI;

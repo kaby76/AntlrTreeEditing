@@ -64,7 +64,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 			return ResultBuffer.wrap((Item)@var);
 		}
 
-		public virtual URI resolveUri(string uri)
+		public virtual Uri resolveUri(string uri)
 		{
 			return dc.resolve_uri(uri);
 		}
@@ -93,7 +93,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 			}
 		}
 
-		public virtual Document getDocument(URI uri)
+		public virtual Document getDocument(Uri uri)
 		{
 			org.eclipse.wst.xml.xpath2.processor.ResultSequence rs = dc.get_doc(uri);
 			if (rs == null || rs.empty())

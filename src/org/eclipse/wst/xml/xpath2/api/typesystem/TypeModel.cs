@@ -15,7 +15,7 @@
 
 namespace org.eclipse.wst.xml.xpath2.api.typesystem
 {
-
+	using org.eclipse.wst.xml.xpath2.api;
 	using Node = org.w3c.dom.Node;
 
 	/// <summary>

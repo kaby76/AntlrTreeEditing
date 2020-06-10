@@ -71,7 +71,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.util
 		private IDictionary _namespaces = new Hashtable();
 		private IDictionary<string, FunctionLibrary> _functionLibraries = new Dictionary<string, FunctionLibrary>();
 
-		private URI _base_uri;
+		private Uri _base_uri;
 		private IDictionary _variableTypes = new Hashtable();
 		private IDictionary _variableCardinality = new Hashtable();
 		private IDictionary _collectionTypes = new Hashtable();
@@ -219,7 +219,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.util
 			return null;
 		}
 
-		public virtual URI BaseUri
+		public virtual Uri BaseUri
 		{
 			get
 			{
@@ -390,7 +390,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.util
 //ORIGINAL LINE: public StaticContextBuilder withBaseUri(String string) throws java.net.URISyntaxException
 		public virtual StaticContextBuilder withBaseUri(string @string)
 		{
-			_base_uri = new URI(@string);
+			_base_uri = new Uri(@string);
 			return this;
 		}
 
@@ -406,7 +406,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.util
 			return this;
 		}
 
-		public virtual ItemType getDocumentType(URI documentUri)
+		public virtual ItemType getDocumentType(Uri documentUri)
 		{
 			return null;
 		}
