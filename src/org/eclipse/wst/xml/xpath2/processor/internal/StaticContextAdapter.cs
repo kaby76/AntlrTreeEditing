@@ -21,7 +21,7 @@ using System.Collections.Generic;
 namespace org.eclipse.wst.xml.xpath2.processor.@internal
 {
 
-
+	using javax.xml.@namespace;
 
 	using CollationProvider = org.eclipse.wst.xml.xpath2.api.CollationProvider;
 	using EvaluationContext = org.eclipse.wst.xml.xpath2.api.EvaluationContext;

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using org.eclipse.wst.xml.xpath2.processor.@internal.types;
 
 /// <summary>
 ///*****************************************************************************
@@ -20,8 +21,9 @@ using System.Collections.Generic;
 
 namespace org.eclipse.wst.xml.xpath2.processor.util
 {
+	using System;
 
-
+	using javax.xml.@namespace;
 
 	using CollationProvider = org.eclipse.wst.xml.xpath2.api.CollationProvider;
 	using Function = org.eclipse.wst.xml.xpath2.api.Function;

@@ -20,6 +20,7 @@ namespace org.eclipse.wst.xml.xpath2.api
 
 	using System;
 	using org.eclipse.wst.xml.xpath2.processor.@internal.types;
+	using javax.xml.@namespace;
 
 	using ItemType = org.eclipse.wst.xml.xpath2.api.typesystem.ItemType;
 	using TypeDefinition = org.eclipse.wst.xml.xpath2.api.typesystem.TypeDefinition;
@@ -96,7 +97,7 @@ namespace org.eclipse.wst.xml.xpath2.api
 		/// documents are available. A URI need not be found in the statically
 		/// known documents to be accessed using fn:doc.
 		/// </summary>
-		ItemType getDocumentType(URI documentUri);
+		ItemType getDocumentType(Uri documentUri);
 
 		/// <summary>
 		/// [Definition: Statically known namespaces. This is a set of (prefix,

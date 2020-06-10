@@ -13,3 +13,9 @@ namespace org.w3c.dom
     public class Element { }
 
 }
+
+namespace javax.xml.@namespace
+{
+    public class NamespaceContext { }
+
+}
