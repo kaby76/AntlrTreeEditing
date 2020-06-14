@@ -15,7 +15,7 @@
 
 namespace org.eclipse.wst.xml.xpath2.api.typesystem
 {
-	using org.eclipse.wst.xml.xpath2.processor.@internal.types;
+	using QName = org.eclipse.wst.xml.xpath2.processor.@internal.types.QName;
 
 	/// <summary>
 	/// @since 2.0

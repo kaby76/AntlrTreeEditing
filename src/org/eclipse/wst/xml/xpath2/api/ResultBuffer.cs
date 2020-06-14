@@ -161,7 +161,9 @@ namespace org.eclipse.wst.xml.xpath2.api
 
 				internal bool seenIt;
 
-				public void remove()
+                object IEnumerator.Current => throw new System.NotImplementedException();
+
+                public void remove()
 				{
 					throw new System.NotSupportedException("ResultSequences are immutable");
 				}
@@ -180,7 +182,17 @@ namespace org.eclipse.wst.xml.xpath2.api
 				{
 					return !seenIt;
 				}
-			}
+
+                bool IEnumerator.MoveNext()
+                {
+                    throw new System.NotImplementedException();
+                }
+
+                void IEnumerator.Reset()
+                {
+                    throw new System.NotImplementedException();
+                }
+            }
 
 			public ItemType itemType(int index)
 			{
@@ -191,7 +203,12 @@ namespace org.eclipse.wst.xml.xpath2.api
 			{
 				return value_Renamed.ItemType;
 			}
-		}
+
+            IEnumerator<Item> ResultSequence.iterator()
+            {
+                throw new System.NotImplementedException();
+            }
+        }
 
 		public sealed class ArrayResultSequence : ResultSequence
 		{
@@ -267,7 +284,9 @@ namespace org.eclipse.wst.xml.xpath2.api
 
 				internal int nextIndex;
 
-				public void remove()
+                public object Current => throw new System.NotImplementedException();
+
+                public void remove()
 				{
 					throw new System.NotSupportedException("ResultSequences are immutable");
 				}
@@ -285,7 +304,17 @@ namespace org.eclipse.wst.xml.xpath2.api
 				{
 					return nextIndex < outerInstance.results.Length;
 				}
-			}
+
+                public bool MoveNext()
+                {
+                    throw new System.NotImplementedException();
+                }
+
+                public void Reset()
+                {
+                    throw new System.NotImplementedException();
+                }
+            }
 
 			public ItemType itemType(int index)
 			{
@@ -305,7 +334,12 @@ namespace org.eclipse.wst.xml.xpath2.api
 			{
 				return item(index).NativeValue;
 			}
-		}
+
+            IEnumerator<Item> ResultSequence.iterator()
+            {
+                throw new System.NotImplementedException();
+            }
+        }
 
 		public virtual int size()
 		{
@@ -474,11 +508,18 @@ namespace org.eclipse.wst.xml.xpath2.api
 				return new IteratorAnonymousInnerClass(this);
 			}
 
-			private class IteratorAnonymousInnerClass : IEnumerator
+            IEnumerator<Item> ResultSequence.iterator()
+            {
+                throw new System.NotImplementedException();
+            }
+
+            private class IteratorAnonymousInnerClass : IEnumerator
 			{
 				private readonly ResultSequenceAnonymousInnerClass outerInstance;
 
-				public IteratorAnonymousInnerClass(ResultSequenceAnonymousInnerClass outerInstance)
+                public object Current => throw new System.NotImplementedException();
+
+                public IteratorAnonymousInnerClass(ResultSequenceAnonymousInnerClass outerInstance)
 				{
 					this.outerInstance = outerInstance;
 				}
@@ -498,7 +539,17 @@ namespace org.eclipse.wst.xml.xpath2.api
 				{
 					return false;
 				}
-			}
+
+                public bool MoveNext()
+                {
+                    throw new System.NotImplementedException();
+                }
+
+                public void Reset()
+                {
+                    throw new System.NotImplementedException();
+                }
+            }
 		}
 
 		public virtual ICollection<Item> Collection

@@ -18,12 +18,12 @@
 
 namespace org.eclipse.wst.xml.xpath2.api
 {
-	using System;
-	using org.w3c.dom;
-	using org.eclipse.wst.xml.xpath2.processor.@internal.types;
-
 	using Document = org.w3c.dom.Document;
 	using Node = org.w3c.dom.Node;
+	using QName = org.eclipse.wst.xml.xpath2.processor.@internal.types.QName;
+	using URI = java.net.URI;
+	using GregorianCalendar = java.util.GregorianCalendar;
+	using Duration = java.time.Duration;
 
 	/// <summary>
 	/// Interface for dynamic context. This covers the Dynamic Context as defined by the XPath2 specification, EXCEPT for 
@@ -54,7 +54,7 @@ namespace org.eclipse.wst.xml.xpath2.api
 		/// <param name="uri">
 		///            is the possibly relative URI to resolve </param>
 		/// <returns> the absolutized, resolved URI. </returns>
-		Uri resolveUri(string uri);
+		URI resolveUri(string uri);
 
 		/// <summary>
 		/// [Definition: Current dateTime. This
@@ -96,7 +96,7 @@ namespace org.eclipse.wst.xml.xpath2.api
 		/// <param name="uri">
 		///            is the URI of the document. </param>
 		/// <returns> document. </returns>
-		Document getDocument(Uri uri);
+		Document getDocument(URI uri);
 
 		/// <summary>
 		/// [Definition: Available collections. This is a mapping of

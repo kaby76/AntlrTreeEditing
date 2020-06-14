@@ -17,11 +17,9 @@
 
 namespace org.eclipse.wst.xml.xpath2.api
 {
-
-	using System;
-	using org.eclipse.wst.xml.xpath2.processor.@internal.types;
-	using javax.xml.@namespace;
-
+	using URI = java.net.URI;
+	using NamespaceContext = javax.xml.@namespace.NamespaceContext;
+	using QName = org.eclipse.wst.xml.xpath2.processor.@internal.types.QName;
 	using ItemType = org.eclipse.wst.xml.xpath2.api.typesystem.ItemType;
 	using TypeDefinition = org.eclipse.wst.xml.xpath2.api.typesystem.TypeDefinition;
 	using TypeModel = org.eclipse.wst.xml.xpath2.api.typesystem.TypeModel;
@@ -83,7 +81,7 @@ namespace org.eclipse.wst.xml.xpath2.api
 		/// function.)] The URI value is whitespace normalized according to the
 		/// rules for the xs:anyURI type in [XML Schema].
 		/// </summary>
-		Uri BaseUri {get;}
+		URI BaseUri {get;}
 
 		/// <summary>
 		/// [Definition: Statically known documents. This is a mapping from strings
@@ -97,7 +95,7 @@ namespace org.eclipse.wst.xml.xpath2.api
 		/// documents are available. A URI need not be found in the statically
 		/// known documents to be accessed using fn:doc.
 		/// </summary>
-		ItemType getDocumentType(Uri documentUri);
+		ItemType getDocumentType(URI documentUri);
 
 		/// <summary>
 		/// [Definition: Statically known namespaces. This is a set of (prefix,
