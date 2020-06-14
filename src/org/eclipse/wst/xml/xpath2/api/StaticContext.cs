@@ -19,7 +19,7 @@ namespace org.eclipse.wst.xml.xpath2.api
 {
 	using URI = java.net.URI;
 	using NamespaceContext = javax.xml.@namespace.NamespaceContext;
-	using QName = org.eclipse.wst.xml.xpath2.processor.@internal.types.QName;
+	using QName = javax.xml.@namespace.QName;
 	using ItemType = org.eclipse.wst.xml.xpath2.api.typesystem.ItemType;
 	using TypeDefinition = org.eclipse.wst.xml.xpath2.api.typesystem.TypeDefinition;
 	using TypeModel = org.eclipse.wst.xml.xpath2.api.typesystem.TypeModel;

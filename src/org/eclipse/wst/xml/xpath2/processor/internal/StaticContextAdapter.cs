@@ -213,7 +213,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 
 			public virtual IEnumerator getPrefixes(string arg0)
 			{
-				return Collections.emptyList().GetEnumerator();
+				return new ArrayList().GetEnumerator();
 			}
 
 			public virtual string getPrefix(string arg0)

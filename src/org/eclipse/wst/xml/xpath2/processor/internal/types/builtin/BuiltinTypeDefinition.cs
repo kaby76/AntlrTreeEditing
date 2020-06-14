@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Reflection;
 
 /// <summary>
 ///*****************************************************************************
@@ -17,6 +18,9 @@ using System.Collections;
 /// </summary>
 namespace org.eclipse.wst.xml.xpath2.processor.@internal.types.builtin
 {
+	using InvocationTargetException = java.lang.reflect.InvocationTargetException;
+	using Method = java.lang.reflect.Method;
+    using QName = javax.xml.@namespace.QName;
 	using ResultSequence = org.eclipse.wst.xml.xpath2.api.ResultSequence;
 	using TypeDefinition = org.eclipse.wst.xml.xpath2.api.typesystem.TypeDefinition;
 	using Attr = org.w3c.dom.Attr;
@@ -146,12 +150,12 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types.builtin
 
 		public virtual IList getSimpleTypes(Attr attr)
 		{
-			return Collections.emptyList();
+			return new ArrayList();
 		}
 
 		public virtual IList getSimpleTypes(Element attr)
 		{
-			return Collections.emptyList();
+			return new ArrayList();
 		}
 
 		/* (non-Javadoc)

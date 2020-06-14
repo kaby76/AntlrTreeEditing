@@ -32,6 +32,8 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 	using CmpEq = org.eclipse.wst.xml.xpath2.processor.@internal.function.CmpEq;
 	using BuiltinTypeLibrary = org.eclipse.wst.xml.xpath2.processor.@internal.types.builtin.BuiltinTypeLibrary;
 
+	using XMLConstants = java.xml.XMLConstants;
+
 	/// <summary>
 	/// A representation of a QName datatype (name of a node)
 	/// </summary>
@@ -413,7 +415,9 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 
 		public virtual javax.xml.@namespace.QName asQName()
 		{
-			return new javax.xml.@namespace.QName(@namespace(), local(), !string.ReferenceEquals(prefix(), null) ? prefix() : XMLConstants.DEFAULT_NS_PREFIX);
+			return new javax.xml.@namespace.QName(@namespace(),
+                local(), !string.ReferenceEquals(prefix(), null)
+                    ? prefix() : XMLConstants.DEFAULT_NS_PREFIX);
 		}
 
 		public override object NativeValue

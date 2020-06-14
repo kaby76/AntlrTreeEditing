@@ -67,6 +67,15 @@ namespace java.util
     }
 }
 
+namespace java.xml
+{
+    public class XMLConstants
+    {
+        public static string NULL_NS_URI { get; set; }
+        public static string DEFAULT_NS_PREFIX { get; set; }
+    }
+}
+
 namespace javax.xml.datatype
 {
     public class Duration { }
@@ -76,6 +85,24 @@ namespace javax.xml.datatype
 namespace javax.xml.@namespace
 {
     public class NamespaceContext { }
+
+    public class QName
+    {
+        private string v1;
+        private string v2;
+        private string v3;
+
+        public QName(string v1, string v2, string v3)
+        {
+            this.v1 = v1;
+            this.v2 = v2;
+            this.v3 = v3;
+        }
+
+        public string NamespaceURI { get; set; }
+        public string LocalPart { get; set; }
+        public string Prefix { get; set; }
+    }
 
 }
 
@@ -95,7 +122,8 @@ namespace org.w3c.dom
 {
     public class Node
     {
-        internal static short TEXT_NODE;
+        public static short TEXT_NODE;
+        public static short ELEMENT_NODE;
 
         public short NodeType { get; internal set; }
     }

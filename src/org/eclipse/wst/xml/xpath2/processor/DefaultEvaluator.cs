@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Collections;
+using System.Collections.Generic;
 
 /// <summary>
 ///*****************************************************************************
@@ -31,7 +32,6 @@ using System.Collections;
 
 namespace org.eclipse.wst.xml.xpath2.processor
 {
-
 
 	using EvaluationContext = org.eclipse.wst.xml.xpath2.api.EvaluationContext;
 	using Function = org.eclipse.wst.xml.xpath2.api.Function;
@@ -1224,7 +1224,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 			QName type = st.type();
 
 			// prepare args from function
-			var args = new ArrayList();
+			var args = new List<api.ResultSequence>();
 			args.Add(ResultSequenceFactory.create_new(aat));
 
 			try
@@ -1855,7 +1855,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		/// <returns> a new function or null </returns>
 		public virtual object visit(FunctionCall e)
 		{
-			ArrayList args = new ArrayList();
+			var args = new List<api.ResultSequence>();
 
 			for (IEnumerator i = e.GetEnumerator(); i.MoveNext();)
 			{
@@ -1940,7 +1940,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 					report_error(new StaticTypeNameError("Type not defined: " + e.qname().@string()));
 				}
 
-				ResultSequence arg = (ResultSequence)((Pair) _param)._two;
+				api.ResultSequence arg = (api.ResultSequence)((Pair) _param)._two;
 				((Pair) _param)._two = item_test(arg, e.qname());
 				break;
 
@@ -2311,7 +2311,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		public virtual object visit(SchemaElemTest e)
 		{
 			// filter out all elements
-            api.ResultSequence rs = kind_test((Resulapi.ResultSequencetSequence)((Pair) _param)._two, typeof(ElementType));
+            api.ResultSequence rs = kind_test((api.ResultSequence)((Pair) _param)._two, typeof(ElementType));
 
 			// match the name
 			// XXX substitution groups

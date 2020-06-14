@@ -18,12 +18,12 @@
 
 namespace org.eclipse.wst.xml.xpath2.api
 {
-	using Document = org.w3c.dom.Document;
-	using Node = org.w3c.dom.Node;
-	using QName = org.eclipse.wst.xml.xpath2.processor.@internal.types.QName;
 	using URI = java.net.URI;
 	using GregorianCalendar = java.util.GregorianCalendar;
-	using Duration = java.time.Duration;
+	using Duration = javax.xml.datatype.Duration;
+	using QName = javax.xml.@namespace.QName;
+    using Document = org.w3c.dom.Document;
+    using Node = org.w3c.dom.Node;
 
 	/// <summary>
 	/// Interface for dynamic context. This covers the Dynamic Context as defined by the XPath2 specification, EXCEPT for 
