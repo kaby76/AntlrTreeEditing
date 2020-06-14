@@ -410,7 +410,11 @@ namespace org.eclipse.wst.xml.xpath2.api
 				}
 			}
 
-			public virtual IEnumerator iterator()
+            public int Count => throw new System.NotImplementedException();
+
+            public bool IsReadOnly => throw new System.NotImplementedException();
+
+            public virtual IEnumerator iterator()
 			{
 				return rs.GetEnumerator();
 			}
@@ -452,7 +456,42 @@ namespace org.eclipse.wst.xml.xpath2.api
 				}
 				return arg0;
 			}
-		}
+
+            public void Add(Item item)
+            {
+                throw new System.NotImplementedException();
+            }
+
+            public void Clear()
+            {
+                throw new System.NotImplementedException();
+            }
+
+            public bool Contains(Item item)
+            {
+                throw new System.NotImplementedException();
+            }
+
+            public void CopyTo(Item[] array, int arrayIndex)
+            {
+                throw new System.NotImplementedException();
+            }
+
+            public bool Remove(Item item)
+            {
+                throw new System.NotImplementedException();
+            }
+
+            public IEnumerator<Item> GetEnumerator()
+            {
+                throw new System.NotImplementedException();
+            }
+
+            IEnumerator IEnumerable.GetEnumerator()
+            {
+                throw new System.NotImplementedException();
+            }
+        }
 
 		public static readonly ResultSequence EMPTY = new ResultSequenceAnonymousInnerClass();
 
