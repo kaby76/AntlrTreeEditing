@@ -170,7 +170,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		private object _param;
 		private EvaluationContext _ec;
 
-		private StaticContext _sc;
+		private api.StaticContext _sc;
 
 		private Focus _focus = new Focus(ResultBuffer.EMPTY);
 
@@ -205,7 +205,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 			_innerScope = _innerScope.nextScope;
 		}
 
-		private void pushScope(QName @var, ResultSequence value)
+		private void pushScope(QName @var, api.ResultSequence value)
 		{
 			_innerScope = new VariableScope(this, @var, value, _innerScope);
 		}
@@ -228,7 +228,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		public DefaultEvaluator(org.eclipse.wst.xml.xpath2.processor.DynamicContext dynamicContext, Document doc) : this(new StaticContextAdapter(dynamicContext), new DynamicContextAdapter(dynamicContext))
 		{
 
-			ResultSequence focusSequence = (doc != null) ? new DocType(doc, _sc.TypeModel) : ResultBuffer.EMPTY;
+			api.ResultSequence focusSequence = (doc != null) ? new DocType(doc, _sc.TypeModel) : ResultBuffer.EMPTY;
 			set_focus(new Focus(focusSequence));
 			dynamicContext.set_focus(focus());
 		}
@@ -236,7 +236,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		/// <summary>
 		/// @since 2.0
 		/// </summary>
-		public DefaultEvaluator(StaticContext staticContext, org.eclipse.wst.xml.xpath2.api.DynamicContext dynamicContext, object[] contextItems) : this(staticContext, dynamicContext)
+		public DefaultEvaluator(api.StaticContext staticContext, org.eclipse.wst.xml.xpath2.api.DynamicContext dynamicContext, object[] contextItems) : this(staticContext, dynamicContext)
 		{
 
 			// initialize context item with root of document
@@ -253,7 +253,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 			_param = null;
 		}
 
-		private DefaultEvaluator(StaticContext staticContext, org.eclipse.wst.xml.xpath2.api.DynamicContext dynamicContext)
+		private DefaultEvaluator(api.StaticContext staticContext, org.eclipse.wst.xml.xpath2.api.DynamicContext dynamicContext)
 		{
 			_sc = staticContext;
 			_dc = dynamicContext;
@@ -302,7 +302,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 				}
 			}
 
-			public virtual StaticContext StaticContext
+			public virtual api.StaticContext StaticContext
 			{
 				get
 				{
@@ -315,7 +315,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		{
 			private readonly DefaultEvaluator outerInstance;
 
-			public VariableScope(DefaultEvaluator outerInstance, QName name, ResultSequence value, VariableScope nextScope)
+			public VariableScope(DefaultEvaluator outerInstance, QName name, api.ResultSequence value, VariableScope nextScope)
 			{
 				this.outerInstance = outerInstance;
 				this.name = name;
@@ -323,13 +323,13 @@ namespace org.eclipse.wst.xml.xpath2.processor
 				this.nextScope = nextScope;
 			}
 			public readonly QName name;
-			public readonly ResultSequence value;
+			public readonly api.ResultSequence value;
 			public readonly VariableScope nextScope;
 		}
 
 		private VariableScope _innerScope = null;
 
-		private ResultSequence getVariable(QName name)
+		private api.ResultSequence getVariable(QName name)
 		{
 			// First, try local scopes
 			VariableScope scope = _innerScope;
@@ -341,7 +341,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 				}
 				scope = scope.nextScope;
 			}
-			return (ResultSequence) _dc.getVariable(name.asQName());
+			return (api.ResultSequence) _dc.getVariable(name.asQName());
 		}
 
 		// XXX this kinda sux
@@ -389,23 +389,23 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		/// <summary>
 		/// @since 2.0
 		/// </summary>
-		public virtual ResultSequence evaluate2(XPathNode node)
+		public virtual api.ResultSequence evaluate2(XPathNode node)
 		{
-			return (ResultSequence) node.accept(this);
+			return (api.ResultSequence) node.accept(this);
 		}
 
 		// basically the comma operator...
-		private ResultSequence do_expr(IEnumerator i)
+		private api.ResultSequence do_expr(IEnumerator i)
 		{
 
-			ResultSequence rs = null;
+            api.ResultSequence rs = null;
 			ResultBuffer buffer = null;
 
 			while (i.MoveNext())
 			{
 				Expr e = (Expr) i.Current;
 
-				ResultSequence result = (ResultSequence) e.accept(this);
+                api.ResultSequence result = (api.ResultSequence) e.accept(this);
 
 				if (rs == null && buffer == null)
 				{
@@ -543,7 +543,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 			// we finally got to do the "last expression"
 			else
 			{
-				return effective_boolean_value((ResultSequence) finalexpr.accept(this));
+				return effective_boolean_value((api.ResultSequence) finalexpr.accept(this));
 			}
 
 		}
@@ -559,7 +559,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 				VarExprPair ve = (VarExprPair) iter.next();
 
 				// evaluate binding sequence
-				ResultSequence rs = (ResultSequence) ve.expr().accept(this);
+                api.ResultSequence rs = (api.ResultSequence) ve.expr().accept(this);
 
 				QName varname = ve.varname();
 
@@ -595,7 +595,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 			// we finally got to do the "last expression"
 			else
 			{
-				return effective_boolean_value((ResultSequence) finalexpr.accept(this));
+				return effective_boolean_value((api.ResultSequence) finalexpr.accept(this));
 			}
 
 		}
@@ -649,7 +649,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		/// <returns> a ifex.then_clause().accept(this). </returns>
 		public virtual object visit(IfExpr ifex)
 		{
-			ResultSequence test_res = do_expr(ifex.GetEnumerator());
+            api.ResultSequence test_res = do_expr(ifex.GetEnumerator());
 
 			XSBoolean res = effective_boolean_value(test_res);
 
@@ -669,10 +669,10 @@ namespace org.eclipse.wst.xml.xpath2.processor
 
 			IEnumerator argiter = args.GetEnumerator();
 
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			ResultSequence one = (ResultSequence) argiter.next();
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			ResultSequence two = (ResultSequence) argiter.next();
+			//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
+            api.ResultSequence one = (api.ResultSequence) argiter.next();
+			//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
+            api.ResultSequence two = (api.ResultSequence) argiter.next();
 
 			bool oneb = effective_boolean_value(one).value();
 			bool twob = effective_boolean_value(two).value();
@@ -707,16 +707,16 @@ namespace org.eclipse.wst.xml.xpath2.processor
 			return ResultSequenceFactory.create_new(new XSBoolean(res[0] && res[1]));
 		}
 
-		private ResultSequence node_cmp(int type, ICollection args)
+		private api.ResultSequence node_cmp(int type, ICollection args)
 		{
 			Debug.Assert(args.Count == 2);
 
 			IEnumerator argsiter = args.GetEnumerator();
 
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			ResultSequence one = (ResultSequence) argsiter.next();
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			ResultSequence two = (ResultSequence) argsiter.next();
+			//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
+            api.ResultSequence one = (api.ResultSequence) argsiter.next();
+			//JAVA TO C# CONVERTER TODO TASK: Java iterators api.ResultSequence only converted within the context of 'while' and 'for' loops:
+            api.ResultSequence two = (api.ResultSequence) argsiter.next();
 
 			int size_one = one.size();
 			int size_two = two.size();
@@ -843,8 +843,8 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		/// <returns> a new function </returns>
 		public virtual object visit(RangeExpr rex)
 		{
-			ResultSequence one = (ResultSequence) rex.left().accept(this);
-			ResultSequence two = (ResultSequence) rex.right().accept(this);
+            api.ResultSequence one = (api.ResultSequence) rex.left().accept(this);
+            api.ResultSequence two = (api.ResultSequence) rex.right().accept(this);
 			if (one.empty() || two.empty())
 			{
 				return ResultSequenceFactory.create_new();
@@ -864,7 +864,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 			}
 		}
 
-		private XSBoolean effective_boolean_value(ResultSequence rs)
+		private XSBoolean effective_boolean_value(api.ResultSequence rs)
 		{
 			try
 			{
@@ -1000,8 +1000,8 @@ namespace org.eclipse.wst.xml.xpath2.processor
 
 		private ICollection do_bin_args(BinExpr e)
 		{
-			ResultSequence one = (ResultSequence) e.left().accept(this);
-			ResultSequence two = (ResultSequence) e.right().accept(this);
+            api.ResultSequence one = (api.ResultSequence) e.left().accept(this);
+            api.ResultSequence two = (api.ResultSequence) e.right().accept(this);
 
 			ICollection args = new ArrayList();
 			args.Add(one);
@@ -1100,14 +1100,14 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		public virtual object visit(InstOfExpr ioexp)
 		{
 			// get the value
-			ResultSequence rs = (ResultSequence) ioexp.left().accept(this);
+            api.ResultSequence rs = (api.ResultSequence) ioexp.left().accept(this);
 
 			// get the sequence type
 			SequenceType seqt = (SequenceType) ioexp.right();
 			return ResultSequenceFactory.create_new(new XSBoolean(isInstanceOf(rs, seqt)));
 		}
 
-		private bool isInstanceOf(ResultSequence rs, SequenceType seqt)
+		private bool isInstanceOf(api.ResultSequence rs, SequenceType seqt)
 		{
 			object oldParam = this._param;
 			try
@@ -1116,7 +1116,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 				int sequenceLength = rs.size();
 				// Run the matcher
 				seqt.accept(this);
-				rs = (ResultSequence)((Pair)_param)._two;
+				rs = (api.ResultSequence)((Pair)_param)._two;
 				int lengthAfter = rs.size();
 
 				if (sequenceLength != lengthAfter)
@@ -1141,7 +1141,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		public virtual object visit(TreatAsExpr taexp)
 		{
 
-			ResultSequence rs = (ResultSequence) taexp.left().accept(this);
+            api.ResultSequence rs = (api.ResultSequence) taexp.left().accept(this);
 
 			SequenceType seqt = (SequenceType) taexp.right();
 			SeqType st = new SeqType(seqt, _sc, rs);
@@ -1191,7 +1191,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		public virtual object visit(CastExpr cexp)
 		{
 
-			ResultSequence rs = (ResultSequence) cexp.left().accept(this);
+            api.ResultSequence rs = (api.ResultSequence) cexp.left().accept(this);
 			SingleType st = (SingleType) cexp.right();
 
 			rs = FnData.atomize(rs);
@@ -1256,7 +1256,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		/// <returns> a new function </returns>
 		public virtual object visit(MinusExpr e)
 		{
-			ResultSequence rs = (ResultSequence) e.arg().accept(this);
+            api.ResultSequence rs = (api.ResultSequence) e.arg().accept(this);
 
 			ICollection args = new ArrayList();
 			args.Add(rs);
@@ -1280,7 +1280,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		/// <returns> a new function </returns>
 		public virtual object visit(PlusExpr e)
 		{
-			ResultSequence rs = (ResultSequence) e.arg().accept(this);
+            api.ResultSequence rs = (api.ResultSequence) e.arg().accept(this);
 
 			ICollection args = new ArrayList();
 			args.Add(rs);
@@ -1301,7 +1301,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		//
 		// i.e. It will execute the step expression for each item in the focus
 		// [each time changing the context item].
-		private ResultSequence do_step(StepExpr se)
+		private api.ResultSequence do_step(StepExpr se)
 		{
 
 			ResultBuffer rs = new ResultBuffer();
@@ -1333,7 +1333,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 			// check the results
 			for (IEnumerator i = results.GetEnumerator(); i.MoveNext();)
 			{
-				ResultSequence result = (ResultSequence) i.Current;
+                api.ResultSequence result = (api.ResultSequence) i.Current;
 
 				// make sure results are of same type, and add them in
 				for (IEnumerator j = result.GetEnumerator(); j.MoveNext();)
@@ -1393,7 +1393,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 			return rs.Sequence;
 		}
 
-		private ResultSequence root_self_node()
+		private api.ResultSequence root_self_node()
 		{
 			Axis axis = new SelfAxis();
 			ResultBuffer buffer = new ResultBuffer();
@@ -1401,7 +1401,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 			// XXX the cast!!!
 			axis.iterate((NodeType) focus().context_item(), buffer, _dc.LimitNode);
 
-			ResultSequence rs = kind_test(buffer.Sequence, typeof(NodeType));
+            api.ResultSequence rs = kind_test(buffer.Sequence, typeof(NodeType));
 
 			IList records = new ArrayList();
 			records.Add(rs);
@@ -1409,7 +1409,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 			return rs;
 		}
 
-		private ResultSequence descendant_or_self_node(ResultSequence rs)
+		private api.ResultSequence descendant_or_self_node(api.ResultSequence rs)
 		{
 			ResultBuffer res = new ResultBuffer();
 			Axis axis = new DescendantOrSelfAxis();
@@ -1435,7 +1435,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		{
 			XPathExpr xp = e;
 
-			ResultSequence rs = null;
+            api.ResultSequence rs = null;
 			Focus original_focus = focus();
 
 			// do all the steps
@@ -1515,7 +1515,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 						}
 						else
 						{
-							rs = (ResultSequence) se.accept(this);
+							rs = (api.ResultSequence) se.accept(this);
 						}
 					}
 				}
@@ -1569,7 +1569,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 
 			// do the name test
 			_param = arg;
-			ResultSequence rs = (ResultSequence) e.node_test().accept(this);
+            api.ResultSequence rs = (api.ResultSequence) e.node_test().accept(this);
 
 			return rs;
 		}
@@ -1612,7 +1612,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 
 			// do the name test
 			_param = arg;
-			ResultSequence rs = (ResultSequence) e.node_test().accept(this);
+            api.ResultSequence rs = (api.ResultSequence) e.node_test().accept(this);
 
 			return rs;
 		}
@@ -1724,7 +1724,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 			// get the arguments
 			Pair arg = (Pair) _param;
 			string type = (string) arg._one;
-			ResultSequence rs = (ResultSequence) arg._two;
+            api.ResultSequence rs = (api.ResultSequence) arg._two;
 
 			ResultBuffer rb = new ResultBuffer();
 
@@ -1762,9 +1762,9 @@ namespace org.eclipse.wst.xml.xpath2.processor
 			{
 			   rs.add((AnyType) @var);
 			}
-			else if (@var is ResultSequence)
+			else if (@var is api.ResultSequence)
 			{
-			   rs.concat((ResultSequence) @var);
+			   rs.concat((api.ResultSequence) @var);
 			}
 
 			return rs.Sequence;
@@ -1861,7 +1861,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 			{
 				Expr arg = (Expr) i.Current;
 				// each argument will produce a result sequence
-				args.Add((ResultSequence)arg.accept(this));
+				args.Add((api.ResultSequence)arg.accept(this));
 			}
 
 			try
@@ -1952,7 +1952,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 			return null;
 		}
 
-		private ResultSequence item_test(ResultSequence rs, QName qname)
+		private api.ResultSequence item_test(api.ResultSequence rs, QName qname)
 		{
 			ResultBuffer rb = new ResultBuffer();
 			for (IEnumerator i = rs.GetEnumerator(); i.MoveNext();)
@@ -1990,7 +1990,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 			return rb.Sequence;
 		}
 
-		private ResultSequence kind_test(ResultSequence rs, Type kind)
+		private api.ResultSequence kind_test(api.ResultSequence rs, Type kind)
 		{
 			ResultBuffer rb = new ResultBuffer();
 			for (IEnumerator i = rs.GetEnumerator(); i.MoveNext();)
@@ -2012,7 +2012,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		/// <returns> a new function </returns>
 		public virtual object visit(AnyKindTest e)
 		{
-			ResultSequence arg = (ResultSequence)((Pair) _param)._two;
+            api.ResultSequence arg = (api.ResultSequence)((Pair) _param)._two;
 
 			return kind_test(arg, typeof(NodeType));
 		}
@@ -2025,11 +2025,11 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		/// <returns> result sequence </returns>
 		public virtual object visit(DocumentTest e)
 		{
-			ResultSequence arg = (ResultSequence)((Pair) _param)._two;
+            api.ResultSequence arg = (api.ResultSequence)((Pair) _param)._two;
 			int type = e.type();
 
 			// filter doc nodes
-			ResultSequence rs = kind_test(arg, typeof(DocType));
+            api.ResultSequence rs = kind_test(arg, typeof(DocType));
 
 			if (type == DocumentTest.NONE)
 			{
@@ -2074,18 +2074,18 @@ namespace org.eclipse.wst.xml.xpath2.processor
 				Debug.Assert(elem != null);
 
 				// setup parameter for element test
-				ResultSequence res = new ResultBuffer.SingleResultSequence(elem);
+                api.ResultSequence res = new ResultBuffer.SingleResultSequence(elem);
 				_param = new Pair("element", res);
 
 				// do name test
 				res = null;
 				if (type == DocumentTest.ELEMENT)
 				{
-					res = (ResultSequence) e.elem_test().accept(this);
+					res = (api.ResultSequence) e.elem_test().accept(this);
 				}
 				else if (type == DocumentTest.SCHEMA_ELEMENT)
 				{
-					res = (ResultSequence) e.schema_elem_test().accept(this);
+					res = (api.ResultSequence) e.schema_elem_test().accept(this);
 				}
 				else
 				{
@@ -2110,7 +2110,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		/// <returns> a new function </returns>
 		public virtual object visit(TextTest e)
 		{
-			ResultSequence arg = (ResultSequence)((Pair) _param)._two;
+            api.ResultSequence arg = (api.ResultSequence)((Pair) _param)._two;
 
 			((Pair) _param)._two = kind_test(arg, typeof(TextType));
 			return ((Pair) _param)._two;
@@ -2124,7 +2124,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		/// <returns> a new function </returns>
 		public virtual object visit(CommentTest e)
 		{
-			ResultSequence arg = (ResultSequence)((Pair) _param)._two;
+            api.ResultSequence arg = (api.ResultSequence)((Pair) _param)._two;
 
 			return kind_test(arg, typeof(CommentType));
 		}
@@ -2137,7 +2137,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		/// <returns> a argument </returns>
 		public virtual object visit(PITest e)
 		{
-			ResultSequence arg = (ResultSequence)((Pair) _param)._two;
+            api.ResultSequence arg = (api.ResultSequence)((Pair) _param)._two;
 
 			string pit_arg = e.arg();
 
@@ -2178,7 +2178,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		public virtual object visit(AttributeTest e)
 		{
 			// filter out all attrs
-			ResultSequence rs = kind_test((ResultSequence)((Pair) _param)._two, typeof(AttrType));
+            api.ResultSequence rs = kind_test((api.ResultSequence)((Pair) _param)._two, typeof(AttrType));
 
 			ResultBuffer rb = new ResultBuffer();
 
@@ -2220,7 +2220,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		public virtual object visit(SchemaAttrTest e)
 		{
 			// filter out all attrs
-			ResultSequence rs = kind_test((ResultSequence)((Pair) _param)._two, typeof(AttrType));
+            api.ResultSequence rs = kind_test((api.ResultSequence)((Pair) _param)._two, typeof(AttrType));
 
 			// match the name
 			QName name = e.arg();
@@ -2260,7 +2260,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		public virtual object visit(ElementTest e)
 		{
 			// filter out all elements
-			ResultSequence rs = kind_test((ResultSequence)((Pair) _param)._two, typeof(ElementType));
+            api.ResultSequence rs = kind_test((api.ResultSequence)((Pair) _param)._two, typeof(ElementType));
 
 			// match the name if it's not a wild card
 			ResultBuffer rb = new ResultBuffer();
@@ -2311,7 +2311,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		public virtual object visit(SchemaElemTest e)
 		{
 			// filter out all elements
-			ResultSequence rs = kind_test((ResultSequence)((Pair) _param)._two, typeof(ElementType));
+            api.ResultSequence rs = kind_test((Resulapi.ResultSequencetSequence)((Pair) _param)._two, typeof(ElementType));
 
 			// match the name
 			// XXX substitution groups
@@ -2350,7 +2350,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 			return rs;
 		}
 
-		private bool predicate_truth(ResultSequence rs)
+		private bool predicate_truth(api.ResultSequence rs)
 		{
 			// rule 1 of spec... if numeric type:
 			// if num eq position then true else false
@@ -2382,7 +2382,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		}
 
 		// do the predicate for all items in focus
-		private ResultSequence do_predicate(ICollection exprs)
+		private api.ResultSequence do_predicate(ICollection exprs)
 		{
 			ResultBuffer rs = new ResultBuffer();
 
@@ -2423,7 +2423,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 				// do the predicate
 				// XXX saxon doesn't allow for predicates to have
 				// commas... but XPath 2.0 spec seems to do
-				ResultSequence res = do_expr(exprs.GetEnumerator());
+                api.ResultSequence res = do_expr(exprs.GetEnumerator());
 
 				// if predicate is true, the context item is definitely
 				// in the sequence
@@ -2453,7 +2453,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		/// <returns> a result sequence </returns>
 		public virtual object visit(AxisStep e)
 		{
-			ResultSequence rs = (ResultSequence) e.step().accept(this);
+            api.ResultSequence rs = (api.ResultSequence) e.step().accept(this);
 
 			if (e.predicate_count() == 0)
 			{
@@ -2491,7 +2491,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		// XXX unify with top ?
 		public virtual object visit(FilterExpr e)
 		{
-			ResultSequence rs = (ResultSequence) e.primary().accept(this);
+            api.ResultSequence rs = (api.ResultSequence) e.primary().accept(this);
 
 			// if no predicates are present, then the result is the same as
 			// the primary expression

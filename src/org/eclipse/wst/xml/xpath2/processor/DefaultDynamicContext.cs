@@ -27,9 +27,12 @@
 using System;
 using System.Collections;
 using System.Diagnostics;
+using System.IO;
+using java.net;
 
 namespace org.eclipse.wst.xml.xpath2.processor
 {
+	using MalformedURLException = java.net.MalformedURLException;
 	using GregorianCalendar = java.util.GregorianCalendar;
 	using URI = java.net.URI;
 	using XSModel = org.apache.xerces.xs.XSModel;

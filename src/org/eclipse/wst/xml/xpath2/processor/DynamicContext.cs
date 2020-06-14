@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System;
-using java.util;
-
+﻿
 /// <summary>
 ///*****************************************************************************
 /// Copyright (c) 2005, 2011 Andrea Bittau, University College London, and others
@@ -26,10 +23,13 @@ using java.util;
 /// ******************************************************************************
 /// </summary>
 
+using System.Collections;
+using java.net;
+
 namespace org.eclipse.wst.xml.xpath2.processor
 {
 	using GregorianCalendar = java.util.GregorianCalendar;
-
+	using URI = java.net.URI;
 	using Focus = org.eclipse.wst.xml.xpath2.processor.@internal.Focus;
 	using AnyType = org.eclipse.wst.xml.xpath2.processor.@internal.types.AnyType;
 	using QName = org.eclipse.wst.xml.xpath2.processor.@internal.types.QName;
@@ -121,7 +121,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		/// <returns> document.
 		/// @since 1.1 </returns>
 		// available doc
-		ResultSequence get_doc(Uri uri);
+		ResultSequence get_doc(URI uri);
 
 		/// <summary>
 		/// Resolve an URI
@@ -130,7 +130,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		///            is the possibly relative URI to resolve </param>
 		/// <returns> the absolutized, resolved URI.
 		/// @since 1.1 </returns>
-		Uri resolve_uri(string uri);
+		URI resolve_uri(string uri);
 
 		// available collections
 

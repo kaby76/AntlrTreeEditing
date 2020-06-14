@@ -12,7 +12,17 @@ namespace java.net
         }
 
         public bool Absolute { get; set; }
+
+        public URI resolve(string uri)
+        {
+            throw new NotImplementedException();
+        }
     }
+
+    public class MalformedURLException : Exception
+    {
+    }
+
 }
 
 namespace java.time
@@ -90,7 +100,7 @@ namespace org.w3c.dom
         public short NodeType { get; internal set; }
     }
 
-    public class Document
+    public class Document : Node
     {
         public string DocumentURI;
     }

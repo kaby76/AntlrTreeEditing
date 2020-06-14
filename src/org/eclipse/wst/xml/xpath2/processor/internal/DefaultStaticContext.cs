@@ -596,7 +596,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 		}
 
 		// overwrites, or creates
-		protected internal virtual void set_variable(QName @var, AnyType val)
+		public virtual void set_variable(QName @var, AnyType val)
 		{
 			IDictionary scope = current_scope();
 
@@ -606,7 +606,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 		/*
 		 * Set a XPath2 sequence into a variable.
 		 */
-		protected internal virtual void set_variable(QName @var, ResultSequence val)
+        public virtual void set_variable(QName @var, ResultSequence val)
 		{
 			IDictionary scope = current_scope();
 
@@ -637,7 +637,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 		}
 
 		// return null if "not found"
-		protected internal virtual object get_var(QName @var)
+        public virtual object get_var(QName @var)
 		{
 			// go through the stack in reverse order... reverse iterators
 			// would be nice here...
