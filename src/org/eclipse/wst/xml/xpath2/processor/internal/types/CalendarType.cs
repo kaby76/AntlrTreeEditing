@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿
 /// <summary>
 ///*****************************************************************************
 /// Copyright (c) 2005, 2011 Andrea Bittau, University College London, and others
@@ -17,8 +16,12 @@
 /// ******************************************************************************
 /// </summary>
 
+using java.util;
+
 namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 {
+	using Calendar = java.util.Calendar;
+	using GregorianCalendar = java.util.GregorianCalendar;
 
 
 	// common base for anything that uses a calendar... basically stuff doing with
@@ -29,11 +32,11 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 	public abstract class CalendarType : CtrType
 	{
 
-		public abstract DateTime calendar();
+		public abstract Calendar calendar();
 
-		public virtual DateTime normalizeCalendar(DateTime cal, XSDuration timezone)
+		public virtual Calendar normalizeCalendar(Calendar cal, XSDuration timezone)
 		{
-			DateTime adjusted = (DateTime) cal.clone();
+            Calendar adjusted = (Calendar) cal.clone();
 
 			if (timezone != null)
 			{

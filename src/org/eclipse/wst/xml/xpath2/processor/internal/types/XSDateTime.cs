@@ -1,7 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-using System.Text;
-
+﻿
 /// <summary>
 ///*****************************************************************************
 /// Copyright (c) 2005, 2011 Andrea Bittau, University College London, and others
@@ -25,10 +22,12 @@ using System.Text;
 
 namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 {
-
-
-
-	using DynamicContext = org.eclipse.wst.xml.xpath2.api.DynamicContext;
+	using Calendar = java.util.Calendar;
+	using GregorianCalendar = java.util.GregorianCalendar;
+	using TimeZone = java.util.TimeZone;
+    using Duration = javax.xml.datatype.Duration;
+    using XMLGregorianCalendar = javax.xml.datatype.XMLGregorianCalendar;
+    using DynamicContext = org.eclipse.wst.xml.xpath2.api.DynamicContext;
 	using Item = org.eclipse.wst.xml.xpath2.api.Item;
 	using ResultBuffer = org.eclipse.wst.xml.xpath2.api.ResultBuffer;
 	using ResultSequence = org.eclipse.wst.xml.xpath2.api.ResultSequence;
@@ -46,7 +45,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 	public class XSDateTime : CalendarType, CmpEq, CmpLt, CmpGt, MathMinus, MathPlus, ICloneable
 	{
 		private const string XS_DATE_TIME = "xs:dateTime";
-		private DateTime _calendar;
+		private Calendar _calendar;
 		private bool _timezoned;
 		private XSDuration _tz;
 
@@ -57,7 +56,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		///            The Calendar representation of the date and time to be stored </param>
 		/// <param name="tz">
 		///            The timezone of the date to be stored. </param>
-		public XSDateTime(DateTime cal, XSDuration tz)
+		public XSDateTime(Calendar cal, XSDuration tz)
 		{
 			_calendar = cal;
 
@@ -81,7 +80,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 //ORIGINAL LINE: public Object clone() throws CloneNotSupportedException
 		public virtual object clone()
 		{
-			DateTime c = (DateTime) calendar().clone();
+            Calendar c = (Calendar) calendar().clone();
 			XSDuration t = tz();
 
 			if (t != null)
@@ -373,7 +372,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 
 			if (ret[0] == 24.0)
 			{
-				ret[0] = 0x0.0;
+				ret[0] = 0.0;
 			}
 
 			// XXX sanity check args...
@@ -464,7 +463,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		///            The value to set the field to </param>
 		/// <returns> True if successfully set. False otherwise (due to out of bounds
 		///         for that field) </returns>
-		private static bool set_item(DateTime cal, int item, int val)
+		private static bool set_item(Calendar cal, int item, int val)
 		{
 			int min = cal.getActualMinimum(item);
 
@@ -542,7 +541,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 			if (year < 0)
 			{
 				year *= -1;
-				cal.set(DateTime.ERA, GregorianCalendar.BC);
+				cal.set(Calendar.ERA, GregorianCalendar.BC);
 			}
 			else
 			{
@@ -900,7 +899,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		/// Retrieves the Calendar representation of the date stored
 		/// </summary>
 		/// <returns> Calendar representation of the date stored </returns>
-		public override DateTime calendar()
+		public override Calendar calendar()
 		{
 			return _calendar;
 		}
@@ -1156,6 +1155,10 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 			}
 		}
 
-	}
+        public object Clone()
+        {
+            throw new NotImplementedException();
+        }
+    }
 
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System;
+using java.util;
 
 /// <summary>
 ///*****************************************************************************
@@ -27,7 +28,7 @@ using System;
 
 namespace org.eclipse.wst.xml.xpath2.processor
 {
-
+	using GregorianCalendar = java.util.GregorianCalendar;
 
 	using Focus = org.eclipse.wst.xml.xpath2.processor.@internal.Focus;
 	using AnyType = org.eclipse.wst.xml.xpath2.processor.@internal.types.AnyType;

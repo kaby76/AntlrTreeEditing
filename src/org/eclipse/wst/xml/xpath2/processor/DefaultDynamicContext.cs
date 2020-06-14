@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-using System.Collections;
-
+﻿
 /// <summary>
 ///*****************************************************************************
 /// Copyright (c) 2005, 2011 Andrea Bittau, University College London, and others
@@ -26,12 +24,16 @@ using System.Collections;
 /// ******************************************************************************
 /// </summary>
 
+using System;
+using System.Collections;
+using System.Diagnostics;
+
 namespace org.eclipse.wst.xml.xpath2.processor
 {
-
-	using System;
-
+	using GregorianCalendar = java.util.GregorianCalendar;
+	using URI = java.net.URI;
 	using XSModel = org.apache.xerces.xs.XSModel;
+	using TimeZone = java.util.TimeZone;
 	using DefaultStaticContext = org.eclipse.wst.xml.xpath2.processor.@internal.DefaultStaticContext;
 	using Focus = org.eclipse.wst.xml.xpath2.processor.@internal.Focus;
 	using Function = org.eclipse.wst.xml.xpath2.processor.@internal.function.Function;
@@ -208,7 +210,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		/// </summary>
 		/// <returns> a ResultSequence from ResultSequenceFactory.create_new()
 		/// @since 1.1 </returns>
-		public virtual ResultSequence get_doc(Uri resolved)
+		public virtual ResultSequence get_doc(URI resolved)
 		{
 			Document doc = null;
 			if (_loaded_documents.Contains(resolved))
@@ -232,18 +234,18 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		/// <summary>
 		/// @since 1.1
 		/// </summary>
-		public virtual Uri resolve_uri(string uri)
+		public virtual URI resolve_uri(string uri)
 		{
 			try
 			{
-				Uri realURI = Uri.create(uri);
+                URI realURI = URI.create(uri);
 				if (realURI.Absolute)
 				{
 					return realURI;
 				}
 				else
 				{
-					Uri baseURI = Uri.create(base_uri().StringValue);
+                    URI baseURI = URI.create(base_uri().StringValue);
 					return baseURI.resolve(uri);
 				}
 			}
@@ -254,7 +256,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		}
 
 		// XXX make it nice, and move it out as a utility function
-		private Document retrieve_doc(Uri uri)
+		private Document retrieve_doc(URI uri)
 		{
 			try
 			{
@@ -337,7 +339,12 @@ namespace org.eclipse.wst.xml.xpath2.processor
 			{
 				return ((string)o1).CompareTo((string)o2);
 			}
-		}
+
+            public int Compare(object x, object y)
+            {
+                throw new NotImplementedException();
+            }
+        }
 
 		/// <summary>
 		/// @since 1.1
