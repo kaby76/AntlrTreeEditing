@@ -120,27 +120,26 @@ namespace org.apache.xerces.dom
 
 namespace org.w3c.dom
 {
-    public class Node
+    public interface Node
     {
-        public static short TEXT_NODE;
-        public static short ELEMENT_NODE;
-
-        public short NodeType { get; internal set; }
+        short TEXT_NODE { get; set; }
+        short ELEMENT_NODE { get; set; }
+        short NodeType { get; set; }
+        string LocalName { get; set; }
     }
 
-    public class Document : Node
+    public interface Attr : Node
     {
-        public string DocumentURI;
     }
 
-    public class Attr { }
-
-    public class Element : Node
+    public interface Document : Node
     {
-        internal object getAttributeNS(string sCHEMA_INSTANCE, string nIL_ATTRIBUTE)
-        {
-            throw new NotImplementedException();
-        }
+        string DocumentURI { get; set; }
+    }
+
+    public interface Element : Node
+    {
+        object getAttributeNS(string sCHEMA_INSTANCE, string nIL_ATTRIBUTE);
     }
 
     interface NodeList { }
