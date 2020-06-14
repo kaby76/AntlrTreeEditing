@@ -110,7 +110,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 		/// <returns> the xpath expressions. </returns>
 		public virtual object visit(XPath xp)
 		{
-			ICollection exprs = new ArrayList();
+			var exprs = new ArrayList();
 
 			for (IEnumerator i = xp.GetEnumerator(); i.MoveNext();)
 			{
@@ -141,7 +141,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 		// takes the iterator for var expr paris
 		private void doForExpr(IEnumerator iter, Expr expr)
 		{
-			ICollection vars = new ArrayList();
+			var vars = new ArrayList();
 
 			// go through expression and cache variables
 			while (iter.MoveNext())
@@ -201,7 +201,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 				// ok we got nested fors...
 				if (depth > 0)
 				{
-					ICollection pairs = new ArrayList();
+					var pairs = new ArrayList();
 					pairs.Add(ve);
 
 					ForExpr fe = new ForExpr(pairs, ret);
@@ -243,7 +243,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 				// ok we got nested fors...
 				if (depth > 0)
 				{
-					ICollection pairs = new ArrayList();
+					var pairs = new ArrayList();
 					pairs.Add(ve);
 
 					QuantifiedExpr qe = new QuantifiedExpr(qex.type(), pairs, ret);
@@ -317,7 +317,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 				j++;
 			}
 
-			ICollection args = new ArrayList();
+			var args = new ArrayList();
 			args.Add(nor_arr[0]);
 			e.set_left(make_function(new QName("fn", "boolean", FnFunctionLibrary.XPATH_FUNCTIONS_NS), args));
 
@@ -386,7 +386,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 
 		private ICollection normalize_bin_args(BinExpr e)
 		{
-			ICollection args = new ArrayList();
+			var args = new ArrayList();
 
 			XPathNode left = (XPathNode) e.left().accept(this);
 			XPathNode right = (XPathNode) e.right().accept(this);
@@ -426,7 +426,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 
 		private XPathExpr make_convert_operand(XPathExpr arg1, XPathExpr arg2)
 		{
-			ICollection args = new ArrayList();
+			var args = new ArrayList();
 			args.Add(arg1);
 			args.Add(arg2);
 
@@ -454,7 +454,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 				j++;
 			}
 
-			ICollection argsfname = new ArrayList();
+			var argsfname = new ArrayList();
 			for (j = 0; j < 2; j++)
 			{
 				XPathExpr arg = make_convert_operand(args_arr[j], convarg);
@@ -645,7 +645,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 			XPathExpr self_node_xpath = new XPathExpr(0, self_node_expr);
 
 			// fn:root(self::node())
-			ICollection args = new ArrayList();
+			var args = new ArrayList();
 			args.Add(self_node_xpath);
 			XPathExpr xpe = make_function(new QName("fn", "root", FnFunctionLibrary.XPATH_FUNCTIONS_NS), args);
 

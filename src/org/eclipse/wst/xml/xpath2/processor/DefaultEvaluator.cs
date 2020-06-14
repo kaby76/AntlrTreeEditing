@@ -236,7 +236,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		/// <summary>
 		/// @since 2.0
 		/// </summary>
-		public DefaultEvaluator(api.StaticContext staticContext, org.eclipse.wst.xml.xpath2.api.DynamicContext dynamicContext, object[] contextItems) : this(staticContext, dynamicContext)
+		public DefaultEvaluator(api.StaticContext staticContext, api.DynamicContext dynamicContext, object[] contextItems) : this(staticContext, dynamicContext)
 		{
 
 			// initialize context item with root of document
@@ -253,7 +253,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 			_param = null;
 		}
 
-		private DefaultEvaluator(api.StaticContext staticContext, org.eclipse.wst.xml.xpath2.api.DynamicContext dynamicContext)
+		private DefaultEvaluator(api.StaticContext staticContext, api.DynamicContext dynamicContext)
 		{
 			_sc = staticContext;
 			_dc = dynamicContext;
@@ -278,7 +278,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 				}
 			}
 
-			public virtual AnyType ContextItem
+			public virtual Item ContextItem
 			{
 				get
 				{
@@ -445,7 +445,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		/// <returns> result sequence. </returns>
 		public virtual object visit(XPath xp)
 		{
-			ResultSequence rs = do_expr(xp.GetEnumerator());
+            api.ResultSequence rs = do_expr(xp.GetEnumerator());
 
 			return rs;
 		}
@@ -461,7 +461,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 				VarExprPair ve = (VarExprPair) iter.next();
 
 				// evaluate binding sequence
-				ResultSequence rs = (ResultSequence) ve.expr().accept(this);
+                api.ResultSequence rs = (api.ResultSequence) ve.expr().accept(this);
 
 				// XXX
 				if (rs.empty())
@@ -489,7 +489,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 			// we finally got to do the "last expression"
 			else
 			{
-				destination.concat((ResultSequence) finalexpr.accept(this));
+				destination.concat((api.ResultSequence) finalexpr.accept(this));
 			}
 		}
 
@@ -509,7 +509,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 				VarExprPair ve = (VarExprPair) iter.next();
 
 				// evaluate binding sequence
-				ResultSequence rs = (ResultSequence) ve.expr().accept(this);
+                api.ResultSequence rs = (api.ResultSequence) ve.expr().accept(this);
 
 				QName varname = ve.varname();
 
@@ -849,7 +849,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 			{
 				return ResultSequenceFactory.create_new();
 			}
-			ICollection args = new ArrayList();
+			var args = new ArrayList();
 			args.Add(one);
 			args.Add(two);
 
@@ -1003,7 +1003,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
             api.ResultSequence one = (api.ResultSequence) e.left().accept(this);
             api.ResultSequence two = (api.ResultSequence) e.right().accept(this);
 
-			ICollection args = new ArrayList();
+			var args = new ArrayList();
 			args.Add(one);
 			args.Add(two);
 
@@ -1224,7 +1224,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 			QName type = st.type();
 
 			// prepare args from function
-			ICollection args = new ArrayList();
+			var args = new ArrayList();
 			args.Add(ResultSequenceFactory.create_new(aat));
 
 			try
@@ -1258,7 +1258,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		{
             api.ResultSequence rs = (api.ResultSequence) e.arg().accept(this);
 
-			ICollection args = new ArrayList();
+			var args = new ArrayList();
 			args.Add(rs);
 
 			try
@@ -1282,7 +1282,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		{
             api.ResultSequence rs = (api.ResultSequence) e.arg().accept(this);
 
-			ICollection args = new ArrayList();
+			var args = new ArrayList();
 			args.Add(rs);
 
 			try

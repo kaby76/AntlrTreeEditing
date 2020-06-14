@@ -43,7 +43,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 	public class FnIndexOf : AbstractCollationEqualFunction
 	{
 
-		private static ICollection _expected_args = null;
+		private static ArrayList _expected_args = null;
 
 		/// <summary>
 		/// Constructor for FnIndexOf.

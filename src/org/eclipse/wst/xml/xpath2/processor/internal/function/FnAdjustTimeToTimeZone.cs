@@ -38,7 +38,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 	public class FnAdjustTimeToTimeZone : Function
 	{
 
-		private static ICollection _expected_args = null;
+		private static ArrayList _expected_args = null;
 		private static readonly XSDayTimeDuration minDuration = new XSDayTimeDuration(0, 14, 0, 0, true);
 		private static readonly XSDayTimeDuration maxDuration = new XSDayTimeDuration(0, 14, 0, 0, false);
 

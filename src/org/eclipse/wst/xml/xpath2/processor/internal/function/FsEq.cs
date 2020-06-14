@@ -244,7 +244,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 			ResultSequence one = ResultSequenceFactory.create_new(a);
 			ResultSequence two = ResultSequenceFactory.create_new(b);
 
-			ICollection args = new ArrayList();
+			var args = new ArrayList();
 			args.Add(one);
 			args.Add(two);
 

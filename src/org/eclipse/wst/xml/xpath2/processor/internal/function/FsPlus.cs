@@ -76,7 +76,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 //ORIGINAL LINE: private static java.util.Collection convert_args(java.util.Collection args) throws org.eclipse.wst.xml.xpath2.processor.DynamicError
 		private static ICollection convert_args(ICollection args)
 		{
-			ICollection result = new ArrayList();
+			var result = new ArrayList();
 
 			// Keep track of numeric types for promotion
 			bool has_float = false;
@@ -122,7 +122,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 
 			if (has_double || has_float)
 			{
-				ICollection result2 = new ArrayList();
+				var result2 = new ArrayList();
 
 				// promote arguments
 				for (IEnumerator i = result.GetEnumerator(); i.MoveNext();)

@@ -48,7 +48,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 	/// </summary>
 	public class FnNormalizeUnicode : Function
 	{
-		private static ICollection _expected_args = null;
+		private static ArrayList _expected_args = null;
 		private static W3CNormalizer normalizer = null;
 
 		/// <summary>

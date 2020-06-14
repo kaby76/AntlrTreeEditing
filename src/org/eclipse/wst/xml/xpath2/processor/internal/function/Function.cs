@@ -319,7 +319,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 //ORIGINAL LINE: public static java.util.Collection convert_arguments(java.util.Collection args, java.util.Collection expected) throws org.eclipse.wst.xml.xpath2.processor.DynamicError
 		public static ICollection convert_arguments(ICollection args, ICollection expected)
 		{
-			ICollection result = new ArrayList();
+			var result = new ArrayList();
 
 			Debug.Assert(args.Count <= expected.Count);
 

@@ -174,7 +174,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 		/// <returns> The expected arguments. </returns>
 		public static ICollection expected_args(ICollection actualArgs)
 		{
-			ICollection _expected_args = new ArrayList();
+			var _expected_args = new ArrayList();
 
 			_expected_args.Add(new SeqType(new XSString(), SeqType.OCC_QMARK));
 			_expected_args.Add(new SeqType(new XSDouble(), SeqType.OCC_NONE));

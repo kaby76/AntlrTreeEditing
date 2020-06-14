@@ -33,7 +33,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 	/// </summary>
 	public class FnEndsWith : Function
 	{
-		private static ICollection _expected_args = null;
+		private static ArrayList _expected_args = null;
 
 		/// <summary>
 		/// Constructor for FnEndsWith.

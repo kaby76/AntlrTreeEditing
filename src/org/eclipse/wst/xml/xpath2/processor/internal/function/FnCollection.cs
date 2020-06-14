@@ -61,7 +61,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 	/// </summary>
 	public class FnCollection : Function
 	{
-		private static ICollection _expected_args = null;
+		private static ArrayList _expected_args = null;
 
 		public const string DEFAULT_COLLECTION_URI = "http://www.w3.org/2005/xpath-functions/collection/default";
 

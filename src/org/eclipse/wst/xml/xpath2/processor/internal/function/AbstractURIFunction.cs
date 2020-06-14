@@ -33,7 +33,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 
 		private static readonly Charset UTF_8 = Charset.forName("UTF-8");
 
-		internal static ICollection _expected_args = null;
+		internal static ArrayList _expected_args = null;
 
 		protected internal static bool needs_escape(sbyte x, bool escape_delimiters, bool escape_space)
 		{
