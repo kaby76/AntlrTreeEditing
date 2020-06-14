@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using java.xml;
 
 /// <summary>
 ///*****************************************************************************
@@ -23,7 +24,6 @@ using System.Collections.Generic;
 
 namespace org.eclipse.wst.xml.xpath2.processor
 {
-
 
 	using Function = org.eclipse.wst.xml.xpath2.api.Function;
 	using XPath = org.eclipse.wst.xml.xpath2.processor.ast.XPath;

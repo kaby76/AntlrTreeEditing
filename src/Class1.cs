@@ -84,7 +84,13 @@ namespace javax.xml.datatype
 }
 namespace javax.xml.@namespace
 {
-    public class NamespaceContext { }
+    public class NamespaceContext
+    {
+        public string getNamespaceURI(string prefix)
+        {
+            throw new NotImplementedException();
+        }
+    }
 
     public class QName
     {

@@ -28,7 +28,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 	public class Engine : XPath2Engine
 	{
 
-		public virtual XPath2Expression parseExpression(string expression, StaticContext context)
+		public virtual XPath2Expression parseExpression(string expression, api.StaticContext context)
 		{
 
 			XPath xPath = (new JFlexCupParser()).parse(expression);
