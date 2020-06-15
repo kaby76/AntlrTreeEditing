@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 
 /// <summary>
 ///*****************************************************************************
@@ -31,7 +32,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		/// </summary>
 		/// <param name="name"> A URI designating the collation to use </param>
 		/// <returns> The collation to use, or null if no such collation exists by this provider </returns>
-		IComparer get_collation(string name);
+		IComparer<string> get_collation(string name);
 	}
 
 }

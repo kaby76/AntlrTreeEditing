@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using java.util;
+using org.eclipse.wst.xml.xpath2.processor;
+using org.w3c.dom;
 
 namespace java.net
 {
@@ -160,6 +163,35 @@ namespace javax.xml.@namespace
 
 }
 
+namespace javax.xml.parsers
+{
+    public abstract class DocumentBuilderFactor
+    {
+        public static DocumentBuilderFactor newInstance()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool NamespaceAware { get; set; }
+        public bool Validating { get; set; }
+
+        public DocumentBuilder newDocumentBuilder()
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public abstract class DocumentBuilder
+    {
+        public DOMBuilder.ErrorHandlerAnonymousInnerClass ErrorHandler { get; set; }
+
+        public Document parse(Stream @in)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}
+
 namespace org.apache.xerces.xs
 {
     public interface XSModel
@@ -208,14 +240,26 @@ namespace org.w3c.dom
     public interface Element : Node
     {
         object getAttributeNS(string sCHEMA_INSTANCE, string nIL_ATTRIBUTE);
+        NamedNodeMap Attributes { get; set; }
     }
 
-    interface NodeList { }
+    public interface NamedNodeMap
+    {
+        int Length { get; set; }
+        Attr item(int i);
+    }
+    public interface NodeList { }
 
-    interface Text { }
+    public interface Text { }
 
-    interface TypeInfo { }
+    public interface TypeInfo { }
 
 }
 
+namespace org.xml.sax
+{
+    public class SAXParseException : SAXException { }
+    public class SAXException : Exception { }
 
+    public class ParserConfigurationException : Exception { }
+}

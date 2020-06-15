@@ -14,11 +14,18 @@
 /// ******************************************************************************
 /// </summary>
 
+using System.IO;
+using javax.xml.parsers;
+
 namespace org.eclipse.wst.xml.xpath2.processor
 {
 
 	using org.w3c.dom;
-	using org.xml.sax;
+    using SAXParseException = org.xml.sax.SAXParseException;
+    using SAXException = org.xml.sax.SAXException;
+	using ParserConfigurationException = org.xml.sax.ParserConfigurationException;
+	using DocumentBuilderFactory = javax.xml.parsers.DocumentBuilderFactor;
+	using DocumentBuilder = javax.xml.parsers.DocumentBuilder;
 
 	/// <summary>
 	/// The DOM builder loads an DOM from an InputStream. The loading is always namespace aware.
@@ -78,7 +85,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 			}
 		}
 
-		private class ErrorHandlerAnonymousInnerClass : ErrorHandler
+        public class ErrorHandlerAnonymousInnerClass : ErrorHandler
 		{
 			private readonly DOMBuilder outerInstance;
 

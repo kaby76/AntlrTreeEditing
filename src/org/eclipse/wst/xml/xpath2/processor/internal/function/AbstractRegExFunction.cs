@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 
 /// <summary>
 ///*****************************************************************************
@@ -40,7 +41,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 			{
 				pattern = pattern.replaceAll("\\-\\[", "&&[^");
 			}
-			Matcher m = compileAndExecute(pattern, flags, src);
+			var m = compileAndExecute(pattern, flags, src);
 			while (m.find())
 			{
 				fnd = true;
@@ -48,15 +49,15 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 			return fnd;
 		}
 
-		protected internal static Matcher regex(string pattern, string flags, string src)
+		protected internal static MatchCollection regex(string pattern, string flags, string src)
 		{
-			Matcher matcher = compileAndExecute(pattern, flags, src);
+            var matcher = compileAndExecute(pattern, flags, src);
 			return matcher;
 		}
 
-		private static Matcher compileAndExecute(string pattern, string flags, string src)
+		private static MatchCollection compileAndExecute(string pattern, string flags, string src)
 		{
-			int flag = Pattern.UNIX_LINES;
+			RegexOptions flag = Pattern.UNIX_LINES;
 			if (!string.ReferenceEquals(flags, null))
 			{
 				if (flags.IndexOf("m", StringComparison.Ordinal) >= 0)
@@ -78,9 +79,10 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 				}
 			}
 
-			Pattern p = Pattern.compile(pattern, flag);
-			return p.matcher(src);
-		}
+            Regex p = new Regex(pattern, flag);
+            MatchCollection matches = p.Matches(src);
+            return matches;
+        }
 
 	}
 

@@ -26,6 +26,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using java.net;
@@ -353,7 +354,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		/// @since 1.1
 		/// 
 		/// </summary>
-		public virtual IComparer get_collation(string uri)
+		public virtual IComparer<string> get_collation(string uri)
 		{
 			if (DynamicContext_Fields.CODEPOINT_COLLATION.Equals(uri))
 			{

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Text;
-
+﻿
 /// <summary>
 ///*****************************************************************************
 /// Copyright (c) 2005, 2011 Andrea Bittau, University College London, and others
@@ -20,9 +18,15 @@ using System.Text;
 /// ******************************************************************************
 /// </summary>
 
+
+using System;
+using System.Text;
+
 namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 {
-
+	using Calendar = java.util.Calendar;
+	using GregorianCalendar = java.util.GregorianCalendar;
+	using TimeZone = java.util.TimeZone;
 
 	using DynamicContext = org.eclipse.wst.xml.xpath2.api.DynamicContext;
 	using ResultBuffer = org.eclipse.wst.xml.xpath2.api.ResultBuffer;
@@ -38,7 +42,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 	{
 
 		private const string XS_G_DAY = "xs:gDay";
-		private DateTime _calendar;
+		private Calendar _calendar;
 		private bool _timezoned;
 		private XSDuration _tz;
 
@@ -49,7 +53,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		///            Calendar representation of the day to be stored </param>
 		/// <param name="tz">
 		///            Timezone associated with this day </param>
-		public XSGDay(DateTime cal, XSDuration tz)
+		public XSGDay(Calendar cal, XSDuration tz)
 		{
 			_calendar = cal;
 			if (tz != null)
@@ -114,7 +118,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 				}
 
 				string[] split = str.Split("-", true);
-				startdate += split[3].replaceAll("Z", "");
+				startdate += split[3].Replace("Z", "");
 
 				if (str.IndexOf('T') != -1)
 				{
@@ -258,7 +262,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		/// <returns> The actual day as an integer </returns>
 		public virtual int day()
 		{
-			return _calendar.Day;
+			return _calendar.get(Calendar.DAY_OF_MONTH);
 		}
 
 		/// <summary>
@@ -280,10 +284,10 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 			{
 				string ret = "---";
     
-				DateTime adjustFortimezone = calendar();
+				Calendar adjustFortimezone = calendar();
     
-				ret += XSDateTime.pad_int(adjustFortimezone.Day, 2);
-    
+				ret += XSDateTime.pad_int(adjustFortimezone.get(Calendar.DAY_OF_MONTH), 2);
+
 				if (timezoned())
 				{
 					int hrs = tz().hours();
@@ -329,7 +333,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		/// Retrieves the Calendar representation of the day stored
 		/// </summary>
 		/// <returns> Calendar representation of the day stored </returns>
-		public override DateTime calendar()
+		public override Calendar calendar()
 		{
 			return _calendar;
 		}
@@ -348,8 +352,8 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		public virtual bool eq(AnyType arg, DynamicContext dynamicContext)
 		{
 			XSGDay val = (XSGDay) NumericType.get_single_type(arg, typeof(XSGDay));
-			DateTime thiscal = normalizeCalendar(calendar(), tz());
-			DateTime thatcal = normalizeCalendar(val.calendar(), val.tz());
+			Calendar thiscal = normalizeCalendar(calendar(), tz());
+            Calendar thatcal = normalizeCalendar(val.calendar(), val.tz());
 
 			return thiscal.Equals(thatcal);
 		}
