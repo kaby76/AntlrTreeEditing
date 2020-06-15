@@ -86,7 +86,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 
 			try
 			{
-				System.Numerics.BigInteger bigInt = new System.Numerics.BigInteger(aat.StringValue);
+				System.Numerics.BigInteger.TryParse(aat.StringValue, out System.Numerics.BigInteger bigInt);
 
 				// doing the range checking
 				System.Numerics.BigInteger min = new System.Numerics.BigInteger(-128L);
