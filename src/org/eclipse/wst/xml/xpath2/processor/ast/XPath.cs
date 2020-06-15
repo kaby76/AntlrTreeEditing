@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using javax.xml.@namespace;
 
 /// <summary>
 ///*****************************************************************************
@@ -20,10 +21,8 @@ using System.Collections.Generic;
 
 namespace org.eclipse.wst.xml.xpath2.processor.ast
 {
-	using org.eclipse.wst.xml.xpath2.processor.@internal.types;
-	using org.eclipse.wst.xml.xpath2.api;
-
-	using DynamicContext = org.eclipse.wst.xml.xpath2.api.DynamicContext;
+	using QName = javax.xml.@namespace.QName;
+    using DynamicContext = org.eclipse.wst.xml.xpath2.api.DynamicContext;
 	using ResultSequence = org.eclipse.wst.xml.xpath2.api.ResultSequence;
 	using StaticContext = org.eclipse.wst.xml.xpath2.api.StaticContext;
 	using XPath2Expression = org.eclipse.wst.xml.xpath2.api.XPath2Expression;

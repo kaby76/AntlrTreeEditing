@@ -17,8 +17,7 @@
 
 namespace org.eclipse.wst.xml.xpath2.api
 {
-
-	using QName = org.eclipse.wst.xml.xpath2.processor.@internal.types.QName;
+    using QName = javax.xml.@namespace.QName;
 
 	/// <summary>
 	/// This interface represents a parsed and statically bound XPath2 expression.

@@ -1,6 +1,4 @@
-﻿using System;
-
-/// <summary>
+﻿/// <summary>
 ///*****************************************************************************
 /// Copyright (c) 2005, 2011 Andrea Bittau, University College London, and others
 /// All rights reserved. This program and the accompanying materials
@@ -18,9 +16,13 @@
 /// ******************************************************************************
 /// </summary>
 
+using java.util;
+
 namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 {
-
+	using Calendar = java.util.Calendar;
+	using GregorianCalendar = java.util.GregorianCalendar;
+	using TimeZone = java.util.TimeZone;
 
 	using DynamicContext = org.eclipse.wst.xml.xpath2.api.DynamicContext;
 	using ResultBuffer = org.eclipse.wst.xml.xpath2.api.ResultBuffer;
@@ -36,7 +38,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 	{
 
 		private const string XS_G_YEAR = "xs:gYear";
-		private DateTime _calendar;
+		private Calendar _calendar;
 		private bool _timezoned;
 		private XSDuration _tz;
 
@@ -48,7 +50,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		///            Calendar representation of the month to be stored </param>
 		/// <param name="tz">
 		///            Timezone associated with this month </param>
-		public XSGYear(DateTime cal, XSDuration tz)
+		public XSGYear(Calendar cal, XSDuration tz)
 		{
 			_calendar = cal;
 			if (tz != null)
@@ -216,8 +218,8 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		/// <returns> The actual year as an integer </returns>
 		public virtual int year()
 		{
-			int y = _calendar.Year;
-			if (_calendar.get(DateTime.ERA) == GregorianCalendar.BC)
+			int y = _calendar.get(Calendar.YEAR);
+			if (_calendar.get(Calendar.ERA) == GregorianCalendar.BC)
 			{
 				y *= -1;
 			}
@@ -292,7 +294,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		/// Retrieves the Calendar representation of the year stored
 		/// </summary>
 		/// <returns> Calendar representation of the year stored </returns>
-		public override DateTime calendar()
+		public override Calendar calendar()
 		{
 			return _calendar;
 		}
@@ -311,8 +313,8 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		public virtual bool eq(AnyType arg, DynamicContext dynamicContext)
 		{
 			XSGYear val = (XSGYear) NumericType.get_single_type(arg, typeof(XSGYear));
-			DateTime thiscal = normalizeCalendar(calendar(), tz());
-			DateTime thatcal = normalizeCalendar(val.calendar(), val.tz());
+            Calendar thiscal = normalizeCalendar(calendar(), tz());
+            Calendar thatcal = normalizeCalendar(val.calendar(), val.tz());
 
 			return thiscal.Equals(thatcal);
 		}

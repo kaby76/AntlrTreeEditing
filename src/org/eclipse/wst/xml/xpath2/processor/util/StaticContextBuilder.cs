@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using org.eclipse.wst.xml.xpath2.processor.@internal.types;
+using java.net;
+using java.xml;
+using javax.xml.@namespace;
 
 /// <summary>
 ///*****************************************************************************
@@ -21,10 +23,10 @@ using org.eclipse.wst.xml.xpath2.processor.@internal.types;
 
 namespace org.eclipse.wst.xml.xpath2.processor.util
 {
-	using System;
-
-	using javax.xml.@namespace;
-
+	using URI = java.net.URI;
+	using XMLConstants = java.xml.XMLConstants;
+	using NamespaceContext = javax.xml.@namespace.NamespaceContext;
+	using QName = javax.xml.@namespace.QName;
 	using CollationProvider = org.eclipse.wst.xml.xpath2.api.CollationProvider;
 	using Function = org.eclipse.wst.xml.xpath2.api.Function;
 	using FunctionLibrary = org.eclipse.wst.xml.xpath2.api.FunctionLibrary;
@@ -73,12 +75,12 @@ namespace org.eclipse.wst.xml.xpath2.processor.util
 		private IDictionary _namespaces = new Hashtable();
 		private IDictionary<string, FunctionLibrary> _functionLibraries = new Dictionary<string, FunctionLibrary>();
 
-		private Uri _base_uri;
+		private URI _base_uri;
 		private IDictionary _variableTypes = new Hashtable();
 		private IDictionary _variableCardinality = new Hashtable();
 		private IDictionary _collectionTypes = new Hashtable();
 
-		private ISet _hiddenFunctions = new HashSet();
+		private HashSet<QName> _hiddenFunctions = new HashSet<QName>();
 
 		private TypeModel _typeModel;
 
@@ -110,8 +112,8 @@ namespace org.eclipse.wst.xml.xpath2.processor.util
 
 			public virtual IEnumerator getPrefixes(string ns)
 			{
-				IList prefixes = new LinkedList();
-				for (IEnumerator it = outerInstance._namespaces.SetOfKeyValuePairs().GetEnumerator(); it.MoveNext();)
+				var prefixes = new List();
+				for (IEnumerator it = outerInstance._namespaces.GetEnumerator(); it.MoveNext();)
 				{
 					DictionaryEntry entry = (DictionaryEntry)it.Current;
 
@@ -125,7 +127,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.util
 
 			public virtual string getPrefix(string ns)
 			{
-				for (IEnumerator it = outerInstance._namespaces.SetOfKeyValuePairs().GetEnumerator(); it.MoveNext();)
+				for (IEnumerator it = outerInstance._namespaces.GetEnumerator(); it.MoveNext();)
 				{
 					DictionaryEntry entry = (DictionaryEntry)it.Current;
 					if (entry.Value.Equals(ns))
@@ -221,7 +223,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.util
 			return null;
 		}
 
-		public virtual Uri BaseUri
+		public virtual URI BaseUri
 		{
 			get
 			{
@@ -392,7 +394,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.util
 //ORIGINAL LINE: public StaticContextBuilder withBaseUri(String string) throws java.net.URISyntaxException
 		public virtual StaticContextBuilder withBaseUri(string @string)
 		{
-			_base_uri = new Uri(@string);
+			_base_uri = new URI(@string);
 			return this;
 		}
 
@@ -408,7 +410,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.util
 			return this;
 		}
 
-		public virtual ItemType getDocumentType(Uri documentUri)
+		public virtual ItemType getDocumentType(URI documentUri)
 		{
 			return null;
 		}

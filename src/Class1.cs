@@ -1,11 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using java.util;
 
 namespace java.net
 {
     public class URI
     {
+        private string @string;
+
+        public URI(string @string)
+        {
+            this.@string = @string;
+        }
+
         public static URI create(string uri)
         {
             throw new NotImplementedException();
@@ -34,14 +42,22 @@ namespace java.util
 {
     public class GregorianCalendar : Calendar
     {
+        public static int BC;
+
         public GregorianCalendar(object getTimeZone)
         {
             throw new NotImplementedException();
         }
     }
 
-    public class Calendar
+    public abstract class Calendar
     {
+        public static int YEAR { get; internal set; }
+        public static int ERA { get; set; }
+        public static int MONTH { get; set; }
+        public static int DAY_OF_MONTH { get; set; }
+        public static int MILLISECOND { get; set; }
+
         public Calendar clone()
         {
             throw new NotImplementedException();
@@ -53,6 +69,21 @@ namespace java.util
         }
 
         public void AddMinutes(int minutes)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int get(int year)
+        {
+            throw new NotImplementedException();
+        }
+
+        public long getTimeInMillis()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void add(int month, int monthValue)
         {
             throw new NotImplementedException();
         }
@@ -78,9 +109,26 @@ namespace java.xml
 
 namespace javax.xml.datatype
 {
-    public class Duration { }
+    public class Duration
+    {
+        public Duration negate()
+        {
+            throw new NotImplementedException();
+        }
+    }
 
-    public class XMLGregorianCalendar { }
+    public class XMLGregorianCalendar
+    {
+        public void add(Duration negate)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Calendar toGregorianCalendar()
+        {
+            throw new NotImplementedException();
+        }
+    }
 }
 namespace javax.xml.@namespace
 {

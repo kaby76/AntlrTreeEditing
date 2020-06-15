@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using java.time;
 
 /// <summary>
 ///*****************************************************************************
@@ -26,9 +27,13 @@ using System.Diagnostics;
 namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 {
 
+    using Calendar = java.util.Calendar;
+    using GregorianCalendar = java.util.GregorianCalendar;
+    using TimeZone = java.util.TimeZone;
+	using Duration = javax.xml.datatype.Duration;
+    using XMLGregorianCalendar = javax.xml.datatype.XMLGregorianCalendar;
 
-
-	using DynamicContext = org.eclipse.wst.xml.xpath2.api.DynamicContext;
+    using DynamicContext = org.eclipse.wst.xml.xpath2.api.DynamicContext;
 	using Item = org.eclipse.wst.xml.xpath2.api.Item;
 	using ResultBuffer = org.eclipse.wst.xml.xpath2.api.ResultBuffer;
 	using ResultSequence = org.eclipse.wst.xml.xpath2.api.ResultSequence;
@@ -46,7 +51,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 	public class XSDate : CalendarType, CmpEq, CmpLt, CmpGt, MathMinus, MathPlus, ICloneable
 	{
 		private const string XS_DATE = "xs:date";
-		private DateTime _calendar;
+        private Calendar _calendar;
 		private bool _timezoned;
 		private XSDuration _tz;
 
@@ -57,7 +62,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		///            The Calendar representation of the date to be stored </param>
 		/// <param name="tz">
 		///            The time zone of the date to be stored. </param>
-		public XSDate(DateTime cal, XSDuration tz)
+		public XSDate(Calendar cal, XSDuration tz)
 		{
 			_calendar = cal;
 
@@ -96,7 +101,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 //ORIGINAL LINE: public Object clone() throws CloneNotSupportedException
 		public virtual object clone()
 		{
-			DateTime c = (DateTime) calendar().clone();
+            Calendar c = (Calendar) calendar().clone();
 			XSDuration t = tz();
 
 			if (t != null)
@@ -247,8 +252,8 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		/// <returns> the year value of the date stored </returns>
 		public virtual int year()
 		{
-			int y = _calendar.Year;
-			if (_calendar.get(DateTime.ERA) == GregorianCalendar.BC)
+			int y = _calendar.get(Calendar.YEAR);
+			if (_calendar.get(Calendar.ERA) == GregorianCalendar.BC)
 			{
 				y *= -1;
 			}
@@ -262,7 +267,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		/// <returns> the month value of the date stored </returns>
 		public virtual int month()
 		{
-			return _calendar.Month + 1;
+			return _calendar.get(Calendar.MONTH) + 1;
 		}
 
 		/// <summary>
@@ -271,7 +276,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		/// <returns> the day value of the date stored </returns>
 		public virtual int day()
 		{
-			return _calendar.Day;
+			return _calendar.get(Calendar.DAY_OF_MONTH);
 		}
 
 		/// <summary>
@@ -294,21 +299,22 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 			{
 				string ret = "";
     
-				DateTime adjustFortimezone = calendar();
+				Calendar adjustFortimezone = calendar();
     
-				if (adjustFortimezone.get(DateTime.ERA) == GregorianCalendar.BC)
+				if (adjustFortimezone.get(Calendar.ERA) == GregorianCalendar.BC)
 				{
 					ret += "-";
 				}
     
-				ret += XSDateTime.pad_int(adjustFortimezone.Year, 4);
-    
+				ret += XSDateTime.pad_int(adjustFortimezone.get(Calendar.YEAR), 4);
+
+                ret += "-";
+                ret += XSDateTime.pad_int(month(), 2);
+
 				ret += "-";
-				ret += XSDateTime.pad_int(month(), 2);
-    
-				ret += "-";
-				ret += XSDateTime.pad_int(adjustFortimezone.Day, 2);
-    
+                ret += XSDateTime.pad_int(adjustFortimezone.get(Calendar.DAY_OF_MONTH),
+                    2);
+
 				if (timezoned())
 				{
 					int hrs = _tz.hours();
@@ -354,7 +360,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		/// Retrieves the Calendar representation of the date stored
 		/// </summary>
 		/// <returns> Calendar representation of the date stored </returns>
-		public override DateTime calendar()
+		public override Calendar calendar()
 		{
 			return _calendar;
 		}
@@ -383,8 +389,8 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		public virtual bool eq(AnyType arg, DynamicContext dynamicContext)
 		{
 			XSDate val = (XSDate) NumericType.get_single_type((Item)arg, typeof(XSDate));
-			DateTime thiscal = normalizeCalendar(calendar(), tz());
-			DateTime thatcal = normalizeCalendar(val.calendar(), val.tz());
+			Calendar thiscal = normalizeCalendar(calendar(), tz());
+            Calendar thatcal = normalizeCalendar(val.calendar(), val.tz());
 
 			return thiscal.Equals(thatcal);
 		}
@@ -402,8 +408,8 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		public virtual bool lt(AnyType arg, DynamicContext context)
 		{
 			XSDate val = (XSDate) NumericType.get_single_type((Item)arg, typeof(XSDate));
-			DateTime thiscal = normalizeCalendar(calendar(), tz());
-			DateTime thatcal = normalizeCalendar(val.calendar(), val.tz());
+            Calendar thiscal = normalizeCalendar(calendar(), tz());
+            Calendar thatcal = normalizeCalendar(val.calendar(), val.tz());
 
 			return thiscal < thatcal;
 		}
@@ -421,8 +427,8 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		public virtual bool gt(AnyType arg, DynamicContext context)
 		{
 			XSDate val = (XSDate) NumericType.get_single_type((Item)arg, typeof(XSDate));
-			DateTime thiscal = normalizeCalendar(calendar(), tz());
-			DateTime thatcal = normalizeCalendar(val.calendar(), val.tz());
+            Calendar thiscal = normalizeCalendar(calendar(), tz());
+            Calendar thatcal = normalizeCalendar(val.calendar(), val.tz());
 
 			return thiscal > thatcal;
 		}
@@ -435,7 +441,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		/// <returns> Number of milliseconds since the begining of the epoch </returns>
 		public virtual double value()
 		{
-			return calendar().Ticks / 1000.0;
+			return calendar().getTimeInMillis() / 1000.0;
 		}
 
 		// math
@@ -494,7 +500,9 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 			try
 			{
 				XSDate res = (XSDate) clone();
-				XMLGregorianCalendar xmlCal = _datatypeFactory.newXMLGregorianCalendar((GregorianCalendar) calendar());
+				XMLGregorianCalendar xmlCal = _datatypeFactory
+                    .newXMLGregorianCalendar(
+                        (GregorianCalendar) calendar());
 				Duration dtduration = _datatypeFactory.newDuration(val.StringValue);
 				xmlCal.add(dtduration.negate());
 				res = new XSDate(xmlCal.toGregorianCalendar(), res.tz());
@@ -513,7 +521,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 			{
 				XSDate res = (XSDate) clone();
 
-				res.calendar().AddMonths(val.monthValue() * -1);
+                res.calendar().add(Calendar.MONTH, val.monthValue() * -1);
 				return ResultSequenceFactory.create_new(res);
 			}
 			catch (CloneNotSupportedException)
@@ -529,9 +537,10 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		{
 			XSDate val = (XSDate) NumericType.get_single_type(arg, typeof(XSDate));
 			Duration dtduration = null;
-			DateTime thisCal = normalizeCalendar(calendar(), tz());
-			DateTime thatCal = normalizeCalendar(val.calendar(), val.tz());
-			long duration = thisCal.Ticks - thatCal.Ticks;
+			Calendar thisCal = normalizeCalendar(calendar(), tz());
+            Calendar thatCal = normalizeCalendar(val.calendar(), val.tz());
+            long duration = thisCal.getTimeInMillis()
+                            - thatCal.getTimeInMillis();
 			dtduration = _datatypeFactory.newDuration(duration);
 			return ResultSequenceFactory.create_new(XSDayTimeDuration.parseDTDuration(dtduration.ToString()));
 		}
@@ -567,7 +576,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 
 					XSDate res = (XSDate) clone();
 
-					res.calendar().AddMonths(val.monthValue());
+                    res.calendar().add(Calendar.MONTH, val.monthValue());
 					return ResultSequenceFactory.create_new(res);
 				}
 				else if (at is XSDayTimeDuration)
@@ -582,10 +591,11 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 					{
 						days *= -1;
 					}
-					res.calendar().AddDays(days);
+                    res.calendar().add(Calendar.DAY_OF_MONTH, days);
 
-					res.calendar().AddMilliseconds((int)(val.time_value() * 1000.0));
-					return ResultSequenceFactory.create_new(res);
+                    res.calendar().add(Calendar.MILLISECOND,
+                        (int)(val.time_value() * 1000.0));
+                    return ResultSequenceFactory.create_new(res);
 				}
 				else
 				{
