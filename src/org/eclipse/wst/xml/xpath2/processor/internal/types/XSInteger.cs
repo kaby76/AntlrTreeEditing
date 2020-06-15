@@ -99,7 +99,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 			}
 		}
 
-		public override Number NativeValue
+		public override object NativeValue
 		{
 			get
 			{

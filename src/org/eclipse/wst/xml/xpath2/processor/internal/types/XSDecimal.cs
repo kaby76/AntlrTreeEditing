@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Numerics;
 
 /// <summary>
 ///*****************************************************************************
@@ -66,7 +67,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		public XSDecimal(string x)
 		{
 			//_value = new BigDecimal(x, MathContext.DECIMAL128);
-			_value = new decimal(x);
+            decimal.TryParse(x, out _value);
 		}
 
 		/// <summary>
@@ -209,12 +210,14 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 			if (aat is XSBoolean)
 			{
 				if (aat.StringValue.Equals("true"))
-				{
-					return new XSDecimal(new decimal("1"));
+                {
+                    decimal.TryParse("1", out decimal v);
+					return new XSDecimal(v);
 				}
 				else
 				{
-					return new XSDecimal(new decimal("0"));
+                    decimal.TryParse("0", out decimal v);
+                    return new XSDecimal(v);
 				}
 			}
 			return new XSDecimal(aat.StringValue);
@@ -227,7 +230,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		/// @deprecated Use getValue() instead. 
 		public virtual double double_value()
 		{
-			return _value.doubleValue();
+			return (double) _value;
 		}
 
 		public virtual decimal Value
@@ -460,8 +463,8 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 			{
 				throw DynamicError.div_zero(null);
 			}
-			System.Numerics.BigInteger _ivalue = _value.toBigInteger();
-			System.Numerics.BigInteger ival = val.Value.toBigInteger();
+			System.Numerics.BigInteger _ivalue = new BigInteger(_value);
+			System.Numerics.BigInteger ival = new BigInteger(val.Value);
 			System.Numerics.BigInteger result = _ivalue / ival;
 			return ResultSequenceFactory.create_new(new XSInteger(result));
 		}
@@ -579,7 +582,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 			}
 		}
 
-		public override Number NativeValue
+		public override object NativeValue
 		{
 			get
 			{
