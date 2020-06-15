@@ -417,7 +417,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 				throw DynamicError.div_zero(null);
 			}
 
-			decimal result = decimal.valueOf((new float?((float_value() / val.float_value()))).longValue());
+			decimal result = new decimal((new float?((float_value() / val.float_value()))).longValue());
 			return ResultSequenceFactory.create_new(new XSInteger(result.toBigInteger()));
 		}
 

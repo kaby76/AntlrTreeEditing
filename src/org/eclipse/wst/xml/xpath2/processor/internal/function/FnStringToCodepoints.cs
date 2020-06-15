@@ -89,7 +89,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 			ResultBuffer rs = new ResultBuffer();
 			for (int codePoint = cpi.current(); codePoint != org.eclipse.wst.xml.xpath2.processor.@internal.utils.CodePointIterator_Fields.DONE; codePoint = cpi.next())
 			{
-				   rs.add(new XSInteger(System.Numerics.BigInteger.valueOf(codePoint)));
+				   rs.add(new XSInteger(new System.Numerics.BigInteger(codePoint)));
 			}
 			return rs.Sequence;
 		}

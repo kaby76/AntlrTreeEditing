@@ -2362,7 +2362,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 				{
 					try
 					{
-						return FsEq.fs_eq_fast(at, new XSInteger(System.Numerics.BigInteger.valueOf(focus().position())), _dc);
+						return FsEq.fs_eq_fast(at, new XSInteger(new System.Numerics.BigInteger(focus().position())), _dc);
 					}
 					catch (DynamicError err)
 					{

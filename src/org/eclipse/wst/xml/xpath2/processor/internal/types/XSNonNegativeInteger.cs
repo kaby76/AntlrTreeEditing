@@ -33,7 +33,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		/// <summary>
 		/// Initializes a representation of 0
 		/// </summary>
-		public XSNonNegativeInteger() : this(System.Numerics.BigInteger.valueOf(0))
+		public XSNonNegativeInteger() : this(new System.Numerics.BigInteger(0))
 		{
 		}
 
@@ -92,7 +92,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 				// doing the range checking
 				// min value is, 0
 				// max value is INF
-				System.Numerics.BigInteger min = System.Numerics.BigInteger.valueOf(0L);
+				System.Numerics.BigInteger min = new System.Numerics.BigInteger(0L);
 
 				if (bigInt.CompareTo(min) < 0)
 				{

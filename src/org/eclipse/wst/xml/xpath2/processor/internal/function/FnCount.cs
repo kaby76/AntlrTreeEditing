@@ -73,7 +73,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 //JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
 			ResultSequence arg = (ResultSequence) citer.next();
 
-			return ResultSequenceFactory.create_new(new XSInteger(System.Numerics.BigInteger.valueOf(arg.size())));
+			return ResultSequenceFactory.create_new(new XSInteger(new System.Numerics.BigInteger(arg.size())));
 		}
 	}
 

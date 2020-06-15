@@ -97,7 +97,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 			// inclusive first and last
 			if (one == two)
 			{
-				return new XSInteger(System.Numerics.BigInteger.valueOf(one));
+				return new XSInteger(new System.Numerics.BigInteger(one));
 			}
 			/*
 			 * for(one++; one <= two; one++) { rs.add(new XSInteger(one)); }

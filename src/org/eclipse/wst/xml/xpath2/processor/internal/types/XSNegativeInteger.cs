@@ -33,7 +33,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		/// <summary>
 		/// Initializes a representation of -1
 		/// </summary>
-		public XSNegativeInteger() : this(System.Numerics.BigInteger.valueOf(-1))
+		public XSNegativeInteger() : this(new System.Numerics.BigInteger(-1))
 		{
 		}
 
@@ -92,7 +92,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 				// doing the range checking
 				// min value is, -INF
 				// max value is -1
-				System.Numerics.BigInteger max = System.Numerics.BigInteger.valueOf(-1L);
+				System.Numerics.BigInteger max = new System.Numerics.BigInteger(-1L);
 
 				if (bigInt.CompareTo(max) > 0)
 				{

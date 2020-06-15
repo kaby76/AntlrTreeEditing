@@ -414,7 +414,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 
 		private XPathExpr make_int_lit(int i)
 		{
-			IntegerLiteral il = new IntegerLiteral(System.Numerics.BigInteger.valueOf(i));
+			IntegerLiteral il = new IntegerLiteral(new System.Numerics.BigInteger(i));
 			return make_xpathexpr(il);
 		}
 

@@ -33,7 +33,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		/// <summary>
 		/// Initializes a representation of 0
 		/// </summary>
-		public XSUnsignedLong() : this(System.Numerics.BigInteger.valueOf(0))
+		public XSUnsignedLong() : this(new System.Numerics.BigInteger(0))
 		{
 		}
 
@@ -92,8 +92,8 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 				// doing the range checking
 				// min value is 0
 				// max value is 18446744073709551615
-				System.Numerics.BigInteger min = System.Numerics.BigInteger.valueOf(0);
-				System.Numerics.BigInteger max = System.Numerics.BigInteger.Parse("18446744073709551615");
+				System.Numerics.BigInteger min = new System.Numerics.BigInteger(0);
+                System.Numerics.BigInteger.TryParse("18446744073709551615", out System.Numerics.BigInteger max);
 
 				if (bigInt.CompareTo(min) < 0 || bigInt.CompareTo(max) > 0)
 				{

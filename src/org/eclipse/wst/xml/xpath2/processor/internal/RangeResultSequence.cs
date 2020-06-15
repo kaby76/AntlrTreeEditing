@@ -91,7 +91,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 
 				for (; _start <= _end; _start++)
 				{
-					newtail.add(new XSInteger(System.Numerics.BigInteger.valueOf(_start)));
+					newtail.add(new XSInteger(new System.Numerics.BigInteger(_start)));
 				}
 
 				newtail.concat(_tail);
@@ -112,7 +112,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 		{
 			if (i < _size)
 			{
-				return new XSInteger(System.Numerics.BigInteger.valueOf(_start + i));
+				return new XSInteger(new System.Numerics.BigInteger(_start + i));
 			}
 			else
 			{

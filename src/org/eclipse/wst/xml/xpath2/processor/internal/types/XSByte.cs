@@ -32,7 +32,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		/// <summary>
 		/// Initializes a representation of 0
 		/// </summary>
-		public XSByte() : this(System.Numerics.BigInteger.valueOf(0))
+		public XSByte() : this(new System.Numerics.BigInteger(0))
 		{
 		}
 
@@ -89,8 +89,8 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 				System.Numerics.BigInteger bigInt = new System.Numerics.BigInteger(aat.StringValue);
 
 				// doing the range checking
-				System.Numerics.BigInteger min = System.Numerics.BigInteger.valueOf(-128L);
-				System.Numerics.BigInteger max = System.Numerics.BigInteger.valueOf(127L);
+				System.Numerics.BigInteger min = new System.Numerics.BigInteger(-128L);
+				System.Numerics.BigInteger max = new System.Numerics.BigInteger(127L);
 
 				if (bigInt.CompareTo(min) < 0 || bigInt.CompareTo(max) > 0)
 				{

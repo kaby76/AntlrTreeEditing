@@ -120,7 +120,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 				DynamicError.throw_type_error();
 			}
 
-			return ((MathDiv)total).div(ResultSequenceFactory.create_new(new XSInteger(System.Numerics.BigInteger.valueOf(elems))));
+			return ((MathDiv)total).div(ResultSequenceFactory.create_new(new XSInteger(new System.Numerics.BigInteger(elems))));
 		}
 
 		public override TypeDefinition ResultType

@@ -49,7 +49,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		/// <summary>
 		/// Initiates a representation of 0.0
 		/// </summary>
-		public XSDecimal() : this(decimal.valueOf(0))
+		public XSDecimal() : this(decimal.Zero)
 		{
 		}
 

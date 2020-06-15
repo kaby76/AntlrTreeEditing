@@ -109,7 +109,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 			{
 				str = ((XSString) arg1.first()).value();
 			}
-			return new XSInteger(System.Numerics.BigInteger.valueOf(UTF16.countCodePoint(str)));
+			return new XSInteger(new System.Numerics.BigInteger(UTF16.countCodePoint(str)));
 		}
 
 		/// <summary>

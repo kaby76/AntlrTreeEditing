@@ -80,7 +80,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 
 			Debug.Assert(last != 0);
 
-			return ResultSequenceFactory.create_new(new XSInteger(System.Numerics.BigInteger.valueOf(last)));
+			return ResultSequenceFactory.create_new(new XSInteger(new System.Numerics.BigInteger(last)));
 		}
 	}
 

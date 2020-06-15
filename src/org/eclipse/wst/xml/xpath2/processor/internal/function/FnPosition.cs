@@ -77,7 +77,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 				throw DynamicError.contextUndefined();
 			}
 
-			return ResultSequenceFactory.create_new(new XSInteger(System.Numerics.BigInteger.valueOf(ec.ContextPosition)));
+			return ResultSequenceFactory.create_new(new XSInteger(new System.Numerics.BigInteger(ec.ContextPosition)));
 		}
 	}
 

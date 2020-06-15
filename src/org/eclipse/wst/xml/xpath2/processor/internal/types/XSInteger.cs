@@ -346,7 +346,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		/// <returns> New XSInteger representing the negation of the integer stored </returns>
 		public override ResultSequence unary_minus()
 		{
-			return ResultSequenceFactory.create_new(new XSInteger(int_value() * System.Numerics.BigInteger.valueOf(-1)));
+			return ResultSequenceFactory.create_new(new XSInteger(int_value() * new System.Numerics.BigInteger(-1)));
 		}
 
 		/// <summary>

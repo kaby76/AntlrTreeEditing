@@ -91,7 +91,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 				res *= -1;
 			}
 
-			return new XSInteger(System.Numerics.BigInteger.valueOf(res));
+			return new XSInteger(new System.Numerics.BigInteger(res));
 		}
 
 		/// <summary>

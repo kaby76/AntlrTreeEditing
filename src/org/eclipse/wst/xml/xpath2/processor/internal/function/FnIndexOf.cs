@@ -162,7 +162,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 					XSBoolean boolat = (XSBoolean) cmptype;
 					if (boolat.eq(at, dc))
 					{
-						rb.add(new XSInteger(System.Numerics.BigInteger.valueOf(index)));
+						rb.add(new XSInteger(new System.Numerics.BigInteger(index)));
 					}
 				}
 				else
@@ -173,7 +173,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 					NumericType numericat = (NumericType) at;
 					if (numericat.eq(cmptype, dc))
 					{
-						rb.add(new XSInteger(System.Numerics.BigInteger.valueOf(index)));
+						rb.add(new XSInteger(new System.Numerics.BigInteger(index)));
 					}
 				}
 				else
@@ -184,7 +184,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 					XSDuration durat = (XSDuration) at;
 					if (durat.eq(cmptype, dc))
 					{
-						rb.add(new XSInteger(System.Numerics.BigInteger.valueOf(index)));
+						rb.add(new XSInteger(new System.Numerics.BigInteger(index)));
 					}
 				}
 				else
@@ -195,7 +195,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 					QName qname = (QName)at;
 					if (qname.eq(cmptype, dc))
 					{
-						rb.add(new XSInteger(System.Numerics.BigInteger.valueOf(index)));
+						rb.add(new XSInteger(new System.Numerics.BigInteger(index)));
 					}
 				}
 				else
@@ -207,7 +207,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 					XSString itemStr = new XSString(at.StringValue);
 					if (FnCompare.compare_string(collationUri, xstr1, itemStr, dc).Equals(System.Numerics.BigInteger.ZERO))
 					{
-						rb.add(new XSInteger(System.Numerics.BigInteger.valueOf(index)));
+						rb.add(new XSInteger(new System.Numerics.BigInteger(index)));
 					}
 				}
 				}

@@ -147,15 +147,15 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 
 			if (ret == 0)
 			{
-				return System.Numerics.BigInteger.ZERO;
+				return System.Numerics.BigInteger.Zero;
 			}
 			else if (ret < 0)
 			{
-				return System.Numerics.BigInteger.valueOf(-1);
+				return new System.Numerics.BigInteger(-1);
 			}
 			else
 			{
-				return System.Numerics.BigInteger.ONE;
+				return System.Numerics.BigInteger.One;
 			}
 		}
 
