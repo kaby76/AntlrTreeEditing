@@ -38,6 +38,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 	using BuiltinTypeLibrary = org.eclipse.wst.xml.xpath2.processor.@internal.types.builtin.BuiltinTypeLibrary;
 	using Element = org.w3c.dom.Element;
 	using Node = org.w3c.dom.Node;
+    using NodeConstants = org.w3c.dom.NodeConstants;
 	using NodeList = org.w3c.dom.NodeList;
 	using Text = org.w3c.dom.Text;
 	using TypeInfo = org.w3c.dom.TypeInfo;
@@ -153,7 +154,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		{
 			string result = "";
 
-			if (node.NodeType == Node.TEXT_NODE)
+			if (node.NodeType == NodeConstants.TEXT_NODE)
 			{
 				Text tn = (Text) node;
 				result += tn.Data;

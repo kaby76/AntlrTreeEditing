@@ -44,7 +44,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 			return xPath;
 		}
 
-		internal virtual bool effectiveBooleanValue(ResultSequence rs)
+		internal virtual bool effectiveBooleanValue(api.ResultSequence rs)
 		{
 			return FnBoolean.fn_boolean(rs).value();
 		}

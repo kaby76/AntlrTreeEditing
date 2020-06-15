@@ -341,6 +341,11 @@ namespace org.eclipse.wst.xml.xpath2.processor.util
 			{
 				return ((string)o1).CompareTo((string)o2);
 			}
+
+            public int Compare(object o1, object o2)
+            {
+                return ((string)o1).CompareTo((string)o2);
+            }
 		}
 
 		private CollationProvider _collationProvider = new CollationProviderAnonymousInnerClass();
@@ -360,7 +365,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.util
 				}
 			}
 
-			public virtual IComparer getCollation(string uri)
+			public virtual IComparer<string> getCollation(string uri)
 			{
 				if (org.eclipse.wst.xml.xpath2.api.CollationProvider_Fields.CODEPOINT_COLLATION.Equals(uri))
 				{

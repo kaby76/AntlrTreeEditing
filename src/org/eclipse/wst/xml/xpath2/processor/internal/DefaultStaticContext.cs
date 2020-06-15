@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Collections;
+using System.Collections.Generic;
 
 /// <summary>
 ///*****************************************************************************
@@ -38,6 +39,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 	using QName = org.eclipse.wst.xml.xpath2.processor.@internal.types.QName;
 	using XSAnyURI = org.eclipse.wst.xml.xpath2.processor.@internal.types.XSAnyURI;
 	using Node = org.w3c.dom.Node;
+    using Document = org.w3c.dom.Document;
 
 	/// <summary>
 	/// Default implementation of a static context as described by the XPath 2.0
@@ -62,7 +64,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 
 		private XSAnyURI _base_uri;
 		private IDictionary _documents;
-		private IDictionary _collections;
+		private IDictionary<string, IList<Document>> _collections;
 
 		public virtual string get_cntxt_item_type()
 		{
@@ -74,12 +76,12 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 			_cntxt_item_type = cntxtItemType;
 		}
 
-		public virtual IDictionary get_collections()
+		public virtual IDictionary<string, IList<Document>> get_collections()
 		{
 			return _collections;
 		}
 
-		public virtual void set_collections(IDictionary collections)
+		public virtual void set_collections(IDictionary<string, IList<Document>> collections)
 		{
 			_collections = collections;
 		}
@@ -645,7 +647,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 			int pos = _scopes.Count;
 			while (--pos >= 0)
 			{
-				IDictionary scope = (IDictionary) _scopes.get(pos);
+				IDictionary scope = (IDictionary) _scopes.Peek(pos);
 
 				// gotcha
 				if (scope.Contains(@var))
@@ -671,7 +673,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 
 				Console.WriteLine("Scope level " + level);
 	//			scope.entrySet().iterator();
-				for (IEnumerator j = scope.SetOfKeyValuePairs().GetEnumerator(); j.MoveNext();)
+				for (IEnumerator j = scope.GetEnumerator(); j.MoveNext();)
 				{
 					QName varname = (QName) j.Current;
 

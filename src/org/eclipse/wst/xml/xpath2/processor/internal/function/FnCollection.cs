@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
+using java.net;
 
 /// <summary>
 ///*****************************************************************************
@@ -20,9 +20,9 @@ using System.Collections;
 
 namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 {
+	using URI = java.net.URI;
 
-
-	using EvaluationContext = org.eclipse.wst.xml.xpath2.api.EvaluationContext;
+    using EvaluationContext = org.eclipse.wst.xml.xpath2.api.EvaluationContext;
 	using ResultBuffer = org.eclipse.wst.xml.xpath2.api.ResultBuffer;
 	using ResultSequence = org.eclipse.wst.xml.xpath2.api.ResultSequence;
 	using DocType = org.eclipse.wst.xml.xpath2.processor.@internal.types.DocType;
@@ -118,7 +118,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 
 			try
 			{
-				new Uri(uri);
+				new URI(uri);
 			}
 			catch (URISyntaxException)
 			{
@@ -131,7 +131,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 			}
 
 
-			Uri resolved = ec.DynamicContext.resolveUri(uri);
+			URI resolved = ec.DynamicContext.resolveUri(uri);
 			if (resolved == null)
 			{
 				throw DynamicError.invalid_doc(null);
@@ -168,7 +168,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 		private static ResultSequence getCollection(string uri, EvaluationContext ec)
 		{
 			ResultBuffer rs = new ResultBuffer();
-			IDictionary collectionMap = ec.DynamicContext.Collections;
+			var collectionMap = ec.DynamicContext.Collections;
 			IList docList = (IList) collectionMap[uri];
 			for (int i = 0; i < docList.Count; i++)
 			{

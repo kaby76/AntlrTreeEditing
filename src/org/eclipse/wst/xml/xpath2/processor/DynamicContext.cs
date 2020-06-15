@@ -24,6 +24,7 @@
 /// </summary>
 
 using System.Collections;
+using System.Collections.Generic;
 using java.net;
 
 namespace org.eclipse.wst.xml.xpath2.processor
@@ -163,7 +164,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		/// <param name="uri"> </param>
 		/// <returns> A Jaa collator, or null, if no such Collator exists 
 		/// @since 1.1 </returns>
-		IComparer get_collation(string uri);
+		IComparer<string> get_collation(string uri);
 
 		/// <summary>
 		/// Returns the current default collator

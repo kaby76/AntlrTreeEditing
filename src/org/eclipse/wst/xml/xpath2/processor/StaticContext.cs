@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System.Collections.Generic;
 
 /// <summary>
 ///*****************************************************************************
@@ -28,6 +28,8 @@ namespace org.eclipse.wst.xml.xpath2.processor
 	using QName = org.eclipse.wst.xml.xpath2.processor.@internal.types.QName;
 	using XSAnyURI = org.eclipse.wst.xml.xpath2.processor.@internal.types.XSAnyURI;
 	using Node = org.w3c.dom.Node;
+
+	using Document = org.w3c.dom.Document;
 
 	/// <summary>
 	/// interface to static context
@@ -236,7 +238,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		/// Java5 it would be <code>Map<String, List<Document>></code>
 		/// 
 		/// </summary>
-		IDictionary get_collections();
+        IDictionary<string, IList<Document>> get_collections();
 
 		/// <summary>
 		/// @since 1.1
@@ -244,7 +246,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		/// Sets the collections map, which maps a String into a List of Document, in
 		/// Java5 it would be <code>Map<String, List<Document>></code>
 		/// </summary>
-		void set_collections(IDictionary collections);
+		void set_collections(IDictionary<string, IList<Document>> collections);
 
 		/// <summary>
 		/// Gets the type provider in use for the specified DOM node.

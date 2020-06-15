@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Collections;
+using org.w3c.dom.org.w3c.dom;
 
 /// <summary>
 ///*****************************************************************************
@@ -46,6 +47,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 	using Document = org.w3c.dom.Document;
 	using Element = org.w3c.dom.Element;
 	using Node = org.w3c.dom.Node;
+	using NodeConstants = org.w3c.dom.NodeConstants;
 	using ProcessingInstruction = org.w3c.dom.ProcessingInstruction;
 	using Text = org.w3c.dom.Text;
 	using TypeInfo = org.w3c.dom.TypeInfo;
@@ -124,23 +126,23 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 
 			switch (node.NodeType)
 			{
-			case Node.ELEMENT_NODE:
+			case NodeConstants.ELEMENT_NODE:
 				return new ElementType((Element) node, tm);
 
-			case Node.COMMENT_NODE:
+			case NodeConstants.COMMENT_NODE:
 				return new CommentType((Comment) node, tm);
 
-			case Node.ATTRIBUTE_NODE:
+			case NodeConstants.ATTRIBUTE_NODE:
 				return new AttrType((Attr) node, tm);
 
-			case Node.TEXT_NODE:
-			case Node.CDATA_SECTION_NODE:
+			case NodeConstants.TEXT_NODE:
+			case NodeConstants.CDATA_SECTION_NODE:
 				return new TextType((Text) node, tm);
 
-			case Node.DOCUMENT_NODE:
+			case NodeConstants.DOCUMENT_NODE:
 				return new DocType((Document) node, tm);
 
-			case Node.PROCESSING_INSTRUCTION_NODE:
+			case NodeConstants.PROCESSING_INSTRUCTION_NODE:
 				return new PIType((ProcessingInstruction) node, tm);
 
 			}
@@ -252,11 +254,11 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 				return compareDocuments(docA, docB);
 			}
 			short relation = nodeA.compareDocumentPosition(nodeB);
-			if ((relation & Node.DOCUMENT_POSITION_PRECEDING) != 0)
+			if ((relation & NodeConstants.DOCUMENT_POSITION_PRECEDING) != 0)
 			{
 				  return 1;
 			}
-			if ((relation & Node.DOCUMENT_POSITION_FOLLOWING) != 0)
+			if ((relation & NodeConstants.DOCUMENT_POSITION_FOLLOWING) != 0)
 			{
 				  return -1;
 			}

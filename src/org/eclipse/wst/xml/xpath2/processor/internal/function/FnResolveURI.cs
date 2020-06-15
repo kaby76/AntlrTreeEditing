@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
+using java.net;
 
 /// <summary>
 ///*****************************************************************************
@@ -19,7 +19,7 @@ using System.Collections;
 
 namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 {
-
+	using URI = java.net.URI;
 
 	using EvaluationContext = org.eclipse.wst.xml.xpath2.api.EvaluationContext;
 	using Item = org.eclipse.wst.xml.xpath2.api.Item;
@@ -129,7 +129,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 			string resolved = null;
 			try
 			{
-				Uri baseURI = new Uri(@base);
+				URI baseURI = new URI(@base);
 				resolved = baseURI.resolve(relative).ToString();
 			}
 			catch (Exception)

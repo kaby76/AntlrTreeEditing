@@ -174,12 +174,26 @@ namespace org.apache.xerces.dom
 
 namespace org.w3c.dom
 {
+    
+    public class NodeConstants
+    {
+        public const short TEXT_NODE = 1;
+        public const short ELEMENT_NODE = 2;
+        public const short DOCUMENT_NODE = 3;
+        public const short COMMENT_NODE = 4;
+        public const short ATTRIBUTE_NODE = 5;
+        public const short CDATA_SECTION_NODE = 6;
+        public const short PROCESSING_INSTRUCTION_NODE = 7;
+        public const short DOCUMENT_POSITION_PRECEDING = 8;
+        public const short DOCUMENT_POSITION_FOLLOWING = 9;
+    }
+
     public interface Node
     {
-        short TEXT_NODE { get; set; }
         short ELEMENT_NODE { get; set; }
         short NodeType { get; set; }
         string LocalName { get; set; }
+        short DOCUMENT_NODE { get; set; }
     }
 
     public interface Attr : Node

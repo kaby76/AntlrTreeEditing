@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using java.xml;
 
 /// <summary>
 ///*****************************************************************************
@@ -20,8 +21,10 @@ using System.Collections.Generic;
 
 namespace org.eclipse.wst.xml.xpath2.processor.@internal
 {
+	using URI = java.net.URI;
 
-	using javax.xml.@namespace;
+	using XMLConstants = java.xml.XMLConstants;
+	using NamespaceContext = javax.xml.@namespace.NamespaceContext;
 
 	using CollationProvider = org.eclipse.wst.xml.xpath2.api.CollationProvider;
 	using EvaluationContext = org.eclipse.wst.xml.xpath2.api.EvaluationContext;
@@ -106,7 +109,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 					DefaultStaticContext dsc = (DefaultStaticContext)sc;
 					return dsc.get_function_libraries();
 				}
-				return Collections.emptyMap();
+				return new Dictionary<string, FunctionLibrary>();
 			}
 		}
 
@@ -147,7 +150,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 				}
 			}
 
-			public virtual IComparer getCollation(string name)
+			public virtual IComparer<string> getCollation(string name)
 			{
 				return dc.get_collation(name);
 			}
@@ -171,20 +174,20 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 				}
 			}
 
-			public virtual IComparer getCollation(string name)
+			public virtual IComparer<string> getCollation(string name)
 			{
 				return null;
 			}
 		}
 
-		public virtual Uri BaseUri
+		public virtual URI BaseUri
 		{
 			get
 			{
 				// TODO Auto-generated method stub
 				try
 				{
-					return new Uri(sc.base_uri().StringValue);
+					return new URI(sc.base_uri().StringValue);
 				}
 				catch (URISyntaxException e)
 				{
@@ -279,7 +282,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 			}
 		}
 
-		public virtual org.eclipse.wst.xml.xpath2.api.typesystem.ItemType getDocumentType(Uri documentUri)
+		public virtual org.eclipse.wst.xml.xpath2.api.typesystem.ItemType getDocumentType(URI documentUri)
 		{
 			return new NodeItemTypeImpl(org.eclipse.wst.xml.xpath2.api.typesystem.ItemType_Fields.OCCURRENCE_OPTIONAL, Node.DOCUMENT_NODE);
 		}

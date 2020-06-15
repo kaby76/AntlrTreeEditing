@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using javax.xml.@namespace;
 
 /// <summary>
 ///*****************************************************************************
@@ -18,7 +19,10 @@ using System.Collections.Generic;
 namespace org.eclipse.wst.xml.xpath2.processor.@internal
 {
 
+	using URI = java.net.URI;
+	using GregorianCalendar = java.util.GregorianCalendar;
 
+	using Duration = javax.xml.datatype.Duration;
 
 	using CollationProvider = org.eclipse.wst.xml.xpath2.api.CollationProvider;
 	using Item = org.eclipse.wst.xml.xpath2.api.Item;
@@ -26,7 +30,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 	using ResultSequence = org.eclipse.wst.xml.xpath2.api.ResultSequence;
 	using FnCollection = org.eclipse.wst.xml.xpath2.processor.@internal.function.FnCollection;
 	using DocType = org.eclipse.wst.xml.xpath2.processor.@internal.types.DocType;
-	using QName = org.eclipse.wst.xml.xpath2.processor.@internal.types.QName;
+    using QName = org.eclipse.wst.xml.xpath2.processor.@internal.types.QName;
 	using XSDuration = org.eclipse.wst.xml.xpath2.processor.@internal.types.XSDuration;
 	using Document = org.w3c.dom.Document;
 	using Node = org.w3c.dom.Node;
@@ -64,7 +68,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 			return ResultBuffer.wrap((Item)@var);
 		}
 
-		public virtual Uri resolveUri(string uri)
+		public virtual URI resolveUri(string uri)
 		{
 			return dc.resolve_uri(uri);
 		}
@@ -93,7 +97,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 			}
 		}
 
-		public virtual Document getDocument(Uri uri)
+		public virtual Document getDocument(URI uri)
 		{
 			org.eclipse.wst.xml.xpath2.processor.ResultSequence rs = dc.get_doc(uri);
 			if (rs == null || rs.empty())

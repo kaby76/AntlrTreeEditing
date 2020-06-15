@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 /// <summary>
 ///*****************************************************************************
@@ -20,8 +19,13 @@ using System.Collections.Generic;
 
 namespace org.eclipse.wst.xml.xpath2.processor.util
 {
+    using MalformedURLException = java.net.MalformedURLException;
+	using URI = java.net.URI;
+	using GregorianCalendar = java.util.GregorianCalendar;
+	using TimeZone = java.util.TimeZone;
 
-
+	using Duration = javax.xml.datatype.Duration;
+	using QName = javax.xml.@namespace.QName;
 
 	using CollationProvider = org.eclipse.wst.xml.xpath2.api.CollationProvider;
 	using DynamicContext = org.eclipse.wst.xml.xpath2.api.DynamicContext;
@@ -170,7 +174,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.util
 		{
 			try
 			{
-				Uri realURI = Uri.create(uri);
+				URI realURI = Uri.create(uri);
 				if (realURI.Absolute)
 				{
 					return realURI;
