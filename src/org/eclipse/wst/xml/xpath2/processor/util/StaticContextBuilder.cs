@@ -72,7 +72,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.util
 		private string _defaultCollation = org.eclipse.wst.xml.xpath2.api.CollationProvider_Fields.CODEPOINT_COLLATION;
 
 		// key: String prefix, contents: String namespace
-		private IDictionary _namespaces = new Hashtable();
+		private Dictionary<string, string> _namespaces = new Dictionary<string, string>();
 		private IDictionary<string, FunctionLibrary> _functionLibraries = new Dictionary<string, FunctionLibrary>();
 
 		private URI _base_uri;
@@ -110,12 +110,12 @@ namespace org.eclipse.wst.xml.xpath2.processor.util
 			}
 
 
-			public virtual IEnumerator getPrefixes(string ns)
+			public virtual IEnumerator<string> getPrefixes(string ns)
 			{
-				var prefixes = new List();
-				for (IEnumerator it = outerInstance._namespaces.GetEnumerator(); it.MoveNext();)
+				var prefixes = new List<string>();
+				for (var it = outerInstance._namespaces.GetEnumerator(); it.MoveNext();)
 				{
-					DictionaryEntry entry = (DictionaryEntry)it.Current;
+					var entry = it.Current;
 
 					if (entry.Value.Equals(ns))
 					{
@@ -127,12 +127,12 @@ namespace org.eclipse.wst.xml.xpath2.processor.util
 
 			public virtual string getPrefix(string ns)
 			{
-				for (IEnumerator it = outerInstance._namespaces.GetEnumerator(); it.MoveNext();)
+				for (var it = outerInstance._namespaces.GetEnumerator(); it.MoveNext();)
 				{
-					DictionaryEntry entry = (DictionaryEntry)it.Current;
+					var entry = it.Current;
 					if (entry.Value.Equals(ns))
 					{
-						return (string)entry.Key;
+						return entry.Key;
 					}
 				}
 				return null;
@@ -140,7 +140,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.util
 
 			public virtual string getNamespaceURI(string prefix)
 			{
-				string ns = (string)outerInstance._namespaces[prefix];
+				string ns = outerInstance._namespaces[prefix];
 				if (string.ReferenceEquals(ns, null))
 				{
 					ns = XMLConstants.NULL_NS_URI;

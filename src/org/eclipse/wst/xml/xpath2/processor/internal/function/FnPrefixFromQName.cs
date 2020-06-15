@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using java.xml;
 
 /// <summary>
 ///*****************************************************************************
@@ -18,7 +19,7 @@
 
 namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 {
-
+	using XMLConstants = java.xml.XMLConstants;
 
 	using EvaluationContext = org.eclipse.wst.xml.xpath2.api.EvaluationContext;
 	using ResultBuffer = org.eclipse.wst.xml.xpath2.api.ResultBuffer;

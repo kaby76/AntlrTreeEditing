@@ -214,9 +214,9 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 			}
 
 
-			public virtual IEnumerator getPrefixes(string arg0)
+			public virtual IEnumerator<string> getPrefixes(string arg0)
 			{
-				return new ArrayList().GetEnumerator();
+				return new List<string>().GetEnumerator();
 			}
 
 			public virtual string getPrefix(string arg0)
