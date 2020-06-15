@@ -270,7 +270,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 			{
 				return System.identityHashCode(docA) - System.identityHashCode(docB);
 			}
-			return docB.DocumentURI.compareTo(docA.DocumentURI);
+			return docB.DocumentURI.CompareTo(docA.DocumentURI);
 		}
 
 		private static Document getDocument(Node nodeA)

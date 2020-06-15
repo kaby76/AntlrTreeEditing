@@ -31,7 +31,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		/// <summary>
 		/// Initializes a representation of 0
 		/// </summary>
-		public XSInt() : this(System.Numerics.BigInteger.valueOf(0))
+		public XSInt() : this(System.Numerics.BigInteger.Zero)
 		{
 		}
 
@@ -86,13 +86,13 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 
 			try
 			{
-				System.Numerics.BigInteger bigInt = new System.Numerics.BigInteger(aat.StringValue);
+				System.Numerics.BigInteger.TryParse(aat.StringValue, out System.Numerics.BigInteger bigInt);
 
 				// doing the range checking
-				System.Numerics.BigInteger min = System.Numerics.BigInteger.valueOf(-2147483648L);
-				System.Numerics.BigInteger max = System.Numerics.BigInteger.valueOf(2147483647L);
+				System.Numerics.BigInteger min = new System.Numerics.BigInteger(-2147483648L);
+				System.Numerics.BigInteger max = new System.Numerics.BigInteger(2147483647L);
 
-				if (bigInt.compareTo(min) < 0 || bigInt.compareTo(max) > 0)
+				if (bigInt.CompareTo(min) < 0 || bigInt.CompareTo(max) > 0)
 				{
 				   // invalid input
 				   DynamicError.throw_type_error();

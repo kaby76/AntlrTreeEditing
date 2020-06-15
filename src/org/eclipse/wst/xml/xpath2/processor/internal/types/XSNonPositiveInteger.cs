@@ -94,7 +94,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 				// max value is 0
 				System.Numerics.BigInteger max = System.Numerics.BigInteger.valueOf(0L);
 
-				if (bigInt.compareTo(max) > 0)
+				if (bigInt.CompareTo(max) > 0)
 				{
 				   // invalid input
 				   throw DynamicError.cant_cast(null);

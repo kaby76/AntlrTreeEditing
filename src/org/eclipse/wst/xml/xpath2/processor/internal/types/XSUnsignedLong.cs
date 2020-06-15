@@ -95,7 +95,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 				System.Numerics.BigInteger min = System.Numerics.BigInteger.valueOf(0);
 				System.Numerics.BigInteger max = System.Numerics.BigInteger.Parse("18446744073709551615");
 
-				if (bigInt.compareTo(min) < 0 || bigInt.compareTo(max) > 0)
+				if (bigInt.CompareTo(min) < 0 || bigInt.CompareTo(max) > 0)
 				{
 				   // invalid input
 				   throw DynamicError.cant_cast(null);

@@ -94,7 +94,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 				// max value is INF
 				System.Numerics.BigInteger min = System.Numerics.BigInteger.valueOf(1);
 
-				if (bigInt.compareTo(min) < 0)
+				if (bigInt.CompareTo(min) < 0)
 				{
 				   // invalid input
 				   throw DynamicError.cant_cast(null);

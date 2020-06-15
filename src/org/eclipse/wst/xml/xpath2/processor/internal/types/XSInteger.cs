@@ -45,7 +45,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		/// <summary>
 		/// Initializes a representation of 0
 		/// </summary>
-		public XSInteger() : this(System.Numerics.BigInteger.valueOf(0))
+		public XSInteger() : this(System.Numerics.BigInteger.Zero)
 		{
 		}
 
@@ -113,7 +113,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		/// <returns> True is the integer represented is 0. False otherwise </returns>
 		public override bool zero()
 		{
-			return (_value.compareTo(System.Numerics.BigInteger.ZERO) == 0);
+			return (_value.CompareTo(System.Numerics.BigInteger.ZERO) == 0);
 		}
 
 		/// <summary>
@@ -369,7 +369,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 			Item carg = convertArg(arg);
 			XSInteger val = (XSInteger) get_single_type(carg, typeof(XSInteger));
 
-			int compareResult = int_value().compareTo(val.int_value());
+			int compareResult = int_value().CompareTo(val.int_value());
 
 			return compareResult > 0;
 		}
@@ -395,7 +395,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 			Item carg = convertArg(arg);
 			XSInteger val = (XSInteger) get_single_type(carg, typeof(XSInteger));
 
-			int compareResult = int_value().compareTo(val.int_value());
+			int compareResult = int_value().CompareTo(val.int_value());
 
 			return compareResult < 0;
 		}
