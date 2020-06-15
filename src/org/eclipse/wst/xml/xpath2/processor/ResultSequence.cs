@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Text;
 
 /// <summary>
@@ -140,10 +142,15 @@ namespace org.eclipse.wst.xml.xpath2.processor
 			return result;
 		}
 
-		/// <summary>
-		/// release the result sequence
-		/// </summary>
-		public virtual void release()
+        internal IEnumerator GetEnumerator()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// release the result sequence
+        /// </summary>
+        public virtual void release()
 		{
 			ResultSequenceFactory.release(this);
 		}
@@ -171,6 +178,16 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		{
 			return get(index).NativeValue;
 		}
-	}
+
+        IEnumerator<Item> api.ResultSequence.iterator()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        Item api.ResultSequence.first()
+        {
+            throw new System.NotImplementedException();
+        }
+    }
 
 }
