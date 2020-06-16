@@ -107,7 +107,7 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             return new InstOfExpr(treatExpr, VisitSequencetype(ctx.sequencetype()));
         }
 
-        public override object /* Integer */ VisitForwardAxis(XPath31Parser.ForwardaxisContext ctx)
+        public override object /* Integer */ VisitForwardaxis(XPath31Parser.ForwardaxisContext ctx)
         {
             switch (((TerminalNode) ctx.GetChild(0)).getSymbol().getType())
             {
@@ -198,7 +198,7 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             return new TreatAsExpr(castableExpr, visitSequenceType(ctx.sequencetype()));
         }
 
-        public override NameTest visitNameTest(XPath31Parser.NameTestContext ctx)
+        public override object /* NameTest */ VisitNametest(XPath31Parser.NametestContext ctx)
         {
             if (ctx.qName() != null)
             {
@@ -210,12 +210,12 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             }
         }
 
-        public override CntxItemExpr visitContextItemExpr(XPath31Parser.ContextItemExprContext ctx)
+        public override object /* CntxItemExpr */ VisitContextitemexpr(XPath31Parser.ContextitemexprContext ctx)
         {
             return new CntxItemExpr();
         }
 
-        public override Expr visitAdditiveExpr(XPath31Parser.AdditiveExprContext ctx)
+        public override object /* Expr */ VisitAdditiveexpr(XPath31Parser.AdditiveexprContext ctx)
         {
             Expr multiplicativeExpr = visitMultiplicativeExpr(ctx.multiplicativeExpr());
             if (ctx.additiveExpr() == null)
@@ -233,12 +233,12 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             }
         }
 
-        public override VarRef visitVarRef(XPath31Parser.VarRefContext ctx)
+        public override object /* VarRef */ VisitVarref(XPath31Parser.VarrefContext ctx)
         {
             return new VarRef(visitVarName(ctx.varName()));
         }
 
-        public override QName visitElementName(XPath31Parser.ElementNameContext ctx)
+        public override object /* QName */ VisitElementname(XPath31Parser.ElementnameContext ctx)
         {
             return visitQName(ctx.qName());
         }
@@ -248,7 +248,7 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             return visitExpr(ctx.expr());
         }
 
-        public override Collection<Collection<Expr>> visitPredicateList(XPath31Parser.PredicateListContext ctx)
+        public override object /* Collection<Collection<Expr>> */ VisitPredicatelist(XPath31Parser.PredicatelistContext ctx)
         {
             Collection<Collection<Expr>> result = new ArrayList<Collection<Expr>>();
             for (XPath31Parser.PredicateContext predicate :
@@ -260,12 +260,12 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             return result;
         }
 
-        public override SchemaAttrTest visitSchemaAttributeTest(XPath31Parser.SchemaAttributeTestContext ctx)
+        public override object /* SchemaAttrTest */ VisitSchemaattributetest(XPath31Parser.SchemaattributetestContext ctx)
         {
             return new SchemaAttrTest(visitAttributeDeclaration(ctx.attributeDeclaration()));
         }
 
-        public override Collection<Expr> visitParenthesizedExpr(XPath31Parser.ParenthesizedExprContext ctx)
+        public override object /* Collection<Expr> */ VisitParenthesizedexpr(XPath31Parser.ParenthesizedexprContext ctx)
         {
             if (ctx.expr() == null)
             {
@@ -275,7 +275,7 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             return visitExpr(ctx.expr());
         }
 
-        public override NumericLiteral visitNumericLiteral(XPath31Parser.NumericLiteralContext ctx)
+        public override object /* NumericLiteral */ VisitNumericliteral(XPath31Parser.NumericliteralContext ctx)
         {
             if (ctx.integerLiteral() != null)
             {
@@ -811,7 +811,7 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             return new CastableExpr(castExpr, visitSingleType(ctx.singleType()));
         }
 
-        public override QuantifiedExpr visitQuantifiedExpr(XPath31Parser.QuantifiedExprContext ctx)
+        public override object /* QuantifiedExpr */ VisitQuantifiedexpr(XPath31Parser.QuantifiedexprContext ctx)
         {
             if (ctx.SOME() != null)
             {
@@ -825,7 +825,7 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             }
         }
 
-        public override Expr visitComparisonExpr(XPath31Parser.ComparisonExprContext ctx)
+        public override object /* Expr */ VisitComparisonexpr(XPath31Parser.ComparisonexprContext ctx)
         {
             if (ctx.rangeExpr(1) == null)
             {
@@ -854,7 +854,7 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             return new FilterExpr(visitPrimaryExpr(ctx.primaryExpr()), visitPredicateList(ctx.predicateList()));
         }
 
-        public override Expr visitUnionExpr(XPath31Parser.UnionExprContext ctx)
+        public override object /* Expr */ VisitUnionexpr(XPath31Parser.UnionexprContext ctx)
         {
             Expr intersectExceptExpr = visitIntersectExceptExpr(ctx.intersectExceptExpr());
             if (ctx.unionExpr() == null)
@@ -862,7 +862,7 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
                 return intersectExceptExpr;
             }
 
-            if (ctx.UNION() != null)
+            if (ctx.KW_UNION() != null)
             {
                 return new UnionExpr(visitUnionExpr(ctx.unionExpr()), intersectExceptExpr);
             }
@@ -872,7 +872,7 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             }
         }
 
-        public override AxisStep visitAxisStep(XPath31Parser.AxisStepContext ctx)
+        public override object /* AxisStep */ VisitAxisstep(XPath31Parser.AxisstepContext ctx)
         {
             if (ctx.forwardStep() != null)
             {
@@ -884,12 +884,12 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             }
         }
 
-        public override ReverseStep visitAbbrevReverseStep(XPath31Parser.AbbrevReverseStepContext ctx)
+        public override object /* ReverseStep */ VisitAbbrevreversestep(XPath31Parser.AbbrevreversestepContext ctx)
         {
             return new ReverseStep(ReverseStep.DOTDOT, null);
         }
 
-        public override AttributeTest visitAttributeTest(XPath31Parser.AttributeTestContext ctx)
+        public override object /* AttributeTest */ VisitAttributetest(XPath31Parser.AttributetestContext ctx)
         {
             if (ctx.attribNameOrWildcard() != null)
             {
@@ -910,7 +910,7 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             }
         }
 
-        public override XPathExpr visitRelativePathExpr(XPath31Parser.RelativePathExprContext ctx)
+        public override object /* XPathExpr */ VisitRelativepathexpr(XPath31Parser.RelativepathexprContext ctx)
         {
             StepExpr stepExpr = visitStepExpr(ctx.stepExpr());
             if (ctx.FORWARD_SLASH() != null)
@@ -931,12 +931,12 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             }
         }
 
-        public override CommentTest visitCommentTest(XPath31Parser.CommentTestContext ctx)
+        public override object /* CommentTest */ VisitCommenttest(XPath31Parser.CommenttestContext ctx)
         {
             return new CommentTest();
         }
 
-        public override QName visitAttribNameOrWildcard(XPath31Parser.AttribNameOrWildcardContext ctx)
+        public override object /* QName */ VisitAttribnameorwildcard(XPath31Parser.AttribnameorwildcardContext ctx)
         {
             if (ctx.attributeName() != null)
             {
@@ -948,12 +948,12 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             }
         }
 
-        public override TextTest visitTextTest(XPath31Parser.TextTestContext ctx)
+        public override object /* TextTest */ VisitTexttest(XPath31Parser.TexttestContext ctx)
         {
             return new TextTest();
         }
 
-        public override Expr visitIntersectExceptExpr(XPath31Parser.IntersectExceptExprContext ctx)
+        public override object /* Expr */ VisitIntersectexceptexpr(XPath31Parser.IntersectexceptexprContext ctx)
         {
             Expr instanceOfExpr = visitInstanceOfExpr(ctx.instanceOfExpr());
             if (ctx.intersectExceptExpr() == null)
@@ -971,7 +971,7 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             }
         }
 
-        public override Integer visitValueComp(XPath31Parser.ValueCompContext ctx)
+        public override object /* Integer */ VisitValuecomp(XPath31Parser.ValuecompContext ctx)
         {
             switch (((TerminalNode) ctx.getChild(0)).getSymbol().getType())
             {
@@ -993,17 +993,17 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             }
         }
 
-        public override IntegerLiteral visitIntegerLiteral(XPath31Parser.IntegerLiteralContext ctx)
-        {
-            return new IntegerLiteral(new BigInteger(ctx.INTEGER().getText()));
-        }
+        //public override object /* IntegerLiteral */ VisitIntegerliteral(XPath31Parser.integ ctx)
+        //{
+        //    return new IntegerLiteral(new BigInteger(ctx.INTEGER().getText()));
+        //}
 
-        public override XPath visitXPath(XPath31Parser.XPathContext ctx)
+        public override object /* XPath */ VisitXpath(XPath31Parser.XpathContext ctx)
         {
             return new XPath(visitExpr(ctx.expr()));
         }
 
-        public override Expr visitMultiplicativeExpr(XPath31Parser.MultiplicativeExprContext ctx)
+        public override object /* Expr */ VisitMultiplicativeexpr(XPath31Parser.MultiplicativeexprContext ctx)
         {
             Expr unionExpr = visitUnionExpr(ctx.unionExpr());
             if (ctx.multiplicativeExpr() == null)
@@ -1029,7 +1029,7 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             }
         }
 
-        public override DocumentTest visitDocumentTest(XPath31Parser.DocumentTestContext ctx)
+        public override object /* DocumentTest */ VisitDocumenttest(XPath31Parser.DocumenttestContext ctx)
         {
             if (ctx.elementTest() != null)
             {
@@ -1045,7 +1045,7 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             }
         }
 
-        public override Expr visitRangeExpr(XPath31Parser.RangeExprContext ctx)
+        public override object /* Expr */ VisitRangeexpr(XPath31Parser.RangeexprContext ctx)
         {
             if (ctx.TO() == null)
             {
@@ -1055,7 +1055,7 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             return new RangeExpr(visitAdditiveExpr(ctx.additiveExpr(0)), visitAdditiveExpr(ctx.additiveExpr(1)));
         }
 
-        public override Expr visitAndExpr(XPath31Parser.AndExprContext ctx)
+        public override object /* Expr */ VisitAndexpr(XPath31Parser.AndexprContext ctx)
         {
             Expr comparisonExpr = visitComparisonExpr(ctx.comparisonExpr());
             if (ctx.AND() == null)
@@ -1066,7 +1066,7 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             return new AndExpr(visitAndExpr(ctx.andExpr()), comparisonExpr);
         }
 
-        public override StepExpr visitStepExpr(XPath31Parser.StepExprContext ctx)
+        public override object /* StepExpr */ VisitStepexpr(XPath31Parser.StepexprContext ctx)
         {
             if (ctx.axisStep() != null)
             {
@@ -1078,7 +1078,7 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             }
         }
 
-        public override Collection<Expr> visitFunctionCallMiddle(XPath31Parser.FunctionCallMiddleContext ctx)
+        public override object /* Collection<Expr> */ VisitFunctioncall(XPath31Parser.FunctioncallContext ctx)
         {
             Collection<Expr> result;
             if (ctx.functionCallMiddle() != null)
