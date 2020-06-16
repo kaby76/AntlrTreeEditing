@@ -1,4 +1,5 @@
 ﻿using System;
+using Antlr4.Runtime;
 
 /// <summary>
 ///*****************************************************************************
@@ -46,36 +47,72 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 //ORIGINAL LINE: public org.eclipse.wst.xml.xpath2.processor.ast.XPath parse(String xpath, boolean isRootlessAccess) throws org.eclipse.wst.xml.xpath2.processor.XPathParserException
 		public virtual XPath parse(string xpath, bool isRootlessAccess)
 		{
+            XPathLexer lexer = new XPathLexer(new AntlrInputStream(xpath));
 
-			XPathFlex lexer = new XPathFlex(new StringReader(xpath));
+            try
+            {
+                var p = new XPath31Parser(new CommonTokenStream(lexer));
+                p.ErrorHandler = new BailErrorStrategy();
+                XPath31Parser.XpathContext context = p.xpath();
+                var visitor = visitor.INSTANCE;
+                XPath xPath2 = visitor.visitXPath(context);
+                if (isRootlessAccess)
+                {
+                    xPath2.accept(new DefaultVisitor()
+                    {
+                        public Object visit(XPathExpr e)
+                        {
+                        if (e.slashes() > 0)
+                        {
+                        throw new XPathParserException("Access to root node is not allowed (set by caller)", null);
+                    }
+                    do
+                    {
+                        e.expr().accept(this); // check the single step (may have filter with root access)
+                        e = e.next(); // follow singly linked list of the path, it's all relative past the first one
+                    } while (e != null);
+                    return null;
+                    }
+                    });
+                }
+                return xPath2;
+            } catch (RecognitionException e) {
+                throw new XPathParserException("ANTLR parser error: " + e.getMessage(), e);
+            } catch (StaticError e) {
+                throw new XPathParserException(e.code(), e.getMessage(), e);
+            } catch (Exception e) {
+                throw new XPathParserException(e.getMessage(), e);
+            }
 
-			try
-			{
-				XPathCup p = new XPathCup(lexer);
-				Symbol res = p.parse();
-				XPath xPath2 = (XPath) res.value;
-				if (isRootlessAccess)
-				{
-					xPath2.accept(new DefaultVisitorAnonymousInnerClass(this));
-				}
-				return xPath2;
-			}
-			catch (JFlexError e)
-			{
-				throw new XPathParserException("JFlex lexer error: " + e.reason());
-			}
-			catch (CupError e)
-			{
-				throw new XPathParserException("CUP parser error: " + e.reason());
-			}
-			catch (StaticError e)
-			{
-				throw new XPathParserException(e.code(), e.Message);
-			}
-			catch (Exception e)
-			{
-				throw new XPathParserException(e.Message);
-			}
+			//XPathFlex lexer = new XPathFlex(new StringReader(xpath));
+			//
+			//try
+			//{
+			//	XPathCup p = new XPathCup(lexer);
+			//	Symbol res = p.parse();
+			//	XPath xPath2 = (XPath) res.value;
+			//	if (isRootlessAccess)
+			//	{
+			//		xPath2.accept(new DefaultVisitorAnonymousInnerClass(this));
+			//	}
+			//	return xPath2;
+			//}
+			//catch (JFlexError e)
+			//{
+			//	throw new XPathParserException("JFlex lexer error: " + e.reason());
+			//}
+			//catch (CupError e)
+			//{
+			//	throw new XPathParserException("CUP parser error: " + e.reason());
+			//}
+			//catch (StaticError e)
+			//{
+			//	throw new XPathParserException(e.code(), e.Message);
+			//}
+			//catch (Exception e)
+			//{
+			//	throw new XPathParserException(e.Message);
+			//}
 		}
 
 		private class DefaultVisitorAnonymousInnerClass : DefaultVisitor

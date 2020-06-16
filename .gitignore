@@ -1,2 +1,12 @@
 src/obj/
 src/.vs/
+src/XPath31.interp
+src/XPath31.tokens
+src/XPath31BaseListener.cs
+src/XPath31Lexer.cs
+src/XPath31Lexer.interp
+src/XPath31Lexer.tokens
+src/XPath31Listener.cs
+src/XPath31Parser.cs
+src/XPath31BaseVisitor.cs
+src/XPath31Visitor.cs

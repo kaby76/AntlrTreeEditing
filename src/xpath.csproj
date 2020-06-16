@@ -1,7 +1,22 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="org\eclipse\wst\xml\xpath2\processor\internal\XPath31.g4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Antlr4 Include="org\eclipse\wst\xml\xpath2\processor\internal\XPath31.g4">
+      <Package>xpath.org.eclipse.wst.xml.xpath2.processor.@internal</Package>
+    </Antlr4>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Antlr4.Runtime.Standard" Version="4.8.0" />
+    <PackageReference Include="Antlr4BuildTasks" Version="7.4.0" />
+  </ItemGroup>
 
 </Project>
