@@ -39,20 +39,24 @@
 
 grammar XPath31;
 
+// [1]
 xpath : expr EOF ;
 paramlist : param ( COMMA param)* ;
 param : DOLLAR eqname typedeclaration? ;
 functionbody : enclosedexpr ;
+// [5]
 enclosedexpr : OC expr? CC ;
 expr : exprsingle ( COMMA exprsingle)* ;
 exprsingle : forexpr | letexpr | quantifiedexpr | ifexpr | orexpr ;
 forexpr : simpleforclause KW_RETURN exprsingle ;
 simpleforclause : KW_FOR simpleforbinding ( COMMA simpleforbinding)* ;
+// [10]
 simpleforbinding : DOLLAR varname KW_IN exprsingle ;
 letexpr :    simpleletclause KW_RETURN exprsingle ;
 simpleletclause : KW_LET simpleletbinding ( COMMA simpleletbinding)* ;
 simpleletbinding : DOLLAR varname CEQ exprsingle ;
 quantifiedexpr :    ( KW_SOME | KW_EVERY) DOLLAR varname KW_IN exprsingle ( COMMA DOLLAR varname KW_IN exprsingle)* KW_SATISFIES exprsingle ;
+// [15]
 ifexpr : KW_IF OP expr CP KW_THEN exprsingle KW_ELSE exprsingle ;
 orexpr : andexpr ( KW_OR andexpr )* ;
 andexpr : comparisonexpr ( KW_AND comparisonexpr )* ;
