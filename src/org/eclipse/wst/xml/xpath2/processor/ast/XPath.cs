@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using javax.xml.@namespace;
+using org.eclipse.wst.xml.xpath2.processor.@internal.ast;
 
 /// <summary>
 ///*****************************************************************************
@@ -35,7 +36,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.ast
 	/// @deprecated This is only for internal use, use XPath2Expression instead 
 	public class XPath : XPathNode, XPath2Expression
 	{
-		private ICollection _exprs;
+		private ICollection<Expr> _exprs;
 		private StaticContext _staticContext;
 		private ICollection<QName> _resolvedFunctions;
 		private ICollection<string> _axes;
@@ -47,7 +48,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.ast
 		/// </summary>
 		/// <param name="exprs">
 		///            XPath expressions. </param>
-		public XPath(ICollection exprs)
+		public XPath(ICollection<Expr> exprs)
 		{
 			_exprs = exprs;
 		}

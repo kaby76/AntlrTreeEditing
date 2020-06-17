@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 
 /// <summary>
 ///*****************************************************************************
@@ -24,7 +25,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
 	/// </summary>
 	public class IfExpr : Expr
 	{
-		private ICollection _exprs;
+		private ICollection<Expr> _exprs;
 		private Expr _then;
 		private Expr _else;
 
@@ -37,7 +38,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
 		///            If true expressions. </param>
 		/// <param name="e">
 		///            If false/else expressions. </param>
-		public IfExpr(ICollection exps, Expr t, Expr e)
+		public IfExpr(ICollection<Expr> exps, Expr t, Expr e)
 		{
 			_exprs = exps;
 			_then = t;

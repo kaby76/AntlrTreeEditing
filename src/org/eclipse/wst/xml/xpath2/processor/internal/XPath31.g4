@@ -62,10 +62,11 @@ orexpr : andexpr ( KW_OR andexpr )* ;
 andexpr : comparisonexpr ( KW_AND comparisonexpr )* ;
 comparisonexpr : stringconcatexpr ( (valuecomp | generalcomp | nodecomp) stringconcatexpr )? ;
 stringconcatexpr : rangeexpr ( PP rangeexpr )* ;
+// [20]
 rangeexpr : additiveexpr ( KW_TO additiveexpr )? ;
-additiveexpr : multiplicativeexpr ( ( PLUS | MINUS) multiplicativeexpr )* ;
-multiplicativeexpr : unionexpr ( ( STAR | KW_DIV | KW_IDIV | KW_MOD) unionexpr )* ;
-unionexpr : intersectexceptexpr ( ( KW_UNION | P) intersectexceptexpr )* ;
+additiveexpr : multiplicativeexpr ( (PLUS | MINUS) multiplicativeexpr )* ;
+multiplicativeexpr : unionexpr ( (STAR | KW_DIV | KW_IDIV | KW_MOD) unionexpr )* ;
+unionexpr : intersectexceptexpr ( (KW_UNION | P) intersectexceptexpr )* ;
 intersectexceptexpr : instanceofexpr ( ( KW_INTERSECT | KW_EXCEPT) instanceofexpr )* ;
 instanceofexpr : treatexpr ( KW_INSTANCE KW_OF sequencetype )? ;
 treatexpr : castableexpr ( KW_TREAT KW_AS sequencetype )? ;
