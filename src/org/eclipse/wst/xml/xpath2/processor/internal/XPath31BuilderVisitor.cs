@@ -355,6 +355,63 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             return new InstOfExpr(treatExpr, (SequenceType)VisitSequencetype(ctx.sequencetype()));
         }
 
+        // [26]
+        public override object /* Expr */ VisitTreatexpr(XPath31Parser.TreatexprContext ctx)
+        {
+            Expr castableExpr = (Expr)VisitCastableexpr(ctx.castableexpr());
+            if (ctx.KW_TREAT() == null)
+            {
+                return castableExpr;
+            }
+            return new TreatAsExpr(castableExpr, (SequenceType)VisitSequencetype(ctx.sequencetype()));
+        }
+
+        // [27]
+        public override object /* Expr */ VisitCastableexpr(XPath31Parser.CastableexprContext ctx)
+        {
+            Expr castExpr = (Expr)VisitCastexpr(ctx.castexpr());
+            if (ctx.KW_CASTABLE() == null)
+            {
+                return castExpr;
+            }
+            return new CastableExpr(castExpr, (SingleType)VisitSingletype(ctx.singletype()));
+        }
+
+        // [28]
+        public override object /* Expr */ VisitCastexpr(XPath31Parser.CastexprContext ctx)
+        {
+            Expr unaryExpr = (Expr)VisitArrowexpr(ctx.arrowexpr());
+            if (ctx.KW_CAST() == null)
+            {
+                return unaryExpr;
+            }
+            return new CastExpr(unaryExpr, (SingleType)VisitSingletype(ctx.singletype()));
+        }
+
+        // [30]
+        public override object /* Expr */ VisitUnaryexpr(XPath31Parser.UnaryexprContext ctx)
+        {
+            Expr all = (Expr) VisitValueexpr(ctx.valueexpr());
+            for (int i = 0; i < ctx.ChildCount - 1; ++i)
+            {
+                if ((ctx.GetChild(i) as TerminalNodeImpl)?.Symbol.Type == XPath31Parser.MINUS)
+                {
+                    all = new MinusExpr(all);
+                }
+                else if (ctx.PLUS() != null)
+                {
+                    all = new PlusExpr(all);
+                }
+                else
+                {
+                    throw new Exception("Bad expr");
+                }
+            }
+            return all;
+        }
+
+
+
 
 
 
@@ -455,16 +512,6 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
         //    return visitNCName(ctx.nCName());
         //}
 
-        public override object /* Expr */ VisitTreatexpr(XPath31Parser.TreatexprContext ctx)
-        {
-            Expr castableExpr = visitCastableExpr(ctx.castableexpr()());
-            if (ctx.KW_TREAT() == null)
-            {
-                return castableExpr;
-            }
-
-            return new TreatAsExpr(castableExpr, visitSequenceType(ctx.sequencetype()));
-        }
 
         public override object /* NameTest */ VisitNametest(XPath31Parser.NametestContext ctx)
         {
@@ -767,16 +814,6 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             return new SchemaElemTest(visitElementDeclaration(ctx.elementDeclaration()));
         }
 
-        public override object /* Expr */ VisitCastexpr(XPath31Parser.CastexprContext ctx)
-        {
-            Expr unaryExpr = visitUnaryExpr(ctx.unaryExpr());
-            if (ctx.CAST() == null)
-            {
-                return unaryExpr;
-            }
-
-            return new CastExpr(unaryExpr, visitSingleType(ctx.singleType()));
-        }
 
         public override object /* QName */ VisitTypename(XPath31Parser.TypenameContext ctx)
         {
@@ -862,21 +899,6 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             }
         }
 
-        public override object /* Expr */ VisitUnaryexpr(XPath31Parser.UnaryexprContext ctx)
-        {
-            if (ctx.MINUS() != null)
-            {
-                return new MinusExpr(visitUnaryExpr(ctx.unaryExpr()));
-            }
-            else if (ctx.PLUS() != null)
-            {
-                return new PlusExpr(visitUnaryExpr(ctx.unaryExpr()));
-            }
-            else
-            {
-                return visitValueExpr(ctx.valueExpr());
-            }
-        }
 
         public override object /* Expr */ VisitValueexpr(XPath31Parser.ValueexprContext ctx)
         {
@@ -975,16 +997,6 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             }
         }
 
-        public override object /* Expr */ VisitCastableexpr(XPath31Parser.CastableexprContext ctx)
-        {
-            Expr castExpr = visitCastExpr(ctx.castExpr());
-            if (ctx.CASTABLE() == null)
-            {
-                return castExpr;
-            }
-
-            return new CastableExpr(castExpr, visitSingleType(ctx.singleType()));
-        }
 
 
         //public override object /* FilterExpr */ VisitFilterexpr(XPath31Parser.filter ctx)
