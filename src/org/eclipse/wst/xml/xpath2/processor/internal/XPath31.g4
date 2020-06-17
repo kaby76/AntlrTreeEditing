@@ -68,6 +68,7 @@ additiveexpr : multiplicativeexpr ( (PLUS | MINUS) multiplicativeexpr )* ;
 multiplicativeexpr : unionexpr ( (STAR | KW_DIV | KW_IDIV | KW_MOD) unionexpr )* ;
 unionexpr : intersectexceptexpr ( (KW_UNION | P) intersectexceptexpr )* ;
 intersectexceptexpr : instanceofexpr ( ( KW_INTERSECT | KW_EXCEPT) instanceofexpr )* ;
+// [25]
 instanceofexpr : treatexpr ( KW_INSTANCE KW_OF sequencetype )? ;
 treatexpr : castableexpr ( KW_TREAT KW_AS sequencetype )? ;
 castableexpr : castexpr ( KW_CASTABLE KW_AS singletype )? ;

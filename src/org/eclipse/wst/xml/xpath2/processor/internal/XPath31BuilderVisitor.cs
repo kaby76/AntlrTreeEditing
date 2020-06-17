@@ -299,6 +299,66 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             return all;
         }
 
+        // [23]
+        public override object /* Expr */ VisitUnionexpr(XPath31Parser.UnionexprContext ctx)
+        {
+            Expr all = (Expr)VisitIntersectexceptexpr((XPath31Parser.IntersectexceptexprContext)ctx.GetChild(0));
+            for (int i = 1; i < ctx.ChildCount; i += 2)
+            {
+                var o = ctx.GetChild(i);
+                var a = (XPath31Parser.IntersectexceptexprContext)ctx.GetChild(i + 1);
+                Expr x = (Expr)VisitIntersectexceptexpr(a);
+                if ((o as TerminalNodeImpl).Symbol.Type == XPath31Lexer.KW_UNION)
+                {
+                    all = new UnionExpr(all, x);
+                }
+                else if ((o as TerminalNodeImpl).Symbol.Type == XPath31Lexer.P)
+                {
+                    all = new PipeExpr(all, x);
+                }
+                else throw new Exception("Bad expr");
+            }
+            return all;
+        }
+
+        // [24]
+        public override object /* Expr */ VisitIntersectexceptexpr(XPath31Parser.IntersectexceptexprContext ctx)
+        {
+            Expr all = (Expr)VisitInstanceofexpr((XPath31Parser.InstanceofexprContext)ctx.GetChild(0));
+            for (int i = 1; i < ctx.ChildCount; i += 2)
+            {
+                var o = ctx.GetChild(i);
+                var a = (XPath31Parser.InstanceofexprContext)ctx.GetChild(i + 1);
+                Expr x = (Expr)VisitInstanceofexpr(a);
+                if ((o as TerminalNodeImpl).Symbol.Type == XPath31Lexer.KW_INTERSECT)
+                {
+                    all = new IntersectExpr(all, x);
+                }
+                else if ((o as TerminalNodeImpl).Symbol.Type == XPath31Lexer.KW_EXCEPT)
+                {
+                    all = new ExceptExpr(all, x);
+                }
+                else throw new Exception("Bad expr");
+            }
+            return all;
+        }
+
+        // [25]
+        public override object /* Expr */ VisitInstanceofexpr(XPath31Parser.InstanceofexprContext ctx)
+        {
+            Expr treatExpr = (Expr)VisitTreatexpr(ctx.treatexpr());
+            if (ctx.KW_INSTANCE() == null)
+            {
+                return treatExpr;
+            }
+
+            return new InstOfExpr(treatExpr, (SequenceType)VisitSequencetype(ctx.sequencetype()));
+        }
+
+
+
+
+
         public override object /* AnyKindTest */VisitAnykindtest(XPath31Parser.AnykindtestContext ctx)
         {
             return new AnyKindTest();
@@ -314,16 +374,6 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
         //    return ctx.getChild(0).getText();
         //}
 
-        public override object /* Expr */ VisitInstanceofexpr(XPath31Parser.InstanceofexprContext ctx)
-        {
-            Expr treatExpr = (Expr)VisitTreatexpr(ctx.treatexpr());
-            if (ctx.INSTANCE() == null)
-            {
-                return treatExpr;
-            }
-
-            return new InstOfExpr(treatExpr, VisitSequencetype(ctx.sequencetype()));
-        }
 
         public override object /* Integer */ VisitForwardaxis(XPath31Parser.ForwardaxisContext ctx)
         {
@@ -942,23 +992,6 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
         //    return new FilterExpr(visitPrimaryExpr(ctx.primaryExpr()), visitPredicateList(ctx.predicateList()));
         //}
 
-        public override object /* Expr */ VisitUnionexpr(XPath31Parser.UnionexprContext ctx)
-        {
-            Expr intersectExceptExpr = visitIntersectExceptExpr(ctx.intersectExceptExpr());
-            if (ctx.unionExpr() == null)
-            {
-                return intersectExceptExpr;
-            }
-
-            if (ctx.KW_UNION() != null)
-            {
-                return new UnionExpr(visitUnionExpr(ctx.unionExpr()), intersectExceptExpr);
-            }
-            else
-            {
-                return new PipeExpr(visitUnionExpr(ctx.unionExpr()), intersectExceptExpr);
-            }
-        }
 
         public override object /* AxisStep */ VisitAxisstep(XPath31Parser.AxisstepContext ctx)
         {
@@ -1041,23 +1074,6 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             return new TextTest();
         }
 
-        public override object /* Expr */ VisitIntersectexceptexpr(XPath31Parser.IntersectexceptexprContext ctx)
-        {
-            Expr instanceOfExpr = visitInstanceOfExpr(ctx.instanceOfExpr());
-            if (ctx.intersectExceptExpr() == null)
-            {
-                return instanceOfExpr;
-            }
-
-            if (ctx.INTERSECT() != null)
-            {
-                return new IntersectExpr(visitIntersectExceptExpr(ctx.intersectExceptExpr()), instanceOfExpr);
-            }
-            else
-            {
-                return new ExceptExpr(visitIntersectExceptExpr(ctx.intersectExceptExpr()), instanceOfExpr);
-            }
-        }
 
         public override object /* Integer */ VisitValuecomp(XPath31Parser.ValuecompContext ctx)
         {
