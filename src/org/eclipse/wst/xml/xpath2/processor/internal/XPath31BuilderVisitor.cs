@@ -877,6 +877,8 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
         }
 
         // [78] missing
+
+        // [79]
         public override object /* SequenceType */ VisitSequencetype(XPath31Parser.SequencetypeContext ctx)
         {
             if (ctx.itemtype() != null)
@@ -897,7 +899,7 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             }
         }
 
-        // [79]
+        // [80]
         public override object /* Integer */ VisitOccurrenceindicator(XPath31Parser.OccurrenceindicatorContext ctx)
         {
             if (ctx.QM() != null)
@@ -915,7 +917,7 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             else throw new Exception();
         }
 
-        // [80]
+        // [81]
         public override object /* ItemType */ VisitItemtype(XPath31Parser.ItemtypeContext ctx)
         {
             if (ctx.kindtest() != null)
@@ -948,22 +950,134 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             }
         }
 
+        // [82] missing
 
+        // [83]
+        public override object /* KindTest */ VisitKindtest(XPath31Parser.KindtestContext ctx)
+        {
+            if (ctx.documenttest() != null)
+            {
+                return VisitDocumenttest(ctx.documenttest());
+            }
+            else if (ctx.elementtest() != null)
+            {
+                return VisitElementtest(ctx.elementtest());
+            }
+            else if (ctx.attributetest() != null)
+            {
+                return VisitAttributetest(ctx.attributetest());
+            }
+            else if (ctx.schemaelementtest() != null)
+            {
+                return VisitSchemaelementtest(ctx.schemaelementtest());
+            }
+            else if (ctx.schemaattributetest() != null)
+            {
+                return VisitSchemaattributetest(ctx.schemaattributetest());
+            }
+            else if (ctx.pitest() != null)
+            {
+                return VisitPitest(ctx.pitest());
+            }
+            else if (ctx.commenttest() != null)
+            {
+                return VisitCommenttest(ctx.commenttest());
+            }
+            else if (ctx.texttest() != null)
+            {
+                return VisitTexttest(ctx.texttest());
+            }
+            else if (ctx.namespacenodetest() != null)
+            {
+                return VisitNamespacenodetest(ctx.namespacenodetest());
+            }
+            else if (ctx.anykindtest() != null)
+            {
+                return VisitAnykindtest(ctx.anykindtest());
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
 
+        // [84]
         public override object /* AnyKindTest */VisitAnykindtest(XPath31Parser.AnykindtestContext ctx)
         {
             return new AnyKindTest();
         }
 
-        //public override DecimalLiteral visitDecimalLiteral(XPath31Parser.DecimalLiteralContext ctx)
-        //{
-        //    return new DecimalLiteral(new BigDecimal(ctx.DECIMAL().getText()));
-        //}
+        // [85]
+        public override object /* DocumentTest */ VisitDocumenttest(XPath31Parser.DocumenttestContext ctx)
+        {
+            if (ctx.elementtest() != null)
+            {
+                return new DocumentTest(DocumentTest.ELEMENT, VisitElementtest(ctx.elementtest()));
+            }
+            else if (ctx.schemaelementtest() != null)
+            {
+                return new DocumentTest(DocumentTest.SCHEMA_ELEMENT, VisitSchemaelementtest(ctx.schemaelementtest()));
+            }
+            else
+            {
+                return new DocumentTest();
+            }
+        }
 
-        //public override String visitUnreservedNCName(XPath31Parser.UnreservedNCNameContext ctx)
-        //{
-        //    return ctx.getChild(0).getText();
-        //}
+        // [86]
+        public override object /* TextTest */ VisitTexttest(XPath31Parser.TexttestContext ctx)
+        {
+            return new TextTest();
+        }
+
+        // [87]
+        public override object /* CommentTest */ VisitCommenttest(XPath31Parser.CommenttestContext ctx)
+        {
+            return new CommentTest();
+        }
+
+        // [88] missing
+
+        // [89]
+        public override object /* PITest */ VisitPitest(XPath31Parser.PitestContext ctx)
+        {
+            if (ctx.NCName() != null)
+            {
+                return new PITest(ctx.NCName().GetText());
+            }
+            else if (ctx.StringLiteral() != null)
+            {
+                return new PITest(new StringLiteral(LiteralUtils.unquote(ctx.StringLiteral().GetText())).ToString());
+            }
+            else
+            {
+                return new PITest();
+            }
+        }
+
+        // [90]
+        public override object /* AttributeTest */ VisitAttributetest(XPath31Parser.AttributetestContext ctx)
+        {
+            if (ctx.attribnameorwildcard() != null)
+            {
+                QName attribNameOrWildcard = (QName)VisitAttribnameorwildcard(ctx.attribnameorwildcard());
+                bool wildcard = attribNameOrWildcard == null;
+                if (ctx.typename() != null)
+                {
+                    return new AttributeTest(attribNameOrWildcard, wildcard, (QName)VisitTypename(ctx.typename()));
+                }
+                else
+                {
+                    return new AttributeTest(attribNameOrWildcard, wildcard);
+                }
+            }
+            else
+            {
+                return new AttributeTest();
+            }
+        }
+
+
 
 
 
@@ -1026,45 +1140,6 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
         }
 
 
-        public override object /* KindTest */ VisitKindtest(XPath31Parser.KindtestContext ctx)
-        {
-            if (ctx.documentTest() != null)
-            {
-                return visitDocumentTest(ctx.documentTest());
-            }
-            else if (ctx.elementTest() != null)
-            {
-                return visitElementTest(ctx.elementTest());
-            }
-            else if (ctx.attributeTest() != null)
-            {
-                return visitAttributeTest(ctx.attributeTest());
-            }
-            else if (ctx.schemaElementTest() != null)
-            {
-                return visitSchemaElementTest(ctx.schemaElementTest());
-            }
-            else if (ctx.schemaAttributeTest() != null)
-            {
-                return visitSchemaAttributeTest(ctx.schemaAttributeTest());
-            }
-            else if (ctx.pITest() != null)
-            {
-                return visitPITest(ctx.pITest());
-            }
-            else if (ctx.commentTest() != null)
-            {
-                return visitCommentTest(ctx.commentTest());
-            }
-            else if (ctx.textTest() != null)
-            {
-                return visitTextTest(ctx.textTest());
-            }
-            else
-            {
-                return visitAnyKindTest(ctx.anyKindTest());
-            }
-        }
 
         //public override object /* StringLiteral */ VisitStringliteral(XPath31Parser. ctx)
         //{
@@ -1080,21 +1155,6 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
 
 
 
-        public override object /* PITest */ Visitpitest(XPath31Parser.PitestContext ctx)
-        {
-            if (ctx.nCName() != null)
-            {
-                return new PITest(visitNCName(ctx.nCName()));
-            }
-            else if (ctx.stringLiteral() != null)
-            {
-                return new PITest(visitStringLiteral(ctx.stringLiteral()).ToString());
-            }
-            else
-            {
-                return new PITest();
-            }
-        }
 
         //public override QName visitQName(XPath31Parser.QNameContext ctx)
         //{
@@ -1208,32 +1268,8 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
 
 
 
-        public override object /* AttributeTest */ VisitAttributetest(XPath31Parser.AttributetestContext ctx)
-        {
-            if (ctx.attribNameOrWildcard() != null)
-            {
-                QName attribNameOrWildcard = visitAttribNameOrWildcard(ctx.attribNameOrWildcard());
-                boolean wildcard = attribNameOrWildcard == null;
-                if (ctx.typeName() != null)
-                {
-                    return new AttributeTest(attribNameOrWildcard, wildcard, visitTypeName(ctx.typeName()));
-                }
-                else
-                {
-                    return new AttributeTest(attribNameOrWildcard, wildcard);
-                }
-            }
-            else
-            {
-                return new AttributeTest();
-            }
-        }
 
 
-        public override object /* CommentTest */ VisitCommenttest(XPath31Parser.CommenttestContext ctx)
-        {
-            return new CommentTest();
-        }
 
         public override object /* QName */ VisitAttribnameorwildcard(XPath31Parser.AttribnameorwildcardContext ctx)
         {
@@ -1247,10 +1283,6 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             }
         }
 
-        public override object /* TextTest */ VisitTexttest(XPath31Parser.TexttestContext ctx)
-        {
-            return new TextTest();
-        }
 
 
 
@@ -1261,21 +1293,6 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
 
 
 
-        public override object /* DocumentTest */ VisitDocumenttest(XPath31Parser.DocumenttestContext ctx)
-        {
-            if (ctx.elementTest() != null)
-            {
-                return new DocumentTest(DocumentTest.ELEMENT, visitElementTest(ctx.elementTest()));
-            }
-            else if (ctx.schemaElementTest() != null)
-            {
-                return new DocumentTest(DocumentTest.SCHEMA_ELEMENT, visitSchemaElementTest(ctx.schemaElementTest()));
-            }
-            else
-            {
-                return new DocumentTest();
-            }
-        }
 
 
 

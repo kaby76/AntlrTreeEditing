@@ -140,6 +140,7 @@ itemtype : kindtest | ( KW_ITEM OP CP) | functiontest | maptest | arraytest | at
 atomicoruniontype : eqname ;
 kindtest : documenttest | elementtest | attributetest | schemaelementtest | schemaattributetest | pitest | commenttest | texttest | namespacenodetest | anykindtest ;
 anykindtest : KW_NODE OP CP ;
+// [85]
 documenttest : KW_DOCUMENT_NODE OP (elementtest | schemaelementtest)? CP ;
 texttest : KW_TEXT OP CP ;
 commenttest : KW_COMMENT OP CP ;
