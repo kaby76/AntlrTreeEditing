@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 
 /// <summary>
 ///*****************************************************************************
@@ -27,7 +28,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
 	public class AxisStep : StepExpr
 	{
 		private Step _step;
-		private ICollection _exprs;
+		private ICollection<ICollection<Expr>> _exprs;
 
 		/// <summary>
 		/// Constructor for AxisStep.
@@ -36,7 +37,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
 		///            Defines forward/reverse step. </param>
 		/// <param name="exprs">
 		///            Collection of xpath expressions. </param>
-		public AxisStep(Step step, ICollection exprs)
+		public AxisStep(Step step, ICollection<ICollection<Expr>> exprs)
 		{
 			_step = step;
 			_exprs = exprs;

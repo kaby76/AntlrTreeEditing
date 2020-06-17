@@ -483,6 +483,82 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             }
         }
 
+        // [35] missing
+
+        // [36]
+        public override object /* Expr */ VisitPathexpr(XPath31Parser.PathexprContext ctx)
+        {
+            if (ctx.relativepathexpr() != null)
+            {
+                XPathExpr relativePathExpr = (XPathExpr)VisitRelativepathexpr(ctx.relativepathexpr());
+                if (ctx.SLASH() != null)
+                {
+                    relativePathExpr.set_slashes(1);
+                }
+                else if (ctx.SS() != null)
+                {
+                    relativePathExpr.set_slashes(2);
+                }
+                return relativePathExpr;
+            }
+            else
+            {
+                return new XPathExpr(1, null);
+            }
+        }
+
+        // [37]
+        public override object /* XPathExpr */ VisitRelativepathexpr(XPath31Parser.RelativepathexprContext ctx)
+        {
+            StepExpr all = (StepExpr)VisitStepexpr((XPath31Parser.StepexprContext)ctx.GetChild(0));
+            XPathExpr relativePathExpr = new XPathExpr(0, all);
+            for (int i = 1; i < ctx.ChildCount; i += 2)
+            {
+                var o = ctx.GetChild(i);
+                var a = (XPath31Parser.StepexprContext)ctx.GetChild(i + 1);
+                StepExpr x = (Expr)VisitStepexpr(a);
+                if ((o as TerminalNodeImpl).Symbol.Type == XPath31Lexer.SLASH)
+                {
+                    relativePathExpr.add_tail(1, x);
+                }
+                else if ((o as TerminalNodeImpl).Symbol.Type == XPath31Lexer.SS)
+                {
+                    relativePathExpr.add_tail(2, x);
+                }
+                else throw new Exception("Bad additiveexpr");
+            }
+            return relativePathExpr;
+        }
+
+        // [38]
+        public override object /* StepExpr */ VisitStepexpr(XPath31Parser.StepexprContext ctx)
+        {
+            if (ctx.axisstep() != null)
+            {
+                return VisitAxisstep(ctx.axisstep());
+            }
+            else
+            {
+                return VisitPostfixexpr(ctx.postfixexpr());
+            }
+        }
+
+        // [39]
+        public override object /* AxisStep */ VisitAxisstep(XPath31Parser.AxisstepContext ctx)
+        {
+            if (ctx.forwardstep() != null)
+            {
+                return new AxisStep((Step)VisitForwardstep(ctx.forwardstep()), (ICollection<ICollection<Expr>>)VisitPredicatelist(ctx.predicatelist()));
+            }
+            else
+            {
+                return new AxisStep((Step)VisitReversestep(ctx.reversestep()), (ICollection<ICollection<Expr>>)VisitPredicatelist(ctx.predicatelist()));
+            }
+        }
+
+        // [40] missing
+
+
 
 
 
@@ -724,27 +800,6 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
         //    return new StringLiteral(LiteralUtils.unquote(ctx.STRING().getText()));
         //}
 
-        public override object /* Expr */ VisitPathexpr(XPath31Parser.PathexprContext ctx)
-        {
-            if (ctx.relativePathExpr() != null)
-            {
-                XPathExpr relativePathExpr = visitRelativePathExpr(ctx.relativePathExpr());
-                if (ctx.FORWARD_SLASH() != null)
-                {
-                    relativePathExpr.set_slashes(1);
-                }
-                else if (ctx.FORWARD_SLASHSLASH() != null)
-                {
-                    relativePathExpr.set_slashes(2);
-                }
-
-                return relativePathExpr;
-            }
-            else
-            {
-                return new XPathExpr(1, null);
-            }
-        }
 
         public override object /* FunctionCall */ VisitFunctioncall(XPath31Parser.FunctioncallContext ctx)
         {
@@ -1035,17 +1090,6 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
         //}
 
 
-        public override object /* AxisStep */ VisitAxisstep(XPath31Parser.AxisstepContext ctx)
-        {
-            if (ctx.forwardStep() != null)
-            {
-                return new AxisStep(visitForwardStep(ctx.forwardStep()), visitPredicateList(ctx.predicateList()));
-            }
-            else
-            {
-                return new AxisStep(visitReverseStep(ctx.reverseStep()), visitPredicateList(ctx.predicateList()));
-            }
-        }
 
         public override object /* ReverseStep */ VisitAbbrevreversestep(XPath31Parser.AbbrevreversestepContext ctx)
         {
@@ -1073,26 +1117,6 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             }
         }
 
-        public override object /* XPathExpr */ VisitRelativepathexpr(XPath31Parser.RelativepathexprContext ctx)
-        {
-            StepExpr stepExpr = visitStepExpr(ctx.stepExpr());
-            if (ctx.FORWARD_SLASH() != null)
-            {
-                XPathExpr relativePathExpr = visitRelativePathExpr(ctx.relativePathExpr());
-                relativePathExpr.add_tail(1, stepExpr);
-                return relativePathExpr;
-            }
-            else if (ctx.FORWARD_SLASHSLASH() != null)
-            {
-                XPathExpr relativePathExpr = visitRelativePathExpr(ctx.relativePathExpr());
-                relativePathExpr.add_tail(2, stepExpr);
-                return relativePathExpr;
-            }
-            else
-            {
-                return new XPathExpr(0, stepExpr);
-            }
-        }
 
         public override object /* CommentTest */ VisitCommenttest(XPath31Parser.CommenttestContext ctx)
         {
@@ -1142,17 +1166,6 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
         }
 
 
-        public override object /* StepExpr */ VisitStepexpr(XPath31Parser.StepexprContext ctx)
-        {
-            if (ctx.axisStep() != null)
-            {
-                return visitAxisStep(ctx.axisStep());
-            }
-            else
-            {
-                return visitFilterExpr(ctx.filterExpr());
-            }
-        }
 
         public override object /* ICollection<Expr> */ VisitFunctionalcall(XPath31Parser.FunctioncallContext ctx)
         {
