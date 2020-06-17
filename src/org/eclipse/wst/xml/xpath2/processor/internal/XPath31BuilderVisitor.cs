@@ -558,29 +558,23 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
 
         // [40] missing
 
-
-
-
-
-        public override object /* AnyKindTest */VisitAnykindtest(XPath31Parser.AnykindtestContext ctx)
+        // [41]
+        public override object /* ForwardStep */ VisitForwardstep(XPath31Parser.ForwardstepContext ctx)
         {
-            return new AnyKindTest();
+            if (ctx.forwardaxis() != null)
+            {
+                return new ForwardStep((int)VisitForwardaxis(ctx.forwardaxis()), (NodeTest)VisitNodetest(ctx.nodetest()));
+            }
+            else
+            {
+                return VisitAbbrevforwardstep(ctx.abbrevforwardstep());
+            }
         }
 
-        //public override DecimalLiteral visitDecimalLiteral(XPath31Parser.DecimalLiteralContext ctx)
-        //{
-        //    return new DecimalLiteral(new BigDecimal(ctx.DECIMAL().getText()));
-        //}
-
-        //public override String visitUnreservedNCName(XPath31Parser.UnreservedNCNameContext ctx)
-        //{
-        //    return ctx.getChild(0).getText();
-        //}
-
-
+        // [42]
         public override object /* Integer */ VisitForwardaxis(XPath31Parser.ForwardaxisContext ctx)
         {
-            switch (((TerminalNode) ctx.GetChild(0)).getSymbol().getType())
+            switch ((ctx.GetChild(0) as TerminalNodeImpl).Symbol.Type)
             {
                 case XPath31Lexer.KW_CHILD:
                     return ForwardStep.CHILD;
@@ -603,6 +597,114 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
                     return ForwardStep.NONE;
             }
         }
+
+        // [43]
+        public override object /* ForwardStep */ VisitAbbrevforwardstep(XPath31Parser.AbbrevforwardstepContext ctx)
+        {
+            NodeTest nodeTest = (NodeTest)VisitNodetest(ctx.nodetest());
+            if (ctx.AT() != null)
+            {
+                return new ForwardStep(ForwardStep.AT_SYM, nodeTest);
+            }
+            else
+            {
+                return new ForwardStep(ForwardStep.NONE, nodeTest);
+            }
+        }
+
+        // [44]
+        public override object /* ReverseStep */ VisitReversestep(XPath31Parser.ReversestepContext ctx)
+        {
+            if (ctx.reverseaxis() != null)
+            {
+                return new ReverseStep((int)VisitReverseaxis(ctx.reverseaxis()), (NodeTest)VisitNodetest(ctx.nodetest()));
+            }
+            else
+            {
+                return VisitAbbrevreversestep(ctx.abbrevreversestep());
+            }
+        }
+
+        // [45]
+        public override object /* Integer */ VisitReverseaxis(XPath31Parser.ReverseaxisContext ctx)
+        {
+            switch ((ctx.GetChild(0) as TerminalNodeImpl).Symbol.Type)
+            {
+                case XPath31Lexer.KW_PARENT:
+                    return ReverseStep.PARENT;
+                case XPath31Lexer.KW_ANCESTOR:
+                    return ReverseStep.ANCESTOR;
+                case XPath31Lexer.KW_PRECEDING_SIBLING:
+                    return ReverseStep.PRECEDING_SIBLING;
+                case XPath31Lexer.KW_PRECEDING:
+                    return ReverseStep.PRECEDING;
+                case XPath31Lexer.KW_ANCESTOR_OR_SELF:
+                    return ReverseStep.ANCESTOR_OR_SELF;
+                default:
+                    Debug.Assert(false);
+                    return ReverseStep.DOTDOT;
+            }
+        }
+
+        // [46]
+        public override object /* NodeTest */ VisitNodetest(XPath31Parser.NodetestContext ctx)
+        {
+            if (ctx.kindtest() != null)
+            {
+                return VisitKindtest(ctx.kindtest());
+            }
+            else
+            {
+                return VisitNametest(ctx.nametest());
+            }
+        }
+
+        // [47]
+        public override object /* NameTest */ VisitNametest(XPath31Parser.NametestContext ctx)
+        {
+            if (ctx.eqname() != null)
+            {
+                return new NameTest((QName)VisitEqname(ctx.eqname()));
+            }
+            else
+            {
+                return new NameTest((QName)VisitWildcard(ctx.wildcard()));
+            }
+        }
+
+        // [48] missing
+
+        // [49] missing
+
+        // [50]
+        public override object /* ICollection<ICollection<Expr>> */ VisitPredicatelist(XPath31Parser.PredicatelistContext ctx)
+        {
+            ICollection<ICollection<Expr>> result = new List<ICollection<Expr>>();
+            foreach (XPath31Parser.PredicateContext predicate in ctx.predicate())
+            {
+                result.Add((ICollection<Expr>)VisitPredicate(predicate));
+            }
+            return result;
+        }
+
+
+
+        public override object /* AnyKindTest */VisitAnykindtest(XPath31Parser.AnykindtestContext ctx)
+        {
+            return new AnyKindTest();
+        }
+
+        //public override DecimalLiteral visitDecimalLiteral(XPath31Parser.DecimalLiteralContext ctx)
+        //{
+        //    return new DecimalLiteral(new BigDecimal(ctx.DECIMAL().getText()));
+        //}
+
+        //public override String visitUnreservedNCName(XPath31Parser.UnreservedNCNameContext ctx)
+        //{
+        //    return ctx.getChild(0).getText();
+        //}
+
+
 
         public override object /* ElementTest */ VisitElementtest(XPath31Parser.ElementtestContext ctx)
         {
@@ -633,25 +735,6 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             }
         }
 
-        public override object /* Integer */ VisitReverseaxis(XPath31Parser.ReverseaxisContext ctx)
-        {
-            switch (((TerminalNode) ctx.GetChild(0)).getSymbol().getType())
-            {
-                case XPath31Lexer.KW_PARENT:
-                    return ReverseStep.PARENT;
-                case XPath31Lexer.KW_ANCESTOR:
-                    return ReverseStep.ANCESTOR;
-                case XPath31Lexer.KW_PRECEDING_SIBLING:
-                    return ReverseStep.PRECEDING_SIBLING;
-                case XPath31Lexer.KW_RECEDING:
-                    return ReverseStep.PRECEDING;
-                case XPath31Lexer.KW_ANCESTOR_OR_SELF:
-                    return ReverseStep.ANCESTOR_OR_SELF;
-                default:
-                    Debug.Assert(false);
-                    return ReverseStep.DOTDOT;
-            }
-        }
 
         //public override object /* String */ VisitPrefix(XPath31Parser. PrefixContext ctx)
         //{
@@ -659,17 +742,6 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
         //}
 
 
-        public override object /* NameTest */ VisitNametest(XPath31Parser.NametestContext ctx)
-        {
-            if (ctx.qName() != null)
-            {
-                return new NameTest(visitQName(ctx.qName()));
-            }
-            else
-            {
-                return new NameTest(visitWildcard(ctx.wildcard()));
-            }
-        }
 
         public override object /* CntxItemExpr */ VisitContextitemexpr(XPath31Parser.ContextitemexprContext ctx)
         {
@@ -691,17 +763,6 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             return VisitExpr(ctx.expr());
         }
 
-        public override object /* ICollection<ICollection<Expr>> */ VisitPredicatelist(XPath31Parser.PredicatelistContext ctx)
-        {
-            ICollection<ICollection<Expr>> result = new List<ICollection<Expr>>();
-            //for (XPath31Parser.PredicateContext predicate :
-            //ctx.predicate())
-            //{
-            //    result.add(visitPredicate(predicate));
-            //}
-
-            return result;
-        }
 
         public override object /* SchemaAttrTest */ VisitSchemaattributetest(XPath31Parser.SchemaattributetestContext ctx)
         {
@@ -819,17 +880,6 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
         //    return new DoubleLiteral(new Double(ctx.DOUBLE().getText()));
         //}
 
-        public override object /* ForwardStep */ VisitForwardstep(XPath31Parser.ForwardstepContext ctx)
-        {
-            if (ctx.forwardAxis() != null)
-            {
-                return new ForwardStep(visitForwardAxis(ctx.forwardAxis()), visitNodeTest(ctx.nodeTest()));
-            }
-            else
-            {
-                return visitAbbrevForwardStep(ctx.abbrevForwardStep());
-            }
-        }
 
         public override object /* SequenceType */ VisitSequencetype(XPath31Parser.SequencetypeContext ctx)
         {
@@ -922,17 +972,6 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
         //    return result;
         //}
 
-        public override object /* NodeTest */ VisitNodetest(XPath31Parser.NodetestContext ctx)
-        {
-            if (ctx.kindTest() != null)
-            {
-                return visitKindTest(ctx.kindTest());
-            }
-            else
-            {
-                return visitNameTest(ctx.nameTest());
-            }
-        }
 
         public override object /* SchemaElemTest */ VisitSchemaelementtest(XPath31Parser.SchemaelementtestContext ctx)
         {
@@ -990,18 +1029,6 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             }
         }
 
-        public override object /* ForwardStep */ VisitAbbrevforwardstep(XPath31Parser.AbbrevforwardstepContext ctx)
-        {
-            NodeTest nodeTest = visitNodeTest(ctx.nodeTest());
-            if (ctx.AT_SYM() != null)
-            {
-                return new ForwardStep(ForwardStep.AT_SYM, nodeTest);
-            }
-            else
-            {
-                return new ForwardStep(ForwardStep.NONE, nodeTest);
-            }
-        }
 
 
 
@@ -1070,17 +1097,6 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             return visitQName(ctx.qName());
         }
 
-        public override object /* ReverseStep */ VisitReversestep(XPath31Parser.ReversestepContext ctx)
-        {
-            if (ctx.reverseAxis() != null)
-            {
-                return new ReverseStep(visitReverseAxis(ctx.reverseAxis()), visitNodeTest(ctx.nodeTest()));
-            }
-            else
-            {
-                return visitAbbrevReverseStep(ctx.abbrevReverseStep());
-            }
-        }
 
 
 
