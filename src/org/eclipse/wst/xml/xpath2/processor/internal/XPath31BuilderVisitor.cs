@@ -410,8 +410,78 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             return all;
         }
 
+        // [31]
+        public override object /* Expr */ VisitValueexpr(XPath31Parser.ValueexprContext ctx)
+        {
+            return VisitSimplemapexpr(ctx.simplemapexpr());
+        }
 
+        // [32]
+        public override object /* int */ VisitGeneralcomp(XPath31Parser.GeneralcompContext ctx)
+        {
+            switch ((ctx.GetChild(0) as TerminalNodeImpl)?.Symbol.Type)
+            {
+                case XPath31Lexer.EQ:
+                    return CmpExpr.EQUALS;
+                case XPath31Lexer.NE:
+                    return CmpExpr.NOTEQUALS;
+                case XPath31Lexer.LT:
+                    return CmpExpr.LESSTHAN;
+                case XPath31Lexer.LE:
+                    return CmpExpr.LESSEQUAL;
+                case XPath31Lexer.GT:
+                    return CmpExpr.GREATER;
+                case XPath31Lexer.GE:
+                    return CmpExpr.GREATEREQUAL;
+                default:
+                    Debug.Assert(false);
+                    return 0;
+            }
+        }
 
+        // [33]
+        public override object /* int */ VisitValuecomp(XPath31Parser.ValuecompContext ctx)
+        {
+            switch ((ctx.GetChild(0) as TerminalNodeImpl)?.Symbol.Type)
+            {
+                case XPath31Lexer.EQ:
+                    return CmpExpr.EQ;
+                case XPath31Lexer.NE:
+                    return CmpExpr.NE;
+                case XPath31Lexer.LT:
+                    return CmpExpr.LT;
+                case XPath31Lexer.LE:
+                    return CmpExpr.LE;
+                case XPath31Lexer.GT:
+                    return CmpExpr.GT;
+                case XPath31Lexer.GE:
+                    return CmpExpr.GE;
+                default:
+                    Debug.Assert(false);
+                    return 0;
+            }
+        }
+
+        // [34]
+        public override object /* int */ VisitNodecomp(XPath31Parser.NodecompContext ctx)
+        {
+            if (ctx.KW_IS() != null)
+            {
+                return CmpExpr.IS;
+            }
+            else if (ctx.LL() != null)
+            {
+                return CmpExpr.LESS_LESS;
+            }
+            else if (ctx.GG() != null)
+            {
+                return CmpExpr.GREATER_GREATER;
+            }
+            else
+            {
+                throw new Exception("bad expr");
+            }
+        }
 
 
 
@@ -837,27 +907,6 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
         //    return ctx.getChild(0).getText();
         //}
 
-        public override object /* Integer */ VisitGeneralcomp(XPath31Parser.GeneralcompContext ctx)
-        {
-            switch (((TerminalNode) ctx.getChild(0)).getSymbol().getType())
-            {
-                case XPath31Lexer.EQUALS:
-                    return CmpExpr.EQUALS;
-                case XPath31Lexer.NOTEQUALS:
-                    return CmpExpr.NOTEQUALS;
-                case XPath31Lexer.LESSTHAN:
-                    return CmpExpr.LESSTHAN;
-                case XPath31Lexer.LESSEQUAL:
-                    return CmpExpr.LESSEQUAL;
-                case XPath31Lexer.GREATER:
-                    return CmpExpr.GREATER;
-                case XPath31Lexer.GREATEREQUAL:
-                    return CmpExpr.GREATEREQUAL;
-                default:
-                    Debug.Assert(false);
-                    return 0;
-            }
-        }
 
         public override object /* QName */ VisitWildcard(XPath31Parser.WildcardContext ctx)
         {
@@ -900,10 +949,6 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
         }
 
 
-        public override object /* Expr */ VisitValueexpr(XPath31Parser.ValueexprContext ctx)
-        {
-            return visitPathExpr(ctx.pathExpr());
-        }
 
         public override object /* PrimaryExpr */ VisitPrimaryexpr(XPath31Parser.PrimaryexprContext ctx)
         {
@@ -952,21 +997,6 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             }
         }
 
-        public override object /* Integer */ VisitNodecomp(XPath31Parser.NodecompContext ctx)
-        {
-            if (ctx.IS() != null)
-            {
-                return CmpExpr.IS;
-            }
-            else if (ctx.LESS_LESS() != null)
-            {
-                return CmpExpr.LESS_LESS;
-            }
-            else
-            {
-                return CmpExpr.GREATER_GREATER;
-            }
-        }
 
         public override object /* QName */ VisitElementnameorwildcard(XPath31Parser.ElementnameorwildcardContext ctx)
         {
@@ -1087,27 +1117,6 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
         }
 
 
-        public override object /* Integer */ VisitValuecomp(XPath31Parser.ValuecompContext ctx)
-        {
-            switch (((TerminalNode) ctx.getChild(0)).getSymbol().getType())
-            {
-                case XPath31Lexer.EQ:
-                    return CmpExpr.EQ;
-                case XPath31Lexer.NE:
-                    return CmpExpr.NE;
-                case XPath31Lexer.LT:
-                    return CmpExpr.LT;
-                case XPath31Lexer.LE:
-                    return CmpExpr.LE;
-                case XPath31Lexer.GT:
-                    return CmpExpr.GT;
-                case XPath31Lexer.GE:
-                    return CmpExpr.GE;
-                default:
-                    Debug.Assert(false);
-                    return 0;
-            }
-        }
 
         //public override object /* IntegerLiteral */ VisitIntegerliteral(XPath31Parser.integ ctx)
         //{

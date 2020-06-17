@@ -74,11 +74,13 @@ treatexpr : castableexpr ( KW_TREAT KW_AS sequencetype )? ;
 castableexpr : castexpr ( KW_CASTABLE KW_AS singletype )? ;
 castexpr : arrowexpr ( KW_CAST KW_AS singletype )? ;
 arrowexpr : unaryexpr ( EG arrowfunctionspecifier argumentlist )* ;
+// [30]
 unaryexpr : ( MINUS | PLUS)* valueexpr ;
 valueexpr : simplemapexpr ;
 generalcomp : EQ | NE | LT | LE | GT | GE ;
 valuecomp : KW_EQ | KW_NE | KW_LT | KW_LE | KW_GT | KW_GE ;
 nodecomp : KW_IS | LL | GG ;
+// [35]
 simplemapexpr : pathexpr ( BANG pathexpr)* ;
 pathexpr : ( SLASH relativepathexpr?) | ( SS relativepathexpr) | relativepathexpr ;
 relativepathexpr : stepexpr (( SLASH | SS) stepexpr)* ;
