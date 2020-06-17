@@ -814,6 +814,141 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             return VisitEqname(ctx.eqname());
         }
 
+        // [61]
+        public override object /* ICollection<Expr> */ VisitParenthesizedexpr(XPath31Parser.ParenthesizedexprContext ctx)
+        {
+            if (ctx.expr() == null)
+            {
+                return new ArrayList<Expr>();
+            }
+            return VisitExpr(ctx.expr());
+        }
+
+        // [62]
+        public override object /* CntxItemExpr */ VisitContextitemexpr(XPath31Parser.ContextitemexprContext ctx)
+        {
+            return new CntxItemExpr();
+        }
+
+        // [63]
+        public override object /* FunctionCall */ VisitFunctioncall(XPath31Parser.FunctioncallContext ctx)
+        {
+            return new FunctionCall((QName)VisitEqname(ctx.eqname()), (ICollection<Expr>)VisitArgumentlist(ctx.argumentlist()));
+        }
+
+        // [64] missing
+
+        // [65] missing
+
+        // [66] missing
+
+        // [67] missing
+
+        // [68] missing
+
+        // [69] missing
+
+        // [70] missing
+
+        // [71] missing
+
+        // [72] missing
+
+        // [73] missing
+
+        // [74] missing
+
+        // [75] missing
+
+        // [76] missing
+
+        // [77]
+        public override object /* SingleType */ VisitSingletype(XPath31Parser.SingletypeContext ctx)
+        {
+            QName a = (QName)VisitSimpletypename(ctx.simpletypename());
+            if (ctx.QM() != null)
+            {
+                return new SingleType(a, true);
+            }
+            else
+            {
+                return new SingleType(a);
+            }
+        }
+
+        // [78] missing
+        public override object /* SequenceType */ VisitSequencetype(XPath31Parser.SequencetypeContext ctx)
+        {
+            if (ctx.itemtype() != null)
+            {
+                ItemType itemType = (ItemType)VisitItemtype(ctx.itemtype());
+                if (ctx.occurrenceindicator() != null)
+                {
+                    return new SequenceType((int)VisitOccurrenceindicator(ctx.occurrenceindicator()), itemType);
+                }
+                else
+                {
+                    return new SequenceType(SequenceType.NONE, itemType);
+                }
+            }
+            else
+            {
+                return new SequenceType(SequenceType.EMPTY, null);
+            }
+        }
+
+        // [79]
+        public override object /* Integer */ VisitOccurrenceindicator(XPath31Parser.OccurrenceindicatorContext ctx)
+        {
+            if (ctx.QM() != null)
+            {
+                return SequenceType.QUESTION;
+            }
+            else if (ctx.STAR() != null)
+            {
+                return SequenceType.STAR;
+            }
+            else if (ctx.PLUS() != null)
+            {
+                return SequenceType.PLUS;
+            }
+            else throw new Exception();
+        }
+
+        // [80]
+        public override object /* ItemType */ VisitItemtype(XPath31Parser.ItemtypeContext ctx)
+        {
+            if (ctx.kindtest() != null)
+            {
+                return new ItemType(ItemType.KINDTEST, VisitKindtest(ctx.kindtest()));
+            }
+            else if (ctx.maptest() != null)
+            {
+                return new ItemType(ItemType.MAPTEST, VisitFunctiontest(ctx.maptest()));
+            }
+            else if (ctx.functiontest() != null)
+            {
+                return new ItemType(ItemType.FUNCTIONTEST, VisitFunctiontest(ctx.functiontest()));
+            }
+            else if (ctx.arraytest() != null)
+            {
+                return new ItemType(ItemType.ARRAYTEST, VisitArraytest(ctx.arraytest()));
+            }
+            else if (ctx.atomicoruniontype() != null)
+            {
+                return new ItemType(ItemType.ATOMICORUNIONTEST, VisitAtomicoruniontype(ctx.atomicoruniontype()));
+            }
+            else if (ctx.parenthesizeditemtype() != null)
+            {
+                return new ItemType(ItemType.PARENTHESIZEDITEMTYPE, VisitParenthesizeditemtype(ctx.parenthesizeditemtype()));
+            }
+            else if (ctx.KW_ITEM() != null)
+            {
+                return new ItemType(ItemType.ITEM, null);
+            }
+        }
+
+
 
         public override object /* AnyKindTest */VisitAnykindtest(XPath31Parser.AnykindtestContext ctx)
         {
@@ -869,10 +1004,6 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
 
 
 
-        public override object /* CntxItemExpr */ VisitContextitemexpr(XPath31Parser.ContextitemexprContext ctx)
-        {
-            return new CntxItemExpr();
-        }
 
 
         public override object /* QName */ VisitElementname(XPath31Parser.ElementnameContext ctx)
@@ -887,15 +1018,6 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             return new SchemaAttrTest(visitAttributeDeclaration(ctx.attributeDeclaration()));
         }
 
-        public override object /* ICollection<Expr> */ VisitParenthesizedexpr(XPath31Parser.ParenthesizedexprContext ctx)
-        {
-            if (ctx.expr() == null)
-            {
-                return new ArrayList<Expr>();
-            }
-
-            return visitExpr(ctx.expr());
-        }
 
 
         public override object /* QName */ VisitElementdeclaration(XPath31Parser.ElementdeclarationContext ctx)
@@ -903,21 +1025,6 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             return visitElementName(ctx.elementName());
         }
 
-        public override object /* Integer */ VisitOccurrenceindicator(XPath31Parser.OccurrenceindicatorContext ctx)
-        {
-            if (ctx.QUESTIONMARK() != null)
-            {
-                return SequenceType.QUESTION;
-            }
-            else if (ctx.STAR() != null)
-            {
-                return SequenceType.STAR;
-            }
-            else
-            {
-                return SequenceType.PLUS;
-            }
-        }
 
         public override object /* KindTest */ VisitKindtest(XPath31Parser.KindtestContext ctx)
         {
@@ -965,18 +1072,6 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
         //}
 
 
-        public override object /* FunctionCall */ VisitFunctioncall(XPath31Parser.FunctioncallContext ctx)
-        {
-            if (ctx.functionCallMiddle() != null)
-            {
-                return new FunctionCall(visitUnreservedQName(ctx.unreservedQName()),
-                    visitFunctionCallMiddle(ctx.functionCallMiddle()));
-            }
-            else
-            {
-                return new FunctionCall(visitUnreservedQName(ctx.unreservedQName()), new ArrayList<Expr>());
-            }
-        }
 
         //public override object /* DoubleLiteral */ VisitDoubleliteral(XPath31Parser.dou ctx)
         //{
@@ -984,25 +1079,6 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
         //}
 
 
-        public override object /* SequenceType */ VisitSequencetype(XPath31Parser.SequencetypeContext ctx)
-        {
-            if (ctx.itemType() != null)
-            {
-                ItemType itemType = visitItemType(ctx.itemType());
-                if (ctx.occurrenceIndicator() != null)
-                {
-                    return new SequenceType(visitOccurrenceIndicator(ctx.occurrenceIndicator()), itemType);
-                }
-                else
-                {
-                    return new SequenceType(SequenceType.NONE, itemType);
-                }
-            }
-            else
-            {
-                return new SequenceType(SequenceType.EMPTY, null);
-            }
-        }
 
         public override object /* PITest */ Visitpitest(XPath31Parser.PitestContext ctx)
         {
@@ -1032,21 +1108,6 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
         //    }
         //}
 
-        public override object /* ItemType */ VisitItemtype(XPath31Parser.ItemtypeContext ctx)
-        {
-            if (ctx.atomicType() != null)
-            {
-                return new ItemType(ItemType.QNAME, visitAtomicType(ctx.atomicType()));
-            }
-            else if (ctx.kindTest() != null)
-            {
-                return new ItemType(ItemType.KINDTEST, visitKindTest(ctx.kindTest()));
-            }
-            else
-            {
-                return new ItemType(ItemType.ITEM, null);
-            }
-        }
 
         //public override object /* QName */ VisitAtomictype(XPath31Parser.AtomicoruniontypeContext ctx)
         //{
@@ -1117,18 +1178,6 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
         //    return visitNCName(ctx.nCName());
         //}
 
-        public override object /* SingleType */ VisitSingletype(XPath31Parser.SingletypeContext ctx)
-        {
-            QName atomicType = visitAtomicType(ctx.atomicType());
-            if (ctx.QUESTIONMARK() != null)
-            {
-                return new SingleType(atomicType, true);
-            }
-            else
-            {
-                return new SingleType(atomicType);
-            }
-        }
 
 
         public override object /* QName */ VisitElementnameorwildcard(XPath31Parser.ElementnameorwildcardContext ctx)

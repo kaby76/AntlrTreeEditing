@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 
 /// <summary>
 ///*****************************************************************************
@@ -28,7 +29,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
 	public class FunctionCall : PrimaryExpr
 	{
 		private QName _name;
-		private ICollection _args;
+		private ICollection<Expr> _args;
 		private Function _function;
 
 		/// <summary>
@@ -38,7 +39,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
 		///            QName. </param>
 		/// <param name="args">
 		///            Collection of arguments. </param>
-		public FunctionCall(QName name, ICollection args)
+		public FunctionCall(QName name, ICollection<Expr> args)
 		{
 			_name = name;
 			_args = args;

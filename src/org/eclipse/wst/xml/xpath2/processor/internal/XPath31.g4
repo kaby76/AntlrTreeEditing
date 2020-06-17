@@ -98,36 +98,43 @@ nodetest : kindtest | nametest ;
 nametest : eqname | wildcard ;
 wildcard : STAR | (NCName CS) | ( SC NCName) | (BracedURILiteral STAR) ;
 postfixexpr : primaryexpr (predicate | argumentlist | lookup)* ;
+// [50]
 argumentlist : OP (argument ( COMMA argument)*)? CP ;
 predicatelist : predicate* ;
 predicate : OB expr CB ;
 lookup : QM keyspecifier ;
 keyspecifier : NCName | IntegerLiteral | parenthesizedexpr | STAR ;
+// [55]
 arrowfunctionspecifier : eqname | varref | parenthesizedexpr ;
 primaryexpr : literal | varref | parenthesizedexpr | contextitemexpr | functioncall | functionitemexpr | mapconstructor | arrayconstructor | unarylookup ;
 literal : numericliteral | StringLiteral ;
 numericliteral : IntegerLiteral | DecimalLiteral | DoubleLiteral ;
 varref : DOLLAR varname ;
+// [60]
 varname : eqname ;
 parenthesizedexpr : OP expr? CP ;
 contextitemexpr : D ;
 functioncall : eqname argumentlist ;
 argument : exprsingle | argumentplaceholder ;
+// [65]
 argumentplaceholder : QM ;
 functionitemexpr : namedfunctionref | inlinefunctionexpr ;
 namedfunctionref : eqname POUND IntegerLiteral /* xgc: reserved-function-names */;
 inlinefunctionexpr : KW_FUNCTION OP paramlist? CP ( KW_AS sequencetype)? functionbody ;
 mapconstructor : KW_MAP OC (mapconstructorentry ( COMMA mapconstructorentry)*)? CC ;
+// [70]
 mapconstructorentry : mapkeyexpr COLON mapvalueexpr ;
 mapkeyexpr : exprsingle ;
 mapvalueexpr : exprsingle ;
 arrayconstructor : squarearrayconstructor | curlyarrayconstructor ;
 squarearrayconstructor : OB (exprsingle ( COMMA exprsingle)*)? CB ;
+// [75]
 curlyarrayconstructor : KW_ARRAY enclosedexpr ;
 unarylookup : QM keyspecifier ;
 singletype : simpletypename QM? ;
 typedeclaration : KW_AS sequencetype ;
 sequencetype : ( KW_EMPTY_SEQUENCE OP CP) | (itemtype occurrenceindicator?) ;
+// [80]
 occurrenceindicator : QM | STAR | PLUS ;
 itemtype : kindtest | ( KW_ITEM OP CP) | functiontest | maptest | arraytest | atomicoruniontype | parenthesizeditemtype ;
 atomicoruniontype : eqname ;
