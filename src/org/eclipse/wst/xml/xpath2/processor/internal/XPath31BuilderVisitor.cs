@@ -1077,19 +1077,41 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             }
         }
 
+        // [91]
+        public override object /* QName */ VisitAttribnameorwildcard(XPath31Parser.AttribnameorwildcardContext ctx)
+        {
+            if (ctx.attributename() != null)
+            {
+                return VisitAttributename(ctx.attributename());
+            }
+            else
+            {
+                return null;
+            }
+        }
 
+        // [92]
+        public override object /* SchemaAttrTest */ VisitSchemaattributetest(XPath31Parser.SchemaattributetestContext ctx)
+        {
+            return new SchemaAttrTest(VisitAttributedeclaration(ctx.attributedeclaration()));
+        }
 
+        // [93]
+        public override object /* QName */ VisitAttributedeclaration(XPath31Parser.AttributedeclarationContext ctx)
+        {
+            return VisitAttributename(ctx.attributename());
+        }
 
-
+        // [94]
         public override object /* ElementTest */ VisitElementtest(XPath31Parser.ElementtestContext ctx)
         {
             if (ctx.elementnameorwildcard() != null)
             {
-                QName elementNameOrWildcard = VisitElementNameOrWildcard(ctx.elementnameorwildcard());
+                QName elementNameOrWildcard = (QName)VisitElementnameorwildcard(ctx.elementnameorwildcard());
                 bool wildcard = elementNameOrWildcard == null;
                 if (ctx.typename() != null)
                 {
-                    QName typeName = visitTypeName(ctx.typename());
+                    QName typeName = (QName)VisitTypename(ctx.typename());
                     if (ctx.QM() != null)
                     {
                         return new ElementTest(elementNameOrWildcard, wildcard, typeName, true);
@@ -1110,6 +1132,47 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             }
         }
 
+        // [95]
+        public override object /* QName */ VisitElementnameorwildcard(XPath31Parser.ElementnameorwildcardContext ctx)
+        {
+            if (ctx.elementname() != null)
+            {
+                return VisitElementname(ctx.elementname());
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        // [96]
+        public override object /* SchemaElemTest */ VisitSchemaelementtest(XPath31Parser.SchemaelementtestContext ctx)
+        {
+            return new SchemaElemTest((QName)VisitElementdeclaration(ctx.elementdeclaration()));
+        }
+
+        // [97]
+        public override object /* QName */ VisitElementdeclaration(XPath31Parser.ElementdeclarationContext ctx)
+        {
+            return VisitElementname(ctx.elementname());
+        }
+
+        // [98]
+        public override object /* QName */ VisitAttributename(XPath31Parser.AttributenameContext ctx)
+        {
+            return VisitEqname(ctx.eqname());
+        }
+
+        // [99]
+        public override object /* QName */ VisitElementname(XPath31Parser.ElementnameContext ctx)
+        {
+            return VisitEqname(ctx.eqname());
+        }
+
+        // [100]
+
+
+
 
         //public override object /* String */ VisitPrefix(XPath31Parser. PrefixContext ctx)
         //{
@@ -1118,26 +1181,6 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
 
 
 
-
-
-        public override object /* QName */ VisitElementname(XPath31Parser.ElementnameContext ctx)
-        {
-            return visitQName(ctx.qName());
-        }
-
-
-
-        public override object /* SchemaAttrTest */ VisitSchemaattributetest(XPath31Parser.SchemaattributetestContext ctx)
-        {
-            return new SchemaAttrTest(visitAttributeDeclaration(ctx.attributeDeclaration()));
-        }
-
-
-
-        public override object /* QName */ VisitElementdeclaration(XPath31Parser.ElementdeclarationContext ctx)
-        {
-            return visitElementName(ctx.elementName());
-        }
 
 
 
@@ -1193,10 +1236,6 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
         //}
 
 
-        public override object /* SchemaElemTest */ VisitSchemaelementtest(XPath31Parser.SchemaelementtestContext ctx)
-        {
-            return new SchemaElemTest(visitElementDeclaration(ctx.elementDeclaration()));
-        }
 
 
         public override object /* QName */ VisitTypename(XPath31Parser.TypenameContext ctx)
@@ -1228,35 +1267,11 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
 
 
 
-        public override object /* QName */ VisitAttributedeclaration(XPath31Parser.AttributedeclarationContext ctx)
-        {
-            return visitAttributeName(ctx.attributeName());
-        }
 
         //public override object /* String */ VisitLocalpart(XPath31Parser.local ctx)
         //{
         //    return visitNCName(ctx.nCName());
         //}
-
-
-
-        public override object /* QName */ VisitElementnameorwildcard(XPath31Parser.ElementnameorwildcardContext ctx)
-        {
-            if (ctx.elementName() != null)
-            {
-                return visitElementName(ctx.elementName());
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        public override object /* QName */ VisitAttributename(XPath31Parser.AttributenameContext ctx)
-        {
-            return visitQName(ctx.qName());
-        }
-
 
 
 
@@ -1271,17 +1286,6 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
 
 
 
-        public override object /* QName */ VisitAttribnameorwildcard(XPath31Parser.AttribnameorwildcardContext ctx)
-        {
-            if (ctx.attributeName() != null)
-            {
-                return visitAttributeName(ctx.attributeName());
-            }
-            else
-            {
-                return null;
-            }
-        }
 
 
 

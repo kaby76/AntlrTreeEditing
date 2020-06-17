@@ -146,16 +146,19 @@ texttest : KW_TEXT OP CP ;
 commenttest : KW_COMMENT OP CP ;
 namespacenodetest : KW_NAMESPACE_NODE OP CP ;
 pitest : KW_PROCESSING_INSTRUCTION OP (NCName | StringLiteral)? CP ;
+// [90]
 attributetest : KW_ATTRIBUTE OP (attribnameorwildcard ( COMMA typename)?)? CP ;
 attribnameorwildcard : attributename | STAR ;
 schemaattributetest : KW_SCHEMA_ATTRIBUTE OP attributedeclaration CP ;
 attributedeclaration : attributename ;
 elementtest : KW_ELEMENT OP (elementnameorwildcard ( COMMA typename QM?)?)? CP ;
+// [95]
 elementnameorwildcard : elementname | STAR ;
 schemaelementtest : KW_SCHEMA_ELEMENT OP elementdeclaration CP ;
 elementdeclaration : elementname ;
 attributename : eqname ;
 elementname : eqname ;
+// [100]
 simpletypename : typename ;
 typename : eqname ;
 functiontest : anyfunctiontest | typedfunctiontest ;
