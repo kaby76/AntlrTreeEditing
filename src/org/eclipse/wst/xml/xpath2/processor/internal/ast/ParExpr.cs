@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 
 /// <summary>
 ///*****************************************************************************
@@ -24,14 +25,14 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
 	/// </summary>
 	public class ParExpr : PrimaryExpr
 	{
-		private ICollection _exprs;
+		private ICollection<Expr> _exprs;
 
 		/// <summary>
 		/// Constructor for ParExpr.
 		/// </summary>
 		/// <param name="exprs">
 		///            Expressions. </param>
-		public ParExpr(ICollection exprs)
+		public ParExpr(ICollection<Expr> exprs)
 		{
 			_exprs = exprs;
 		}

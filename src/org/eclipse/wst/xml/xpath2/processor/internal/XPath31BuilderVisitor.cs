@@ -556,9 +556,7 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             }
         }
 
-        // [40] missing
-
-        // [41]
+        // [40]
         public override object /* ForwardStep */ VisitForwardstep(XPath31Parser.ForwardstepContext ctx)
         {
             if (ctx.forwardaxis() != null)
@@ -571,7 +569,7 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             }
         }
 
-        // [42]
+        // [41]
         public override object /* Integer */ VisitForwardaxis(XPath31Parser.ForwardaxisContext ctx)
         {
             switch ((ctx.GetChild(0) as TerminalNodeImpl).Symbol.Type)
@@ -598,7 +596,7 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             }
         }
 
-        // [43]
+        // [42]
         public override object /* ForwardStep */ VisitAbbrevforwardstep(XPath31Parser.AbbrevforwardstepContext ctx)
         {
             NodeTest nodeTest = (NodeTest)VisitNodetest(ctx.nodetest());
@@ -612,7 +610,7 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             }
         }
 
-        // [44]
+        // [43]
         public override object /* ReverseStep */ VisitReversestep(XPath31Parser.ReversestepContext ctx)
         {
             if (ctx.reverseaxis() != null)
@@ -625,7 +623,7 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             }
         }
 
-        // [45]
+        // [44]
         public override object /* Integer */ VisitReverseaxis(XPath31Parser.ReverseaxisContext ctx)
         {
             switch ((ctx.GetChild(0) as TerminalNodeImpl).Symbol.Type)
@@ -644,6 +642,12 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
                     Debug.Assert(false);
                     return ReverseStep.DOTDOT;
             }
+        }
+     
+        // [45]
+        public override object /* ReverseStep */ VisitAbbrevreversestep(XPath31Parser.AbbrevreversestepContext ctx)
+        {
+            return new ReverseStep(ReverseStep.DOTDOT, null);
         }
 
         // [46]
@@ -672,11 +676,33 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             }
         }
 
-        // [48] missing
+        // [48]
+        public override object /* QName */ VisitWildcard(XPath31Parser.WildcardContext ctx)
+        {
+            if (ctx.BracedURILiteral() != null)
+            {
+                return new QName(ctx.BracedURILiteral().GetText(), "*");
+            }
+            else if (ctx.STAR() != null)
+            {
+                return new QName("*");
+            }
+            else if (ctx.CS() != null)
+            {
+                return new QName(ctx.NCName().GetText(), ctx.CS().GetText());
+            }
+            else if (ctx.SC() != null)
+            {
+                return new QName(ctx.SC().GetText(), ctx.NCName().GetText());
+            }
+            else throw new Exception("bad expr");
+        }
 
         // [49] missing
 
-        // [50]
+        // [50] missing
+
+        // [51]
         public override object /* ICollection<ICollection<Expr>> */ VisitPredicatelist(XPath31Parser.PredicatelistContext ctx)
         {
             ICollection<ICollection<Expr>> result = new List<ICollection<Expr>>();
@@ -687,6 +713,106 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             return result;
         }
 
+        // [52]
+        public override object /* ICollection<Expr> */ VisitPredicate(XPath31Parser.PredicateContext ctx)
+        {
+            return VisitExpr(ctx.expr());
+        }
+
+        // [53] missing
+
+        // [54] missing
+
+        // [55] missing
+
+        // [56]
+        public override object /* PrimaryExpr */ VisitPrimaryexpr(XPath31Parser.PrimaryexprContext ctx)
+        {
+            if (ctx.literal() != null)
+            {
+                return VisitLiteral(ctx.literal());
+            }
+            else if (ctx.varref() != null)
+            {
+                return VisitVarref(ctx.varref());
+            }
+            else if (ctx.parenthesizedexpr() != null)
+            {
+                return new ParExpr((ICollection<Expr>)VisitParenthesizedexpr(ctx.parenthesizedexpr()));
+            }
+            else if (ctx.contextitemexpr() != null)
+            {
+                return VisitContextitemexpr(ctx.contextitemexpr());
+            }
+            else if (ctx.functioncall() != null)
+            {
+                return VisitFunctioncall(ctx.functioncall());
+            }
+            else if (ctx.functionitemexpr() != null)
+            {
+                return VisitFunctionitemexpr(ctx.functionitemexpr());
+            }
+            else if (ctx.arrayconstructor() != null)
+            {
+                return VisitArrayconstructor(ctx.arrayconstructor());
+            }
+            else if (ctx.unarylookup() != null)
+            {
+                return VisitUnarylookup(ctx.unarylookup());
+            }
+            else
+            {
+                throw new Exception("Bad");
+            }
+        }
+
+        // [57]
+        public override object /* Literal */ VisitLiteral(XPath31Parser.LiteralContext ctx)
+        {
+            if (ctx.numericliteral() != null)
+            {
+                return VisitNumericliteral(ctx.numericliteral());
+            }
+            else if (ctx.StringLiteral() != null)
+            {
+                return new StringLiteral(LiteralUtils.unquote(ctx.StringLiteral().GetText()));
+            }
+            else
+            {
+                throw new Exception("Bad");
+            }
+        }
+
+        // [58]
+        public override object /* NumericLiteral */ VisitNumericliteral(XPath31Parser.NumericliteralContext ctx)
+        {
+            if (ctx.IntegerLiteral() != null)
+            {
+                BigInteger.TryParse(ctx.IntegerLiteral().GetText(), out BigInteger value);
+                return new IntegerLiteral(value);
+            }
+            else if (ctx.DecimalLiteral() != null)
+            {
+                return new DecimalLiteral(new BigDecimal(ctx.DecimalLiteral().GetText()));
+            }
+            else if (ctx.DoubleLiteral() != null)
+            {
+                Double.TryParse(ctx.DoubleLiteral().GetText(), out double value);
+                return new DoubleLiteral(value);
+            }
+        }
+
+        // [59]
+        public override object /* VarRef */ VisitVarref(XPath31Parser.VarrefContext ctx)
+        {
+            return new VarRef((QName)VisitVarname(ctx.varname()));
+        }
+
+        // [60]
+        public override object /* QName */ VisitVarname(XPath31Parser.VarnameContext ctx)
+        {
+            return VisitEqname(ctx.eqname());
+        }
 
 
         public override object /* AnyKindTest */VisitAnykindtest(XPath31Parser.AnykindtestContext ctx)
@@ -748,20 +874,12 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             return new CntxItemExpr();
         }
 
-        public override object /* VarRef */ VisitVarref(XPath31Parser.VarrefContext ctx)
-        {
-            return new VarRef(visitVarName(ctx.varName()));
-        }
 
         public override object /* QName */ VisitElementname(XPath31Parser.ElementnameContext ctx)
         {
             return visitQName(ctx.qName());
         }
 
-        public override object /* ICollection<Expr> */ VisitPredicate(XPath31Parser.PredicateContext ctx)
-        {
-            return VisitExpr(ctx.expr());
-        }
 
 
         public override object /* SchemaAttrTest */ VisitSchemaattributetest(XPath31Parser.SchemaattributetestContext ctx)
@@ -779,21 +897,6 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             return visitExpr(ctx.expr());
         }
 
-        public override object /* NumericLiteral */ VisitNumericliteral(XPath31Parser.NumericliteralContext ctx)
-        {
-            if (ctx.integerLiteral() != null)
-            {
-                return visitIntegerLiteral(ctx.integerLiteral());
-            }
-            else if (ctx.decimalLiteral() != null)
-            {
-                return visitDecimalLiteral(ctx.decimalLiteral());
-            }
-            else
-            {
-                return visitDoubleLiteral(ctx.doubleLiteral());
-            }
-        }
 
         public override object /* QName */ VisitElementdeclaration(XPath31Parser.ElementdeclarationContext ctx)
         {
@@ -951,10 +1054,6 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
         //}
 
 
-        public override object /* QName */ VisitVarname(XPath31Parser.VarnameContext ctx)
-        {
-            return visitQName(ctx.qName());
-        }
 
         //public override object /* Collection<VarExprPair> */ VisitQuantifiedexprmiddle(XPath31Parser.qu ctx)
         //{
@@ -1002,59 +1101,11 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
         //}
 
 
-        public override object /* QName */ VisitWildcard(XPath31Parser.WildcardContext ctx)
-        {
-            if (ctx.COLON() == null)
-            {
-                return new QName("*", "*");
-            }
-            else if (ctx.GetChild(0) is TerminalNode) {
-                return new QName("*", visitNCName(ctx.nCName()));
-            }
-            else
-            {
-                return new QName(visitNCName(ctx.nCName()), "*");
-            }
-        }
-
-        public override object /* Literal */ VisitLiteral(XPath31Parser.LiteralContext ctx)
-        {
-            if (ctx.numericLiteral() != null)
-            {
-                return visitNumericLiteral(ctx.numericLiteral());
-            }
-            else
-            {
-                return visitStringLiteral(ctx.stringLiteral());
-            }
-        }
 
 
 
 
-        public override object /* PrimaryExpr */ VisitPrimaryexpr(XPath31Parser.PrimaryexprContext ctx)
-        {
-            if (ctx.literal() != null)
-            {
-                return visitLiteral(ctx.literal());
-            }
-            else if (ctx.varRef() != null)
-            {
-                return visitVarRef(ctx.varRef());
-            }
-            else if (ctx.parenthesizedExpr() != null)
-            {
-                return new ParExpr(visitParenthesizedExpr(ctx.parenthesizedExpr()));
-            }
-            else if (ctx.contextItemExpr() != null)
-            {
-                return visitContextItemExpr(ctx.contextItemExpr());
-            }
-            else
-            {
-                return visitFunctionCall(ctx.functionCall());
-            }
-        }
+
 
         public override object /* QName */ VisitAttributedeclaration(XPath31Parser.AttributedeclarationContext ctx)
         {
@@ -1107,10 +1158,6 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
 
 
 
-        public override object /* ReverseStep */ VisitAbbrevreversestep(XPath31Parser.AbbrevreversestepContext ctx)
-        {
-            return new ReverseStep(ReverseStep.DOTDOT, null);
-        }
 
         public override object /* AttributeTest */ VisitAttributetest(XPath31Parser.AttributetestContext ctx)
         {

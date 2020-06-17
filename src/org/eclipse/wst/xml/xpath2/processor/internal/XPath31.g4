@@ -93,6 +93,7 @@ abbrevforwardstep : AT? nodetest ;
 reversestep : (reverseaxis nodetest) | abbrevreversestep ;
 reverseaxis : ( KW_PARENT COLONCOLON) | ( KW_ANCESTOR COLONCOLON) | ( KW_PRECEDING_SIBLING COLONCOLON) | ( KW_PRECEDING COLONCOLON) | ( KW_ANCESTOR_OR_SELF COLONCOLON) ;
 // [45]
+abbrevreversestep : DD ;
 nodetest : kindtest | nametest ;
 nametest : eqname | wildcard ;
 wildcard : STAR | (NCName CS) | ( SC NCName) | (BracedURILiteral STAR) ;
