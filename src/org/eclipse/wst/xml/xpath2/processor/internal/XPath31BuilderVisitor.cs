@@ -1170,32 +1170,26 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
         }
 
         // [100]
+        public override /* QName */ object VisitSimpletypename(XPath31Parser.SimpletypenameContext ctx)
+        {
+            return VisitTypename(ctx.typename());
+        }
 
+        // [101]
+        public override object /* QName */ VisitTypename(XPath31Parser.TypenameContext ctx)
+        {
+            return VisitEqname(ctx.eqname());
+        }
 
+        // [102] missing
+
+        // [103]
 
 
         //public override object /* String */ VisitPrefix(XPath31Parser. PrefixContext ctx)
         //{
         //    return visitNCName(ctx.nCName());
         //}
-
-
-
-
-
-
-        //public override object /* StringLiteral */ VisitStringliteral(XPath31Parser. ctx)
-        //{
-        //    return new StringLiteral(LiteralUtils.unquote(ctx.STRING().getText()));
-        //}
-
-
-
-        //public override object /* DoubleLiteral */ VisitDoubleliteral(XPath31Parser.dou ctx)
-        //{
-        //    return new DoubleLiteral(new Double(ctx.DOUBLE().getText()));
-        //}
-
 
 
 
@@ -1237,12 +1231,6 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
 
 
 
-
-        public override object /* QName */ VisitTypename(XPath31Parser.TypenameContext ctx)
-        {
-            return visitQName(ctx.qName());
-        }
-
         //public override QName visitUnreservedQName(XPath31Parser.UnreservedQNameContext ctx)
         //{
         //    if (ctx.COLON() != null)
@@ -1262,12 +1250,6 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
 
 
 
-
-
-
-
-
-
         //public override object /* String */ VisitLocalpart(XPath31Parser.local ctx)
         //{
         //    return visitNCName(ctx.nCName());
@@ -1279,42 +1261,6 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
         //{
         //    return new FilterExpr(visitPrimaryExpr(ctx.primaryExpr()), visitPredicateList(ctx.predicateList()));
         //}
-
-
-
-
-
-
-
-
-
-
-
-        //public override object /* IntegerLiteral */ VisitIntegerliteral(XPath31Parser.integ ctx)
-        //{
-        //    return new IntegerLiteral(new BigInteger(ctx.INTEGER().getText()));
-        //}
-
-
-
-
-
-
-        public override object /* ICollection<Expr> */ VisitFunctionalcall(XPath31Parser.FunctioncallContext ctx)
-        {
-            ICollection<Expr> result;
-            if (ctx.functionCallMiddle() != null)
-            {
-                result = visitFunctionCallMiddle(ctx.functionCallMiddle());
-            }
-            else
-            {
-                result = new ArrayList<Expr>();
-            }
-
-            result.Add(VisitExprsingle(ctx.exprsingle()));
-            return result;
-        }
 
     }
 }
