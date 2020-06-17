@@ -618,6 +618,10 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 			}
 		}
 
-	}
+        public object Clone()
+        {
+            throw new NotImplementedException();
+        }
+    }
 
 }

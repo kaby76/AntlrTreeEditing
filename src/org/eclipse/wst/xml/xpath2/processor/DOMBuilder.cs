@@ -85,7 +85,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 			}
 		}
 
-        public class ErrorHandlerAnonymousInnerClass : ErrorHandler
+        public class ErrorHandlerAnonymousInnerClass //: ErrorHandler
 		{
 			private readonly DOMBuilder outerInstance;
 

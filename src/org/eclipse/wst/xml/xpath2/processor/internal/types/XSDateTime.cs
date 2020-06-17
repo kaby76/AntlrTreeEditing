@@ -20,6 +20,10 @@
 /// ******************************************************************************
 /// </summary>
 
+using System;
+using System.Diagnostics;
+using System.Text;
+
 namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 {
 	using Calendar = java.util.Calendar;

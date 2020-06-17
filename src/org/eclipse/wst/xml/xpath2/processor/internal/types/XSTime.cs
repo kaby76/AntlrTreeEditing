@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
+using java.util;
+using javax.xml.datatype;
+using TimeZone = System.TimeZone;
 
 /// <summary>
 ///*****************************************************************************
@@ -26,6 +29,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 {
 
 
+	using Calendar = java.util.Calendar;
 
 	using DynamicContext = org.eclipse.wst.xml.xpath2.api.DynamicContext;
 	using Item = org.eclipse.wst.xml.xpath2.api.Item;
@@ -46,7 +50,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 	{
 
 		private const string XS_TIME = "xs:time";
-		private DateTime _calendar;
+		private Calendar _calendar;
 		private bool _timezoned;
 		private XSDuration _tz;
 
@@ -57,7 +61,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		///            Calendar representation of the time to be stored </param>
 		/// <param name="tz">
 		///            The timezone (possibly null) associated with this time </param>
-		public XSTime(DateTime cal, XSDuration tz)
+		public XSTime(Calendar cal, XSDuration tz)
 		{
 			_calendar = cal;
 
@@ -75,7 +79,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		/// <summary>
 		/// Initialises to the current time
 		/// </summary>
-		public XSTime() : this(new GregorianCalendar(TimeZone.getTimeZone("GMT")), null)
+		public XSTime() : this(new GregorianCalendar(TimeZone.CurrentTimeZone), null)
 		{
 		}
 
@@ -88,7 +92,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 //ORIGINAL LINE: public Object clone() throws CloneNotSupportedException
 		public virtual object clone()
 		{
-			DateTime c = (DateTime) calendar().clone();
+            Calendar c = (Calendar) calendar().clone();
 			XSDuration t = tz();
 
 			if (t != null)
@@ -201,7 +205,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		/// <returns> The hour stored </returns>
 		public virtual int hour()
 		{
-			return _calendar.Hour;
+			return _calendar.get(Calendar.HOUR_OF_DAY);
 		}
 
 		/// <summary>
@@ -210,7 +214,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		/// <returns> The minute stored </returns>
 		public virtual int minute()
 		{
-			return _calendar.Minute;
+			return _calendar.get(Calendar.MINUTE);
 		}
 
 		/// <summary>
@@ -219,9 +223,9 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		/// <returns> The second stored </returns>
 		public virtual double second()
 		{
-			double s = _calendar.Second;
+            double s = _calendar.get(Calendar.SECOND);
 
-			double ms = _calendar.Millisecond;
+            double ms = _calendar.get(Calendar.MILLISECOND);
 
 			ms /= 1000;
 
@@ -248,13 +252,13 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 			{
 				string ret = "";
     
-				DateTime adjustFortimezone = calendar();
-				ret += XSDateTime.pad_int(adjustFortimezone.Hour, 2);
-    
-				ret += ":";
-				ret += XSDateTime.pad_int(adjustFortimezone.Minute, 2);
-    
-    
+				Calendar adjustFortimezone = calendar();
+                ret += XSDateTime.pad_int(adjustFortimezone.get(Calendar.HOUR_OF_DAY), 2);
+
+                ret += ":";
+                ret += XSDateTime.pad_int(adjustFortimezone.get(Calendar.MINUTE), 2);
+
+
 				ret += ":";
 				int isecond = (int) second();
 				double sec = second();
@@ -320,7 +324,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		/// Retrieves a Calendar representation of time stored
 		/// </summary>
 		/// <returns> Calendar representation of the time stored </returns>
-		public override DateTime calendar()
+		public override Calendar calendar()
 		{
 			return _calendar;
 		}
@@ -342,7 +346,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		/// <returns> time stored in milliseconds since the epoch </returns>
 		public virtual double value()
 		{
-			return calendar().Ticks / 1000.0;
+			return calendar().getTimeInMillis() / 1000.0;
 		}
 
 		/// <summary>
@@ -357,8 +361,8 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		public virtual bool eq(AnyType arg, DynamicContext dynamicContext)
 		{
 			XSTime val = (XSTime) NumericType.get_single_type(arg, typeof(XSTime));
-			DateTime thiscal = normalizeCalendar(calendar(), tz());
-			DateTime thatcal = normalizeCalendar(val.calendar(), val.tz());
+            Calendar thiscal = normalizeCalendar(calendar(), tz());
+            Calendar thatcal = normalizeCalendar(val.calendar(), val.tz());
 
 			return thiscal.Equals(thatcal);
 		}
@@ -375,9 +379,9 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		public virtual bool lt(AnyType arg, DynamicContext context)
 		{
 			XSTime val = (XSTime) NumericType.get_single_type(arg, typeof(XSTime));
-			DateTime thiscal = normalizeCalendar(calendar(), tz());
-			DateTime thatcal = normalizeCalendar(val.calendar(), val.tz());
-			return thiscal < thatcal;
+            Calendar thiscal = normalizeCalendar(calendar(), tz());
+            Calendar thatcal = normalizeCalendar(val.calendar(), val.tz());
+			return thiscal.IsLessThan(thatcal);
 		}
 
 		/// <summary>
@@ -393,10 +397,10 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		public virtual bool gt(AnyType arg, DynamicContext context)
 		{
 			XSTime val = (XSTime) NumericType.get_single_type(arg, typeof(XSTime));
-			DateTime thiscal = normalizeCalendar(calendar(), tz());
-			DateTime thatcal = normalizeCalendar(val.calendar(), val.tz());
+			Calendar thiscal = normalizeCalendar(calendar(), tz());
+            Calendar thatcal = normalizeCalendar(val.calendar(), val.tz());
 
-			return thiscal > thatcal;
+			return thiscal.IsGreaterThan(thatcal);
 		}
 
 		/// <summary>
@@ -447,7 +451,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 			{
 				res = (XSTime) clone();
 			}
-			catch (CloneNotSupportedException)
+			catch 
 			{
 				return null;
 			}
@@ -464,9 +468,9 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		{
 			XSTime val = (XSTime) at;
 			Duration dtduration = null;
-			DateTime thisCal = normalizeCalendar(calendar(), tz());
-			DateTime thatCal = normalizeCalendar(val.calendar(), val.tz());
-			long duration = thisCal.Ticks - thatCal.Ticks;
+			Calendar thisCal = normalizeCalendar(calendar(), tz());
+            Calendar thatCal = normalizeCalendar(val.calendar(), val.tz());
+			long duration = thisCal.getTimeInMillis() - thatCal.getTimeInMillis();
 			dtduration = _datatypeFactory.newDuration(duration);
 			return ResultSequenceFactory.create_new(XSDayTimeDuration.parseDTDuration(dtduration.ToString()));
 		}
@@ -492,11 +496,11 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 
 				XSTime res = (XSTime) clone();
 
-				res.calendar().AddMilliseconds((int) ms);
+                res.calendar().add(Calendar.MILLISECOND, (int)ms);
 
 				return ResultSequenceFactory.create_new(res);
 			}
-			catch (CloneNotSupportedException)
+			catch
 			{
 				Debug.Assert(false);
 				return null;
@@ -518,6 +522,11 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 				return _calendar.clone();
 			}
 		}
-	}
+
+        public object Clone()
+        {
+            throw new NotImplementedException();
+        }
+    }
 
 }

@@ -30,7 +30,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 	using XSInteger = org.eclipse.wst.xml.xpath2.processor.@internal.types.XSInteger;
 	using XSString = org.eclipse.wst.xml.xpath2.processor.@internal.types.XSString;
 
-	using UTF16 = com.ibm.icu.text.UTF16;
+	//using UTF16 = com.ibm.icu.text.UTF16;
 
 	/// <summary>
 	/// Creates an xs:string from a sequence of code points. Returns the zero-length

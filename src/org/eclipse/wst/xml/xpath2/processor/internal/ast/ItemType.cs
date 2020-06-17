@@ -41,6 +41,12 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
 		private QName _qname;
 		private KindTest _ktest;
 
+        public const int MAPTEST = 3;
+		public const int FUNCTIONTEST = 4;
+		public const int ARRAYTEST = 5;
+		public const int ATOMICORUNIONTEST = 6;
+		public const int PARENTHESIZEDITEMTYPE = 7;
+
 		// XXX: polymorphism
 		/// <summary>
 		/// Constructor for ItemType.

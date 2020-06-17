@@ -5,8 +5,6 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Numerics;
 using System.Text;
-using BigDecimal = java.math.BigDecimal;
-using BigInteger;
 using Antlr4.Runtime;
 using Antlr4.Runtime.Misc;
 using Antlr4.Runtime.Tree;
@@ -83,22 +81,43 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
         public static XPathBuilderVisitor INSTANCE = new XPathBuilderVisitor();
 
         // [1]
-
         public override object /* XPath */ VisitXpath(XPath31Parser.XpathContext ctx)
         {
             return new XPath((ICollection<Expr>)VisitExpr(ctx.expr()));
         }
 
-        // [6]
+        // [2]
+        public override object VisitParamlist(XPath31Parser.ParamlistContext context)
+        {
+            return base.VisitParamlist(context);
+        }
 
+        // [3]
+        public override object VisitParam(XPath31Parser.ParamContext context)
+        {
+            return base.VisitParam(context);
+        }
+
+        // [4]
+        public override object VisitFunctionbody(XPath31Parser.FunctionbodyContext context)
+        {
+            return base.VisitFunctionbody(context);
+        }
+
+        // [5]
+        public override object VisitEnclosedexpr(XPath31Parser.EnclosedexprContext context)
+        {
+            return base.VisitEnclosedexpr(context);
+        }
+
+        // [6]
         public override object /* ICollection<Expr> */ VisitExpr(XPath31Parser.ExprContext ctx)
         {
             ICollection<Expr> result = new List<Expr>();
             foreach (XPath31Parser.ExprsingleContext ex in ctx.exprsingle())
             {
-                result.Add(VisitExprsingle(ex));
+                result.Add((Expr)VisitExprsingle(ex));
             }
-
             return result;
         }
 
@@ -126,39 +145,66 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
         // [8]
         public override object /* ForExpr */ VisitForexpr(XPath31Parser.ForexprContext ctx)
         {
-            return new ForExpr(visitSimpleForClause(ctx.simpleForClause()), visitExprSingle(ctx.exprSingle()));
+            return new ForExpr((Collection<VarExprPair>)VisitSimpleforclause(ctx.simpleforclause()), (Expr)VisitExprsingle(ctx.exprsingle()));
         }
 
         // [9]
         public override object /* Collection<VarExprPair> */ VisitSimpleforclause(XPath31Parser.SimpleforclauseContext ctx)
         {
-            Collection<VarExprPair> result;
-            if (ctx.simpleForClause() != null)
+            Collection<VarExprPair> result = new Collection<VarExprPair>();
+            foreach (var forbinding in ctx.simpleforbinding())
             {
-                result = visitSimpleForClause(ctx.simpleForClause());
+                var b = VisitSimpleforbinding(forbinding);
+                result.Add((VarExprPair)b);
             }
-            else
-            {
-                result = new ArrayList<VarExprPair>();
-            }
-
-            result.add(new VarExprPair(visitVarName(ctx.varName()), visitExprSingle(ctx.exprSingle())));
             return result;
         }
 
-        // [14]
+        // [10]
+        public override object VisitSimpleforbinding(XPath31Parser.SimpleforbindingContext ctx)
+        {
+            var re = new VarExprPair((QName)VisitVarname(ctx.varname()), (Expr)VisitExprsingle(ctx.exprsingle()));
+            return re;
+        }
 
+        // [11]
+        public override object VisitLetexpr(XPath31Parser.LetexprContext context)
+        {
+            return base.VisitLetexpr(context);
+        }
+
+        // [12]
+        public override object VisitSimpleletclause(XPath31Parser.SimpleletclauseContext context)
+        {
+            return base.VisitSimpleletclause(context);
+        }
+
+        // [13]
+        public override object VisitSimpleletbinding(XPath31Parser.SimpleletbindingContext context)
+        {
+            return base.VisitSimpleletbinding(context);
+        }
+
+        // [14]
         public override object /* QuantifiedExpr */ VisitQuantifiedexpr(XPath31Parser.QuantifiedexprContext ctx)
         {
+            var middle = new List<VarExprPair>();
+            var varnames = ctx.varname();
+            var exprsingles = ctx.exprsingle();
+            for (int i = 0; i < varnames.Length; ++i)
+            {
+                var varname = (QName)VisitVarname(varnames[i]);
+                var exprsingle = (Expr)VisitExprsingle(exprsingles[i]);
+                var varexprpair = new VarExprPair(varname, exprsingle);
+                middle.Add(varexprpair);
+            }
             if (ctx.KW_SOME() != null)
             {
-                return new QuantifiedExpr(QuantifiedExpr.SOME, visitQuantifiedExprMiddle(ctx.quantifiedExprMiddle()),
-                    visitExprSingle(ctx.exprSingle()));
+                return new QuantifiedExpr(QuantifiedExpr.SOME, middle, (Expr)VisitExprsingle(exprsingles[varnames.Length]));
             }
             else
             {
-                return new QuantifiedExpr(QuantifiedExpr.ALL, visitQuantifiedExprMiddle(ctx.quantifiedExprMiddle()),
-                    visitExprSingle(ctx.exprSingle()));
+                return new QuantifiedExpr(QuantifiedExpr.ALL, middle, (Expr)VisitExprsingle(exprsingles[varnames.Length]));
             }
         }
 
@@ -516,7 +562,7 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             {
                 var o = ctx.GetChild(i);
                 var a = (XPath31Parser.StepexprContext)ctx.GetChild(i + 1);
-                StepExpr x = (Expr)VisitStepexpr(a);
+                StepExpr x = (StepExpr)VisitStepexpr(a);
                 if ((o as TerminalNodeImpl).Symbol.Type == XPath31Lexer.SLASH)
                 {
                     relativePathExpr.add_tail(1, x);
@@ -793,13 +839,15 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             }
             else if (ctx.DecimalLiteral() != null)
             {
-                return new DecimalLiteral(new BigDecimal(ctx.DecimalLiteral().GetText()));
+                decimal.TryParse(ctx.DecimalLiteral().GetText(), out decimal value);
+                return new DecimalLiteral(value);
             }
             else if (ctx.DoubleLiteral() != null)
             {
                 Double.TryParse(ctx.DoubleLiteral().GetText(), out double value);
                 return new DoubleLiteral(value);
             }
+            else throw new Exception();
         }
 
         // [59]
@@ -926,7 +974,7 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             }
             else if (ctx.maptest() != null)
             {
-                return new ItemType(ItemType.MAPTEST, VisitFunctiontest(ctx.maptest()));
+                return new ItemType(ItemType.MAPTEST, VisitMaptest(ctx.maptest()));
             }
             else if (ctx.functiontest() != null)
             {
@@ -948,6 +996,7 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             {
                 return new ItemType(ItemType.ITEM, null);
             }
+            else throw new Exception();
         }
 
         // [82] missing
@@ -1093,7 +1142,7 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
         // [92]
         public override object /* SchemaAttrTest */ VisitSchemaattributetest(XPath31Parser.SchemaattributetestContext ctx)
         {
-            return new SchemaAttrTest(VisitAttributedeclaration(ctx.attributedeclaration()));
+            return new SchemaAttrTest((QName)VisitAttributedeclaration(ctx.attributedeclaration()));
         }
 
         // [93]

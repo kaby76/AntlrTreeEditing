@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Numerics;
 using System.Text;
 using java.util;
 using org.eclipse.wst.xml.xpath2.processor;
 using org.w3c.dom;
+
+
 
 namespace java.net
 {
@@ -36,6 +39,14 @@ namespace java.net
 
 }
 
+namespace java.text
+{
+    public class DecimalFormat
+    {
+
+    }
+}
+
 namespace java.time
 {
     public class Duration { }
@@ -55,11 +66,16 @@ namespace java.util
 
     public abstract class Calendar
     {
+        public static int MINUTE;
+        public static int SECOND;
         public static int YEAR { get; internal set; }
         public static int ERA { get; set; }
         public static int MONTH { get; set; }
         public static int DAY_OF_MONTH { get; set; }
         public static int MILLISECOND { get; set; }
+        public static int HOUR_OF_DAY { get; set; }
+        public int Month { get; set; }
+        public int Day { get; set; }
 
         public Calendar clone()
         {
@@ -90,6 +106,16 @@ namespace java.util
         {
             throw new NotImplementedException();
         }
+
+        internal bool IsLessThan(Calendar thatcal)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal bool IsGreaterThan(Calendar thatcal)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class TimeZone
@@ -114,6 +140,11 @@ namespace javax.xml.datatype
 {
     public class Duration
     {
+        public int Days { get; internal set; }
+        public int Hours { get; set; }
+        public int Minutes { get; set; }
+        public int Sign { get; set; }
+
         public Duration negate()
         {
             throw new NotImplementedException();
@@ -133,6 +164,7 @@ namespace javax.xml.datatype
         }
     }
 }
+
 namespace javax.xml.@namespace
 {
     public class NamespaceContext
@@ -186,6 +218,17 @@ namespace javax.xml.parsers
         public DOMBuilder.ErrorHandlerAnonymousInnerClass ErrorHandler { get; set; }
 
         public Document parse(Stream @in)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}
+
+namespace org.apache.xerces.util
+{
+    public class XMLChar
+    {
+        public static bool isValidNCName(string strValue)
         {
             throw new NotImplementedException();
         }

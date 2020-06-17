@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Text;
+using java.util;
+using TimeZone = System.TimeZone;
 
 /// <summary>
 ///*****************************************************************************
@@ -39,7 +41,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 	{
 
 		private const string XS_G_MONTH_DAY = "xs:gMonthDay";
-		private DateTime _calendar;
+		private Calendar _calendar;
 		private bool _timezoned;
 		private XSDuration _tz;
 
@@ -51,7 +53,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		///            Calendar representation of the month and day to be stored </param>
 		/// <param name="tz">
 		///            Timezone associated with this month and day </param>
-		public XSGMonthDay(DateTime cal, XSDuration tz)
+		public XSGMonthDay(Calendar cal, XSDuration tz)
 		{
 			_calendar = cal;
 			if (tz != null)
@@ -64,7 +66,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		/// <summary>
 		/// Initialises a representation of the current month and day
 		/// </summary>
-		public XSGMonthDay() : this(new GregorianCalendar(TimeZone.getTimeZone("GMT")), null)
+		public XSGMonthDay() : this(new GregorianCalendar(TimeZone.CurrentTimeZone), null)
 		{
 		}
 
@@ -118,7 +120,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 
 
 				string[] split = str.Split("-", true);
-				startdate += split[2].replaceAll("Z", "") + "-" + split[3].replaceAll("Z", "").substring(0, 2);
+				startdate += split[2].Replace("Z", "") + "-" + split[3].Replace("Z", "").Substring(0, 2);
 
 				if (split.Length > 4)
 				{
@@ -291,7 +293,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 			{
 				string ret = "--";
     
-				DateTime adjustFortimezone = calendar();
+				Calendar adjustFortimezone = calendar();
     
 				ret += XSDateTime.pad_int(month(), 2);
     
@@ -344,7 +346,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		/// Retrieves the Calendar representation of the month and day stored
 		/// </summary>
 		/// <returns> Calendar representation of the month and day stored </returns>
-		public override DateTime calendar()
+		public override Calendar calendar()
 		{
 			return _calendar;
 		}

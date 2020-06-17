@@ -1,4 +1,5 @@
 ﻿using System;
+using javax.xml.datatype;
 
 /// <summary>
 ///*****************************************************************************
@@ -23,6 +24,7 @@
 namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 {
 
+	using Duration = javax.xml.datatype.Duration;
 
 	using Item = org.eclipse.wst.xml.xpath2.api.Item;
 	using ResultBuffer = org.eclipse.wst.xml.xpath2.api.ResultBuffer;
@@ -399,8 +401,10 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 					else
 					{
 						ret = new decimal(value());
-						ret = ret.divide(new decimal(dt.double_value()), 18, decimal.ROUND_HALF_EVEN);
-						retval = ret.doubleValue();
+						ret = decimal.Divide(ret, new decimal(dt.double_value()));
+						var x = ret.ToString();
+                        double.TryParse(x, out double r);
+						retval = r;
 					}
 				}
 				else
@@ -419,23 +423,26 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 				if (!dt.zero())
 				{
 					ret = new decimal(value());
-					ret = ret.divide(dt.Value, 18, decimal.ROUND_HALF_EVEN);
+					ret = decimal.Divide(ret, dt.Value);
 				}
 				else
 				{
 					throw DynamicError.overflowUnderflow();
 				}
 
-				return ResultSequenceFactory.create_new(new XSDayTimeDuration(ret.intValue()));
+                var x = ret.ToString();
+                double.TryParse(x, out double r);
+                var i = (int) r;
+				return ResultSequenceFactory.create_new(new XSDayTimeDuration(i));
 			}
 			else if (at is XSDayTimeDuration)
 			{
 				XSDuration md = (XSDuration) at;
 
-				decimal res = null;
+				decimal res = default;
 				res = new decimal(this.value());
 				decimal l = new decimal(md.value());
-				res = res.divide(l, 18, decimal.ROUND_HALF_EVEN);
+				res = decimal.Divide(res, l);
 
 				return ResultSequenceFactory.create_new(new XSDecimal(res));
 			}
