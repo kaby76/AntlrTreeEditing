@@ -73,7 +73,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
 		/// Interator.
 		/// </summary>
 		/// <returns> Iterated expressions. </returns>
-		public virtual IEnumerator iterator()
+		public virtual IEnumerator<ICollection<Expr>> iterator()
 		{
 			return _exprs.GetEnumerator();
 		}

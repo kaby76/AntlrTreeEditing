@@ -63,7 +63,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 
 			// for each sibling, get all its descendants
 			DescendantAxis da = new DescendantAxis();
-			for (IEnumerator i = siblingBuffer.GetEnumerator(); i.MoveNext();)
+			for (IEnumerator i = siblingBuffer.iterator(); i.MoveNext();)
 			{
 				result.add((NodeType)i);
 				da.iterate((NodeType) i.Current, result, null);

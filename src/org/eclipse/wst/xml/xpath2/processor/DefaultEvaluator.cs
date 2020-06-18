@@ -2,6 +2,8 @@
 using System.Diagnostics;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using org.w3c.dom;
 
 /// <summary>
 ///*****************************************************************************
@@ -452,13 +454,10 @@ namespace org.eclipse.wst.xml.xpath2.processor
 
 		private void do_for_each(IEnumerator iter, Expr finalexpr, ResultBuffer destination)
 		{
-
 			// we have more vars to bind...
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			if (iter.hasNext())
+			if (iter.MoveNext())
 			{
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-				VarExprPair ve = (VarExprPair) iter.next();
+				VarExprPair ve = (VarExprPair) iter.Current;
 
 				// evaluate binding sequence
                 api.ResultSequence rs = (api.ResultSequence) ve.expr().accept(this);
@@ -466,7 +465,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 				// XXX
 				if (rs.empty())
 				{
-					iter.previous();
+					//iter.previous();
 					return;
 				}
 
@@ -484,7 +483,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 					do_for_each(iter, finalexpr, destination);
 					popScope();
 				}
-				iter.previous();
+				//iter.previous();
 			}
 			// we finally got to do the "last expression"
 			else
@@ -502,11 +501,9 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		{
 
 			// we have more vars to bind...
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			if (iter.hasNext())
+			if (iter.MoveNext())
 			{
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-				VarExprPair ve = (VarExprPair) iter.next();
+				VarExprPair ve = (VarExprPair) iter.Current;
 
 				// evaluate binding sequence
                 api.ResultSequence rs = (api.ResultSequence) ve.expr().accept(this);
@@ -536,7 +533,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 				}
 				finally
 				{
-					iter.previous();
+					//iter.previous();
 				}
 				return XSBoolean.TRUE;
 			}
@@ -552,11 +549,9 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		{
 
 			// we have more vars to bind...
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			if (iter.hasNext())
+			if (iter.MoveNext())
 			{
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-				VarExprPair ve = (VarExprPair) iter.next();
+				VarExprPair ve = (VarExprPair) iter.Current;
 
 				// evaluate binding sequence
                 api.ResultSequence rs = (api.ResultSequence) ve.expr().accept(this);
@@ -586,7 +581,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 				}
 				finally
 				{
-					iter.previous();
+					//iter.previous();
 				}
 
 				// since none in this sequence evaluated to true, return false
@@ -609,9 +604,8 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		public virtual object visit(ForExpr fex)
 		{
 			// XXX
-			IList pairs = new ArrayList(fex.ve_pairs());
+			IList pairs = new ArrayList(fex.ve_pairs().ToList());
 			ResultBuffer rb = new ResultBuffer();
-//JAVA TO C# CONVERTER WARNING: Unlike Java's ListIterator, enumerators in .NET do not allow altering the collection:
 			do_for_each(pairs.GetEnumerator(), fex.expr(), rb);
 			return rb.Sequence;
 		}
@@ -624,15 +618,13 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		/// <returns> a new function or null. </returns>
 		public virtual object visit(QuantifiedExpr qex)
 		{
-			IList pairs = new ArrayList(qex.ve_pairs());
+			IList pairs = new ArrayList(qex.ve_pairs().ToList());
 
 			switch (qex.type())
 			{
 			case QuantifiedExpr.SOME:
-//JAVA TO C# CONVERTER WARNING: Unlike Java's ListIterator, enumerators in .NET do not allow altering the collection:
 				return do_exists(pairs.GetEnumerator(), qex.expr());
 			case QuantifiedExpr.ALL:
-//JAVA TO C# CONVERTER WARNING: Unlike Java's ListIterator, enumerators in .NET do not allow altering the collection:
 				return do_for_all(pairs.GetEnumerator(), qex.expr());
 
 			default:
@@ -649,7 +641,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		/// <returns> a ifex.then_clause().accept(this). </returns>
 		public virtual object visit(IfExpr ifex)
 		{
-            api.ResultSequence test_res = do_expr(ifex.GetEnumerator());
+            api.ResultSequence test_res = do_expr(ifex.iterator());
 
 			XSBoolean res = effective_boolean_value(test_res);
 
@@ -668,11 +660,10 @@ namespace org.eclipse.wst.xml.xpath2.processor
 			ICollection args = do_bin_args(e);
 
 			IEnumerator argiter = args.GetEnumerator();
-
-			//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-            api.ResultSequence one = (api.ResultSequence) argiter.next();
-			//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-            api.ResultSequence two = (api.ResultSequence) argiter.next();
+            argiter.MoveNext();
+            api.ResultSequence one = (api.ResultSequence) argiter.Current;
+            argiter.MoveNext();
+            api.ResultSequence two = (api.ResultSequence) argiter.Current;
 
 			bool oneb = effective_boolean_value(one).value();
 			bool twob = effective_boolean_value(two).value();
@@ -713,10 +704,10 @@ namespace org.eclipse.wst.xml.xpath2.processor
 
 			IEnumerator argsiter = args.GetEnumerator();
 
-			//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-            api.ResultSequence one = (api.ResultSequence) argsiter.next();
-			//JAVA TO C# CONVERTER TODO TASK: Java iterators api.ResultSequence only converted within the context of 'while' and 'for' loops:
-            api.ResultSequence two = (api.ResultSequence) argsiter.next();
+            argsiter.MoveNext();
+            api.ResultSequence one = (api.ResultSequence) argsiter.Current;
+            argsiter.MoveNext();
+            api.ResultSequence two = (api.ResultSequence) argsiter.Current;
 
 			int size_one = one.size();
 			int size_two = two.size();
@@ -1310,8 +1301,8 @@ namespace org.eclipse.wst.xml.xpath2.processor
 			// 1: atomic
 			// 2: node
 
-			Focus focus = focus();
-			int original_pos = focus.position();
+			Focus xfocus = focus();
+			int original_pos = xfocus.position();
 
 			// execute step for all items in focus
 			while (true)
@@ -1319,14 +1310,14 @@ namespace org.eclipse.wst.xml.xpath2.processor
 				results.Add(se.accept(this));
 
 				// go to next
-				if (!focus.advance_cp())
+				if (!xfocus.advance_cp())
 				{
 					break;
 				}
 			}
 
 			// make sure we didn't change focus
-			focus.set_position(original_pos);
+			xfocus.set_position(original_pos);
 
 			bool node_types = false;
 
@@ -1561,7 +1552,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 			NodeType cn = (NodeType) ci;
 
 			// get the nodes on the axis
-			ForwardAxis axis = e.GetEnumerator();
+			ForwardAxis axis = e.iterator();
 			ResultBuffer rb = new ResultBuffer();
 			axis.iterate(cn, rb, _dc.LimitNode);
 			// get all nodes in the axis, and principal node
@@ -1594,7 +1585,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 			NodeType cn = (NodeType) ci;
 
 			// get the nodes on the axis
-			ReverseAxis axis = e.GetEnumerator();
+			ReverseAxis axis = e.iterator();
 
 			ResultBuffer result = new ResultBuffer();
 			// short for "gimme da parent"
@@ -2051,7 +2042,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 					Node child = children.item(j);
 
 					// bingo
-					if (child.NodeType == Node.ELEMENT_NODE)
+					if (child.NodeType == NodeConstants.ELEMENT_NODE)
 					{
 						elem_count++;
 
@@ -2067,7 +2058,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 				// this doc is no good... send him to hell
 				if (elem_count != 1)
 				{
-					i.remove();
+				//	i.remove();
 					continue;
 				}
 
@@ -2095,7 +2086,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 				// check if element survived nametest
 				if (res.size() != 1)
 				{
-					i.remove();
+			//		i.remove();
 				}
 			}
 
@@ -2229,8 +2220,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 				if (!name_test((NodeType) i.Current, name, "attribute"))
 				{
 
-//JAVA TO C# CONVERTER TODO TASK: .NET enumerators are read-only:
-					i.remove();
+					//i.remove();
 				}
 			}
 
@@ -2242,8 +2232,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 
 				if (!derivesFrom(node, et))
 				{
-//JAVA TO C# CONVERTER TODO TASK: .NET enumerators are read-only:
-					i.remove();
+				//	i.remove();
 				}
 
 			}
@@ -2321,8 +2310,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 				if (!name_test((ElementType) i.Current, name, "element"))
 				{
 
-//JAVA TO C# CONVERTER TODO TASK: .NET enumerators are read-only:
-					i.remove();
+			//		i.remove();
 				}
 			}
 
@@ -2334,8 +2322,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 
 				if (!derivesFrom(node, et))
 				{
-//JAVA TO C# CONVERTER TODO TASK: .NET enumerators are read-only:
-					i.remove();
+	//				i.remove();
 					continue;
 				}
 
@@ -2343,7 +2330,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 				// XXX or, in schema it is nillable
 				if (nilled.value())
 				{
-					i.remove();
+		//			i.remove();
 				}
 			}
 
@@ -2386,14 +2373,16 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		{
 			ResultBuffer rs = new ResultBuffer();
 
-			Focus focus = focus();
-			int original_cp = focus.position();
+			Focus xfocus = focus();
+			int original_cp = xfocus.position();
 
 			// optimization
 			// check if predicate is single numeric constant
 			if (exprs.Count == 1)
-			{
-				Expr expr = (Expr) exprs.GetEnumerator().next();
+            {
+                var x = exprs.GetEnumerator();
+                x.MoveNext();
+				Expr expr = (Expr) x.Current;
 
 				if (expr is XPathExpr)
 				{
@@ -2403,14 +2392,14 @@ namespace org.eclipse.wst.xml.xpath2.processor
 						FilterExpr fex = (FilterExpr) xpe.expr();
 						if (fex.primary() is IntegerLiteral)
 						{
-							int pos = (((IntegerLiteral) fex.primary()).value().int_value()).intValue();
+							int pos = (int) (((IntegerLiteral) fex.primary()).value().int_value());
 
-							if (pos <= focus.last() && pos > 0)
+							if (pos <= xfocus.last() && pos > 0)
 							{
-								focus.set_position(pos);
-								rs.add(focus.context_item());
+								xfocus.set_position(pos);
+								rs.add(xfocus.context_item());
 							}
-							focus.set_position(original_cp);
+							xfocus.set_position(original_cp);
 							return rs.Sequence;
 						}
 					}
@@ -2432,7 +2421,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 					rs.add(focus().context_item());
 				}
 
-				if (!focus.advance_cp())
+				if (!xfocus.advance_cp())
 				{
 					break;
 				}
@@ -2440,7 +2429,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 			}
 
 			// restore
-			focus.set_position(original_cp);
+			xfocus.set_position(original_cp);
 
 			return rs.Sequence;
 		}

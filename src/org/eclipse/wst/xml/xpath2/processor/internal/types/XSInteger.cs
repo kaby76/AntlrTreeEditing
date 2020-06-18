@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Numerics;
 
 /// <summary>
 ///*****************************************************************************
@@ -54,7 +56,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		/// </summary>
 		/// <param name="x">
 		///            Integer to be stored </param>
-		public XSInteger(System.Numerics.BigInteger x) : base(new decimal(x))
+		public XSInteger(System.Numerics.BigInteger x) : base(new decimal((long)x))
 		{
 			_value = x;
 		}
@@ -64,9 +66,10 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		/// </summary>
 		/// <param name="x">
 		///            Integer to be stored </param>
-		public XSInteger(string x) : base(new decimal(x))
-		{
-			_value = new System.Numerics.BigInteger(x);
+		public XSInteger(string x) : base(x)
+        {
+            BigInteger.TryParse(x, out BigInteger v);
+			_value = v;
 		}
 
 		/// <summary>
@@ -113,7 +116,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		/// <returns> True is the integer represented is 0. False otherwise </returns>
 		public override bool zero()
 		{
-			return (_value.CompareTo(System.Numerics.BigInteger.ZERO) == 0);
+			return (_value.CompareTo(System.Numerics.BigInteger.Zero) == 0);
 		}
 
 		/// <summary>
@@ -166,21 +169,24 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 			{
 				if (aat.StringValue.Equals("true"))
 				{
-					return System.Numerics.BigInteger.ONE;
+					return System.Numerics.BigInteger.One;
 				}
 				else
 				{
-					return System.Numerics.BigInteger.ZERO;
+					return System.Numerics.BigInteger.Zero;
 				}
 			}
 
 			if (aat is XSDecimal || aat is XSFloat || aat is XSDouble)
 			{
-					decimal bigDec = new decimal(aat.StringValue);
-					return bigDec.toBigInteger();
+				var s1 = aat.ToString();
+                BigInteger.TryParse(s1, out BigInteger v1);
+                return v1;
 			}
 
-			return new System.Numerics.BigInteger(aat.StringValue);
+            var s = aat.ToString();
+            BigInteger.TryParse(s, out BigInteger v);
+			return v;
 		}
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
@@ -209,9 +215,10 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		{
 
 			try
-			{
-				new System.Numerics.BigInteger(value);
-			}
+            {
+                if (BigInteger.TryParse(value, out BigInteger v)) return true;
+                else return false;
+            }
 			catch (System.FormatException)
 			{
 				return false;
@@ -237,7 +244,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		public virtual void set_int(System.Numerics.BigInteger x)
 		{
 			_value = x;
-			set_double(x.intValue());
+			set_double((long)x);
 		}
 
 		/// <summary>
@@ -335,7 +342,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 			ResultSequence carg = convertResultSequence(arg);
 
 			XSInteger val = (XSInteger) get_single_type(carg, typeof(XSInteger));
-			System.Numerics.BigInteger result = int_value().remainder(val.int_value());
+			System.Numerics.BigInteger result = ((long)int_value()) % (val.int_value());
 
 			return ResultSequenceFactory.create_new(new XSInteger(result));
 		}
@@ -354,8 +361,10 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		/// </summary>
 		/// <returns> New XSInteger representing the absolute of the integer stored </returns>
 		public override NumericType abs()
-		{
-			return new XSInteger(int_value().abs());
+        {
+            var i = int_value();
+            var f = Math.Abs((long)i);
+			return new XSInteger(f);
 		}
 
 		/*
@@ -413,7 +422,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 				throw DynamicError.div_zero(null);
 			}
 
-			decimal result = Value.divide(val.Value, 18, decimal.ROUND_HALF_EVEN);
+			decimal result = decimal.Divide(Value, val.Value);
 			return ResultSequenceFactory.create_new(new XSDecimal(result));
 		}
 

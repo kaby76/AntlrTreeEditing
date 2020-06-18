@@ -515,7 +515,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 
 				if (!dt.zero())
 				{
-					ret = (int) Math.Round(monthValue() / dt.Value.doubleValue());
+					ret = (int) Math.Round(monthValue() / dt.Value);
 				}
 
 				return ResultSequenceFactory.create_new(new XSYearMonthDuration(ret));

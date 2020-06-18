@@ -630,10 +630,11 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 			}
 
 			IDictionary scope = current_scope();
-			if (scope.Remove(@var) == null)
+			if (!scope.Contains(@var))
 			{
 				return false;
 			}
+			scope.Remove(@var);
 			return true;
 
 		}

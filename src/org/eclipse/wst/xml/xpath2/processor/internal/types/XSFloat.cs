@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Numerics;
 
 /// <summary>
 ///*****************************************************************************
@@ -417,8 +418,11 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 				throw DynamicError.div_zero(null);
 			}
 
-			decimal result = new decimal((new float?((float_value() / val.float_value()))).longValue());
-			return ResultSequenceFactory.create_new(new XSInteger(result.toBigInteger()));
+			decimal result = (decimal)(
+                (double)
+                    (float_value() / val.float_value())
+                    );
+			return ResultSequenceFactory.create_new(new XSInteger(new BigInteger(result)));
 		}
 
 		/// <summary>
@@ -483,9 +487,10 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		public override NumericType round()
 		{
 			decimal value = new decimal(float_value());
-			decimal round = value.setScale(0, decimal.ROUND_HALF_UP);
-			return new XSFloat(round.floatValue());
-		}
+//			decimal round = value.setScale(0, decimal.ROUND_HALF_UP);
+	//		return new XSFloat(round.floatValue());
+    return new XSFloat((long)value);
+        }
 
 		/// <summary>
 		/// Returns the closest integer of the number stored.
@@ -504,8 +509,9 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		public override NumericType round_half_to_even(int precision)
 		{
 			decimal value = new decimal(_value.Value);
-			decimal round = value.setScale(precision, decimal.ROUND_HALF_EVEN);
-			return new XSFloat(round.floatValue());
+			//decimal round = value.setScale(precision, decimal.ROUND_HALF_EVEN);
+			//return new XSFloat(round.floatValue());
+			return new XSFloat((long)value);
 		}
 
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:

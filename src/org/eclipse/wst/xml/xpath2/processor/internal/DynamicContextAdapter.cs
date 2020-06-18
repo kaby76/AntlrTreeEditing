@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using javax.xml.datatype;
 using javax.xml.@namespace;
 
 /// <summary>
@@ -92,7 +93,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 				}
 				catch (DatatypeConfigurationException e)
 				{
-					throw new Exception(e);
+					throw;
 				}
 			}
 		}

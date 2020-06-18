@@ -63,7 +63,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		/// <summary>
 		/// Initialises a representation of the current year and month
 		/// </summary>
-		public XSGYearMonth() : this(new GregorianCalendar(TimeZone.getTimeZone("GMT")), null)
+		public XSGYearMonth() : this(new GregorianCalendar(TimeZone.CurrentTimeZone), null)
 		{
 		}
 
@@ -234,8 +234,8 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		/// <returns> The actual year as an integer </returns>
 		public virtual int year()
 		{
-			int y = _calendar.Year;
-			if (_calendar.get(DateTime.ERA) == GregorianCalendar.BC)
+			int y = _calendar.get(Calendar.YEAR);
+			if (_calendar.get(Calendar.ERA) == GregorianCalendar.BC)
 			{
 				y *= -1;
 			}
@@ -341,8 +341,8 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		public virtual bool eq(AnyType arg, DynamicContext dynamicContext)
 		{
 			XSGYearMonth val = (XSGYearMonth) NumericType.get_single_type(arg, typeof(XSGYearMonth));
-			DateTime thiscal = normalizeCalendar(calendar(), tz());
-			DateTime thatcal = normalizeCalendar(val.calendar(), val.tz());
+			Calendar thiscal = normalizeCalendar(calendar(), tz());
+            Calendar thatcal = normalizeCalendar(val.calendar(), val.tz());
 
 			return thiscal.Equals(thatcal);
 		}

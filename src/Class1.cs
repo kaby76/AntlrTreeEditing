@@ -187,6 +187,11 @@ namespace javax.xml.datatype
         {
             throw new NotImplementedException();
         }
+
+        public Duration newDuration(bool duration, int i, int i1, int i2, int hours, int minutes, int i3)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class DatatypeConfigurationException : Exception { }
@@ -267,6 +272,16 @@ namespace org.apache.xerces.util
         {
             throw new NotImplementedException();
         }
+
+        public static bool isValidName(string strValue)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static bool isValidNmtoken(string strValue)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 
@@ -305,6 +320,8 @@ namespace org.w3c.dom
         string LocalName { get; set; }
         short DOCUMENT_NODE { get; set; }
         Document OwnerDocument { get; set; }
+        NodeList ChildNodes { get; set; }
+        Node NextSibling { get; set; }
         bool isSameNode(Node nodeValue);
         short compareDocumentPosition(Node nodeB);
     }
@@ -317,6 +334,7 @@ namespace org.w3c.dom
     {
         string DocumentURI { get; set; }
         NodeList ChildNodes { get; set; }
+        NodeList getElementsByTagNameNS(string ns, string local);
     }
 
     public interface Element : Node
@@ -330,7 +348,11 @@ namespace org.w3c.dom
         int Length { get; set; }
         Attr item(int i);
     }
-    public interface NodeList { }
+    public interface NodeList
+    {
+        int Length { get; set; }
+        Node item(int i);
+    }
 
     public interface Text { }
 

@@ -103,8 +103,8 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 				}
     
 				// strip trailing zeros
-				_value = new decimal((_value.ToString()).replaceFirst("0*", ""));
-    
+				//_value = new decimal((_value.ToString()).replaceFirst("0*", ""));
+                throw new Exception();
 				return format.xpathFormat(_value);
 			}
 		}
@@ -438,8 +438,9 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 			{
 				throw DynamicError.div_zero(null);
 			}
-			decimal result = Value.divide(val.Value, 18, decimal.ROUND_HALF_EVEN);
-			return ResultSequenceFactory.create_new(new XSDecimal(result));
+			//decimal result = Value.divide(val.Value, 18, decimal.ROUND_HALF_EVEN);
+			//return ResultSequenceFactory.create_new(new XSDecimal(result));
+			throw new Exception();
 		}
 
 		/// <summary>
@@ -496,10 +497,11 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 			// return value.remainder(divisor);
 
 			// appx as of now. JDK 1.4 doesn't support BigDecimal.remainder(..)
-			decimal dividend = value.divide(divisor, decimal.ROUND_DOWN);
-			decimal ceilDividend = new decimal(dividend.toBigInteger());
+			//decimal dividend = value.divide(divisor, decimal.ROUND_DOWN);
+			//decimal ceilDividend = new decimal(dividend.toBigInteger());
+            throw new Exception();
 
-			return value - ceilDividend * divisor;
+			//return value - ceilDividend * divisor;
 		}
 
 		/// <summary>
@@ -519,7 +521,8 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		/// <returns> A XSDecimal representing the absolute value of the number stored </returns>
 		public override NumericType abs()
 		{
-			return new XSDecimal(_value.abs());
+            throw new Exception();
+			//return new XSDecimal(_value.abs());
 		}
 
 		/// <summary>
@@ -529,8 +532,9 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		///         number stored </returns>
 		public override NumericType ceiling()
 		{
-			decimal ceiling = _value.setScale(0, decimal.ROUND_CEILING);
-			return new XSDecimal(ceiling);
+            throw new Exception();
+			//decimal ceiling = _value.setScale(0, decimal.ROUND_CEILING);
+			//return new XSDecimal(ceiling);
 		}
 
 		/// <summary>
@@ -540,8 +544,9 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		///         number stored </returns>
 		public override NumericType floor()
 		{
-			decimal floor = _value.setScale(0, decimal.ROUND_FLOOR);
-			return new XSDecimal(floor);
+			throw new Exception();
+			//decimal floor = _value.setScale(0, decimal.ROUND_FLOOR);
+			//return new XSDecimal(floor);
 		}
 
 		/// <summary>
@@ -550,8 +555,9 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		/// <returns> A XSDecimal representing the closest long of the number stored. </returns>
 		public override NumericType round()
 		{
-			decimal round = _value.setScale(0, decimal.ROUND_UP);
-			return new XSDecimal(round);
+			throw new Exception();
+			//decimal round = _value.setScale(0, decimal.ROUND_UP);
+			//return new XSDecimal(round);
 		}
 
 		/// <summary>
@@ -570,8 +576,9 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		/// <returns> A XSDecimal representing the closest long of the number stored. </returns>
 		public override NumericType round_half_to_even(int precision)
 		{
-			decimal round = _value.setScale(precision, decimal.ROUND_HALF_EVEN);
-			return new XSDecimal(round);
+			throw new Exception();
+			//decimal round = _value.setScale(precision, decimal.ROUND_HALF_EVEN);
+			//return new XSDecimal(round);
 		}
 
 		public override TypeDefinition TypeDefinition

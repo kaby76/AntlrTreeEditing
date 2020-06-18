@@ -81,7 +81,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 			if (needsStringComparison(itema, itemb))
 			{
 				XSString xstr1 = new XSString(itema.StringValue);
-				if (FnCompare.compare_string(collationURI, xstr1, itemStr, context).Equals(System.Numerics.BigInteger.ZERO))
+				if (FnCompare.compare_string(collationURI, xstr1, itemStr, context).Equals(System.Numerics.BigInteger.Zero))
 				{
 					return true;
 				}
@@ -95,7 +95,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 		{
 			XSString itemStr = new XSString(item.StringValue);
 
-			for (IEnumerator i = rs.GetEnumerator(); i.MoveNext();)
+			for (IEnumerator i = rs.iterator(); i.MoveNext();)
 			{
 				AnyType at = (AnyType) i.Current;
 
@@ -134,7 +134,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 				if (needsStringComparison(item, at))
 				{
 					XSString xstr1 = new XSString(at.StringValue);
-					if (FnCompare.compare_string(collationURI, xstr1, itemStr, context).Equals(System.Numerics.BigInteger.ZERO))
+					if (FnCompare.compare_string(collationURI, xstr1, itemStr, context).Equals(System.Numerics.BigInteger.Zero))
 					{
 						return true;
 					}

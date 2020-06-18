@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Numerics;
 
 /// <summary>
 ///*****************************************************************************
@@ -497,7 +498,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 			}
 
 			decimal result = new decimal((double_value() / val.double_value()));
-			return ResultSequenceFactory.create_new(new XSInteger(result.toBigInteger()));
+			return ResultSequenceFactory.create_new(new XSInteger(new BigInteger(result)));
 		}
 
 		/// <summary>
@@ -563,8 +564,9 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		public override NumericType round()
 		{
 			decimal value = new decimal(_value.Value);
-			decimal round = value.setScale(0, decimal.ROUND_HALF_UP);
-			return new XSDouble(round.doubleValue());
+			//decimal round = value.setScale(0, decimal.ROUND_HALF_UP);
+			//return new XSDouble(round.doubleValue());
+			return new XSDouble((long)value);
 		}
 
 		/// <summary>
@@ -587,8 +589,9 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		public override NumericType round_half_to_even(int precision)
 		{
 			decimal value = new decimal(_value.Value);
-			decimal round = value.setScale(precision, decimal.ROUND_HALF_EVEN);
-			return new XSDouble(round.doubleValue());
+			//decimal round = value.setScale(precision, decimal.ROUND_HALF_EVEN);
+			//return new XSDouble(round.doubleValue());
+			return new XSDouble((long)value);
 		}
 
 		public override TypeDefinition TypeDefinition

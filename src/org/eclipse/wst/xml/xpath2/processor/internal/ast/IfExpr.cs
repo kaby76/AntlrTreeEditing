@@ -58,7 +58,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
 		/// Support for Iterator interface.
 		/// </summary>
 		/// <returns> Result of Iterator operation. </returns>
-		public virtual IEnumerator iterator()
+		public virtual IEnumerator<Expr> iterator()
 		{
 			return _exprs.GetEnumerator();
 		}

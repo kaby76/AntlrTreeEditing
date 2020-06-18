@@ -39,10 +39,10 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 			bool fnd = false;
 			if (pattern.IndexOf("-[", StringComparison.Ordinal) != -1)
 			{
-				pattern = pattern.replaceAll("\\-\\[", "&&[^");
+				pattern = pattern.Replace("\\-\\[", "&&[^");
 			}
 			var m = compileAndExecute(pattern, flags, src);
-			while (m.find())
+			while (m.Count > 0)
 			{
 				fnd = true;
 			}

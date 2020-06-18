@@ -1,4 +1,5 @@
 ﻿using System;
+using org.w3c.dom;
 
 /// <summary>
 ///*****************************************************************************
@@ -135,7 +136,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
 			NodeType nodeType = (NodeType) at;
 			Node node = nodeType.node_value();
 			Document doc = null;
-			if (node.NodeType == Node.DOCUMENT_NODE)
+			if (node.NodeType == NodeConstants.DOCUMENT_NODE)
 			{
 				doc = (Document) node;
 			}
@@ -228,6 +229,10 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
 						return 0;
 					}
 				}
+                set
+                {
+                    throw new Exception();
+                }
 			}
 
 		}

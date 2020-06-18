@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 
 /// <summary>
 ///*****************************************************************************
@@ -33,7 +34,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
 	public class FilterExpr : StepExpr, IEnumerable
 	{
 		private PrimaryExpr _pexpr;
-		private ICollection _exprs;
+		private ICollection<Expr> _exprs;
 
 		/// <summary>
 		/// Constructor of FilterExpr.
@@ -42,7 +43,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
 		///            is copied to _pexpr. </param>
 		/// <param name="exprs">
 		///            is copied to _exprs.  </param>
-		public FilterExpr(PrimaryExpr pexpr, ICollection exprs)
+		public FilterExpr(PrimaryExpr pexpr, ICollection<Expr> exprs)
 		{
 			_pexpr = pexpr;
 			_exprs = exprs;
@@ -70,7 +71,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
 		/// Get the next predicate.
 		/// </summary>
 		/// <returns> The next predicate. </returns>
-		public virtual IEnumerator iterator()
+		public virtual IEnumerator<Expr> iterator()
 		{
 			return _exprs.GetEnumerator();
 		}

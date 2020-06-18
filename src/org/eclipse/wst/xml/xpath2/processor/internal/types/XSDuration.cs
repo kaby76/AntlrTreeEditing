@@ -170,23 +170,23 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 				}
     
 				// do the "time" bit
-				int hours = hours();
-				int minutes = minutes();
-				double seconds = seconds();
+				int xhours = hours();
+				int xminutes = minutes();
+				double xseconds = seconds();
     
-				if (hours != 0)
+				if (xhours != 0)
 				{
-					tret += hours + "H";
+					tret += xhours + "H";
 					did_something = true;
 				}
-				if (minutes != 0)
+				if (xminutes != 0)
 				{
-					tret += minutes + "M";
+					tret += xminutes + "M";
 					did_something = true;
 				}
-				if (seconds != 0)
+				if (xseconds != 0)
 				{
-					string doubStr = ((new double?(seconds)).ToString());
+					string doubStr = ((new double?(xseconds)).ToString());
 					if (doubStr.EndsWith(".0", StringComparison.Ordinal))
 					{
 						// string value of x.0 seconds is xS. e.g, 7.0S is converted to
@@ -195,7 +195,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 					}
 					else
 					{
-						tret += seconds + "S";
+						tret += xseconds + "S";
 					}
 					did_something = true;
 				}
@@ -204,7 +204,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 						tret += "0S";
 				}
     
-				if ((year() == 0 && month() == 0) || (hours > 0 || minutes > 0 || seconds > 0))
+				if ((year() == 0 && month() == 0) || (xhours > 0 || xminutes > 0 || xseconds > 0))
 				{
 					if (tret.Length > 0)
 					{

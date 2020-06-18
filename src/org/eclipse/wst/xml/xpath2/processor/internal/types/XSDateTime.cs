@@ -1045,8 +1045,8 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		{
 			XSDateTime val = (XSDateTime) NumericType.get_single_type(arg, typeof(XSDateTime));
 
-			DateTime thisCal = normalizeCalendar(calendar(), tz());
-			DateTime thatCal = normalizeCalendar(val.calendar(), val.tz());
+			Calendar thisCal = normalizeCalendar(calendar(), tz());
+            Calendar thatCal = normalizeCalendar(val.calendar(), val.tz());
 			long duration = thisCal.Ticks - thatCal.Ticks;
 			Duration dtduration = _datatypeFactory.newDuration(duration);
 			return ResultSequenceFactory.create_new(XSDayTimeDuration.parseDTDuration(dtduration.ToString()));
@@ -1055,20 +1055,24 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		private ResultSequence minusXSDayTimeDuration(Item at)
 		{
 			XSDuration val = (XSDuration) at;
-			try
-			{
-				XSDateTime res = (XSDateTime) clone();
-				XMLGregorianCalendar xmlCal = _datatypeFactory.newXMLGregorianCalendar((GregorianCalendar) calendar());
-				Duration dtduration = _datatypeFactory.newDuration(val.StringValue);
-				xmlCal.add(dtduration.negate());
-				res = new XSDateTime(xmlCal.toGregorianCalendar(), res.tz());
+            try
+            {
+                XSDateTime res = (XSDateTime) clone();
+                XMLGregorianCalendar xmlCal = _datatypeFactory.newXMLGregorianCalendar((GregorianCalendar) calendar());
+                Duration dtduration = _datatypeFactory.newDuration(val.StringValue);
+                xmlCal.add(dtduration.negate());
+                res = new XSDateTime(xmlCal.toGregorianCalendar(), res.tz());
 
-				return ResultSequenceFactory.create_new(res);
-			}
-			catch (CloneNotSupportedException)
-			{
+                return ResultSequenceFactory.create_new(res);
+            }
+            catch
+            {
+                throw;
+            }
+			//catch (CloneNotSupportedException)
+			//{
 
-			}
+			//}
 			return null;
 		}
 

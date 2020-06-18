@@ -85,7 +85,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 		/// <returns> the xpath expressions. </returns>
 		public virtual object visit(XPath xp)
 		{
-			for (IEnumerator<Expr> i = xp.GetEnumerator(); i.MoveNext();)
+			for (IEnumerator<Expr> i = xp.iterator(); i.MoveNext();)
 			{
 				Expr e = (Expr) i.Current;
 				e.accept(this);
@@ -99,7 +99,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 		/// <returns> fex expression. </returns>
 		public virtual object visit(ForExpr fex)
 		{
-			for (IEnumerator<VarExprPair> i = fex.GetEnumerator(); i.MoveNext();)
+			for (IEnumerator<VarExprPair> i = fex.iterator(); i.MoveNext();)
 			{
 				i.Current.expr().accept(this);
 			}
@@ -113,7 +113,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 		/// <returns> qex expression. </returns>
 		public virtual object visit(QuantifiedExpr qex)
 		{
-			for (IEnumerator<VarExprPair> i = qex.GetEnumerator(); i.MoveNext();)
+			for (IEnumerator<VarExprPair> i = qex.iterator(); i.MoveNext();)
 			{
 				i.Current.expr().accept(this);
 			}
@@ -127,7 +127,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 		/// <returns> ifex expression. </returns>
 		public virtual object visit(IfExpr ifex)
 		{
-			for (IEnumerator<Expr> i = ifex.GetEnumerator(); i.MoveNext();)
+			for (IEnumerator<Expr> i = ifex.iterator(); i.MoveNext();)
 			{
 				i.Current.accept(this);
 			}
@@ -416,7 +416,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 		/// <returns> e </returns>
 		public virtual object visit(ParExpr e)
 		{
-			for (IEnumerator<Expr> i = e.GetEnumerator(); i.MoveNext();)
+			for (IEnumerator<Expr> i = e.iterator(); i.MoveNext();)
 			{
 				i.Current.accept(this);
 			}
@@ -436,7 +436,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 		/// <returns> e </returns>
 		public virtual object visit(FunctionCall e)
 		{
-			for (IEnumerator<Expr> i = e.GetEnumerator(); i.MoveNext();)
+			for (IEnumerator<Expr> i = e.iterator(); i.MoveNext();)
 			{
 				i.Current.accept(this);
 			}
@@ -573,7 +573,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 		public virtual object visit(AxisStep e)
 		{
 			e.step().accept(this);
-			for (IEnumerator<Expr> i = e.GetEnumerator(); i.MoveNext();)
+			for (IEnumerator<Expr> i = e.iterator(); i.MoveNext();)
 			{
 				i.Current.accept(this);
 			}
@@ -586,7 +586,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 		public virtual object visit(FilterExpr e)
 		{
 			e.primary().accept(this);
-			for (IEnumerator<Expr> i = e.GetEnumerator(); i.MoveNext();)
+			for (IEnumerator<Expr> i = e.iterator(); i.MoveNext();)
 			{
 				i.Current.accept(this);
 			}

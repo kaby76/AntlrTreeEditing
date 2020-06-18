@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 
 /// <summary>
 ///*****************************************************************************
@@ -24,7 +26,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
 	/// </summary>
 	public class ForExpr : Expr
 	{
-		private ICollection _var_expr_pairs;
+		private ICollection<VarExprPair> _var_expr_pairs;
 		private Expr _return;
 
 		/// <summary>
@@ -34,7 +36,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
 		///            Expressions. </param>
 		/// <param name="ret">
 		///            Return expression. </param>
-		public ForExpr(ICollection varexp, Expr ret)
+		public ForExpr(ICollection<VarExprPair> varexp, Expr ret)
 		{
 			_var_expr_pairs = varexp;
 			_return = ret;
@@ -53,7 +55,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
 		/// Support for Iterator interface.
 		/// </summary>
 		/// <returns> Result of Iterator operation. </returns>
-		public virtual IEnumerator iterator()
+		public virtual IEnumerator<VarExprPair> iterator()
 		{
 			return _var_expr_pairs.GetEnumerator();
 		}
@@ -88,12 +90,13 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
 
 			for (IEnumerator i = _var_expr_pairs.GetEnumerator(); i.MoveNext();)
 			{
-				i.Current;
+			//	i.Current;
 				if (!first)
 				{
 //JAVA TO C# CONVERTER TODO TASK: .NET enumerators are read-only:
-					i.remove();
-				}
+                    throw new Exception();
+                    //	i.remove();
+                }
 
 				first = false;
 			}
@@ -103,7 +106,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
 		/// Support for Collection interface.
 		/// </summary>
 		/// <returns> Expression pairs. </returns>
-		public virtual ICollection ve_pairs()
+		public virtual ICollection<VarExprPair> ve_pairs()
 		{
 			return _var_expr_pairs;
 		}
