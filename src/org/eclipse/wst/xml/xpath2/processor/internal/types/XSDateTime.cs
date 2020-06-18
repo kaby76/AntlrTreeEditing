@@ -537,7 +537,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 			}
 
 			// SANITY CHEX
-			TimeZone UTC = TimeZone.getTimeZone("UTC");
+			var UTC = TimeZone.getTimeZone("UTC");
 			GregorianCalendar cal = new GregorianCalendar(UTC);
 
 			// year

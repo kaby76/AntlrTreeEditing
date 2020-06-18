@@ -1,4 +1,6 @@
 ﻿using System;
+using java.util;
+using TimeZone = System.TimeZone;
 
 /// <summary>
 ///*****************************************************************************
@@ -36,7 +38,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 	{
 
 		private const string XS_G_YEAR_MONTH = "xs:gYearMonth";
-		private DateTime _calendar;
+		private Calendar _calendar;
 		private bool _timezoned;
 		private XSDuration _tz;
 
@@ -48,7 +50,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		///            Calendar representation of the year and month to be stored </param>
 		/// <param name="tz">
 		///            Timezone associated with this year and month </param>
-		public XSGYearMonth(DateTime cal, XSDuration tz)
+		public XSGYearMonth(Calendar cal, XSDuration tz)
 		{
 			_calendar = cal;
 			if (tz != null)
@@ -320,7 +322,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		/// Retrieves the Calendar representation of the year and month stored
 		/// </summary>
 		/// <returns> Calendar representation of the year and month stored </returns>
-		public override DateTime calendar()
+		public override Calendar calendar()
 		{
 			return _calendar;
 		}

@@ -596,6 +596,11 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 				return _datatypeFactory.newDuration(!negative(), year(), month(), days(), hours(), minutes(), (int)seconds());
 			}
 		}
-	}
+
+        public object Clone()
+        {
+            throw new NotImplementedException();
+        }
+    }
 
 }
