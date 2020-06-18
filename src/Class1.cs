@@ -124,6 +124,8 @@ namespace java.util
         {
             throw new NotImplementedException();
         }
+
+        public static TimeZone Default { get; set; }
     }
 }
 
@@ -163,6 +165,16 @@ namespace javax.xml.datatype
             throw new NotImplementedException();
         }
     }
+
+    public class DatatypeFactory
+    {
+        public static DatatypeFactory newInstance()
+        {
+            return null;
+        }
+    }
+
+    public class DatatypeConfigurationException : Exception { }
 }
 
 namespace javax.xml.@namespace
@@ -296,6 +308,17 @@ namespace org.w3c.dom
     public interface Text { }
 
     public interface TypeInfo { }
+
+    public interface ProcessingInstruction : Node
+    {
+        string Data { get; set; }
+        string Target { get; set; }
+    }
+
+    public interface Comment
+    {
+
+    }
 
 }
 

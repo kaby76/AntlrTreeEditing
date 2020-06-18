@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Text;
+using java.util;
+using TimeZone = System.TimeZone;
 
 /// <summary>
 ///*****************************************************************************
@@ -37,7 +39,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 	{
 
 		private const string XS_G_MONTH = "xs:gMonth";
-		private DateTime _calendar;
+		private Calendar _calendar;
 		private bool _timezoned;
 		private XSDuration _tz;
 
@@ -48,7 +50,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		///            Calendar representation of the month to be stored </param>
 		/// <param name="tz">
 		///            Timezone associated with this month </param>
-		public XSGMonth(DateTime cal, XSDuration tz)
+		public XSGMonth(Calendar cal, XSDuration tz)
 		{
 			_calendar = cal;
 			if (tz != null)
@@ -109,7 +111,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 				}
 
 				string[] split = str.Split("-", true);
-				startdate += split[2].replaceAll("Z", "") + "-01";
+				startdate += split[2].Replace("Z", "") + "-01";
 
 				if (str.IndexOf('T') != -1)
 				{
@@ -322,7 +324,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		/// Retrieves the Calendar representation of the month stored
 		/// </summary>
 		/// <returns> Calendar representation of the month stored </returns>
-		public override DateTime calendar()
+		public override Calendar calendar()
 		{
 			return _calendar;
 		}
@@ -341,8 +343,8 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		public virtual bool eq(AnyType arg, DynamicContext dynamicContext)
 		{
 			XSGMonth val = (XSGMonth) NumericType.get_single_type(arg, typeof(XSGMonth));
-			DateTime thiscal = normalizeCalendar(calendar(), tz());
-			DateTime thatcal = normalizeCalendar(val.calendar(), val.tz());
+			Calendar thiscal = normalizeCalendar(calendar(), tz());
+            Calendar thatcal = normalizeCalendar(val.calendar(), val.tz());
 
 			return thiscal.Equals(thatcal);
 		}

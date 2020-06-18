@@ -28,7 +28,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 	/// <summary>
 	/// Class for Function Library support.
 	/// </summary>
-	public class FunctionLibraryImpl : FunctionLibrary
+	public class FunctionLibraryImpl : api.FunctionLibrary
 	{
 		private string _namespace;
 		private IDictionary _functions;
@@ -49,7 +49,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 		/// </summary>
 		/// <param name="x">
 		///            function to add. </param>
-		public virtual void addFunction(Function x)
+		public virtual void addFunction(api.Function x)
 		{
 			_functions[signature(x)] = x;
 		}
@@ -60,7 +60,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 		/// <param name="f">
 		///            current function. </param>
 		/// <returns> Signature. </returns>
-		private static string signature(Function f)
+		private static string signature(api.Function f)
 		{
 			return signature(f.Name, f.VariableArgument ? -1 : f.MinArity);
 		}
@@ -75,7 +75,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 		/// <returns> Signature. </returns>
 		private static string signature(string name, int arity)
 		{
-			return name + "_" + ((arity < 0) ? "x" : arity);
+			return name + "_" + ((arity < 0) ? "x" : arity.ToString());
 		}
 
 		public virtual bool functionExists(string name, int arity)
@@ -83,10 +83,10 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 			return resolveFunction(name, arity) != null;
 		}
 
-		public virtual Function resolveFunction(string localName, int arity)
+		public virtual api.Function resolveFunction(string localName, int arity)
 		{
 
-			Function f = (Function) _functions[signature(localName, arity)];
+            api.Function f = (api.Function) _functions[signature(localName, arity)];
 
 			if (f != null || arity == -1)
 			{
@@ -94,7 +94,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 			}
 
 			// see if we got a varg one
-			f = (Function) _functions[signature(localName, -1)];
+			f = (api.Function) _functions[signature(localName, -1)];
 
 			// nope
 			if (f == null)

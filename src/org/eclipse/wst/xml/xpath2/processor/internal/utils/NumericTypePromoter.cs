@@ -54,9 +54,9 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.utils
 			return true;
 		}
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public org.eclipse.wst.xml.xpath2.processor.internal.types.AnyAtomicType doPromote(org.eclipse.wst.xml.xpath2.processor.internal.types.AnyAtomicType value) throws org.eclipse.wst.xml.xpath2.processor.DynamicError
-		public virtual AnyAtomicType doPromote(AnyAtomicType value)
+		//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
+		//ORIGINAL LINE: public org.eclipse.wst.xml.xpath2.processor.internal.types.AnyAtomicType doPromote(org.eclipse.wst.xml.xpath2.processor.internal.types.AnyAtomicType value) throws org.eclipse.wst.xml.xpath2.processor.DynamicError
+		public override AnyAtomicType doPromote(AnyAtomicType value)
 		{
 			if (TargetType == typeof(XSFloat))
 			{
@@ -106,7 +106,6 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.utils
 		{
 			return superType.IsAssignableFrom(typeToConsider);
 		}
-
-	}
+    }
 
 }

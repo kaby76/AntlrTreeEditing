@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Collections;
+using System.Collections.Generic;
 
 /// <summary>
 ///*****************************************************************************
@@ -27,7 +28,8 @@ using System.Collections;
 namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 {
 
-
+	using DatatypeFactory = javax.xml.datatype.DatatypeFactory;
+    using DatatypeConfigurationException = javax.xml.datatype.DatatypeConfigurationException;
 
 	using EvaluationContext = org.eclipse.wst.xml.xpath2.api.EvaluationContext;
 	using Item = org.eclipse.wst.xml.xpath2.api.Item;
@@ -248,7 +250,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 				org.eclipse.wst.xml.xpath2.api.ResultSequence rs = FnData.atomize(arg);
 
 				// cast untyped to expected type
-				for (IEnumerator i = rs.GetEnumerator(); i.MoveNext();)
+				for (var i = rs.iterator(); i.MoveNext(); )
 				{
 					AnyType item = (AnyType) i.Current;
 
@@ -327,10 +329,12 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 			IEnumerator expi = expected.GetEnumerator();
 
 			// convert all arguments
-			while (argi.MoveNext())
+			while (argi.MoveNext() && expi.MoveNext())
 			{
 //JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-				result.Add(convert_argument((org.eclipse.wst.xml.xpath2.api.ResultSequence) argi.Current, (SeqType) expi.next()));
+				result.Add(convert_argument(
+                    (org.eclipse.wst.xml.xpath2.api.ResultSequence) argi.Current,
+                    (SeqType) expi.Current));
 			}
 
 			return result;
@@ -416,7 +420,17 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 			return "argument_" + index;
 		}
 
-		public virtual TypeDefinition computeReturnType(ICollection args, org.eclipse.wst.xml.xpath2.api.StaticContext sc)
+        public api.ResultSequence evaluate(ICollection<api.ResultSequence> args, EvaluationContext evaluationContext)
+        {
+            throw new NotImplementedException();
+        }
+
+        public TypeDefinition computeReturnType(ICollection<TypeDefinition> args, api.StaticContext sc)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual TypeDefinition computeReturnType(ICollection args, org.eclipse.wst.xml.xpath2.api.StaticContext sc)
 		{
 			return BuiltinTypeLibrary.XS_UNTYPED;
 		}

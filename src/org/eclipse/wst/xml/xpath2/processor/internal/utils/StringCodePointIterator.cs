@@ -207,7 +207,12 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.utils
 			return text.GetHashCode() ^ pos ^ end;
 		}
 
-		/// <summary>
+        public object Clone()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        /// <summary>
 		/// Creates a copy of this iterator. </summary>
 		/// <returns> A copy of this </returns>
 		public object clone()
