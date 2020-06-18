@@ -20,8 +20,8 @@
 namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 {
 
-	using Base64 = org.apache.xerces.impl.dv.util.Base64;
-	using HexBin = org.apache.xerces.impl.dv.util.HexBin;
+//	using Base64 = org.apache.xerces.impl.dv.util.Base64;
+//	using HexBin = org.apache.xerces.impl.dv.util.HexBin;
 	using DynamicContext = org.eclipse.wst.xml.xpath2.api.DynamicContext;
 	using ResultBuffer = org.eclipse.wst.xml.xpath2.api.ResultBuffer;
 	using ResultSequence = org.eclipse.wst.xml.xpath2.api.ResultSequence;
@@ -158,8 +158,9 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 
 			if (aat is XSBase64Binary)
 			{
-				decodedValue = Base64.decode(str_value);
-				decodedValue = HexBin.encode(decodedValue).Bytes;
+				throw new Exception();
+				//decodedValue = Base64.decode(str_value);
+				//decodedValue = HexBin.encode(decodedValue).Bytes;
 			}
 			else
 			{
@@ -189,31 +190,32 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public boolean eq(AnyType arg, org.eclipse.wst.xml.xpath2.api.DynamicContext dynamicContext) throws org.eclipse.wst.xml.xpath2.processor.DynamicError
 		public virtual bool eq(AnyType arg, DynamicContext dynamicContext)
-		{
+        {
+            throw new Exception();
 		  string valToCompare = arg.StringValue;
 
-		  sbyte[] value1 = HexBin.decode(_value);
-		  sbyte[] value2 = HexBin.decode(valToCompare);
-		  if (value2 == null)
-		  {
-			return false;
-		  }
+		 // sbyte[] value1 = HexBin.decode(_value);
+		 // sbyte[] value2 = HexBin.decode(valToCompare);
+		 // if (value2 == null)
+		 // {
+			//return false;
+		 // }
 
-		  int len = value1.Length;
-		  if (len != value2.Length)
-		  {
-			return false;
-		  }
+		 // int len = value1.Length;
+		 // if (len != value2.Length)
+		 // {
+			//return false;
+		 // }
 
-		  for (int i = 0; i < len; i++)
-		  {
-			if (value1[i] != value2[i])
-			{
-			  return false;
-			}
-		  }
+		 // for (int i = 0; i < len; i++)
+		 // {
+			//if (value1[i] != value2[i])
+			//{
+			//  return false;
+			//}
+		 // }
 
-		  return true;
+		 // return true;
 		}
 		public override TypeDefinition TypeDefinition
 		{
@@ -226,9 +228,10 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		public override object NativeValue
 		{
 			get
-			{
-				return HexBin.decode(_value);
-			}
+            {
+                throw new Exception();
+                //	return HexBin.decode(_value);
+            }
 		}
 	}
 

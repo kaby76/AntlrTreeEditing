@@ -18,8 +18,7 @@ using System.Reflection;
 /// </summary>
 namespace org.eclipse.wst.xml.xpath2.processor.@internal.types.builtin
 {
-	using InvocationTargetException = java.lang.reflect.InvocationTargetException;
-	using Method = java.lang.reflect.Method;
+//	using InvocationTargetException = java.lang.reflect.InvocationTargetException;
     using QName = javax.xml.@namespace.QName;
 	using ResultSequence = org.eclipse.wst.xml.xpath2.api.ResultSequence;
 	using TypeDefinition = org.eclipse.wst.xml.xpath2.api.typesystem.TypeDefinition;
@@ -35,8 +34,8 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types.builtin
 		private readonly Type implementationClass;
 		private readonly Type nativeType;
 		private readonly BuiltinTypeDefinition baseType;
-		private readonly Method constructorMethod;
-		private readonly Method constructorFromNativeMethod;
+		private readonly object/* Method */ constructorMethod;
+		private readonly object/* Method */ constructorFromNativeMethod;
 
 		public BuiltinTypeDefinition(QName name, BuiltinTypeDefinition baseType) : this(name, null, null, baseType)
 		{
@@ -53,34 +52,27 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types.builtin
 			this.nativeType = nativeType;
 			this.baseType = baseType;
 
-			Method m = null;
+		//	Method m = null;
 			try
 			{
-				m = implementationClass != null ? implementationClass.GetMethod("constructor", typeof(ResultSequence)) : null;
+		//		m = implementationClass != null ? implementationClass.GetMethod("constructor", typeof(ResultSequence)) : null;
 			}
-			catch (SecurityException e)
+			catch
 			{
-				throw new Exception(e);
+				throw;
 			}
-			catch (NoSuchMethodException)
-			{
-			}
-			this.constructorMethod = m;
+	//		this.constructorMethod = m;
 
-			m = null;
+//m = null;
 			try
 			{
-				m = implementationClass != null ? implementationClass.GetMethod("constructor", nativeType) : null;
+	//			m = implementationClass != null ? implementationClass.GetMethod("constructor", nativeType) : null;
 			}
-			catch (SecurityException e)
-			{
-				throw new Exception(e);
-			}
-			catch (NoSuchMethodException)
-			{
-				// We'll live
-			}
-			this.constructorFromNativeMethod = m;
+            catch
+            {
+                throw;
+            }
+	//		this.constructorFromNativeMethod = m;
 
 		}
 
@@ -169,16 +161,13 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types.builtin
 				{
 					throw new XPathError("Type " + Name + " is abstract!");
 				}
-				return (SingleItemSequence)constructorMethod.invoke(null, new object[] {rs});
-			}
-			catch (IllegalAccessException e)
-			{
-				throw new Exception(e);
-			}
-			catch (InvocationTargetException e)
-			{
-				throw new Exception(e);
-			}
+			//	return (SingleItemSequence)constructorMethod.invoke(null, new object[] {rs});
+            return null;
+            }
+            catch
+            {
+                throw;
+            }
 		}
 
 		public virtual SingleItemSequence constructNative(object obj)
@@ -189,16 +178,13 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types.builtin
 				{
 					throw new XPathError("Type " + Name + " cannot be constructed from native object!");
 				}
-				return (SingleItemSequence)constructorFromNativeMethod.invoke(null, new object[] {obj});
-			}
-			catch (IllegalAccessException e)
-			{
-				throw new Exception(e);
-			}
-			catch (InvocationTargetException e)
-			{
-				throw new Exception(e);
-			}
+	//			return (SingleItemSequence)constructorFromNativeMethod.invoke(null, new object[] {obj});
+    return null;
+            }
+            catch
+            {
+                throw;
+            }
 		}
 
 		public virtual Type NativeType

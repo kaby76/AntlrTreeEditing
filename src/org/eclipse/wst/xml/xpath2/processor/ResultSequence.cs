@@ -188,6 +188,16 @@ namespace org.eclipse.wst.xml.xpath2.processor
         {
             throw new System.NotImplementedException();
         }
+
+        IEnumerator<Item> IEnumerable<Item>.GetEnumerator()
+        {
+            throw new NotImplementedException();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            throw new NotImplementedException();
+        }
     }
 
 }

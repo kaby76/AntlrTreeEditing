@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using javax.xml.datatype;
 
@@ -135,6 +136,16 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		{
 			return new SimpleAtomicItemTypeImpl(TypeDefinition, org.eclipse.wst.xml.xpath2.api.typesystem.ItemType_Fields.OCCURRENCE_ONE);
 		}
-	}
+
+        public IEnumerator<Item> GetEnumerator()
+        {
+            throw new NotImplementedException();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+    }
 
 }

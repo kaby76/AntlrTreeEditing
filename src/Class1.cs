@@ -192,6 +192,14 @@ namespace javax.xml.@namespace
         private string v1;
         private string v2;
         private string v3;
+        private string xS_NS;
+        private string name;
+
+        public QName(string xS_NS, string name)
+        {
+            this.xS_NS = xS_NS;
+            this.name = name;
+        }
 
         public QName(string v1, string v2, string v3)
         {

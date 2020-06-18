@@ -34,7 +34,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.ast
 	/// Support for XPath.
 	/// </summary>
 	/// @deprecated This is only for internal use, use XPath2Expression instead 
-	public class XPath : XPathNode, XPath2Expression
+	public class XPath : XPathNode, XPath2Expression, IEnumerable
 	{
 		private ICollection<Expr> _exprs;
 		private StaticContext _staticContext;
@@ -172,6 +172,10 @@ namespace org.eclipse.wst.xml.xpath2.processor.ast
 			}
 		}
 
-	}
+        public IEnumerator GetEnumerator()
+        {
+            throw new System.NotImplementedException();
+        }
+    }
 
 }

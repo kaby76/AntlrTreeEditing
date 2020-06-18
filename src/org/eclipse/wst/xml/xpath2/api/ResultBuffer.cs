@@ -208,6 +208,16 @@ namespace org.eclipse.wst.xml.xpath2.api
             {
                 throw new System.NotImplementedException();
             }
+
+            public IEnumerator<Item> GetEnumerator()
+            {
+                throw new System.NotImplementedException();
+            }
+
+            IEnumerator IEnumerable.GetEnumerator()
+            {
+                return GetEnumerator();
+            }
         }
 
 		public sealed class ArrayResultSequence : ResultSequence
@@ -339,6 +349,16 @@ namespace org.eclipse.wst.xml.xpath2.api
             {
                 throw new System.NotImplementedException();
             }
+
+            public IEnumerator<Item> GetEnumerator()
+            {
+                throw new System.NotImplementedException();
+            }
+
+            IEnumerator IEnumerable.GetEnumerator()
+            {
+                return GetEnumerator();
+            }
         }
 
 		public virtual int size()
@@ -354,7 +374,7 @@ namespace org.eclipse.wst.xml.xpath2.api
 
 		public virtual void prepend(ResultSequence rs)
 		{
-			values.AddRange(0, collectionWrapper(rs));
+			values.AddRange(collectionWrapper(rs));
 		}
 
 //JAVA TO C# CONVERTER WARNING: 'final' parameters are not available in .NET:
@@ -589,7 +609,17 @@ namespace org.eclipse.wst.xml.xpath2.api
                     throw new System.NotImplementedException();
                 }
             }
-		}
+
+            public IEnumerator<Item> GetEnumerator()
+            {
+                throw new System.NotImplementedException();
+            }
+
+            IEnumerator IEnumerable.GetEnumerator()
+            {
+                return GetEnumerator();
+            }
+        }
 
 		public virtual ICollection<Item> Collection
 		{
@@ -599,7 +629,7 @@ namespace org.eclipse.wst.xml.xpath2.api
 			}
 		}
 
-		public virtual ResultBuffer concat(ICollection others)
+		public virtual ResultBuffer concat(ICollection<Item> others)
 		{
 			this.values.AddRange(others);
 			return this;

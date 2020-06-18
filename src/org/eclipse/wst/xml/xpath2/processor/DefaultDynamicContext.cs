@@ -356,10 +356,10 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		/// </summary>
 		public virtual IComparer<string> get_collation(string uri)
 		{
-			if (DynamicContext_Fields.CODEPOINT_COLLATION.Equals(uri))
-			{
-				return CODEPOINT_COMPARATOR;
-			}
+			//if (DynamicContext_Fields.CODEPOINT_COLLATION.Equals(uri))
+			//{
+			//	return CODEPOINT_COMPARATOR;
+			//}
 
 			return _collation_provider != null ? _collation_provider.get_collation(uri) : null;
 		}

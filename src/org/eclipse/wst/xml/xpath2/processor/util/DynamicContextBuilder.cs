@@ -52,8 +52,9 @@ namespace org.eclipse.wst.xml.xpath2.processor.util
 		private bool InstanceFieldsInitialized = false;
 
 		private void InitializeInstanceFields()
-		{
-			_tz = _datatypeFactory.newDuration(_systemTimezone.RawOffset);
+        {
+            throw new Exception();
+//			_tz = _datatypeFactory.newDuration(_systemTimezone.RawOffset);
 		}
 
 
@@ -152,12 +153,13 @@ namespace org.eclipse.wst.xml.xpath2.processor.util
 		{
 			try
 			{
-				DOMLoader loader = new XercesLoader();
-				loader.set_validating(false);
+				throw new Exception();
+				//DOMLoader loader = new XercesLoader();
+				//loader.set_validating(false);
 
-				Document doc = loader.load((new URL(uri.ToString())).openStream());
-				doc.DocumentURI = uri.ToString();
-				return doc;
+				//Document doc = loader.load((new URL(uri.ToString())).openStream());
+				//doc.DocumentURI = uri.ToString();
+				//return doc;
 			}
 			catch (FileNotFoundException)
 			{

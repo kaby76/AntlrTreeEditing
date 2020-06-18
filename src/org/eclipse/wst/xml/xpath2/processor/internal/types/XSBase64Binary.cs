@@ -14,11 +14,13 @@
 /// ******************************************************************************
 /// </summary>
 
+using System;
+
 namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 {
 
-	using Base64 = org.apache.xerces.impl.dv.util.Base64;
-	using HexBin = org.apache.xerces.impl.dv.util.HexBin;
+//	using Base64 = org.apache.xerces.impl.dv.util.Base64;
+//	using HexBin = org.apache.xerces.impl.dv.util.HexBin;
 	using DynamicContext = org.eclipse.wst.xml.xpath2.api.DynamicContext;
 	using ResultBuffer = org.eclipse.wst.xml.xpath2.api.ResultBuffer;
 	using ResultSequence = org.eclipse.wst.xml.xpath2.api.ResultSequence;
@@ -103,47 +105,48 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public org.eclipse.wst.xml.xpath2.api.ResultSequence constructor(org.eclipse.wst.xml.xpath2.api.ResultSequence arg) throws org.eclipse.wst.xml.xpath2.processor.DynamicError
 		public override ResultSequence constructor(ResultSequence arg)
-		{
+        {
+            return null;
 
-			if (arg.empty())
-			{
-				return ResultBuffer.EMPTY;
-			}
+            //if (arg.empty())
+            //{
+            //	return ResultBuffer.EMPTY;
+            //}
 
-			AnyAtomicType aat = (AnyAtomicType) arg.first();
-			if (aat is NumericType || aat is XSDuration || aat is CalendarType || aat is XSBoolean || aat is XSAnyURI)
-			{
-				throw DynamicError.invalidType();
-			}
+            //AnyAtomicType aat = (AnyAtomicType) arg.first();
+            //if (aat is NumericType || aat is XSDuration || aat is CalendarType || aat is XSBoolean || aat is XSAnyURI)
+            //{
+            //	throw DynamicError.invalidType();
+            //}
 
-			if (!isCastable(aat))
-			{
-				throw DynamicError.cant_cast(null);
-			}
+            //if (!isCastable(aat))
+            //{
+            //	throw DynamicError.cant_cast(null);
+            //}
 
-			string str_value = aat.StringValue;
+            //string str_value = aat.StringValue;
 
-			sbyte[] decodedValue = Base64.decode(str_value);
+            //sbyte[] decodedValue = Base64.decode(str_value);
 
-			if (aat is XSHexBinary)
-			{
-				decodedValue = HexBin.decode(str_value);
-				decodedValue = Base64.encode(decodedValue).Bytes;
-			}
-			else
-			{
-				decodedValue = str_value.GetBytes();
-			}
-			if (decodedValue != null)
-			{
-			  return new XSBase64Binary(StringHelperClass.NewString(decodedValue));
-			}
-			else
-			{
-			  // invalid base64 string
-			  throw DynamicError.throw_type_error();
-			}
-		}
+            //if (aat is XSHexBinary)
+            //{
+            //	decodedValue = HexBin.decode(str_value);
+            //	decodedValue = Base64.encode(decodedValue).Bytes;
+            //}
+            //else
+            //{
+            //	decodedValue = str_value.GetBytes();
+            //}
+            //if (decodedValue != null)
+            //{
+            //  return new XSBase64Binary(StringHelperClass.NewString(decodedValue));
+            //}
+            //else
+            //{
+            //  // invalid base64 string
+            //  throw DynamicError.throw_type_error();
+            //}
+        }
 
 		private bool isCastable(AnyAtomicType aat)
 		{
@@ -172,32 +175,33 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public boolean eq(AnyType arg, org.eclipse.wst.xml.xpath2.api.DynamicContext dynamicContext) throws org.eclipse.wst.xml.xpath2.processor.DynamicError
 		public virtual bool eq(AnyType arg, DynamicContext dynamicContext)
-		{
-		  string valToCompare = arg.StringValue;
+        {
+            throw new Exception();
+            // string valToCompare = arg.StringValue;
 
-		  sbyte[] value1 = Base64.decode(_value);
-		  sbyte[] value2 = Base64.decode(valToCompare);
-		  if (value2 == null)
-		  {
-			return false;
-		  }
+            // sbyte[] value1 = Base64.decode(_value);
+            // sbyte[] value2 = Base64.decode(valToCompare);
+            // if (value2 == null)
+            // {
+            //return false;
+            // }
 
-		  int len = value1.Length;
-		  if (len != value2.Length)
-		  {
-			return false;
-		  }
+            // int len = value1.Length;
+            // if (len != value2.Length)
+            // {
+            //return false;
+            // }
 
-		  for (int i = 0; i < len; i++)
-		  {
-			if (value1[i] != value2[i])
-			{
-			  return false;
-			}
-		  }
+            // for (int i = 0; i < len; i++)
+            // {
+            //if (value1[i] != value2[i])
+            //{
+            //  return false;
+            //}
+            // }
 
-		  return true;
-		}
+            // return true;
+        }
 
 		public override TypeDefinition TypeDefinition
 		{
@@ -210,9 +214,10 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		public override object NativeValue
 		{
 			get
-			{
-				return Base64.decode(_value);
-			}
+            {
+                throw new Exception();
+                //	return Base64.decode(_value);
+            }
 		}
 	}
 
