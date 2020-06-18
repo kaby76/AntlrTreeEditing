@@ -30,7 +30,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
 	/// expression. Context positions are assigned to items based on their ordinal
 	/// position in the result sequence. The first context position is 1.
 	/// </summary>
-	public class FilterExpr : StepExpr
+	public class FilterExpr : StepExpr, IEnumerable
 	{
 		private PrimaryExpr _pexpr;
 		private ICollection _exprs;
@@ -93,6 +93,11 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
 		{
 			return _exprs.Count;
 		}
-	}
+
+        public IEnumerator GetEnumerator()
+        {
+            throw new System.NotImplementedException();
+        }
+    }
 
 }

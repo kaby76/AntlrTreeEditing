@@ -26,7 +26,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
 	/// <summary>
 	/// Class for Function Call support.
 	/// </summary>
-	public class FunctionCall : PrimaryExpr
+	public class FunctionCall : PrimaryExpr, IEnumerable
 	{
 		private QName _name;
 		private ICollection<Expr> _args;
@@ -90,6 +90,11 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
 		{
 			return _args.Count;
 		}
-	}
+
+        public IEnumerator GetEnumerator()
+        {
+            throw new System.NotImplementedException();
+        }
+    }
 
 }

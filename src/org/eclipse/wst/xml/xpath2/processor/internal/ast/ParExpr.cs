@@ -23,7 +23,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
 	/// <summary>
 	/// Class for parethesized expressions support.
 	/// </summary>
-	public class ParExpr : PrimaryExpr
+	public class ParExpr : PrimaryExpr, IEnumerable
 	{
 		private ICollection<Expr> _exprs;
 
@@ -54,6 +54,11 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
 		{
 			return _exprs.GetEnumerator();
 		}
-	}
+
+        public IEnumerator GetEnumerator()
+        {
+            throw new System.NotImplementedException();
+        }
+    }
 
 }

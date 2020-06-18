@@ -141,7 +141,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 
 			System.Numerics.BigInteger result = FnCompare.compare_string(dc.CollationProvider.DefaultCollation, this, comparand, dc);
 
-			return result.intValue();
+			return (int)result;
 		}
 
 		/// <summary>

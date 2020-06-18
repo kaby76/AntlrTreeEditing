@@ -172,6 +172,21 @@ namespace javax.xml.datatype
         {
             return null;
         }
+
+        public Duration newDuration(long duration)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Duration newDuration(string duration)
+        {
+            throw new NotImplementedException();
+        }
+
+        public XMLGregorianCalendar newXMLGregorianCalendar(GregorianCalendar calendar)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class DatatypeConfigurationException : Exception { }
@@ -301,6 +316,7 @@ namespace org.w3c.dom
     public interface Document : Node
     {
         string DocumentURI { get; set; }
+        NodeList ChildNodes { get; set; }
     }
 
     public interface Element : Node

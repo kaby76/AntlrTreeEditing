@@ -25,7 +25,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
 	/// nodes are always returned in Document Order. This can be Forward Step or
 	/// Reverse Step.
 	/// </summary>
-	public class AxisStep : StepExpr
+	public class AxisStep : StepExpr, IEnumerable
 	{
 		private Step _step;
 		private ICollection<ICollection<Expr>> _exprs;
@@ -86,6 +86,11 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
 		{
 			return _exprs.Count;
 		}
-	}
+
+        public IEnumerator GetEnumerator()
+        {
+            throw new System.NotImplementedException();
+        }
+    }
 
 }

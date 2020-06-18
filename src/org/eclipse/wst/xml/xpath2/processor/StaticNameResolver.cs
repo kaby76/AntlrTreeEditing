@@ -397,7 +397,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		public virtual object visit(ForExpr fex)
 		{
 
-			doForExpr(fex.GetEnumerator(), fex.expr());
+			doForExpr(fex.iterator(), fex.expr());
 
 			return null;
 		}
@@ -411,7 +411,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		public virtual object visit(QuantifiedExpr qex)
 		{
 			// lets cheat
-			doForExpr(qex.GetEnumerator(), qex.expr());
+			doForExpr(qex.iterator(), qex.expr());
 
 			return null;
 		}
@@ -435,7 +435,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		public virtual object visit(IfExpr ifex)
 		{
 
-			visitExprs(ifex.GetEnumerator());
+			visitExprs(ifex.iterator());
 
 			ifex.then_clause().accept(this);
 
@@ -764,7 +764,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		{
 			e.node_test().accept(this);
 
-			_axes.Add(e.GetEnumerator().name());
+			_axes.Add(e.iterator().name());
 
 			return null;
 		}
@@ -784,7 +784,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 				nt.accept(this);
 			}
 
-			ReverseAxis iterator = e.GetEnumerator();
+			var iterator = e.iterator();
 			if (iterator != null)
 			{
 				_axes.Add(iterator.name());

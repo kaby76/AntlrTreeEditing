@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Collections;
+using System.Diagnostics;
 
 /// <summary>
 ///*****************************************************************************
@@ -24,7 +25,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
 	/// <summary>
 	/// Class for Reverse stepping support for Step operations.
 	/// </summary>
-	public class ReverseStep : Step
+	public class ReverseStep : Step, IEnumerable
 	{
 		/// <summary>
 		/// Set internal value for PARENT.
@@ -127,6 +128,11 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
 		{
 			return _iterator;
 		}
-	}
+
+        public IEnumerator GetEnumerator()
+        {
+            throw new System.NotImplementedException();
+        }
+    }
 
 }

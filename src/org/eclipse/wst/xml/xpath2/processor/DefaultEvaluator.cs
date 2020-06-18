@@ -476,7 +476,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 				// variable and do the expression, concatenating the
 				// result
 
-				for (IEnumerator i = rs.GetEnumerator(); i.MoveNext();)
+				for (IEnumerator i = rs.iterator(); i.MoveNext();)
 				{
 					AnyType item = (AnyType) i.Current;
 
@@ -518,7 +518,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 
 				try
 				{
-					for (IEnumerator i = rs.GetEnumerator(); i.MoveNext();)
+					for (IEnumerator i = rs.iterator(); i.MoveNext();)
 					{
 						AnyType item = (AnyType) i.Current;
 
@@ -568,7 +568,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 
 				try
 				{
-					for (IEnumerator i = rs.GetEnumerator(); i.MoveNext();)
+					for (IEnumerator i = rs.iterator(); i.MoveNext();)
 					{
 						AnyType item = (AnyType) i.Current;
 
