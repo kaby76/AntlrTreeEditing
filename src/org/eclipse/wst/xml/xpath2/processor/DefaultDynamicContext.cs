@@ -47,7 +47,6 @@ namespace org.eclipse.wst.xml.xpath2.processor
 	using QName = org.eclipse.wst.xml.xpath2.processor.@internal.types.QName;
 	using XSDayTimeDuration = org.eclipse.wst.xml.xpath2.processor.@internal.types.XSDayTimeDuration;
 	using XSDuration = org.eclipse.wst.xml.xpath2.processor.@internal.types.XSDuration;
-	using XercesTypeModel = org.eclipse.wst.xml.xpath2.processor.@internal.types.xerces.XercesTypeModel;
 	using ResultSequenceUtil = org.eclipse.wst.xml.xpath2.processor.util.ResultSequenceUtil;
 	using TypeModel = org.eclipse.wst.xml.xpath2.api.typesystem.TypeModel;
 	using Document = org.w3c.dom.Document;
@@ -76,7 +75,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		///            Schema information of document. May be null </param>
 		/// <param name="doc">
 		///            Document [root] node of XML source. </param>
-		public DefaultDynamicContext(XSModel schema, Document doc) : this(new XercesTypeModel(schema))
+		public DefaultDynamicContext(XSModel schema, Document doc)
 		{
 		}
 
@@ -262,32 +261,33 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		// XXX make it nice, and move it out as a utility function
 		private Document retrieve_doc(URI uri)
 		{
-			try
-			{
-				DOMLoader loader = new XercesLoader();
-				loader.set_validating(false);
+			//try
+			//{
+			//	DOMLoader loader = new XercesLoader();
+			//	loader.set_validating(false);
 
-				Document doc = loader.load((new URL(uri.ToString())).openStream());
-				doc.DocumentURI = uri.ToString();
-				return doc;
-			}
-			catch (DOMLoaderException)
-			{
-				return null;
-			}
-			catch (FileNotFoundException)
-			{
-				return null;
-			}
-			catch (MalformedURLException)
-			{
-				return null;
-			}
-			catch (IOException)
-			{
-				return null;
-			}
-		}
+			//	Document doc = loader.load((new URL(uri.ToString())).openStream());
+			//	doc.DocumentURI = uri.ToString();
+			//	return doc;
+			//}
+			//catch (DOMLoaderException)
+			//{
+			//	return null;
+			//}
+			//catch (FileNotFoundException)
+			//{
+			//	return null;
+			//}
+			//catch (MalformedURLException)
+			//{
+			//	return null;
+			//}
+			//catch (IOException)
+			//{
+			//	return null;
+			//}
+            return null;
+        }
 
 		/// <summary>
 		/// Sets the value of a variable.

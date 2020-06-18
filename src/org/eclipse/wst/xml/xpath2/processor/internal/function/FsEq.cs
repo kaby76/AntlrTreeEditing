@@ -180,9 +180,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 		/// <exception cref="DynamicError">
 		///             Dynamic error. </exception>
 		/// <returns> Result of Equality operation. </returns>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: private static boolean do_general_pair(org.eclipse.wst.xml.xpath2.processor.internal.types.AnyType a, org.eclipse.wst.xml.xpath2.processor.internal.types.AnyType b, Method comparator, org.eclipse.wst.xml.xpath2.api.DynamicContext ec) throws org.eclipse.wst.xml.xpath2.processor.DynamicError
-		private static bool do_general_pair(AnyType a, AnyType b, Method comparator, DynamicContext ec)
+		private static bool do_general_pair(AnyType a, AnyType b, IComparer comparator, DynamicContext ec)
 		{
 
 			// section 3.5.2
@@ -253,22 +251,12 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 			ResultSequence result = null;
 			try
 			{
-				result = (ResultSequence) comparator.invoke(null, margs);
+				result = (ResultSequence) comparator.Compare(args, ec);
 			}
-			catch (IllegalAccessException)
-			{
-				Debug.Assert(false);
-			}
-			catch (InvocationTargetException err)
-			{
-				Exception ex = err.TargetException;
-
-				if (ex is Exception)
-				{
-					throw (Exception) ex;
-				}
-				throw new Exception(ex);
-			}
+			catch (Exception ex)
+            {
+                throw;
+            }
 
 			if (((XSBoolean) result.first()).value())
 			{
@@ -310,18 +298,18 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 		{
 
 			// do the voodoo
-			Method comparator = null;
+			IComparer comparator = null;
 
 			try
 			{
 				Type[] margsdef = new Type[] {typeof(ICollection), typeof(DynamicContext)};
 
-				comparator = type.GetMethod(mname, margsdef);
+//				comparator = type.GetMethod(mname, margsdef);
 
 			}
-			catch (NoSuchMethodException err)
+			catch
 			{
-				throw new Exception("Can�'t find method : " + mname, err);
+				throw new Exception("Can't find method : " + mname);
 			}
 
 			// sanity check args and get them
@@ -332,10 +320,10 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 
 			IEnumerator argiter = args.GetEnumerator();
 
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			ResultSequence one = (ResultSequence) argiter.next();
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			ResultSequence two = (ResultSequence) argiter.next();
+            argiter.MoveNext();
+            ResultSequence one = (ResultSequence) argiter.Current;
+            argiter.MoveNext();
+			ResultSequence two = (ResultSequence) argiter.Current;
 
 			// XXX ?
 			if (one.empty() || two.empty())
@@ -348,10 +336,10 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 			two = FnData.atomize(two);
 
 			// we gotta find a pair that satisfied the condition
-			for (IEnumerator i = one.GetEnumerator(); i.MoveNext();)
+			for (IEnumerator i = one.iterator(); i.MoveNext();)
 			{
 				AnyType a = (AnyType) i.Current;
-				for (IEnumerator j = two.GetEnumerator(); j.MoveNext();)
+				for (IEnumerator j = two.iterator(); j.MoveNext();)
 				{
 					AnyType b = (AnyType) j.Current;
 
@@ -380,8 +368,6 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 		/// <exception cref="DynamicError">
 		///             Dynamic error. </exception>
 		/// <returns> Result of the operation. </returns>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static org.eclipse.wst.xml.xpath2.api.ResultSequence do_cmp_value_op(java.util.Collection args, Class type, String mname, org.eclipse.wst.xml.xpath2.api.DynamicContext context) throws org.eclipse.wst.xml.xpath2.processor.DynamicError
 		public static ResultSequence do_cmp_value_op(ICollection args, Type type, string mname, DynamicContext context)
 		{
 
@@ -400,10 +386,10 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 
 			// make sure arugments are comparable by equality
 			IEnumerator argi = cargs.GetEnumerator();
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			Item arg = ((ResultSequence) argi.next()).first();
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			ResultSequence arg2 = (ResultSequence) argi.next();
+            argi.MoveNext();
+
+			Item arg = ((ResultSequence) argi.Current).first();
+            ResultSequence arg2 = (ResultSequence) argi.Current;
 
 			if (arg2.size() != 1)
 			{
@@ -418,35 +404,19 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 			try
 			{
 				Type[] margsdef = new Type[] {typeof(AnyType), typeof(DynamicContext)};
-				Method method = null;
+				IComparer method = null;
 
 				method = type.GetMethod(mname, margsdef);
 
 				object[] margs = new object[] {arg2.first(), context};
-				bool? cmpres = (bool?) method.invoke(arg, margs);
+				bool? cmpres = (bool?) method.Compare(arg, margs);
 
 				return ResultSequenceFactory.create_new(new XSBoolean(cmpres.Value));
 			}
-			catch (NoSuchMethodException err)
+			catch 
 			{
 				Debug.Assert(false);
-				throw new Exception("cannot compare using method " + mname, err);
-			}
-			catch (IllegalAccessException err)
-			{
-				Debug.Assert(false);
-				throw new Exception("cannot compare using method " + mname, err);
-			}
-			catch (InvocationTargetException err)
-			{
-				Exception ex = err.TargetException;
-
-				if (ex is DynamicError)
-				{
-					throw (DynamicError) ex;
-				}
-
-				throw new Exception("cannot compare using method " + mname, ex);
+				throw new Exception("cannot compare using method " + mname);
 			}
 		}
 	}

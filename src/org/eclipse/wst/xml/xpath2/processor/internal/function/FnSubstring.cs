@@ -33,8 +33,6 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 	using CodePointIterator = org.eclipse.wst.xml.xpath2.processor.@internal.utils.CodePointIterator;
 	using StringCodePointIterator = org.eclipse.wst.xml.xpath2.processor.@internal.utils.StringCodePointIterator;
 
-	using UCharacter = com.ibm.icu.lang.UCharacter;
-
 	/// <summary>
 	/// <para>
 	/// Function to obtain a substring from a string.
@@ -86,84 +84,89 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 			return substring(args);
 		}
 
-		/// <summary>
-		/// Obtain a substring from the arguments.
-		/// </summary>
-		/// <param name="args">
-		///            are used to obtain a substring. </param>
-		/// <exception cref="DynamicError">
-		///             Dynamic error. </exception>
-		/// <returns> The result of obtaining a substring from the arguments. </returns>
+        /// <summary>
+        /// Obtain a substring from the arguments.
+        /// </summary>
+        /// <param name="args">
+        ///            are used to obtain a substring. </param>
+        /// <exception cref="DynamicError">
+        ///             Dynamic error. </exception>
+        /// <returns> The result of obtaining a substring from the arguments. </returns>
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public static org.eclipse.wst.xml.xpath2.api.ResultSequence substring(java.util.Collection args) throws org.eclipse.wst.xml.xpath2.processor.DynamicError
-		public static ResultSequence substring(ICollection args)
-		{
-			ICollection cargs = Function.convert_arguments(args, expected_args(args));
+        public static ResultSequence substring(ICollection args)
+        {
+            ICollection cargs = Function.convert_arguments(args, expected_args(args));
 
-			IEnumerator argi = cargs.GetEnumerator();
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			ResultSequence stringArg = (ResultSequence) argi.next();
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			ResultSequence startPosArg = (ResultSequence) argi.next();
-			ResultSequence lengthArg = null;
+            IEnumerator argi = cargs.GetEnumerator();
+            argi.MoveNext();
+            ResultSequence stringArg = (ResultSequence) argi.Current;
+            argi.MoveNext();
+            ResultSequence startPosArg = (ResultSequence) argi.Current;
+            ResultSequence lengthArg = null;
 
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			if (argi.hasNext())
-			{
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			  lengthArg = (ResultSequence) argi.next();
-			}
+            if (argi.MoveNext())
+            {
+                lengthArg = (ResultSequence) argi.Current;
+            }
 
-			if (stringArg.empty())
-			{
-				return emptyString();
-			}
+            if (stringArg.empty())
+            {
+                return emptyString();
+            }
 
-			string str = ((XSString) stringArg.first()).value();
-			double dstart = ((XSDouble) startPosArg.first()).double_value();
+            string str = ((XSString) stringArg.first()).value();
+            double dstart = ((XSDouble) startPosArg.first()).double_value();
 
-			// is start is NaN, no chars are returned
-			if (double.IsNaN(dstart) || double.NegativeInfinity == dstart)
-			{
-				return emptyString();
-			}
-			long istart = Math.Round(dstart);
+            // is start is NaN, no chars are returned
+            if (double.IsNaN(dstart) || double.NegativeInfinity == dstart)
+            {
+                return emptyString();
+            }
 
-			long ilength = long.MaxValue;
-			if (lengthArg != null)
-			{
-				double dlength = ((XSDouble) lengthArg.first()).double_value();
-				if (double.IsNaN(dlength))
-				{
-					return emptyString();
-				}
-				// Switch to the rounded kind
-				ilength = Math.Round(dlength);
-				if (ilength <= 0)
-				{
-					return emptyString();
-				}
-			}
+            double x = Math.Round(dstart);
+            long istart = (long) x;
+
+            long ilength = long.MaxValue;
+            if (lengthArg != null)
+            {
+                double dlength = ((XSDouble) lengthArg.first()).double_value();
+                if (double.IsNaN(dlength))
+                {
+                    return emptyString();
+                }
+
+                // Switch to the rounded kind
+                double y = Math.Round(dlength);
+                ilength = (long) y;
+                if (ilength <= 0)
+                {
+                    return emptyString();
+                }
+            }
 
 
-			// could guess too short in cases supplementary chars 
-			StringBuilder sb = new StringBuilder((int) Math.Min(str.Length, ilength));
+            // could guess too short in cases supplementary chars 
+            StringBuilder sb = new StringBuilder((int) Math.Min(str.Length, ilength));
 
-			// This looks like an inefficient way to iterate, but due to surrogate handling,
-			// string indexes are no good here. Welcome to UTF-16!
+            // This looks like an inefficient way to iterate, but due to surrogate handling,
+            // string indexes are no good here. Welcome to UTF-16!
 
-			CodePointIterator strIter = new StringCodePointIterator(str);
-			for (long p = 1; strIter.current() != org.eclipse.wst.xml.xpath2.processor.@internal.utils.CodePointIterator_Fields.DONE; ++p, strIter.next())
-			{
-				if (istart <= p && p - istart < ilength)
-				{
-				   sb.Append(UCharacter.toChars(strIter.current()));
-				}
-			}
-			return new XSString(sb.ToString());
-		}
+            CodePointIterator strIter = new StringCodePointIterator(str);
+            for (long p = 1;
+                strIter.current() != org.eclipse.wst.xml.xpath2.processor.@internal.utils.CodePointIterator_Fields.DONE;
+                ++p, strIter.next())
+            {
+                if (istart <= p && p - istart < ilength)
+                {
+                    sb.Append(strIter.current());
+                }
+            }
 
-		private static ResultSequence emptyString()
+            return new XSString(sb.ToString());
+        }
+
+        private static ResultSequence emptyString()
 		{
 			return new XSString("");
 		}

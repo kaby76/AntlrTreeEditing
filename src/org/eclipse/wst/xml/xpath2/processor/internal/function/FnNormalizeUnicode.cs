@@ -29,8 +29,6 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 	using QName = org.eclipse.wst.xml.xpath2.processor.@internal.types.QName;
 	using XSString = org.eclipse.wst.xml.xpath2.processor.@internal.types.XSString;
 
-	using Normalizer = com.ibm.icu.text.Normalizer;
-
 	/// <summary>
 	/// <para>
 	/// Function to normalize unicode.
@@ -71,47 +69,47 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 		/// <summary>
 		/// W3C normalizer implemented via IBM's ICU
 		/// </summary>
-		internal class ICUNormalizer : W3CNormalizer
-		{
-			internal bool InstanceFieldsInitialized = false;
+//		internal class ICUNormalizer : W3CNormalizer
+//		{
+//			internal bool InstanceFieldsInitialized = false;
 
-			public ICUNormalizer()
-			{
-				if (!InstanceFieldsInitialized)
-				{
-					InitializeInstanceFields();
-					InstanceFieldsInitialized = true;
-				}
-			}
+//			public ICUNormalizer()
+//			{
+//				if (!InstanceFieldsInitialized)
+//				{
+//					InitializeInstanceFields();
+//					InstanceFieldsInitialized = true;
+//				}
+//			}
 
-			internal virtual void InitializeInstanceFields()
-			{
-				// Can't handle "FULLY-NORMALIZED" yet
+//			internal virtual void InitializeInstanceFields()
+//			{
+//				// Can't handle "FULLY-NORMALIZED" yet
                 
-				modeMap["NFC"] = Normalizer.NFC;
-				modeMap["NFD"] = Normalizer.NFD;
-				modeMap["NFKC"] = Normalizer.NFKC;
-				modeMap["NFKD"] = Normalizer.NFKD;
-			}
+//				modeMap["NFC"] = Normalizer.NFC;
+//				modeMap["NFD"] = Normalizer.NFD;
+//				modeMap["NFKC"] = Normalizer.NFKC;
+//				modeMap["NFKD"] = Normalizer.NFKD;
+//			}
 
 
-			internal IDictionary modeMap = new Hashtable();
+//			internal IDictionary modeMap = new Hashtable();
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public String normalize(String argument, String normalizationForm) throws org.eclipse.wst.xml.xpath2.processor.DynamicError
-			public virtual string normalize(string argument, string normalizationForm)
-			{
-				Normalizer.Mode mode = (Normalizer.Mode)modeMap[normalizationForm];
-				if (mode != null)
-				{
-					return Normalizer.normalize(argument, mode);
-				}
-				else
-				{
-					throw DynamicError.unsupported_normalization_form(normalizationForm);
-				}
-			}
-		}
+////JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
+////ORIGINAL LINE: public String normalize(String argument, String normalizationForm) throws org.eclipse.wst.xml.xpath2.processor.DynamicError
+//			public virtual string normalize(string argument, string normalizationForm)
+//			{
+//				Normalizer.Mode mode = (Normalizer.Mode)modeMap[normalizationForm];
+//				if (mode != null)
+//				{
+//					return Normalizer.normalize(argument, mode);
+//				}
+//				else
+//				{
+//					throw DynamicError.unsupported_normalization_form(normalizationForm);
+//				}
+//			}
+//		}
 
 		/*
 		static class JDK6Normalizer implements W3CNormalizer {
@@ -151,16 +149,16 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 		}
 		*/
 
-		internal class FailingNormalizer : W3CNormalizer
-		{
+//		internal class FailingNormalizer : W3CNormalizer
+//		{
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public String normalize(String argument, String normalizationForm) throws org.eclipse.wst.xml.xpath2.processor.DynamicError
-			public virtual string normalize(string argument, string normalizationForm)
-			{
-				throw DynamicError.unsupported_normalization_form("Can't normalize to form " + normalizationForm + ": No ICU Library or Java 6 found. 'normalize-unicode' requires either 'com.ibm.icu.text.Normalizer' or 'java.text.Normalizer' on the classpath");
-			}
-		}
+////JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
+////ORIGINAL LINE: public String normalize(String argument, String normalizationForm) throws org.eclipse.wst.xml.xpath2.processor.DynamicError
+//			public virtual string normalize(string argument, string normalizationForm)
+//			{
+//				throw DynamicError.unsupported_normalization_form("Can't normalize to form " + normalizationForm + ": No ICU Library or Java 6 found. 'normalize-unicode' requires either 'com.ibm.icu.text.Normalizer' or 'java.text.Normalizer' on the classpath");
+//			}
+//		}
 
 		/// <summary>
 		/// Evaluate the arguments.
@@ -173,8 +171,9 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public org.eclipse.wst.xml.xpath2.api.ResultSequence evaluate(java.util.Collection args, org.eclipse.wst.xml.xpath2.api.EvaluationContext ec) throws org.eclipse.wst.xml.xpath2.processor.DynamicError
 		public override ResultSequence evaluate(ICollection args, EvaluationContext ec)
-		{
-			return normalize_unicode(args, ec.DynamicContext);
+        {
+            return null;
+			//return normalize_unicode(args, ec.DynamicContext);
 		}
 
 		/// <summary>
@@ -187,66 +186,66 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 		/// <returns> The result of normalizing the space in the arguments. </returns>
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public static org.eclipse.wst.xml.xpath2.api.ResultSequence normalize_unicode(java.util.Collection args, org.eclipse.wst.xml.xpath2.api.DynamicContext d_context) throws org.eclipse.wst.xml.xpath2.processor.DynamicError
-		public static ResultSequence normalize_unicode(ICollection args, DynamicContext d_context)
-		{
-			Debug.Assert(args.Count >= 1 && args.Count <= 2);
+//		public static ResultSequence normalize_unicode(ICollection args, DynamicContext d_context)
+//		{
+//			Debug.Assert(args.Count >= 1 && args.Count <= 2);
 
-			ICollection cargs = Function.convert_arguments(args, expected_args());
+//			ICollection cargs = Function.convert_arguments(args, expected_args());
 
-			IEnumerator cargsIterator = cargs.GetEnumerator();
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			ResultSequence arg1 = (ResultSequence) cargsIterator.next();
+//			IEnumerator cargsIterator = cargs.GetEnumerator();
+////JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
+//			ResultSequence arg1 = (ResultSequence) cargsIterator.next();
 
 
-			string normalizationType = "NFC";
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			if (cargsIterator.hasNext())
-			{
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-				ResultSequence arg2 = (ResultSequence)cargsIterator.next();
-				// Trim and convert to upper as per the spec
-				if (arg2.empty())
-				{
-					normalizationType = "";
-				}
-				else
-				{
-					normalizationType = ((XSString) arg2.first()).value().Trim().ToUpper();
-				}
-			}
+//			string normalizationType = "NFC";
+////JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
+//			if (cargsIterator.hasNext())
+//			{
+////JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
+//				ResultSequence arg2 = (ResultSequence)cargsIterator.next();
+//				// Trim and convert to upper as per the spec
+//				if (arg2.empty())
+//				{
+//					normalizationType = "";
+//				}
+//				else
+//				{
+//					normalizationType = ((XSString) arg2.first()).value().Trim().ToUpper();
+//				}
+//			}
 
-			string argument = "";
-			if (!arg1.empty())
-			{
-				argument = ((XSString) arg1.first()).value();
-			}
+//			string argument = "";
+//			if (!arg1.empty())
+//			{
+//				argument = ((XSString) arg1.first()).value();
+//			}
 
-			string normalized = normalizationType.Equals("") ? argument : Normalizer.normalize(argument, normalizationType);
-			return new XSString(normalized);
-		}
+//			string normalized = normalizationType.Equals("") ? argument : Normalizer.normalize(argument, normalizationType);
+//			return new XSString(normalized);
+//		}
 
-		private static W3CNormalizer Normalizer
-		{
-			get
-			{
-				if (normalizer == null)
-				{
-					ClassLoader classLoader = Thread.CurrentThread.ContextClassLoader;
+//		private static W3CNormalizer Normalizer
+//		{
+//			get
+//			{
+//				if (normalizer == null)
+//				{
+//					ClassLoader classLoader = Thread.CurrentThread.ContextClassLoader;
     
-					normalizer = createICUNormalizer(classLoader);
-					/*
-					if (normalizer == null) {
-						normalizer = createJDKNormalizer(classLoader);
-					}
-					*/
-					if (normalizer == null)
-					{
-						normalizer = new FailingNormalizer();
-					}
-				}
-				return normalizer;
-			}
-		}
+//					normalizer = createICUNormalizer(classLoader);
+//					/*
+//					if (normalizer == null) {
+//						normalizer = createJDKNormalizer(classLoader);
+//					}
+//					*/
+//					if (normalizer == null)
+//					{
+//						normalizer = new FailingNormalizer();
+//					}
+//				}
+//				return normalizer;
+//			}
+//		}
 
 		/*
 		private static W3CNormalizer createJDKNormalizer(ClassLoader classLoader) {
@@ -264,40 +263,40 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 		}
 		*/
 
-		private static W3CNormalizer createICUNormalizer(ClassLoader classLoader)
-		{
-			// First attempt is to try the IBM ICU library
-			try
-			{
-				if (classLoader.loadClass("com.ibm.icu.text.Normalizer") != null)
-				{
-					return new ICUNormalizer();
-				}
-			}
-			catch (ClassNotFoundException)
-			{
-			}
-			return null;
-		}
+		//private static W3CNormalizer createICUNormalizer(ClassLoader classLoader)
+		//{
+		//	// First attempt is to try the IBM ICU library
+		//	try
+		//	{
+		//		if (classLoader.loadClass("com.ibm.icu.text.Normalizer") != null)
+		//		{
+		//			return new ICUNormalizer();
+		//		}
+		//	}
+		//	catch (ClassNotFoundException)
+		//	{
+		//	}
+		//	return null;
+		//}
 
-		/// <summary>
-		/// Calculate the expected arguments.
-		/// </summary>
-		/// <returns> The expected arguments. </returns>
-		public static ICollection expected_args()
-		{
-			lock (typeof(FnNormalizeUnicode))
-			{
-				if (_expected_args == null)
-				{
-					_expected_args = new ArrayList();
-					_expected_args.Add(new SeqType(new XSString(), SeqType.OCC_QMARK));
-					_expected_args.Add(new SeqType(new XSString(), SeqType.OCC_NONE));
-				}
+		///// <summary>
+		///// Calculate the expected arguments.
+		///// </summary>
+		///// <returns> The expected arguments. </returns>
+		//public static ICollection expected_args()
+		//{
+		//	lock (typeof(FnNormalizeUnicode))
+		//	{
+		//		if (_expected_args == null)
+		//		{
+		//			_expected_args = new ArrayList();
+		//			_expected_args.Add(new SeqType(new XSString(), SeqType.OCC_QMARK));
+		//			_expected_args.Add(new SeqType(new XSString(), SeqType.OCC_NONE));
+		//		}
         
-				return _expected_args;
-			}
-		}
+		//		return _expected_args;
+		//	}
+		//}
 	}
 
 }

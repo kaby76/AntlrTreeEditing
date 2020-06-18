@@ -54,6 +54,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.util
 				InitializeInstanceFields();
 				InstanceFieldsInitialized = true;
 			}
+            _collationProvider = new CollationProviderAnonymousInnerClass(this);
 		}
 
 		private void InitializeInstanceFields()
@@ -348,29 +349,27 @@ namespace org.eclipse.wst.xml.xpath2.processor.util
             }
 		}
 
-		private CollationProvider _collationProvider = new CollationProviderAnonymousInnerClass();
+        private CollationProvider _collationProvider = null;
 
 		private class CollationProviderAnonymousInnerClass : CollationProvider
 		{
-			public CollationProviderAnonymousInnerClass()
-			{
-			}
+			public CollationProviderAnonymousInnerClass(StaticContextBuilder builder)
+            {
+                DefaultCollation = builder._defaultCollation;
+            }
 
 
 			public virtual string DefaultCollation
 			{
-				get
-				{
-					return outerInstance._defaultCollation;
-				}
+				get; private set;
 			}
 
 			public virtual IComparer<string> getCollation(string uri)
 			{
-				if (org.eclipse.wst.xml.xpath2.api.CollationProvider_Fields.CODEPOINT_COLLATION.Equals(uri))
-				{
-					return CODEPOINT_COMPARATOR;
-				}
+				//if (org.eclipse.wst.xml.xpath2.api.CollationProvider_Fields.CODEPOINT_COLLATION.Equals(uri))
+				//{
+				//	return CODEPOINT_COMPARATOR;
+				//}
 				return null;
 			}
 		}

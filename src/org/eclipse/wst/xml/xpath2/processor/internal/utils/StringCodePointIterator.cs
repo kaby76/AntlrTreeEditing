@@ -14,10 +14,11 @@
 /// ******************************************************************************
 /// </summary>
 
+using System;
+
 namespace org.eclipse.wst.xml.xpath2.processor.@internal.utils
 {
 
-	using UCharacter = com.ibm.icu.lang.UCharacter;
 
 	public sealed class StringCodePointIterator : CodePointIterator
 	{
@@ -39,10 +40,10 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.utils
 
 			this.text = text;
 			this.end = text.Length;
-			if (end > 0 && UCharacter.isHighSurrogate(text[end - 1]))
-			{
-				throw new System.ArgumentException("Invalid UTF-16 sequence ending with a high surrogate");
-			}
+			//if (end > 0 && UCharacter.isHighSurrogate(text[end - 1]))
+			//{
+			//	throw new System.ArgumentException("Invalid UTF-16 sequence ending with a high surrogate");
+			//}
 
 			this.pos = 0;
 			this.cpPos = 0;
@@ -87,7 +88,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.utils
 		public int last()
 		{
 			pos = end;
-			cpPos = UCharacter.codePointCount(text, 0, pos);
+			cpPos = pos;
 			return previous();
 		}
 
@@ -99,10 +100,10 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.utils
 			if (pos < end)
 			{
 				char ch1 = text[pos];
-				if (UCharacter.isHighSurrogate(ch1))
-				{
-				   return UCharacter.toCodePoint(ch1, text[pos + 1]);
-				}
+				//if (UCharacter.isHighSurrogate(ch1))
+				//{
+				//   return UCharacter.toCodePoint(ch1, text[pos + 1]);
+				//}
 
 				return ch1;
 			}
@@ -120,10 +121,10 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.utils
 			if (pos < end - 1)
 			{
 				pos++;
-				if (UCharacter.isLowSurrogate(text[pos]))
-				{
-					pos++;
-				}
+				//if (UCharacter.isLowSurrogate(text[pos]))
+				//{
+				//	pos++;
+				//}
 				cpPos++;
 				return current();
 			}
@@ -142,10 +143,10 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.utils
 			if (pos > 0)
 			{
 				pos--;
-				if (UCharacter.isLowSurrogate(text[pos]))
-				{
-					pos--;
-				}
+				//if (UCharacter.isLowSurrogate(text[pos]))
+				//{
+				//	pos--;
+				//}
 				cpPos--;
 				return current();
 			}
@@ -218,13 +219,13 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.utils
 		public object clone()
 		{
 			try
-			{
-				StringCodePointIterator other = (StringCodePointIterator) base.clone();
+            {
+                StringCodePointIterator other = (StringCodePointIterator) base.MemberwiseClone();
 				return other;
 			}
-			catch (CloneNotSupportedException)
+			catch
 			{
-				throw new InternalError();
+				throw new Exception();
 			}
 		}
 

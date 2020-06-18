@@ -281,6 +281,9 @@ namespace org.w3c.dom
         short NodeType { get; set; }
         string LocalName { get; set; }
         short DOCUMENT_NODE { get; set; }
+        Document OwnerDocument { get; set; }
+        bool isSameNode(Node nodeValue);
+        short compareDocumentPosition(Node nodeB);
     }
 
     public interface Attr : Node
@@ -307,7 +310,10 @@ namespace org.w3c.dom
 
     public interface Text { }
 
-    public interface TypeInfo { }
+    public interface TypeInfo
+    {
+        string TypeName { get; set; }
+    }
 
     public interface ProcessingInstruction : Node
     {

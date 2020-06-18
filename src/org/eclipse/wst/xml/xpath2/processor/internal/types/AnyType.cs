@@ -76,7 +76,9 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 
 		public virtual IEnumerator<Item> iterator()
 		{
-			return Collections.singletonList((Item)this).GetEnumerator();
+			List<Item> list = new List<Item>();
+			list.Add(this);
+            return list.GetEnumerator();
 		}
 
 		public virtual ItemType ItemType
@@ -119,7 +121,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 			return ItemType;
 		}
 
-		public virtual AnyType first()
+		public virtual Item first()
 		{
 			return this;
 		}

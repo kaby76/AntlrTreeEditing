@@ -29,7 +29,6 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 	using CodePointIterator = org.eclipse.wst.xml.xpath2.processor.@internal.utils.CodePointIterator;
 	using StringCodePointIterator = org.eclipse.wst.xml.xpath2.processor.@internal.utils.StringCodePointIterator;
 
-	using UCharacter = com.ibm.icu.lang.UCharacter;
 
 	/// <summary>
 	/// <para>
@@ -112,12 +111,12 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 			ICollection cargs = Function.convert_arguments(args, expected_args());
 
 			IEnumerator argi = cargs.GetEnumerator();
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			ResultSequence arg1 = (ResultSequence) argi.next();
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			ResultSequence arg2 = (ResultSequence) argi.next();
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			ResultSequence arg3 = (ResultSequence) argi.next();
+            argi.MoveNext();
+            ResultSequence arg1 = (ResultSequence) argi.Current;
+            argi.MoveNext();
+			ResultSequence arg2 = (ResultSequence) argi.Current;
+            argi.MoveNext();
+            ResultSequence arg3 = (ResultSequence) argi.Current;
 
 			if (arg1.empty())
 			{
@@ -140,12 +139,12 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 					int? replaceWith = (int?)replacements[inputCodepoint];
 					if (replaceWith != null)
 					{
-						sb.Append(UCharacter.toChars(replaceWith.Value));
+						sb.Append(replaceWith.Value);
 					}
 				}
 				else
 				{
-					sb.Append(UCharacter.toChars(input));
+					sb.Append(input);
 				}
 			}
 

@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Numerics;
 
 /// <summary>
 ///*****************************************************************************
@@ -31,8 +32,6 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 	using QName = org.eclipse.wst.xml.xpath2.processor.@internal.types.QName;
 	using XSInteger = org.eclipse.wst.xml.xpath2.processor.@internal.types.XSInteger;
 	using XSString = org.eclipse.wst.xml.xpath2.processor.@internal.types.XSString;
-
-	using UTF16 = com.ibm.icu.text.UTF16;
 
 	/// <summary>
 	/// <para>
@@ -100,16 +99,20 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 			  return getResultSetForArityZero(ec);
 			}
 			else
-			{
-			  arg1 = (ResultSequence) cargs.GetEnumerator().next();
-			}
+            {
+                var i = cargs.GetEnumerator();
+                i.MoveNext();
+                arg1 = (ResultSequence) i.Current;
+            }
 
 			string str = "";
 			if (!arg1.empty())
 			{
 				str = ((XSString) arg1.first()).value();
 			}
-			return new XSInteger(new System.Numerics.BigInteger(UTF16.countCodePoint(str)));
+
+            BigInteger.TryParse(str, out BigInteger v);
+			return new XSInteger(v);
 		}
 
 		/// <summary>

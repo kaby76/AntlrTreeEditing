@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Collections;
-using org.w3c.dom.org.w3c.dom;
+using System.Collections.Generic;
+using org.eclipse.wst.xml.xpath2.api;
 
 /// <summary>
 ///*****************************************************************************
@@ -75,6 +76,11 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 			{
 				return compare_node((NodeType)o1, (NodeType)o2);
 			}
+
+            public int Compare(object x, object y)
+            {
+                return compare_node((NodeType)x, (NodeType)y);
+            }
 		}
 
 		/// <summary>
@@ -151,27 +157,28 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 			return null;
 		}
 
-		public static org.eclipse.wst.xml.xpath2.processor.ResultSequence eliminate_dups(org.eclipse.wst.xml.xpath2.processor.ResultSequence rs)
-		{
-			Hashtable added = new Hashtable(rs.size());
+//		public static org.eclipse.wst.xml.xpath2.processor.ResultSequence eliminate_dups(org.eclipse.wst.xml.xpath2.processor.ResultSequence rs)
+//		{
+//			Hashtable added = new Hashtable(rs.size());
 
-			for (IEnumerator i = rs.GetEnumerator(); i.MoveNext();)
-			{
-				NodeType node = (NodeType) i.Current;
-				Node n = node.node_value();
 
-				if (added.ContainsKey(n))
-				{
-//JAVA TO C# CONVERTER TODO TASK: .NET enumerators are read-only:
-					i.remove();
-				}
-				else
-				{
-					added[n] = true;
-				}
-			}
-			return rs;
-		}
+//			for (IEnumerator i = rs.GetEnumerator(); i.MoveNext();)
+//			{
+//				NodeType node = (NodeType) i.Current;
+//				Node n = node.node_value();
+
+//				if (added.ContainsKey(n))
+//				{
+////JAVA TO C# CONVERTER TODO TASK: .NET enumerators are read-only:
+//					i.remove();
+//				}
+//				else
+//				{
+//					added[n] = true;
+//				}
+//			}
+//			return rs;
+//		}
 
 		public static org.eclipse.wst.xml.xpath2.processor.ResultSequence sort_document_order(org.eclipse.wst.xml.xpath2.processor.ResultSequence rs)
 		{
@@ -268,10 +275,10 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		private static int compareDocuments(Document docA, Document docB)
 		{
 			// Arbitrary but fulfills the spec (provided documenURI is always set)
-			if (docB.DocumentURI == null && docA.DocumentURI == null)
-			{
-				return System.identityHashCode(docA) - System.identityHashCode(docB);
-			}
+			//if (docB.DocumentURI == null && docA.DocumentURI == null)
+			//{
+			//	return System.identityHashCode(docA) - System.identityHashCode(docB);
+			//}
 			return docB.DocumentURI.CompareTo(docA.DocumentURI);
 		}
 
@@ -451,7 +458,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 				string typeInfoName = typeInfo.TypeName;
 				if (!string.ReferenceEquals(typeInfoName, null))
 				{
-					if (typeInfo.TypeName.equalsIgnoreCase(typeName))
+					if (typeInfo.TypeName.ToLower() == typeName.ToLower())
 					{
 						return true;
 					}
@@ -497,8 +504,8 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 
 		public static ResultBuffer linarize(ResultBuffer rs)
 		{
-			SortedSet all = new SortedSet(NODE_COMPARATOR);
-			all.addAll(rs.Collection);
+			SortedSet<Item> all = new SortedSet<Item>();
+			foreach (var x in rs.Collection) all.Add(x);
 			return (new ResultBuffer()).concat(all);
 		}
 	}

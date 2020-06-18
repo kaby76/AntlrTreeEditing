@@ -24,7 +24,7 @@ namespace org.eclipse.wst.xml.xpath2.api
 	/// 
 	/// Definition from the XPath2 specification: A collation is a specification of
 	/// the manner in which strings and URIs are compared and, by extension,
-	/// ordered. For a more complete definition of collation, see [XQuery 1.0 and
+	/// ordered. For a more complete , see [XQuery 1.0 and
 	/// XPath 2.0 Functions and Operators (Second Edition)].
 	/// @since 2.0
 	/// </summary>
