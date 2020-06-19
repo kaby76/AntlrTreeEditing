@@ -137,11 +137,11 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 					}
 					else if (has_double && (arg is XSDecimal))
 					{
-						arg = new XSDouble(((XSDecimal)arg).Value.doubleValue());
+						arg = new XSDouble(((XSDecimal)arg).double_value());
 					}
 					else if (has_float && (arg is XSDecimal))
 					{
-						arg = new XSFloat(((XSDecimal)arg).Value.floatValue());
+						arg = new XSFloat((float)((XSDecimal)arg).double_value());
 					}
 					result2.Add(arg);
 				}
@@ -176,8 +176,6 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 		/// <exception cref="DynamicError">
 		///             Dynamic error. </exception>
 		/// <returns> Result of the operation. </returns>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static org.eclipse.wst.xml.xpath2.api.ResultSequence fs_plus_unary(java.util.Collection args) throws org.eclipse.wst.xml.xpath2.processor.DynamicError
 		public static ResultSequence fs_plus_unary(ICollection args)
 		{
 
@@ -186,7 +184,9 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 			{
 				DynamicError.throw_type_error();
 			}
-			ResultSequence arg = (ResultSequence) args.GetEnumerator().next();
+            var i = args.GetEnumerator();
+            i.MoveNext();
+            ResultSequence arg = (ResultSequence) i.Current;
 
 			// make sure we got only one numeric atom
 			if (arg.size() != 1)
@@ -217,8 +217,6 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 		/// <exception cref="DynamicError">
 		///             Dynamic error. </exception>
 		/// <returns> Result of operation. </returns>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static org.eclipse.wst.xml.xpath2.api.ResultSequence do_math_op(java.util.Collection args, Class type, String mname) throws org.eclipse.wst.xml.xpath2.processor.DynamicError
 		public static ResultSequence do_math_op(ICollection args, Type type, string mname)
 		{
 
@@ -237,10 +235,10 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 
 			// make sure arugments are good [at least the first one]
 			IEnumerator argi = cargs.GetEnumerator();
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			Item arg = ((ResultSequence) argi.next()).item(0);
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			ResultSequence arg2 = (ResultSequence) argi.next();
+            argi.MoveNext();
+			Item arg = ((ResultSequence) argi.Current).item(0);
+            argi.MoveNext();
+			ResultSequence arg2 = (ResultSequence) argi.Current;
 
 			if (!(type.IsInstanceOfType(arg)))
 			{
@@ -257,30 +255,11 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 
 				object[] margs = new object[] {arg2};
 				return (ResultSequence) method.invoke(arg, margs);
-
-			}
-			catch (NoSuchMethodException err)
-			{
-				Console.WriteLine("NoSuchMethodException: " + err.Message);
-				Debug.Assert(false);
-			}
-			catch (IllegalAccessException err)
-			{
-				Console.WriteLine("IllegalAccessException: " + err.Message);
-				Debug.Assert(false);
-			}
-			catch (InvocationTargetException err)
-			{
-				Exception ex = err.TargetException;
-				if (ex is DynamicError)
-				{
-					throw (DynamicError) ex;
-				}
-				else
-				{
-					throw new Exception(ex);
-				}
-			}
+            }
+			catch
+            {
+                throw;
+            }
 			return null; // unreach!
 		}
 	}

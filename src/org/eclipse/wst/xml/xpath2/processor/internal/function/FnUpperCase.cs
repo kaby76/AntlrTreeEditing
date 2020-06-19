@@ -83,10 +83,11 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 		public static ResultSequence upper_case(ICollection args)
 		{
 			ICollection cargs = Function.convert_arguments(args, expected_args());
+            var i = cargs.GetEnumerator();
+            i.MoveNext();
+            ResultSequence arg1 = (ResultSequence) i.Current;
 
-			ResultSequence arg1 = (ResultSequence) cargs.GetEnumerator().next();
-
-			if (arg1.empty())
+			if (arg1 == null || arg1.empty())
 			{
 				return new XSString("");
 			}

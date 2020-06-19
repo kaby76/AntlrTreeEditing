@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using java.util;
 
 /// <summary>
 ///*****************************************************************************
@@ -17,6 +18,7 @@ using System.Collections;
 /// </summary>
 namespace org.eclipse.wst.xml.xpath2.processor.@internal.types.builtin
 {
+    using Duration = javax.xml.datatype.Duration;
 
 
 	using TypeDefinition = org.eclipse.wst.xml.xpath2.api.typesystem.TypeDefinition;
@@ -45,27 +47,27 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types.builtin
 
 		public static readonly BuiltinAtomicTypeDefinition XS_UNTYPEDATOMIC = new BuiltinAtomicTypeDefinition("untypedAtomic", null, typeof(string), XS_ANYATOMICTYPE);
 
-		public static readonly BuiltinAtomicTypeDefinition XS_DATETIME = new BuiltinAtomicTypeDefinition("dateTime", typeof(XSDateTime), typeof(DateTime),XS_ANYATOMICTYPE);
-		public static readonly BuiltinAtomicTypeDefinition XS_DATE = new BuiltinAtomicTypeDefinition("date", typeof(XSDate), typeof(DateTime), XS_ANYATOMICTYPE);
-		public static readonly BuiltinAtomicTypeDefinition XS_TIME = new BuiltinAtomicTypeDefinition("time", typeof(XSTime), typeof(DateTime), XS_ANYATOMICTYPE);
+		public static readonly BuiltinAtomicTypeDefinition XS_DATETIME = new BuiltinAtomicTypeDefinition("dateTime", typeof(XSDateTime), typeof(Calendar),XS_ANYATOMICTYPE);
+		public static readonly BuiltinAtomicTypeDefinition XS_DATE = new BuiltinAtomicTypeDefinition("date", typeof(XSDate), typeof(Calendar), XS_ANYATOMICTYPE);
+		public static readonly BuiltinAtomicTypeDefinition XS_TIME = new BuiltinAtomicTypeDefinition("time", typeof(XSTime), typeof(Calendar), XS_ANYATOMICTYPE);
 		public static readonly BuiltinAtomicTypeDefinition XS_DURATION = new BuiltinAtomicTypeDefinition("duration", typeof(XSDuration), typeof(Duration), XS_ANYATOMICTYPE);
 			public static readonly BuiltinAtomicTypeDefinition XS_YEARMONTHDURATION = new BuiltinAtomicTypeDefinition("yearMonthDuration", typeof(XSYearMonthDuration), typeof(Duration), XS_DURATION);
 			public static readonly BuiltinAtomicTypeDefinition XS_DAYTIMEDURATION = new BuiltinAtomicTypeDefinition("dayTimeDuration", typeof(XSDayTimeDuration), typeof(Duration), XS_DURATION);
-		public static readonly BuiltinAtomicTypeDefinition XS_FLOAT = new BuiltinAtomicTypeDefinition("float", typeof(XSFloat), typeof(Float), XS_ANYATOMICTYPE);
+		public static readonly BuiltinAtomicTypeDefinition XS_FLOAT = new BuiltinAtomicTypeDefinition("float", typeof(XSFloat), typeof(float), XS_ANYATOMICTYPE);
 		public static readonly BuiltinAtomicTypeDefinition XS_DOUBLE = new BuiltinAtomicTypeDefinition("double", typeof(XSDouble), typeof(Double), XS_ANYATOMICTYPE);
 		public static readonly BuiltinAtomicTypeDefinition XS_DECIMAL = new BuiltinAtomicTypeDefinition("decimal", typeof(XSDecimal), typeof(decimal), XS_ANYATOMICTYPE);
 			public static readonly BuiltinAtomicTypeDefinition XS_INTEGER = new BuiltinAtomicTypeDefinition("integer", typeof(XSInteger), typeof(System.Numerics.BigInteger), XS_DECIMAL);
 				public static readonly BuiltinAtomicTypeDefinition XS_NONPOSITIVEINTEGER = new BuiltinAtomicTypeDefinition("nonPositiveInteger", typeof(XSNonPositiveInteger), typeof(System.Numerics.BigInteger), XS_INTEGER);
 					public static readonly BuiltinAtomicTypeDefinition XS_NEGATIVEINTEGER = new BuiltinAtomicTypeDefinition("negativeInteger", typeof(XSNegativeInteger), typeof(System.Numerics.BigInteger), XS_NONPOSITIVEINTEGER);
-				public static readonly BuiltinAtomicTypeDefinition XS_LONG = new BuiltinAtomicTypeDefinition("long", typeof(XSLong), typeof(Long), XS_INTEGER);
-					public static readonly BuiltinAtomicTypeDefinition XS_INT = new BuiltinAtomicTypeDefinition("int", typeof(XSInt), typeof(Integer), XS_LONG);
-						public static readonly BuiltinAtomicTypeDefinition XS_SHORT = new BuiltinAtomicTypeDefinition("short", typeof(XSShort), typeof(Short), XS_INT);
+				public static readonly BuiltinAtomicTypeDefinition XS_LONG = new BuiltinAtomicTypeDefinition("long", typeof(XSLong), typeof(long), XS_INTEGER);
+					public static readonly BuiltinAtomicTypeDefinition XS_INT = new BuiltinAtomicTypeDefinition("int", typeof(XSInt), typeof(int), XS_LONG);
+						public static readonly BuiltinAtomicTypeDefinition XS_SHORT = new BuiltinAtomicTypeDefinition("short", typeof(XSShort), typeof(short), XS_INT);
 							public static readonly BuiltinAtomicTypeDefinition XS_BYTE = new BuiltinAtomicTypeDefinition("byte", typeof(XSByte), typeof(Byte), XS_SHORT);
 				public static readonly BuiltinAtomicTypeDefinition XS_NONNEGATIVEINTEGER = new BuiltinAtomicTypeDefinition("nonNegativeInteger", typeof(XSNonNegativeInteger), typeof(System.Numerics.BigInteger), XS_INTEGER);
 					public static readonly BuiltinAtomicTypeDefinition XS_UNSIGNEDLONG = new BuiltinAtomicTypeDefinition("unsignedLong", typeof(XSUnsignedLong), typeof(System.Numerics.BigInteger), XS_NONNEGATIVEINTEGER);
-						public static readonly BuiltinAtomicTypeDefinition XS_UNSIGNEDINT = new BuiltinAtomicTypeDefinition("unsignedInt", typeof(XSUnsignedInt), typeof(Long), XS_UNSIGNEDLONG);
-							public static readonly BuiltinAtomicTypeDefinition XS_UNSIGNEDSHORT = new BuiltinAtomicTypeDefinition("unsignedShort", typeof(XSUnsignedShort), typeof(Integer), XS_UNSIGNEDINT);
-								public static readonly BuiltinAtomicTypeDefinition XS_UNSIGNEDBYTE = new BuiltinAtomicTypeDefinition("unsignedByte", typeof(XSUnsignedByte), typeof(Short), XS_UNSIGNEDSHORT);
+						public static readonly BuiltinAtomicTypeDefinition XS_UNSIGNEDINT = new BuiltinAtomicTypeDefinition("unsignedInt", typeof(XSUnsignedInt), typeof(long), XS_UNSIGNEDLONG);
+							public static readonly BuiltinAtomicTypeDefinition XS_UNSIGNEDSHORT = new BuiltinAtomicTypeDefinition("unsignedShort", typeof(XSUnsignedShort), typeof(int), XS_UNSIGNEDINT);
+								public static readonly BuiltinAtomicTypeDefinition XS_UNSIGNEDBYTE = new BuiltinAtomicTypeDefinition("unsignedByte", typeof(XSUnsignedByte), typeof(short), XS_UNSIGNEDSHORT);
 					public static readonly BuiltinAtomicTypeDefinition XS_POSITIVEINTEGER = new BuiltinAtomicTypeDefinition("positiveInteger", typeof(XSPositiveInteger), typeof(System.Numerics.BigInteger), XS_NONNEGATIVEINTEGER);
 		public static readonly BuiltinAtomicTypeDefinition XS_GYEARMONTH = new BuiltinAtomicTypeDefinition("gYearMonth", typeof(XSGYearMonth), typeof(DateTime), XS_ANYATOMICTYPE);
 		public static readonly BuiltinAtomicTypeDefinition XS_GYEAR = new BuiltinAtomicTypeDefinition("gYear", typeof(XSGYear), typeof(DateTime), XS_ANYATOMICTYPE);
@@ -109,7 +111,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types.builtin
 				{
 					return null;
 				}
-				return (TypeDefinition) builtinTypes.get(typeName);
+				return (TypeDefinition) builtinTypes[typeName];
 			}
 
 			public virtual TypeDefinition lookupElementDeclaration(string @namespace, string elementName)
@@ -181,7 +183,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types.builtin
 
 			private void addType(BuiltinTypeDefinition btd)
 			{
-				builtinTypes.put(btd.Name, btd);
+				builtinTypes[btd.Name] = btd;
 			}
 
 			public virtual TypeDefinition getType(Node node)

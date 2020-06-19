@@ -16,7 +16,7 @@
 /// </summary>
 namespace org.eclipse.wst.xml.xpath2.processor.@internal.types.builtin
 {
-
+	using QName = javax.xml.@namespace.QName;
 
 	using SimpleTypeDefinition = org.eclipse.wst.xml.xpath2.api.typesystem.SimpleTypeDefinition;
 	using TypeDefinition = org.eclipse.wst.xml.xpath2.api.typesystem.TypeDefinition;

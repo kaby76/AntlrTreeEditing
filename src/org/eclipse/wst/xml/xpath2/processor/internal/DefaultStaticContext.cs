@@ -58,7 +58,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 		private IDictionary _namespaces;
 
 		private string _cntxt_item_type;
-		private IDictionary _functions;
+		private IDictionary<string, FunctionLibrary> _functions;
 
 		// XXX collations
 
@@ -119,7 +119,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 			_model = model;
 			builtinTypes = new XSCtrLibrary();
 
-			_functions = new Hashtable(20); // allow null keys: null namespace
+			_functions = new Dictionary<string, FunctionLibrary>(20); // allow null keys: null namespace
 			_namespaces = new Hashtable(20); // ditto
 
 			_cntxt_item_type = null;
@@ -237,7 +237,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 		public virtual bool function_exists(QName name, int arity)
 		{
 			string ns = name.@namespace();
-			if (!_functions.Contains(ns))
+			if (!_functions.ContainsKey(ns))
 			{
 				return false;
 			}
@@ -250,7 +250,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 		public virtual Function function(QName name, int arity)
 		{
 			string ns = name.@namespace();
-			if (!_functions.Contains(ns))
+			if (!_functions.ContainsKey(ns))
 			{
 				return null;
 			}
@@ -272,7 +272,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 		{
 			string ns = name.@namespace();
 
-			if (!_functions.Contains(ns))
+			if (!_functions.ContainsKey(ns))
 			{
 				return null;
 			}
@@ -718,7 +718,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 			return _model;
 		}
 
-		public virtual IDictionary get_function_libraries()
+		public virtual IDictionary<string, FunctionLibrary> get_function_libraries()
 		{
 			return _functions;
 		}

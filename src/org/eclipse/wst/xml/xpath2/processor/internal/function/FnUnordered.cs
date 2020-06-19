@@ -61,8 +61,6 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 		/// <exception cref="DynamicError">
 		///             Dynamic error. </exception>
 		/// <returns> Result of fn:unordered operation. </returns>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static org.eclipse.wst.xml.xpath2.api.ResultSequence unordered(java.util.Collection args) throws org.eclipse.wst.xml.xpath2.processor.DynamicError
 		public static ResultSequence unordered(ICollection args)
 		{
 
@@ -70,10 +68,10 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 
 			// get args
 			IEnumerator citer = args.GetEnumerator();
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			ResultSequence arg = (ResultSequence) citer.next();
+            citer.MoveNext();
+            ResultSequence arg = (ResultSequence) citer.Current;
 
-			if (arg.empty())
+			if (arg == null || arg.empty())
 			{
 				return ResultBuffer.EMPTY;
 			}

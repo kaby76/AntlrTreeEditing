@@ -43,7 +43,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 	public class FnSum : Function
 	{
 
-		private static XSInteger ZERO = new XSInteger(System.Numerics.BigInteger.ZERO);
+		private static XSInteger ZERO = new XSInteger(System.Numerics.BigInteger.Zero);
 
 		/// <summary>
 		/// Constructor for FnSum.
@@ -65,14 +65,12 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 		public override ResultSequence evaluate(ICollection args, org.eclipse.wst.xml.xpath2.api.EvaluationContext ec)
 		{
 			IEnumerator argIterator = args.GetEnumerator();
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			ResultSequence argSequence = (ResultSequence)argIterator.next();
+            argIterator.MoveNext();
+            ResultSequence argSequence = (ResultSequence) argIterator.Current;
 			AnyAtomicType zero = ZERO;
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			if (argIterator.hasNext())
+			if (argIterator.MoveNext())
 			{
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-				ResultSequence zeroSequence = (ResultSequence)argIterator.next();
+				ResultSequence zeroSequence = (ResultSequence)argIterator.Current;
 				if (zeroSequence.size() != 1)
 				{
 					throw new DynamicError(TypeError.invalid_type(null));
@@ -121,7 +119,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 
 				if (conv is XSDouble && ((XSDouble)conv).nan() || conv is XSFloat && ((XSFloat)conv).nan())
 				{
-					return ResultSequenceFactory.create_new(tp.promote(new XSFloat(Float.NaN)));
+					return ResultSequenceFactory.create_new(tp.promote(new XSFloat(float.NaN)));
 				}
 				if (total == null)
 				{

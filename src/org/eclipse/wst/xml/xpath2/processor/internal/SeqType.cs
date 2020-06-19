@@ -166,8 +166,8 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 		{
 			string ns = qname.@namespace();
 
-			IDictionary functionLibraries = sc.FunctionLibraries;
-			if (!functionLibraries.Contains(ns))
+			var functionLibraries = sc.FunctionLibraries;
+			if (!functionLibraries.ContainsKey(ns))
 			{
 				return null;
 			}

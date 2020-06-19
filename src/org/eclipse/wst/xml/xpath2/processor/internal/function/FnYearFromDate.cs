@@ -66,15 +66,14 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 		/// <exception cref="DynamicError">
 		///             Dynamic error. </exception>
 		/// <returns> Result of fn:year-from-date operation. </returns>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static org.eclipse.wst.xml.xpath2.api.ResultSequence year_from_date(java.util.Collection args) throws org.eclipse.wst.xml.xpath2.processor.DynamicError
 		public static ResultSequence year_from_date(ICollection args)
 		{
 			ICollection cargs = Function.convert_arguments(args, expected_args());
+            var i = cargs.GetEnumerator();
+            i.MoveNext();
+			ResultSequence arg1 = (ResultSequence) i.Current;
 
-			ResultSequence arg1 = (ResultSequence) cargs.GetEnumerator().next();
-
-			if (arg1.empty())
+			if (arg1 == null || arg1.empty())
 			{
 				return ResultBuffer.EMPTY;
 			}

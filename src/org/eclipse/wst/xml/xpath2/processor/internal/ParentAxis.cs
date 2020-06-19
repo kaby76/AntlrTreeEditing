@@ -15,6 +15,8 @@
 /// ******************************************************************************
 /// </summary>
 
+using org.w3c.dom;
+
 namespace org.eclipse.wst.xml.xpath2.processor.@internal
 {
 
@@ -67,7 +69,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 
 			// special case attribute elements...
 			// in this case... the parent is the element which owns the attr
-			if (n.NodeType == Node.ATTRIBUTE_NODE)
+			if (n.NodeType == NodeConstants.ATTRIBUTE_NODE)
 			{
 				Attr att = (Attr) n;
 

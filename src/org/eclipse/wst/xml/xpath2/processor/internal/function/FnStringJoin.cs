@@ -87,26 +87,26 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 			ICollection cargs = Function.convert_arguments(args, expected_args());
 
 			IEnumerator argi = cargs.GetEnumerator();
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			ResultSequence arg1 = (ResultSequence) argi.next();
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			ResultSequence arg2 = (ResultSequence) argi.next();
+            argi.MoveNext();
+            ResultSequence arg1 = (ResultSequence) argi.Current;
+            argi.MoveNext();
+            ResultSequence arg2 = (ResultSequence) argi.Current;
 
 			string result = "";
 			string separator = ((XSString) arg2.first()).value();
 
 			StringBuilder buf = new StringBuilder();
+            bool first = false;
 			for (IEnumerator i = arg1.GetEnumerator(); i.MoveNext();)
-			{
+            {
+                if (!first)
+                {
+                    buf.Append(separator);
+                }
+                first = false;
 				XSString item = (XSString) i.Current;
 				buf.Append(item.value());
-
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-				if (i.hasNext())
-				{
-					buf.Append(separator);
-				}
-			}
+            }
 
 			result = buf.ToString();
 			return new XSString(result);

@@ -82,7 +82,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 //ORIGINAL LINE: private static java.util.Collection value_convert_args(java.util.Collection args) throws org.eclipse.wst.xml.xpath2.processor.DynamicError
 		private static ICollection value_convert_args(ICollection args)
 		{
-			ICollection result = new ArrayList(args.Count);
+			var result = new ArrayList(args.Count);
 
 			// atomize arguments
 			for (IEnumerator i = args.GetEnumerator(); i.MoveNext();)

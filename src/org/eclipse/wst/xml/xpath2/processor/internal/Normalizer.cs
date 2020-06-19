@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 
 /// <summary>
 ///*****************************************************************************
@@ -109,8 +110,8 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 		///            is the xpath expression. </param>
 		/// <returns> the xpath expressions. </returns>
 		public virtual object visit(XPath xp)
-		{
-			var exprs = new ArrayList();
+        {
+            var exprs = new List<Expr>();
 
 			for (IEnumerator i = xp.GetEnumerator(); i.MoveNext();)
 			{
@@ -194,14 +195,14 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 			Expr ret = fex.expr();
 			int depth = 0;
 
-			for (IEnumerator i = fex.GetEnumerator(); i.MoveNext();)
+			for (IEnumerator i = fex.iterator(); i.MoveNext();)
 			{
 				VarExprPair ve = (VarExprPair) i.Current;
 
 				// ok we got nested fors...
 				if (depth > 0)
 				{
-					var pairs = new ArrayList();
+					var pairs = new List<VarExprPair>();
 					pairs.Add(ve);
 
 					ForExpr fe = new ForExpr(pairs, ret);
@@ -236,14 +237,14 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 			Expr ret = qex.expr();
 			int depth = 0;
 
-			for (IEnumerator i = qex.GetEnumerator(); i.MoveNext();)
+			for (IEnumerator i = qex.iterator(); i.MoveNext();)
 			{
 				VarExprPair ve = (VarExprPair) i.Current;
 
 				// ok we got nested fors...
 				if (depth > 0)
 				{
-					var pairs = new ArrayList();
+					var pairs = new List<VarExprPair>();
 					pairs.Add(ve);
 
 					QuantifiedExpr qe = new QuantifiedExpr(qex.type(), pairs, ret);
@@ -285,7 +286,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 		public virtual object visit(IfExpr ifex)
 		{
 
-			printExprs(ifex.GetEnumerator());
+			printExprs(ifex.iterator());
 
 			ifex.then_clause().accept(this);
 
@@ -408,7 +409,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 
 		private XPathExpr make_xpathexpr(PrimaryExpr pex)
 		{
-			FilterExpr fe = new FilterExpr(pex, new ArrayList());
+			FilterExpr fe = new FilterExpr(pex, new List<Expr>());
 			return new XPathExpr(0, fe);
 		}
 
@@ -627,11 +628,11 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 			return ae.accept(this);
 		}
 
-		private XPathExpr make_function(QName name, ICollection args)
+		private XPathExpr make_function(QName name, ICollection<Expr> args)
 		{
 
 			FunctionCall fc = new FunctionCall(name, args);
-			FilterExpr fe = new FilterExpr(fc, new ArrayList());
+			FilterExpr fe = new FilterExpr(fc, new List<Expr>());
 			return new XPathExpr(0, fe);
 
 		}

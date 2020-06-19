@@ -79,23 +79,20 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 
 			// get args
 			IEnumerator citer = args.GetEnumerator();
-
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			ResultSequence seq = (ResultSequence) citer.next();
+            citer.MoveNext();
+            ResultSequence seq = (ResultSequence) citer.Current;
 			if (seq.empty())
 			{
 				return ResultBuffer.EMPTY;
 			}
 
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			ResultSequence startLoc = (ResultSequence) citer.next();
+            citer.MoveNext();
+            ResultSequence startLoc = (ResultSequence) citer.Current;
 			ResultSequence length = null;
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			if (citer.hasNext())
+			if (citer.MoveNext())
 			{
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-				length = (ResultSequence) citer.next();
-			}
+                length = (ResultSequence) citer.Current;
+            }
 
 			Item at = startLoc.first();
 			if (!(at is NumericType))

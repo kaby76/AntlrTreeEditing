@@ -349,6 +349,7 @@ namespace org.w3c.dom
         string NamespaceURI { get; set; }
         object NodeName { get; set; }
         Node ParentNode { get; set; }
+        Node PreviousSibling { get; set; }
         bool isSameNode(Node nodeValue);
         short compareDocumentPosition(Node nodeB);
         bool isEqualNode(Node node);
@@ -361,6 +362,7 @@ namespace org.w3c.dom
         object Name { get; set; }
         string Value { get; set; }
         Node OwnerElement { get; set; }
+        TypeInfo SchemaTypeInfo { get; set; }
     }
 
     public interface Document : Node
@@ -368,6 +370,7 @@ namespace org.w3c.dom
         string DocumentURI { get; set; }
         NodeList ChildNodes { get; set; }
         NodeList getElementsByTagNameNS(string ns, string local);
+        bool isSupported(string core, string s);
     }
 
     public interface Element : Node

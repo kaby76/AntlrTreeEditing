@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using java.xml;
+using org.w3c.dom;
 
 /// <summary>
 ///*****************************************************************************
@@ -107,7 +109,10 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 				if (sc is DefaultStaticContext)
 				{
 					DefaultStaticContext dsc = (DefaultStaticContext)sc;
-					return dsc.get_function_libraries();
+                    IDictionary<string, function.FunctionLibrary> x = dsc.get_function_libraries();
+                    IDictionary<string, FunctionLibrary> y = new Dictionary<string, FunctionLibrary>();
+					foreach (var z in x) y.Add(z.Key, z.Value);
+					return y;
 				}
 				return new Dictionary<string, FunctionLibrary>();
 			}
@@ -189,9 +194,9 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 				{
 					return new URI(sc.base_uri().StringValue);
 				}
-				catch (URISyntaxException e)
+				catch
 				{
-					throw new Exception(e);
+					throw;
 				}
 			}
 		}
@@ -284,7 +289,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 
 		public virtual org.eclipse.wst.xml.xpath2.api.typesystem.ItemType getDocumentType(URI documentUri)
 		{
-			return new NodeItemTypeImpl(org.eclipse.wst.xml.xpath2.api.typesystem.ItemType_Fields.OCCURRENCE_OPTIONAL, Node.DOCUMENT_NODE);
+			return new NodeItemTypeImpl(org.eclipse.wst.xml.xpath2.api.typesystem.ItemType_Fields.OCCURRENCE_OPTIONAL, NodeConstants.DOCUMENT_NODE);
 		}
 	}
 }

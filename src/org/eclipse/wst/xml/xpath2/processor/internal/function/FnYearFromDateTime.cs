@@ -71,8 +71,9 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 		public static ResultSequence year_from_date_time(ICollection args)
 		{
 			ICollection cargs = Function.convert_arguments(args, expected_args());
-
-			ResultSequence arg1 = (ResultSequence) cargs.GetEnumerator().next();
+            var i = cargs.GetEnumerator();
+            i.MoveNext();
+            ResultSequence arg1 = (ResultSequence) i.Current;
 
 			if (arg1.empty())
 			{

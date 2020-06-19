@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Text.RegularExpressions;
 
 /// <summary>
 ///*****************************************************************************
@@ -67,8 +68,6 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 		/// <exception cref="DynamicError">
 		///             Dynamic error. </exception>
 		/// <returns> Result of fn:tokenize operation. </returns>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static org.eclipse.wst.xml.xpath2.api.ResultSequence tokenize(java.util.Collection args) throws org.eclipse.wst.xml.xpath2.processor.DynamicError
 		public static ResultSequence tokenize(ICollection args)
 		{
 			ICollection cargs = Function.convert_arguments(args, expected_args());
@@ -77,25 +76,23 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 
 			// get args
 			IEnumerator argiter = cargs.GetEnumerator();
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			ResultSequence arg1 = (ResultSequence) argiter.next();
+            argiter.MoveNext();
+            ResultSequence arg1 = (ResultSequence) argiter.Current;
 			string str1 = "";
 			if (!arg1.empty())
 			{
 				str1 = ((XSString) arg1.first()).value();
 			}
 
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			ResultSequence arg2 = (ResultSequence) argiter.next();
+            argiter.MoveNext();
+            ResultSequence arg2 = (ResultSequence) argiter.Current;
 			string pattern = ((XSString) arg2.first()).value();
 			string flags = null;
 
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			if (argiter.hasNext())
+			if (argiter.MoveNext())
 			{
 				ResultSequence flagRS = null;
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-				flagRS = (ResultSequence) argiter.next();
+                flagRS = (ResultSequence) argiter.Current;
 				flags = flagRS.first().StringValue;
 				if (validflags.IndexOf(flags, StringComparison.Ordinal) == -1 && flags.Length > 0)
 				{
@@ -113,7 +110,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 				}
 
 			}
-			catch (PatternSyntaxException)
+			catch (Exception)
 			{
 				throw DynamicError.regex_error(null);
 			}
@@ -121,23 +118,21 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 			return rs.Sequence;
 		}
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: private static java.util.ArrayList tokenize(String pattern, String flags, String src) throws org.eclipse.wst.xml.xpath2.processor.DynamicError
 		private static ArrayList tokenize(string pattern, string flags, string src)
 		{
-			Matcher matcher = regex(pattern, flags, src);
+			MatchCollection matches = regex(pattern, flags, src);
 			ArrayList tokens = new ArrayList();
 			int startpos = 0;
 			int endpos = src.Length;
-			while (matcher.find())
-			{
-				string delim = matcher.group();
+			foreach (Match match in matches)
+            {
+                string delim = match.Groups[0].Value;
 				if (delim.Length == 0)
 				{
 					throw DynamicError.regex_match_zero_length(null);
 				}
-				string token = src.Substring(startpos, matcher.start() - startpos);
-				startpos = matcher.end();
+				string token = src.Substring(startpos, match.Index- startpos);
+                startpos = match.Index + match.Length;
 				tokens.Add(token);
 			}
 			if (startpos < endpos)

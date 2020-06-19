@@ -88,7 +88,10 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 			{
 				DynamicError.throw_type_error();
 			}
-			ResultSequence arg = (ResultSequence) args.GetEnumerator().next();
+
+            var i = args.GetEnumerator();
+            i.MoveNext();
+            ResultSequence arg = (ResultSequence) i.Current;
 
 			// make sure we got only one numeric atom
 			if (arg.size() != 1)

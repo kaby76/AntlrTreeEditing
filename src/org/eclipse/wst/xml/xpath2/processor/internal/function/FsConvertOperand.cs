@@ -75,12 +75,12 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 
 			IEnumerator iter = args.GetEnumerator();
 
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			ResultSequence actual = (ResultSequence) iter.next();
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			ResultSequence expected = (ResultSequence) iter.next();
+            iter.MoveNext();
+            ResultSequence actual = (ResultSequence) iter.Current;
+            iter.MoveNext();
+            ResultSequence expected = (ResultSequence) iter.Current;
 
-			if (expected.size() != 1)
+			if (expected == null || expected.size() != 1)
 			{
 				DynamicError.throw_type_error();
 			}
