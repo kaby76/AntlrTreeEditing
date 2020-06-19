@@ -70,9 +70,11 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 				argument = getResultSetForArityZero(ec);
 			}
 			else
-			{
-				argument = (ResultSequence) args.GetEnumerator().next();
-			}
+            {
+                var i = args.GetEnumerator();
+                i.MoveNext();
+                argument = (ResultSequence) i.Current;
+            }
 
 			return fn_number(argument, ec);
 		}
@@ -116,7 +118,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 					  float value = ((XSFloat)at).float_value();
 					  if (float.IsNaN(value))
 					  {
-						  return new XSDouble(Double.NaN);
+						  return new XSDouble(double.NaN);
 					  }
 					  else if (value == float.NegativeInfinity)
 					  {
@@ -134,18 +136,18 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 				  else
 				  {
 					 XSDouble d = XSDouble.parse_double(at.StringValue);
-					 return d != null ? d : new XSDouble(Double.NaN);
+					 return d != null ? d : new XSDouble(double.NaN);
 				  }
 				}
 				else if (at is NodeType)
 				{
 					XSDouble d = XSDouble.parse_double((FnData.atomize(at)).StringValue);
-					return d != null ? d : new XSDouble(Double.NaN);
+					return d != null ? d : new XSDouble(double.NaN);
 				}
 			}
 			else
 			{
-				return new XSDouble(Double.NaN);
+				return new XSDouble(double.NaN);
 			}
 
 			// unreach

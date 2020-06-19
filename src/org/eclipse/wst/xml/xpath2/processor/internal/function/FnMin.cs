@@ -100,7 +100,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 
 					if (conv is XSDouble && ((XSDouble)conv).nan() || conv is XSFloat && ((XSFloat)conv).nan())
 					{
-						return ResultSequenceFactory.create_new(tp.promote(new XSFloat(Float.NaN)));
+						return ResultSequenceFactory.create_new(tp.promote(new XSFloat(float.NaN)));
 					}
 					if (max == null || ((CmpLt)conv).lt((AnyType)max, context))
 					{

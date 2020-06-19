@@ -80,15 +80,15 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 		/// <exception cref="DynamicError">
 		///             Dynamic error. </exception>
 		/// <returns> The result of converting the arguments to lower case. </returns>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static org.eclipse.wst.xml.xpath2.api.ResultSequence lower_case(java.util.Collection args) throws org.eclipse.wst.xml.xpath2.processor.DynamicError
 		public static ResultSequence lower_case(ICollection args)
 		{
 			ICollection cargs = Function.convert_arguments(args, expected_args());
 
-			ResultSequence arg1 = (ResultSequence) cargs.GetEnumerator().next();
+            var i = cargs.GetEnumerator();
+            i.MoveNext();
+            ResultSequence arg1 = (ResultSequence) i.Current;
 
-			if (arg1.empty())
+			if (arg1 == null || arg1.empty())
 			{
 				return new XSString("");
 			}

@@ -82,16 +82,16 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 
 			// get args
 			IEnumerator argiter = cargs.GetEnumerator();
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			ResultSequence arg1 = (ResultSequence) argiter.next();
+            argiter.MoveNext();
+            ResultSequence arg1 = (ResultSequence) argiter.Current;
 
 			if (arg1.empty())
 			{
 				return ResultBuffer.EMPTY;
 			}
 
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			ResultSequence arg2 = (ResultSequence) argiter.next();
+            argiter.MoveNext();
+            ResultSequence arg2 = (ResultSequence) argiter.Current;
 
 			string name = ((XSString) arg1.first()).value();
 

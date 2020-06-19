@@ -72,9 +72,11 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 			ICollection cargs = Function.convert_arguments(args, expected_args());
 
 			// get arg
-			ResultSequence arg1 = (ResultSequence) cargs.GetEnumerator().next();
+            var i = cargs.GetEnumerator();
+            i.MoveNext();
+            ResultSequence arg1 = (ResultSequence) i.Current;
 
-			if (arg1.empty())
+			if (arg1 == null || arg1.empty())
 			{
 				return ResultBuffer.EMPTY;
 			}

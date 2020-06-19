@@ -100,9 +100,11 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 			  arg1 = getResultSetForArityZero(ec);
 			}
 			else
-			{
-			  arg1 = (ResultSequence) cargs.GetEnumerator().next();
-			}
+            {
+                var i = cargs.GetEnumerator();
+                i.MoveNext();
+                arg1 = (ResultSequence) i.Current;
+            }
 
 			string str = "";
 			if (!arg1.empty())

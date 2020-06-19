@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using java.net;
 
 /// <summary>
@@ -91,15 +92,13 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 
 			ICollection cargs = args;
 			IEnumerator argit = cargs.GetEnumerator();
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			ResultSequence relativeRS = (ResultSequence) argit.next();
+            argit.MoveNext();
+            ResultSequence relativeRS = (ResultSequence) argit.Current;
 			ResultSequence baseUriRS = null;
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			if (argit.hasNext())
-			{
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-				baseUriRS = (ResultSequence) argit.next();
-			}
+			if (argit.MoveNext())
+            {
+                baseUriRS = (ResultSequence) argit.Current;
+            }
 
 			if (relativeRS.empty())
 			{
@@ -122,8 +121,6 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 			return new XSAnyURI(resolvedURI);
 		}
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: private static String resolveURI(String super, String relative) throws org.eclipse.wst.xml.xpath2.processor.DynamicError
 		private static string resolveURI(string @base, string relative)
 		{
 			string resolved = null;

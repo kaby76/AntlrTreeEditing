@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using org.w3c.dom;
 
 /// <summary>
 ///*****************************************************************************
@@ -56,8 +57,6 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 		/// <exception cref="DynamicError">
 		///             Dynamic error. </exception>
 		/// <returns> Result of evaluation. </returns>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public org.eclipse.wst.xml.xpath2.api.ResultSequence evaluate(java.util.Collection args, org.eclipse.wst.xml.xpath2.api.EvaluationContext ec) throws org.eclipse.wst.xml.xpath2.processor.DynamicError
 		public override ResultSequence evaluate(ICollection args, EvaluationContext ec)
 		{
 			return idref(args, ec);
@@ -72,8 +71,6 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 		/// <exception cref="DynamicError">
 		///             Dynamic error. </exception>
 		/// <returns> Result of fn:insert-before operation. </returns>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static org.eclipse.wst.xml.xpath2.api.ResultSequence idref(java.util.Collection args, org.eclipse.wst.xml.xpath2.api.EvaluationContext ec) throws org.eclipse.wst.xml.xpath2.processor.DynamicError
 		public static ResultSequence idref(ICollection args, EvaluationContext ec)
 		{
 			ICollection cargs = Function.convert_arguments(args, expected_args());
@@ -81,18 +78,16 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 			ResultBuffer rs = new ResultBuffer();
 
 			IEnumerator argIt = cargs.GetEnumerator();
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			ResultSequence idrefRS = (ResultSequence) argIt.next();
+            argIt.MoveNext();
+            ResultSequence idrefRS = (ResultSequence) argIt.Current;
 			string[] idst = idrefRS.first().StringValue.Split(" ", true);
 
 			ArrayList ids = createIDs(idst);
 			ResultSequence nodeArg = null;
 			NodeType nodeType = null;
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			if (argIt.hasNext())
-			{
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-				nodeArg = (ResultSequence) argIt.next();
+			if (argIt.MoveNext())
+            {
+                nodeArg = (ResultSequence) argIt.Current;
 				nodeType = (NodeType)nodeArg.first();
 			}
 			else
@@ -154,7 +149,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 			for (int nodecnt = 0; nodecnt < nodeList.Length; nodecnt++)
 			{
 				Node childNode = nodeList.item(nodecnt);
-				if (childNode.NodeType == Node.ELEMENT_NODE && !isDuplicate(childNode, rs))
+				if (childNode.NodeType == NodeConstants.ELEMENT_NODE && !isDuplicate(childNode, rs))
 				{
 					ElementType element = new ElementType((Element)childNode, ec.StaticContext.TypeModel);
 					if (element.IDREF)
@@ -215,7 +210,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 
 		private static bool isDuplicate(Node node, ResultBuffer rs)
 		{
-			IEnumerator it = rs.GetEnumerator();
+			IEnumerator it = rs.iterator();
 			while (it.MoveNext())
 			{
 				if (it.Current.Equals(node))

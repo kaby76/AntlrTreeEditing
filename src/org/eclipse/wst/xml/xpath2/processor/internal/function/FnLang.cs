@@ -88,8 +88,8 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 
 			// get arg
 			IEnumerator citer = cargs.GetEnumerator();
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			ResultSequence arg1 = (ResultSequence) citer.next();
+            citer.MoveNext();
+            ResultSequence arg1 = (ResultSequence) citer.Current;
 			ResultSequence arg2 = null;
 			if (cargs.Count == 1)
 			{
@@ -100,14 +100,14 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 				arg2 = (AnyType) ec.ContextItem;
 			}
 			else
-			{
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-				arg2 = (ResultSequence) citer.next();
-			}
+            {
+                citer.MoveNext();
+                arg2 = (ResultSequence) citer.Current;
+            }
 
 			string lang = "";
 
-			if (!arg1.empty())
+			if (!(arg1 == null || arg1.empty()))
 			{
 				lang = ((XSString) arg1.first()).value();
 			}

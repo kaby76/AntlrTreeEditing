@@ -76,25 +76,23 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 
 			// get args
 			IEnumerator argiter = cargs.GetEnumerator();
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			ResultSequence arg1 = (ResultSequence) argiter.next();
+            argiter.MoveNext();
+            ResultSequence arg1 = (ResultSequence) argiter.Current;
 			string str1 = "";
 			if (!arg1.empty())
 			{
 				str1 = ((XSString) arg1.first()).value();
 			}
 
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			ResultSequence arg2 = (ResultSequence) argiter.next();
+            argiter.MoveNext();
+            ResultSequence arg2 = (ResultSequence) argiter.Current;
 			string pattern = ((XSString) arg2.first()).value();
 			string flags = null;
 
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			if (argiter.hasNext())
+			if (argiter.MoveNext())
 			{
 				ResultSequence flagRS = null;
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-				flagRS = (ResultSequence) argiter.next();
+                flagRS = (ResultSequence) argiter.Current;
 				flags = flagRS.first().StringValue;
 				if (validflags.IndexOf(flags, StringComparison.Ordinal) == -1 && flags.Length > 0)
 				{
@@ -108,7 +106,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 				result = matches(pattern, flags, str1);
 				return XSBoolean.valueOf(result);
 			}
-			catch (PatternSyntaxException pex)
+			catch (Exception pex)
 			{
 				throw DynamicError.regex_error(pex.Message);
 			}

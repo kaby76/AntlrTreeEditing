@@ -1,4 +1,6 @@
 ﻿using System.Collections;
+using java.xml;
+using org.w3c.dom;
 
 /// <summary>
 ///*****************************************************************************
@@ -76,10 +78,11 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 
 	//		Collection cargs = Function.convert_arguments(args, expected_args());
 			ICollection cargs = args;
+            var i = cargs.GetEnumerator();
+            i.MoveNext();
+            ResultSequence arg1 = (ResultSequence) i.Current;
 
-			ResultSequence arg1 = (ResultSequence) cargs.GetEnumerator().next();
-
-			if (arg1.empty())
+			if (arg1 == null || arg1.empty())
 			{
 			  return ResultBuffer.EMPTY;
 			}
@@ -114,7 +117,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 			IList prefixList = new ArrayList();
 			Node node = domElm;
 
-			while (node != null && node.NodeType != Node.DOCUMENT_NODE)
+			while (node != null && node.NodeType != NodeConstants.DOCUMENT_NODE)
 			{
 				NamedNodeMap attrs = node.Attributes;
 				for (int i = 0; i < attrs.Length; i++)

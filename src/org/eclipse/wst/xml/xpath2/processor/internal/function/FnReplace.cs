@@ -74,24 +74,22 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 
 			// get args
 			IEnumerator argiter = cargs.GetEnumerator();
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			ResultSequence arg1 = (ResultSequence) argiter.next();
+            argiter.MoveNext();
+            ResultSequence arg1 = (ResultSequence) argiter.Current;
 			string str1 = "";
 			if (!arg1.empty())
 			{
 				str1 = ((XSString) arg1.first()).value();
 			}
 
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			ResultSequence arg2 = (ResultSequence) argiter.next();
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			ResultSequence arg3 = (ResultSequence) argiter.next();
+            argiter.MoveNext();
+            ResultSequence arg2 = (ResultSequence) argiter.Current;
+            argiter.MoveNext();
+            ResultSequence arg3 = (ResultSequence) argiter.Current;
 			ResultSequence arg4 = null;
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			if (argiter.hasNext())
-			{
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-				arg4 = (ResultSequence) argiter.next();
+			if (argiter.MoveNext())
+            {
+                arg4 = (ResultSequence) argiter.Current;
 				string flags = arg4.first().StringValue;
 
 				if (flags.Length == 0)
@@ -108,25 +106,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 
 			try
 			{
-				return new XSString(str1.replaceAll(pattern, replacement));
-			}
-			catch (PatternSyntaxException)
-			{
-				throw DynamicError.regex_error(null);
-			}
-			catch (System.ArgumentException)
-			{
-				throw new DynamicError("FORX0004", "invalid regex.");
-			}
-			catch (System.IndexOutOfRangeException ex)
-			{
-//JAVA TO C# CONVERTER WARNING: The .NET Type.FullName property will not always yield results identical to the Java Class.getName method:
-				string className = ex.GetType().FullName;
-				if (className.EndsWith("StringIndexOutOfBoundsException", StringComparison.Ordinal))
-				{
-					throw new DynamicError("FORX0004", "result out of bounds");
-				}
-				throw new DynamicError("FORX0003", "invalid regex.");
+				return new XSString(str1.Replace(pattern, replacement));
 			}
 			catch (Exception)
 			{

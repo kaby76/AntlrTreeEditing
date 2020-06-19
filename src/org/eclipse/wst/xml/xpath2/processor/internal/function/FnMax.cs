@@ -100,7 +100,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 
 					if (conv is XSDouble && ((XSDouble)conv).nan() || conv is XSFloat && ((XSFloat)conv).nan())
 					{
-						return ResultSequenceFactory.create_new(tp.promote(new XSFloat(Float.NaN)));
+						return ResultSequenceFactory.create_new(tp.promote(new XSFloat(float.NaN)));
 					}
 					if (max == null || ((CmpGt)conv).gt((AnyType)max, dynamicContext))
 					{
@@ -126,8 +126,9 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 		public static ResultSequence get_arg(ICollection args, Type op)
 		{
 			Debug.Assert(args.Count == 1);
-
-			ResultSequence arg = (ResultSequence) args.GetEnumerator().next();
+            var i = args.GetEnumerator();
+            i.MoveNext();
+            ResultSequence arg = (ResultSequence) i.Current;
 
 			return arg;
 		}

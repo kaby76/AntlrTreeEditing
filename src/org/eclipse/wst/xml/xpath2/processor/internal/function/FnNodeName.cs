@@ -70,8 +70,11 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 		{
 			ICollection cargs = Function.convert_arguments(args, expected_args());
 
-			ResultSequence arg1 = (ResultSequence) cargs.GetEnumerator().next();
-			if (arg1.empty())
+            var i = cargs.GetEnumerator();
+            i.MoveNext();
+            ResultSequence arg1 = (ResultSequence)i.Current;
+
+            if (arg1 == null || arg1.empty())
 			{
 				return ResultBuffer.EMPTY;
 			}

@@ -63,15 +63,15 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 		/// <exception cref="DynamicError">
 		///             Dynamic error. </exception>
 		/// <returns> Result of fn:local-name-from-QName operation. </returns>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static org.eclipse.wst.xml.xpath2.api.ResultSequence local_name(java.util.Collection args) throws org.eclipse.wst.xml.xpath2.processor.DynamicError
 		public static ResultSequence local_name(ICollection args)
 		{
 
 			ICollection cargs = Function.convert_arguments(args, expected_args());
 
 			// get arg
-			ResultSequence arg1 = (ResultSequence) cargs.GetEnumerator().next();
+            var i = cargs.GetEnumerator();
+            i.MoveNext();
+            ResultSequence arg1 = (ResultSequence) i.Current;
 
 			if (arg1.empty())
 			{

@@ -85,7 +85,9 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 			else
 			{
 				// get arg
-				arg1 = (ResultSequence) cargs.GetEnumerator().next();
+                var i = cargs.GetEnumerator();
+                i.MoveNext();
+                arg1 = (ResultSequence)i.Current;
 			}
 
 			if (arg1.empty())

@@ -111,28 +111,26 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 
 			// get args
 			IEnumerator citer = args.GetEnumerator();
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			ResultSequence arg1 = (ResultSequence) citer.next();
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			ResultSequence arg2 = (ResultSequence) citer.next();
+            citer.MoveNext();
+            ResultSequence arg1 = (ResultSequence) citer.Current;
+            citer.MoveNext();
+            ResultSequence arg2 = (ResultSequence) citer.Current;
 
-			if (arg1.empty())
+			if (arg1 == null || arg1.empty())
 			{
 				return ResultBuffer.EMPTY;
 			}
 
 			// sanity chex
-			if (arg2.size() != 1)
+			if (arg2 == null || arg2.size() != 1)
 			{
 				DynamicError.throw_type_error();
 			}
 
 			string collationUri = dc.CollationProvider.DefaultCollation;
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			if (citer.hasNext())
-			{
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-				ResultSequence arg3 = (ResultSequence) citer.next();
+            if (citer.MoveNext())
+            {
+                ResultSequence arg3 = (ResultSequence) citer.Current;
 				if (!arg3.empty())
 				{
 					XSString collation = (XSString) arg3.first();
@@ -205,7 +203,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 				{
 					XSString xstr1 = new XSString(cmptype.StringValue);
 					XSString itemStr = new XSString(at.StringValue);
-					if (FnCompare.compare_string(collationUri, xstr1, itemStr, dc).Equals(System.Numerics.BigInteger.ZERO))
+					if (FnCompare.compare_string(collationUri, xstr1, itemStr, dc).Equals(System.Numerics.BigInteger.Zero))
 					{
 						rb.add(new XSInteger(new System.Numerics.BigInteger(index)));
 					}

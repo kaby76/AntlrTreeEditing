@@ -147,6 +147,8 @@ namespace java.xml
 {
     public class XMLConstants
     {
+        public static object XMLNS_ATTRIBUTE_NS_URI;
+        public static object XMLNS_ATTRIBUTE;
         public static string NULL_NS_URI { get; set; }
         public static string DEFAULT_NS_PREFIX { get; set; }
     }
@@ -342,13 +344,22 @@ namespace org.w3c.dom
         NodeList ChildNodes { get; set; }
         Node NextSibling { get; set; }
         string BaseURI { get; set; }
+        NamedNodeMap Attributes { get; set; }
+        object NodeValue { get; set; }
+        string NamespaceURI { get; set; }
+        object NodeName { get; set; }
+        Node ParentNode { get; set; }
         bool isSameNode(Node nodeValue);
         short compareDocumentPosition(Node nodeB);
         bool isEqualNode(Node node);
+        bool hasChildNodes();
+        bool hasAttributes();
     }
 
     public interface Attr : Node
     {
+        object Name { get; set; }
+        string Value { get; set; }
     }
 
     public interface Document : Node
@@ -362,6 +373,8 @@ namespace org.w3c.dom
     {
         object getAttributeNS(string sCHEMA_INSTANCE, string nIL_ATTRIBUTE);
         NamedNodeMap Attributes { get; set; }
+        string lookupNamespaceURI(string prefix);
+        bool isDefaultNamespace(object elementNamespaceUri);
     }
 
     public interface NamedNodeMap
