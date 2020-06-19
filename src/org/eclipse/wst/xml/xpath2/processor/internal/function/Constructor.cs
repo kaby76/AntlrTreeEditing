@@ -61,11 +61,12 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 		public override ResultSequence evaluate(ICollection args, EvaluationContext ec)
 		{
 			Debug.Assert(args.Count >= min_arity() && args.Count <= max_arity());
-
+            var i = args.GetEnumerator();
+            i.MoveNext();
 			// sanity checks
-			ResultSequence arg = (ResultSequence) args.GetEnumerator().next();
+			ResultSequence arg = (ResultSequence) i.Current;
 
-			if (arg.size() > 1)
+			if (arg == null || arg.size() > 1)
 			{
 				DynamicError.throw_type_error();
 			}

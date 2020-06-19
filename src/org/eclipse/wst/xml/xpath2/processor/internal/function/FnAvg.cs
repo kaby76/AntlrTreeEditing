@@ -77,11 +77,12 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public static org.eclipse.wst.xml.xpath2.api.ResultSequence avg(java.util.Collection args) throws org.eclipse.wst.xml.xpath2.processor.DynamicError
 		public static ResultSequence avg(ICollection args)
-		{
+        {
+            var j = args.GetEnumerator();
+            j.MoveNext();
+            ResultSequence arg = (ResultSequence)j.Current;
 
-			ResultSequence arg = (ResultSequence)args.GetEnumerator().next();
-
-			if (arg.empty())
+			if (arg == null || arg.empty())
 			{
 				return ResultSequenceFactory.create_new();
 			}
@@ -102,7 +103,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 
 					if (conv is XSDouble && ((XSDouble)conv).nan() || conv is XSFloat && ((XSFloat)conv).nan())
 					{
-						return ResultSequenceFactory.create_new(tp.promote(new XSFloat(Float.NaN)));
+						return ResultSequenceFactory.create_new(tp.promote(new XSFloat(float.NaN)));
 					}
 					if (total == null)
 					{

@@ -100,17 +100,15 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 			ICollection cargs = Function.convert_arguments(args, expected_args());
 
 			IEnumerator argiter = cargs.GetEnumerator();
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			ResultSequence arg1 = (ResultSequence) argiter.next();
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			ResultSequence arg2 = (ResultSequence) argiter.next();
+            argiter.MoveNext();
+            ResultSequence arg1 = (ResultSequence) argiter.Current;
+            argiter.MoveNext();
+			ResultSequence arg2 = (ResultSequence) argiter.Current;
 
 			string collationUri = context.CollationProvider.DefaultCollation;
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			if (argiter.hasNext())
-			{
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-				ResultSequence collArg = (ResultSequence) argiter.next();
+			if (argiter.MoveNext())
+            {
+                ResultSequence collArg = (ResultSequence) argiter.Current;
 				collationUri = collArg.first().StringValue;
 			}
 
@@ -128,11 +126,9 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 			}
 		}
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static java.math.BigInteger compare_string(String collationUri, org.eclipse.wst.xml.xpath2.processor.internal.types.XSString xstr1, org.eclipse.wst.xml.xpath2.processor.internal.types.XSString xstr2, org.eclipse.wst.xml.xpath2.api.DynamicContext context) throws org.eclipse.wst.xml.xpath2.processor.DynamicError
 		public static System.Numerics.BigInteger compare_string(string collationUri, XSString xstr1, XSString xstr2, DynamicContext context)
 		{
-			IComparer collator = context.CollationProvider.getCollation(collationUri);
+			var collator = context.CollationProvider.getCollation(collationUri);
 			if (collator == null)
 			{
 				throw DynamicError.unsupported_collation(collationUri);
@@ -140,7 +136,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 
 			if (xstr1 == null || xstr2 == null)
 			{
-				return null;
+				return default;
 			}
 
 			int ret = collator.Compare(xstr1.value(), xstr2.value());

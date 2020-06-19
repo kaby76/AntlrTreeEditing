@@ -78,7 +78,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 		{
 			Debug.Assert(args.Count == 0);
 
-			Duration d = dc.TimezoneOffset;
+			var d = dc.TimezoneOffset;
 			XSDayTimeDuration tz = new XSDayTimeDuration(0, d.Hours, d.Minutes, 0.0, d.Sign == -1);
 
 			AnyType res = new XSDateTime(dc.CurrentDateTime, tz);

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using java.net;
 
 /// <summary>
@@ -108,11 +109,9 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 			ResultSequence arg1 = null;
 
 			string uri = DEFAULT_COLLECTION_URI;
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			if (argiter.hasNext())
-			{
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-				arg1 = (ResultSequence) argiter.next();
+			if (argiter.MoveNext())
+            {
+                arg1 = (ResultSequence) argiter.Current;
 				uri = ((XSString) arg1.first()).value();
 			}
 
@@ -120,7 +119,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 			{
 				new URI(uri);
 			}
-			catch (URISyntaxException)
+			catch
 			{
 				throw DynamicError.doc_not_found(null);
 			}

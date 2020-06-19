@@ -97,19 +97,19 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 			ResultBuffer rs = new ResultBuffer();
 
 			IEnumerator argiter = cargs.GetEnumerator();
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			ResultSequence arg1 = (ResultSequence) argiter.next();
-			XSString xstr1 = arg1.empty() ? null : (XSString) arg1.first();
+            argiter.MoveNext();
+            ResultSequence arg1 = (ResultSequence) argiter.Current;
+			XSString xstr1 = arg1 == null || arg1.empty() ? null : (XSString) arg1.first();
 
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			ResultSequence arg2 = (ResultSequence) argiter.next();
-			XSString xstr2 = arg2.empty() ? null : (XSString) arg2.first();
+            argiter.MoveNext();
+            ResultSequence arg2 = (ResultSequence) argiter.Current;
+			XSString xstr2 = arg2 == null || arg2.empty() ? null : (XSString) arg2.first();
 
 			// This delegates to FnCompare
 			System.Numerics.BigInteger result = FnCompare.compare_string(org.eclipse.wst.xml.xpath2.api.CollationProvider_Fields.CODEPOINT_COLLATION, xstr1, xstr2, dynamicContext);
 			if (result != null)
 			{
-				rs.add(new XSBoolean(System.Numerics.BigInteger.ZERO.Equals(result)));
+				rs.add(new XSBoolean(System.Numerics.BigInteger.Zero.Equals(result)));
 			}
 
 			return rs.Sequence;

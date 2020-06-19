@@ -86,18 +86,16 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 
 			// get args
 			IEnumerator citer = args.GetEnumerator();
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			ResultSequence arg1 = (ResultSequence) citer.next();
+            citer.MoveNext();
+            ResultSequence arg1 = (ResultSequence) citer.Current;
 			ResultSequence arg2 = ResultBuffer.EMPTY;
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			if (citer.hasNext())
-			{
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-				arg2 = (ResultSequence) citer.next();
-			}
+			if (citer.MoveNext())
+            {
+                arg2 = (ResultSequence) citer.Current;
+            }
 
 			string collationURI = context.CollationProvider.DefaultCollation;
-			if (!arg2.empty())
+			if (!(arg2 == null || arg2.empty()))
 			{
 				XSString collation = (XSString) arg2.item(0);
 				collationURI = collation.StringValue;

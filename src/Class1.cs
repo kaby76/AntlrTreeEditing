@@ -116,6 +116,20 @@ namespace java.util
         {
             throw new NotImplementedException();
         }
+
+        public static Calendar getInstance()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void set(int year, int month, int day)
+        {
+            throw new NotImplementedException();
+        }
+        public void set(int field, int value)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class TimeZone
@@ -189,6 +203,11 @@ namespace javax.xml.datatype
         }
 
         public Duration newDuration(bool duration, int i, int i1, int i2, int hours, int minutes, int i3)
+        {
+            throw new NotImplementedException();
+        }
+
+        public XMLGregorianCalendar newXMLGregorianCalendarTime(int hour, int minute, int second, int i)
         {
             throw new NotImplementedException();
         }
@@ -322,8 +341,10 @@ namespace org.w3c.dom
         Document OwnerDocument { get; set; }
         NodeList ChildNodes { get; set; }
         Node NextSibling { get; set; }
+        string BaseURI { get; set; }
         bool isSameNode(Node nodeValue);
         short compareDocumentPosition(Node nodeB);
+        bool isEqualNode(Node node);
     }
 
     public interface Attr : Node

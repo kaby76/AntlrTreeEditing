@@ -85,10 +85,10 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 
 			// get args
 			IEnumerator argiter = cargs.GetEnumerator();
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			ResultSequence arg1 = (ResultSequence) argiter.next();
+            argiter.MoveNext();
+            ResultSequence arg1 = (ResultSequence) argiter.Current;
 
-			if (arg1.empty())
+			if (arg1 == null || arg1.empty())
 			{
 				return ResultSequenceFactory.create_new();
 			}
@@ -96,7 +96,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 			string uri = ((XSString) arg1.item(0)).value();
 
 			DynamicContext dc = ec.DynamicContext;
-			Uri resolved = dc.resolveUri(uri);
+			var resolved = dc.resolveUri(uri);
 			if (resolved == null)
 			{
 				throw DynamicError.invalid_doc(null);

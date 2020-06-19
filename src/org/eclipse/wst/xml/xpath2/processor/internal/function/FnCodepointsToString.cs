@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Linq;
 
 /// <summary>
 ///*****************************************************************************
@@ -87,9 +88,10 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 		public static ResultSequence codepoints_to_string(ICollection args)
 		{
 			ICollection cargs = Function.convert_arguments(args, expected_args());
-
-			ResultSequence arg1 = (ResultSequence) cargs.GetEnumerator().next();
-			if (arg1.empty())
+            var j = cargs.GetEnumerator();
+            j.MoveNext();
+            ResultSequence arg1 = (ResultSequence) j.Current;
+			if (arg1 == null || arg1.empty())
 			{
 				return new XSString("");
 			}
@@ -100,7 +102,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 			{
 				XSInteger code = (XSInteger) i.Current;
 
-				int codepoint = code.int_value().intValue();
+				int codepoint = (int)code.int_value();
 				if (codepoint < MIN_LEGAL_CODEPOINT || codepoint > MAX_LEGAL_CODEPOINT)
 				{
 					throw DynamicError.unsupported_codepoint("U+" + Convert.ToString(codepoint, 16).ToUpper());
@@ -111,8 +113,9 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 			}
 
 			try
-			{
-				string str = UTF16.newString(codePointArray, 0, codePointArray.Length);
+            {
+                var c = codePointArray.Select(x => (char) x).ToArray();
+                string str = new string(c);
 				return new XSString(str);
 			}
 			catch (System.ArgumentException iae)

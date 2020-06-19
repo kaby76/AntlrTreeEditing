@@ -573,9 +573,11 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 		public virtual object visit(AxisStep e)
 		{
 			e.step().accept(this);
-			for (IEnumerator<Expr> i = e.iterator(); i.MoveNext();)
-			{
-				i.Current.accept(this);
+			for (var i = e.iterator(); i.MoveNext();)
+            {
+                ICollection<Expr> x = i.Current;
+                foreach (Expr expr in x)
+                    expr.accept(this);
 			}
 			return null;
 		}

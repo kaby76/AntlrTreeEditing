@@ -1,4 +1,6 @@
 ﻿using System.Collections;
+using java.util;
+using javax.xml.datatype;
 
 /// <summary>
 ///*****************************************************************************
@@ -80,19 +82,18 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 
 			// get args
 			IEnumerator argiter = cargs.GetEnumerator();
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			ResultSequence arg1 = (ResultSequence) argiter.next();
-			if (arg1.empty())
+            argiter.MoveNext();
+            ResultSequence arg1 = (ResultSequence) argiter.Current;
+			if (arg1 == null || arg1.empty())
 			{
 				return ResultBuffer.EMPTY;
 			}
 			ResultSequence arg2 = null;
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			if (argiter.hasNext())
+            if (argiter.MoveNext())
 			{
 //JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-				arg2 = (ResultSequence) argiter.next();
-			}
+                arg2 = (ResultSequence) argiter.Current;
+            }
 			XSDateTime dateTime = (XSDateTime) arg1.item(0);
 			XSDayTimeDuration timezone = null;
 

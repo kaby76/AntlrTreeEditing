@@ -62,8 +62,9 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 		{
 			// 1 argument only!
 			Debug.Assert(args.Count >= min_arity() && args.Count <= max_arity());
-
-			ResultSequence argument = (ResultSequence) args.GetEnumerator().next();
+            var i = args.GetEnumerator();
+            i.MoveNext();
+            ResultSequence argument = (ResultSequence) i.Current;
 
 			return fn_abs(argument);
 		}
@@ -107,7 +108,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 				XSFloat dat = (XSFloat) nt;
 				if (dat.zero() || dat.negativeZero())
 				{
-					return new XSFloat((new float?(0)));
+					return new XSFloat((float)0);
 				}
 				if (dat.infinite())
 				{

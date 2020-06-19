@@ -105,8 +105,10 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 			else if (cargs.Count == 1)
 			{
 			  // support for arity 1
-			  ResultSequence arg1 = (ResultSequence) cargs.GetEnumerator().next();
-			  Item att = arg1.empty() ? null : arg1.first();
+              var i = cargs.GetEnumerator();
+              i.MoveNext();
+              ResultSequence arg1 = (ResultSequence) i.Current;
+			  Item att = arg1 == null || arg1.empty() ? null : arg1.first();
 
 			  rs = getBaseUri(att);
 			}

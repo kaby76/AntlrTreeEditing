@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using java.util;
 
 /// <summary>
 ///*****************************************************************************
@@ -20,7 +21,7 @@ using System.Collections;
 
 namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 {
-
+	using Calendar = java.util.Calendar;
 
 	using EvaluationContext = org.eclipse.wst.xml.xpath2.api.EvaluationContext;
 	using ResultBuffer = org.eclipse.wst.xml.xpath2.api.ResultBuffer;
@@ -56,8 +57,6 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 		/// <exception cref="DynamicError">
 		///             Dynamic error. </exception>
 		/// <returns> Result of evaluation. </returns>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public org.eclipse.wst.xml.xpath2.api.ResultSequence evaluate(java.util.Collection args, org.eclipse.wst.xml.xpath2.api.EvaluationContext ec) throws org.eclipse.wst.xml.xpath2.processor.DynamicError
 		public override ResultSequence evaluate(ICollection args, EvaluationContext ec)
 		{
 			return dateTime(args, ec.StaticContext);
@@ -73,8 +72,6 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 		/// <exception cref="DynamicError">
 		///             Dynamic error. </exception>
 		/// <returns> Result of the fn:dateTime operation. </returns>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static org.eclipse.wst.xml.xpath2.api.ResultSequence dateTime(java.util.Collection args, org.eclipse.wst.xml.xpath2.api.StaticContext sc) throws org.eclipse.wst.xml.xpath2.processor.DynamicError
 		public static ResultSequence dateTime(ICollection args, StaticContext sc)
 		{
 
@@ -82,26 +79,26 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 
 			// get args
 			IEnumerator argiter = cargs.GetEnumerator();
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			ResultSequence arg1 = (ResultSequence) argiter.next();
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			ResultSequence arg2 = (ResultSequence) argiter.next();
+            argiter.MoveNext();
+            ResultSequence arg1 = (ResultSequence) argiter.Current;
+            argiter.MoveNext();
+            ResultSequence arg2 = (ResultSequence) argiter.Current;
 
 			// if either of the parameter is an empty sequence, the result
 			// is an empty sequence
-			if (arg1.empty() || arg2.empty())
+			if (arg1 == null || arg2 == null || arg1.empty() || arg2.empty())
 			{
 				  return ResultBuffer.EMPTY;
 			}
 			XSDate param1 = (XSDate)arg1.first();
 			XSTime param2 = (XSTime)arg2.first();
 
-			DateTime cal = new DateTime();
-			cal = new DateTime(param1.year(), param1.month() - 1, param1.day());
-			cal.set(DateTime.HOUR_OF_DAY, param2.hour());
-			cal.set(DateTime.MINUTE, param2.minute());
-			cal.set(DateTime.SECOND, ((new double?(Math.Floor(param2.second()))).intValue()));
-			cal.set(DateTime.MILLISECOND, 0);
+			Calendar cal = Calendar.getInstance();
+            cal.set(param1.year(), param1.month() - 1, param1.day());
+            cal.set(Calendar.HOUR_OF_DAY, param2.hour());
+			cal.set(Calendar.MINUTE, param2.minute());
+			cal.set(Calendar.SECOND, (int)Math.Floor(param2.second()));
+			cal.set(Calendar.MILLISECOND, 0);
 
 			XSDuration dateTimeZone = param1.tz();
 			XSDuration timeTimeZone = param2.tz();

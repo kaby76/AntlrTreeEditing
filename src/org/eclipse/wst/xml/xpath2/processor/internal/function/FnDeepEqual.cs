@@ -84,18 +84,16 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 
 			// get args
 			IEnumerator citer = args.GetEnumerator();
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			ResultSequence arg1 = (ResultSequence) citer.next();
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			ResultSequence arg2 = (ResultSequence) citer.next();
+            citer.MoveNext();
+            ResultSequence arg1 = (ResultSequence) citer.Current;
+            citer.MoveNext();
+            ResultSequence arg2 = (ResultSequence) citer.Current;
 			ResultSequence arg3 = null;
 			string collationURI = context.StaticContext.CollationProvider.DefaultCollation;
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			if (citer.hasNext())
-			{
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-				arg3 = (ResultSequence) citer.next();
-				if (!arg3.empty())
+			if (citer.MoveNext())
+            {
+                arg3 = (ResultSequence) citer.Current;
+				if (!(arg3 == null || arg3.empty()))
 				{
 					collationURI = arg3.first().StringValue;
 				}
@@ -134,8 +132,8 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 			while (onei.MoveNext())
 			{
 				AnyType a = (AnyType) onei.Current;
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-				AnyType b = (AnyType) twoi.next();
+                twoi.MoveNext();
+                AnyType b = (AnyType) twoi.Current;
 
 				if (!deep_equal(a, b, context, collationURI))
 				{
@@ -224,7 +222,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 				{
 					XSString xstr1 = new XSString(one.StringValue);
 					XSString xstr2 = new XSString(two.StringValue);
-					if (FnCompare.compare_string(collationURI, xstr1, xstr2, context).Equals(System.Numerics.BigInteger.ZERO))
+					if (FnCompare.compare_string(collationURI, xstr1, xstr2, context).Equals(System.Numerics.BigInteger.Zero))
 					{
 						return true;
 					}

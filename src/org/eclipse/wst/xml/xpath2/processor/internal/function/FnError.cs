@@ -71,11 +71,10 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 
 			// Iterate over the args
 			IEnumerator it = cargs.GetEnumerator();
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			if (it.hasNext())
-			{
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-				ResultSequence rsQName = (ResultSequence)it.next();
+
+            if (it.MoveNext())
+            {
+                ResultSequence rsQName = (ResultSequence) it.Current;
 				// for arity 2 and 3, the code is not mandatory, as in fn:code((), "description). Handle this:
 				if (!rsQName.empty())
 				{
@@ -83,20 +82,16 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 				}
 			}
 			// Next arg (if present) is the description
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			if (it.hasNext())
-			{
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-				ResultSequence rsDescription = (ResultSequence)it.next();
+			if (it.MoveNext())
+            {
+                ResultSequence rsDescription = (ResultSequence) it.Current;
 				description = ((XSString)rsDescription.first()).value();
 			}
 			// Final arg (if present) is the list of items
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			if (it.hasNext())
-			{
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-				items = (ResultSequence)it.next();
-			}
+			if (it.MoveNext())
+            {
+                items = (ResultSequence) it.Current;
+            }
 
 			// Handle the code if missing
 			if (code == null)
