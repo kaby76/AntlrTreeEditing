@@ -81,8 +81,8 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 
 			// get args
 			IEnumerator citer = args.GetEnumerator();
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			ResultSequence arg = (ResultSequence) citer.next();
+            citer.MoveNext();
+            ResultSequence arg = (ResultSequence) citer.Current;
 
 			if (arg.size() <= 1)
 			{

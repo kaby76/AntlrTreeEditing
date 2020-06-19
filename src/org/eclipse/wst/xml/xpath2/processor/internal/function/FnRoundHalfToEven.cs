@@ -57,8 +57,10 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 //ORIGINAL LINE: public org.eclipse.wst.xml.xpath2.api.ResultSequence evaluate(java.util.Collection args, org.eclipse.wst.xml.xpath2.api.EvaluationContext ec) throws org.eclipse.wst.xml.xpath2.processor.DynamicError
 		public override ResultSequence evaluate(ICollection args, org.eclipse.wst.xml.xpath2.api.EvaluationContext ec)
-		{
-			ResultSequence argument = (ResultSequence) args.GetEnumerator().next();
+        {
+            var i = args.GetEnumerator();
+            i.MoveNext();
+            ResultSequence argument = (ResultSequence) i.Current;
 			if (args.Count == 2)
 			{
 				return fn_round_half_to_even(args);
@@ -102,10 +104,10 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 			}
 
 			IEnumerator argIt = args.GetEnumerator();
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			ResultSequence rsArg1 = (ResultSequence) argIt.next();
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-			ResultSequence rsPrecision = (ResultSequence) argIt.next();
+            argIt.MoveNext();
+            ResultSequence rsArg1 = (ResultSequence) argIt.Current;
+            argIt.MoveNext();
+			ResultSequence rsPrecision = (ResultSequence) argIt.Current;
 
 			NumericType nt = FnAbs.get_single_numeric_arg(rsArg1);
 

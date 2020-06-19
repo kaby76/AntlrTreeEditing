@@ -98,9 +98,11 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 				arg = ResultBuffer.wrap(ec.ContextItem);
 			}
 			else
-			{
-				arg = (ResultSequence) cargs.GetEnumerator().next();
-			}
+            {
+                var i = cargs.GetEnumerator();
+                i.MoveNext();
+                arg = (ResultSequence) i.Current;
+            }
 
 			if (arg.empty())
 			{

@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Diagnostics;
 
 /// <summary>
 ///*****************************************************************************
@@ -70,7 +71,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 		public static ResultSequence @string(ICollection args, EvaluationContext ec)
 		{
 
-			assert(args.Count == 0 || args.Count == 1);
+			Debug.Assert(args.Count == 0 || args.Count == 1);
 
 			ResultSequence arg1 = null;
 
@@ -80,9 +81,11 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 				return getResultSetForArityZero(ec);
 			}
 			else
-			{
-				arg1 = (ResultSequence) args.GetEnumerator().next();
-			}
+            {
+                var i = args.GetEnumerator();
+                i.MoveNext();
+                arg1 = (ResultSequence) i.Current;
+            }
 
 			// sanity check args
 			if (arg1.size() > 1)

@@ -360,6 +360,7 @@ namespace org.w3c.dom
     {
         object Name { get; set; }
         string Value { get; set; }
+        Node OwnerElement { get; set; }
     }
 
     public interface Document : Node

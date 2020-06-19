@@ -58,8 +58,9 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 		{
 			// 1 argument only!
 			Debug.Assert(args.Count >= min_arity() && args.Count <= max_arity());
-
-			ResultSequence argument = (ResultSequence) args.GetEnumerator().next();
+            var i = args.GetEnumerator();
+            i.MoveNext();
+            ResultSequence argument = (ResultSequence) args.GetEnumerator().Current;
 
 			return fn_round(argument);
 		}
