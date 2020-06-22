@@ -12,6 +12,9 @@
 ///     IBM Corporation - initial API and implementation
 /// ******************************************************************************
 /// </summary>
+
+using org.eclipse.wst.xml.xpath2.api.typesystem;
+
 namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 {
 
@@ -25,7 +28,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		{
 		}
 
-		public NodeItemTypeImpl(short nodeType) : this(OCCURRENCE_ONE, nodeType, null, null, true)
+		public NodeItemTypeImpl(short nodeType) : this(ItemType_Fields.OCCURRENCE_ONE, nodeType, null, null, true)
 		{
 		}
 

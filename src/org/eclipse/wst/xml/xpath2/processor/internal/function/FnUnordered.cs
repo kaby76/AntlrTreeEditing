@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Collections;
 
 /// <summary>
@@ -83,7 +84,8 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 				tmp.Add(i.Current);
 			}
 
-			Collections.shuffle(tmp);
+            throw new Exception();
+			//Collections.shuffle(tmp);
 
 			ResultBuffer rb = new ResultBuffer();
 			for (IEnumerator i = tmp.GetEnumerator(); i.MoveNext();)

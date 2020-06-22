@@ -251,7 +251,8 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 			ResultSequence result = null;
 			try
 			{
-				result = (ResultSequence) comparator.Compare(args, ec);
+				throw new Exception();
+				//result = (ResultSequence) comparator.Compare(args, ec);
 			}
 			catch (Exception ex)
             {
@@ -400,18 +401,18 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 			{
 				DynamicError.throw_type_error();
 			}
-
+			throw new Exception();
 			try
 			{
-				Type[] margsdef = new Type[] {typeof(AnyType), typeof(DynamicContext)};
-				IComparer method = null;
+				//Type[] margsdef = new Type[] {typeof(AnyType), typeof(DynamicContext)};
+				//IComparer method = null;
 
-				method = type.GetMethod(mname, margsdef);
+				//method = type.GetMethod(mname, margsdef);
 
-				object[] margs = new object[] {arg2.first(), context};
-				bool? cmpres = (bool?) method.Compare(arg, margs);
+				//object[] margs = new object[] {arg2.first(), context};
+				//bool? cmpres = (bool?) method.Compare(arg, margs);
 
-				return ResultSequenceFactory.create_new(new XSBoolean(cmpres.Value));
+				//return ResultSequenceFactory.create_new(new XSBoolean(cmpres.Value));
 			}
 			catch 
 			{

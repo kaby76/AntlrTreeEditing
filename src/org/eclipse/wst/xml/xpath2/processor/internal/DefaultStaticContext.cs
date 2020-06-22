@@ -644,21 +644,21 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 		{
 			// go through the stack in reverse order... reverse iterators
 			// would be nice here...
+            throw new Exception();
+            //int pos = _scopes.Count;
+            //while (--pos >= 0)
+            //{
+            //	IDictionary scope = (IDictionary) _scopes.Peek(pos);
 
-			int pos = _scopes.Count;
-			while (--pos >= 0)
-			{
-				IDictionary scope = (IDictionary) _scopes.Peek(pos);
+            //	// gotcha
+            //	if (scope.Contains(@var))
+            //	{
+            //		return scope[@var];
+            //	}
+            //}
 
-				// gotcha
-				if (scope.Contains(@var))
-				{
-					return scope[@var];
-				}
-			}
-
-			return null;
-		}
+            //return null;
+        }
 
 		/// <summary>
 		/// Debug function which will print current variable scopes and info.

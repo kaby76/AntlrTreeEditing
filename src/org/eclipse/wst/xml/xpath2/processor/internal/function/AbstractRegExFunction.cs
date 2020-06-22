@@ -56,30 +56,31 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 		}
 
 		private static MatchCollection compileAndExecute(string pattern, string flags, string src)
-		{
-			RegexOptions flag = Pattern.UNIX_LINES;
-			if (!string.ReferenceEquals(flags, null))
-			{
-				if (flags.IndexOf("m", StringComparison.Ordinal) >= 0)
-				{
-					flag = flag | Pattern.MULTILINE;
-				}
-				if (flags.IndexOf("s", StringComparison.Ordinal) >= 0)
-				{
-					flag = flag | Pattern.DOTALL;
-				}
-				if (flags.IndexOf("i", StringComparison.Ordinal) >= 0)
-				{
-					flag = flag | Pattern.CASE_INSENSITIVE;
-				}
+        {
+            RegexOptions flag = default;
+            //RegexOptions flag = Pattern.UNIX_LINES;
+			//if (!string.ReferenceEquals(flags, null))
+			//{
+			//	if (flags.IndexOf("m", StringComparison.Ordinal) >= 0)
+			//	{
+			//		flag = flag | Pattern.MULTILINE;
+			//	}
+			//	if (flags.IndexOf("s", StringComparison.Ordinal) >= 0)
+			//	{
+			//		flag = flag | Pattern.DOTALL;
+			//	}
+			//	if (flags.IndexOf("i", StringComparison.Ordinal) >= 0)
+			//	{
+			//		flag = flag | Pattern.CASE_INSENSITIVE;
+			//	}
 
-				if (flags.IndexOf("x", StringComparison.Ordinal) >= 0)
-				{
-					flag = flag | Pattern.COMMENTS;
-				}
-			}
+			//	if (flags.IndexOf("x", StringComparison.Ordinal) >= 0)
+			//	{
+			//		flag = flag | Pattern.COMMENTS;
+			//	}
+			//}
 
-            Regex p = new Regex(pattern, flag);
+			Regex p = new Regex(pattern, flag);
             MatchCollection matches = p.Matches(src);
             return matches;
         }

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 /// <summary>
@@ -306,28 +307,29 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 		}
 
 		private BinExpr make_logic_expr(BinExpr e)
-		{
-			ICollection normalized = normalize_bin_args(e);
+        {
+            throw new Exception();
+            //ICollection normalized = normalize_bin_args(e);
 
-			XPathNode[] nor_arr = new XPathNode[2];
-			int j = 0;
+            //XPathNode[] nor_arr = new XPathNode[2];
+            //int j = 0;
 
-			for (IEnumerator i = normalized.GetEnumerator(); i.MoveNext();)
-			{
-				nor_arr[j] = (XPathNode) i.Current;
-				j++;
-			}
+            //for (IEnumerator i = normalized.GetEnumerator(); i.MoveNext();)
+            //{
+            //	nor_arr[j] = (XPathNode) i.Current;
+            //	j++;
+            //}
 
-			var args = new ArrayList();
-			args.Add(nor_arr[0]);
-			e.set_left(make_function(new QName("fn", "boolean", FnFunctionLibrary.XPATH_FUNCTIONS_NS), args));
+            //var args = new List<XPathNode>();
+            //args.Add(nor_arr[0]);
+            //e.set_left(make_function(new QName("fn", "boolean", FnFunctionLibrary.XPATH_FUNCTIONS_NS), args));
 
-			args.Clear();
-			args.Add(nor_arr[1]);
-			e.set_right(make_function(new QName("fn", "boolean", FnFunctionLibrary.XPATH_FUNCTIONS_NS), args));
+            //args.Clear();
+            //args.Add(nor_arr[1]);
+            //e.set_right(make_function(new QName("fn", "boolean", FnFunctionLibrary.XPATH_FUNCTIONS_NS), args));
 
-			return e;
-		}
+            //return e;
+        }
 
 		/// <param name="orex">
 		///            is the 'or' expression. </param>
@@ -350,39 +352,40 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 		/// <returns> cmpex. </returns>
 		public virtual object visit(CmpExpr cmpex)
 		{
-			switch (cmpex.type())
-			{
-			case CmpExpr.EQ:
-				return make_CmpOp(cmpex, new QName("fs", "eq", OpFunctionLibrary.XPATH_OP_NS));
+			throw new Exception();
+			//switch (cmpex.type())
+			//{
+			//case CmpExpr.EQ:
+			//	return make_CmpOp(cmpex, new QName("fs", "eq", OpFunctionLibrary.XPATH_OP_NS));
 
-			case CmpExpr.NE:
-				return make_CmpOp(cmpex, new QName("fs", "ne", OpFunctionLibrary.XPATH_OP_NS));
+			//case CmpExpr.NE:
+			//	return make_CmpOp(cmpex, new QName("fs", "ne", OpFunctionLibrary.XPATH_OP_NS));
 
-			case CmpExpr.LT:
-				return make_CmpOp(cmpex, new QName("fs", "lt", OpFunctionLibrary.XPATH_OP_NS));
+			//case CmpExpr.LT:
+			//	return make_CmpOp(cmpex, new QName("fs", "lt", OpFunctionLibrary.XPATH_OP_NS));
 
-			case CmpExpr.GT:
-				return make_CmpOp(cmpex, new QName("fs", "gt", OpFunctionLibrary.XPATH_OP_NS));
+			//case CmpExpr.GT:
+			//	return make_CmpOp(cmpex, new QName("fs", "gt", OpFunctionLibrary.XPATH_OP_NS));
 
-			case CmpExpr.LE:
-				return make_CmpOp(cmpex, new QName("fs", "le", OpFunctionLibrary.XPATH_OP_NS));
+			//case CmpExpr.LE:
+			//	return make_CmpOp(cmpex, new QName("fs", "le", OpFunctionLibrary.XPATH_OP_NS));
 
-			case CmpExpr.GE:
-				return make_CmpOp(cmpex, new QName("fs", "ge", OpFunctionLibrary.XPATH_OP_NS));
+			//case CmpExpr.GE:
+			//	return make_CmpOp(cmpex, new QName("fs", "ge", OpFunctionLibrary.XPATH_OP_NS));
 
-				// XXX don't have functs!
-			case CmpExpr.IS:
-				return make_function(new QName("op", "node-equal"), normalize_bin_args(cmpex));
+			//	// XXX don't have functs!
+			//case CmpExpr.IS:
+			//	return make_function(new QName("op", "node-equal"), normalize_bin_args(cmpex));
 
-			case CmpExpr.LESS_LESS:
-				return make_function(new QName("op", "node-before"), normalize_bin_args(cmpex));
+			//case CmpExpr.LESS_LESS:
+			//	return make_function(new QName("op", "node-before"), normalize_bin_args(cmpex));
 
-			case CmpExpr.GREATER_GREATER:
-				return make_function(new QName("op", "node-after"), normalize_bin_args(cmpex));
-			}
+			//case CmpExpr.GREATER_GREATER:
+			//	return make_function(new QName("op", "node-after"), normalize_bin_args(cmpex));
+			//}
 
-			printBinExpr("CMP" + cmpex.type(), cmpex);
-			return cmpex;
+			//printBinExpr("CMP" + cmpex.type(), cmpex);
+			//return cmpex;
 		}
 
 		private ICollection normalize_bin_args(BinExpr e)
@@ -403,8 +406,9 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 		/// <returns> a new function. </returns>
 		public virtual object visit(RangeExpr rex)
 		{
-			ICollection args = normalize_bin_args(rex);
-			return make_function(new QName("op", "to", OpFunctionLibrary.XPATH_OP_NS), args);
+			throw new Exception();
+			//ICollection args = normalize_bin_args(rex);
+			//return make_function(new QName("op", "to", OpFunctionLibrary.XPATH_OP_NS), args);
 		}
 
 		private XPathExpr make_xpathexpr(PrimaryExpr pex)
@@ -427,11 +431,12 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 
 		private XPathExpr make_convert_operand(XPathExpr arg1, XPathExpr arg2)
 		{
-			var args = new ArrayList();
-			args.Add(arg1);
-			args.Add(arg2);
+            throw new Exception();
+			//var args = new ArrayList();
+			//args.Add(arg1);
+			//args.Add(arg2);
 
-			return make_function(new QName("fs", "convert-operand", OpFunctionLibrary.XPATH_OP_NS), args);
+			//return make_function(new QName("fs", "convert-operand", OpFunctionLibrary.XPATH_OP_NS), args);
 		}
 
 		private XPathExpr make_double_lit(double d)
@@ -445,23 +450,24 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 		// )
 		private XPathExpr make_convert_binop(BinExpr e, XPathExpr convarg, QName name)
 		{
-			ICollection args = normalize_bin_args(e);
-			XPathExpr[] args_arr = new XPathExpr[2];
-			int j = 0;
+			throw new Exception();
+			//ICollection args = normalize_bin_args(e);
+			//XPathExpr[] args_arr = new XPathExpr[2];
+			//int j = 0;
 
-			for (IEnumerator i = args.GetEnumerator(); i.MoveNext();)
-			{
-				args_arr[j] = (XPathExpr) i.Current;
-				j++;
-			}
+			//for (IEnumerator i = args.GetEnumerator(); i.MoveNext();)
+			//{
+			//	args_arr[j] = (XPathExpr) i.Current;
+			//	j++;
+			//}
 
-			var argsfname = new ArrayList();
-			for (j = 0; j < 2; j++)
-			{
-				XPathExpr arg = make_convert_operand(args_arr[j], convarg);
-				argsfname.Add(arg);
-			}
-			return make_function(name, argsfname);
+			//var argsfname = new ArrayList();
+			//for (j = 0; j < 2; j++)
+			//{
+			//	XPathExpr arg = make_convert_operand(args_arr[j], convarg);
+			//	argsfname.Add(arg);
+			//}
+			//return make_function(name, argsfname);
 		}
 
 		private XPathExpr make_ArithOp(BinExpr e, QName name)
@@ -532,8 +538,9 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 		/// <returns> a new function. </returns>
 		public virtual object visit(UnionExpr unex)
 		{
-			ICollection args = normalize_bin_args(unex);
-			return make_function(new QName("op", "union", OpFunctionLibrary.XPATH_OP_NS), args);
+            throw new Exception();
+			//ICollection args = normalize_bin_args(unex);
+			//return make_function(new QName("op", "union", OpFunctionLibrary.XPATH_OP_NS), args);
 		}
 
 		/// <param name="pipex">
@@ -541,8 +548,9 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 		/// <returns> a new function. </returns>
 		public virtual object visit(PipeExpr pipex)
 		{
-			ICollection args = normalize_bin_args(pipex);
-			return make_function(new QName("op", "union", OpFunctionLibrary.XPATH_OP_NS), args);
+            throw new Exception();
+			//ICollection args = normalize_bin_args(pipex);
+			//return make_function(new QName("op", "union", OpFunctionLibrary.XPATH_OP_NS), args);
 		}
 
 		/// <param name="iexpr">
@@ -550,8 +558,9 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 		/// <returns> a new function. </returns>
 		public virtual object visit(IntersectExpr iexpr)
 		{
-			ICollection args = normalize_bin_args(iexpr);
-			return make_function(new QName("op", "intersect", OpFunctionLibrary.XPATH_OP_NS), args);
+            throw new Exception();
+			//ICollection args = normalize_bin_args(iexpr);
+			//return make_function(new QName("op", "intersect", OpFunctionLibrary.XPATH_OP_NS), args);
 		}
 
 		/// <param name="eexpr">
@@ -559,8 +568,9 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 		/// <returns> a new function. </returns>
 		public virtual object visit(ExceptExpr eexpr)
 		{
-			ICollection args = normalize_bin_args(eexpr);
-			return make_function(new QName("op", "except", OpFunctionLibrary.XPATH_OP_NS), args);
+            throw new Exception();
+			//ICollection args = normalize_bin_args(eexpr);
+			//return make_function(new QName("op", "except", OpFunctionLibrary.XPATH_OP_NS), args);
 		}
 
 		/// <param name="ioexp">
@@ -639,26 +649,28 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 
 		private XPathExpr make_root_self_node()
 		{
+            throw new Exception();
 
 			// self::node()
-			Step self_node = new ForwardStep(ForwardStep.SELF, new AnyKindTest());
-			StepExpr self_node_expr = new AxisStep(self_node, new ArrayList());
-			XPathExpr self_node_xpath = new XPathExpr(0, self_node_expr);
+			//Step self_node = new ForwardStep(ForwardStep.SELF, new AnyKindTest());
+			//StepExpr self_node_expr = new AxisStep(self_node, new ArrayList());
+			//XPathExpr self_node_xpath = new XPathExpr(0, self_node_expr);
 
-			// fn:root(self::node())
-			var args = new ArrayList();
-			args.Add(self_node_xpath);
-			XPathExpr xpe = make_function(new QName("fn", "root", FnFunctionLibrary.XPATH_FUNCTIONS_NS), args);
+			//// fn:root(self::node())
+			//var args = new ArrayList();
+			//args.Add(self_node_xpath);
+			//XPathExpr xpe = make_function(new QName("fn", "root", FnFunctionLibrary.XPATH_FUNCTIONS_NS), args);
 
-			return xpe;
+			//return xpe;
 		}
 
 		private XPathExpr make_descendant_or_self()
 		{
-			Step desc_self_node = new ForwardStep(ForwardStep.DESCENDANT_OR_SELF, new AnyKindTest());
-			StepExpr se = new AxisStep(desc_self_node, new ArrayList());
+            throw new Exception();
+			//Step desc_self_node = new ForwardStep(ForwardStep.DESCENDANT_OR_SELF, new AnyKindTest());
+			//StepExpr se = new AxisStep(desc_self_node, new ArrayList());
 
-			return new XPathExpr(0, se);
+			//return new XPathExpr(0, se);
 		}
 
 		/// <param name="e">
@@ -769,22 +781,23 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 		/// <returns> e </returns>
 		public virtual object visit(ReverseStep e)
 		{
+            throw new Exception();
 
-			if (e.axis() == ReverseStep.DOTDOT)
-			{
-				NodeTest nt = new AnyKindTest();
-				Step s = new ReverseStep(ReverseStep.PARENT, nt);
+			//if (e.axis() == ReverseStep.DOTDOT)
+			//{
+			//	NodeTest nt = new AnyKindTest();
+			//	Step s = new ReverseStep(ReverseStep.PARENT, nt);
 
-				return s;
-			}
+			//	return s;
+			//}
 
-			NodeTest nt = e.node_test();
-			if (nt != null)
-			{
-				nt.accept(this);
-			}
+			//NodeTest nt = e.node_test();
+			//if (nt != null)
+			//{
+			//	nt.accept(this);
+			//}
 
-			return e;
+			//return e;
 		}
 
 		/// <param name="e">
