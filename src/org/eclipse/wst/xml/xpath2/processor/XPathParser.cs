@@ -33,8 +33,6 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		/// <exception cref="XPathParserException">
 		///             XPath parser exception. </exception>
 		/// <returns> The parsed XPath. </returns>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public org.eclipse.wst.xml.xpath2.processor.ast.XPath parse(String xpath) throws XPathParserException;
 		XPath parse(string xpath);
 
 		/// <summary>
@@ -48,8 +46,6 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		///             XPath parser exception. </exception>
 		/// <returns> The parsed XPath.
 		/// @since 2.0 </returns>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public org.eclipse.wst.xml.xpath2.processor.ast.XPath parse(String xpath, boolean isRootlessAccess) throws XPathParserException;
 		XPath parse(string xpath, bool isRootlessAccess);
 	}
 

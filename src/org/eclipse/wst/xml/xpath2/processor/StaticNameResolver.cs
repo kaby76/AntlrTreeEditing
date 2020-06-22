@@ -344,7 +344,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		/// <returns> null. </returns>
 		public virtual object visit(XPath xp)
 		{
-			for (IEnumerator i = xp.GetEnumerator(); i.MoveNext();)
+			for (IEnumerator<Expr> i = xp.iterator(); i.MoveNext();)
 			{
 				Expr e = (Expr) i.Current;
 

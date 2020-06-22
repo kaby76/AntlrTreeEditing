@@ -29,8 +29,6 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 	/// <summary>
 	/// JFlexCupParser parses the xpath expression
 	/// </summary>
-	//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-	//ORIGINAL LINE: @SuppressWarnings("deprecation") public class InternalXPathParser
 	public class InternalXPathParser
 	{
 
@@ -44,11 +42,9 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 		/// <exception cref="XPathParserException."> </exception>
 		/// <returns> the xpath value.
 		/// @since 2.0 </returns>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public org.eclipse.wst.xml.xpath2.processor.ast.XPath parse(String xpath, boolean isRootlessAccess) throws org.eclipse.wst.xml.xpath2.processor.XPathParserException
 		public virtual XPath parse(string xpath, bool isRootlessAccess)
 		{
-            XPathLexer lexer = new XPathLexer(new AntlrInputStream(xpath));
+            var lexer = new XPath31Lexer(new AntlrInputStream(xpath));
 
             try
             {

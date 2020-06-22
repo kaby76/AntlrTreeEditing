@@ -396,10 +396,8 @@ namespace org.w3c.dom
 
     public interface Node
     {
-        short ELEMENT_NODE { get; set; }
         short NodeType { get; set; }
         string LocalName { get; set; }
-        short DOCUMENT_NODE { get; set; }
         Document OwnerDocument { get; set; }
         NodeList ChildNodes { get; set; }
         Node NextSibling { get; set; }

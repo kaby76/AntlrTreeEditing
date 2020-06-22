@@ -12,3 +12,9 @@ src/XPath31Parser.cs
 src/XPath31BaseVisitor.cs
 src/XPath31Visitor.cs
 .vs/
+ClassLibrary1/obj/
+ClassLibrary2/bin/
+ClassLibrary1/bin/
+ClassLibrary2/obj/
+ConsoleApp1/bin/
+ConsoleApp1/obj/
