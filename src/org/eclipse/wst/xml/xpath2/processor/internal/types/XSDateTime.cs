@@ -80,8 +80,6 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		/// Creates a copy of this date and time representation
 		/// </summary>
 		/// <returns> A copy of this date and time representation </returns>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public Object clone() throws CloneNotSupportedException
 		public virtual object clone()
 		{
             Calendar c = (Calendar) calendar().clone();
@@ -549,27 +547,27 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 			}
 			else
 			{
-				cal.set(DateTime.ERA, GregorianCalendar.AD);
+				cal.set(Calendar.ERA, GregorianCalendar.AD);
 			}
 
 			// this is a nice bug....
 			// if say the current day is 29...
 			// then if we set the month to feb for example, and 29 doesn't
 			// exist in that year, then the date screws up.
-			cal.set(DateTime.DAY_OF_MONTH, 2);
-			cal.set(DateTime.MONTH, 2);
+			cal.set(Calendar.DAY_OF_MONTH, 2);
+			cal.set(Calendar.MONTH, 2);
 
-			if (!set_item(cal, DateTime.YEAR, year))
+			if (!set_item(cal, Calendar.YEAR, year))
 			{
 				return null;
 			}
 
-			if (!set_item(cal, DateTime.MONTH, d[1] - 1))
+			if (!set_item(cal, Calendar.MONTH, d[1] - 1))
 			{
 				return null;
 			}
 
-			if (!set_item(cal, DateTime.DAY_OF_MONTH, d[2]))
+			if (!set_item(cal, Calendar.DAY_OF_MONTH, d[2]))
 			{
 				return null;
 			}
@@ -581,24 +579,24 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 				return null;
 			}
 
-			if (!set_item(cal, DateTime.HOUR_OF_DAY, (int) t[0]))
+			if (!set_item(cal, Calendar.HOUR_OF_DAY, (int) t[0]))
 			{
 				return null;
 			}
 
-			if (!set_item(cal, DateTime.MINUTE, (int) t[1]))
+			if (!set_item(cal, Calendar.MINUTE, (int) t[1]))
 			{
 				return null;
 			}
 
-			if (!set_item(cal, DateTime.SECOND, (int) t[2]))
+			if (!set_item(cal, Calendar.SECOND, (int) t[2]))
 			{
 				return null;
 			}
 
 			double ms = t[2] - ((int) t[2]);
 			ms *= 1000;
-			if (!set_item(cal, DateTime.MILLISECOND, (int) ms))
+			if (!set_item(cal, Calendar.MILLISECOND, (int) ms))
 			{
 				return null;
 			}
@@ -705,8 +703,8 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		/// <returns> the year value of the date stored </returns>
 		public virtual int year()
 		{
-			int y = _calendar.Year;
-			if (_calendar.get(DateTime.ERA) == GregorianCalendar.BC)
+			int y = _calendar.get(Calendar.YEAR);
+			if (_calendar.get(Calendar.ERA) == GregorianCalendar.BC)
 			{
 				y *= -1;
 			}
@@ -720,7 +718,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		/// <returns> the month value of the date stored </returns>
 		public virtual int month()
 		{
-			return _calendar.Month + 1;
+			return _calendar.get(Calendar.MONTH) + 1;
 		}
 
 		/// <summary>
@@ -729,7 +727,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		/// <returns> the day value of the date stored </returns>
 		public virtual int day()
 		{
-			return _calendar.Day;
+			return _calendar.get(Calendar.DAY_OF_MONTH);
 		}
 
 		/// <summary>
@@ -738,7 +736,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		/// <returns> the hour value of the date stored </returns>
 		public virtual int hour()
 		{
-			return _calendar.Hour;
+			return _calendar.get(Calendar.HOUR_OF_DAY);
 		}
 
 		/// <summary>
@@ -747,7 +745,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		/// <returns> the minute value of the date stored </returns>
 		public virtual int minute()
 		{
-			return _calendar.Minute;
+			return _calendar.get(Calendar.MINUTE);
 		}
 
 		/// <summary>
@@ -756,9 +754,9 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		/// <returns> the seconds value of the date stored </returns>
 		public virtual double second()
 		{
-			double s = _calendar.Second;
+			double s = _calendar.get(Calendar.SECOND);
 
-			double ms = _calendar.Millisecond;
+			double ms = _calendar.get(Calendar.MILLISECOND);
 
 			ms /= 1000;
 
@@ -815,29 +813,29 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 			{
 				string ret = "";
     
-				DateTime adjustFortimezone = calendar();
+				Calendar adjustFortimezone = calendar();
     
-				if (adjustFortimezone.get(DateTime.ERA) == GregorianCalendar.BC)
+				if (adjustFortimezone.get(Calendar.ERA) == GregorianCalendar.BC)
 				{
 					ret += "-";
 				}
     
-				ret += pad_int(adjustFortimezone.Year, 4);
-    
+				ret += pad_int(adjustFortimezone.get(Calendar.YEAR), 4);
+
 				ret += "-";
-				ret += pad_int(month(), 2);
-    
+				ret += pad_int(adjustFortimezone.get(Calendar.DAY_OF_MONTH), 2);
+
 				ret += "-";
-				ret += pad_int(adjustFortimezone.Day, 2);
-    
+				ret += pad_int(adjustFortimezone.get(Calendar.HOUR_OF_DAY), 2);
+
 				// time
 				ret += "T";
     
-				ret += pad_int(adjustFortimezone.Hour, 2);
-    
+				ret += pad_int(adjustFortimezone.get(Calendar.HOUR_OF_DAY), 2);
+
 				ret += ":";
-				ret += pad_int(adjustFortimezone.Minute, 2);
-    
+				ret += pad_int(adjustFortimezone.get(Calendar.MINUTE), 2);
+
 				ret += ":";
 				int isecond = (int) second();
 				double sec = second();
@@ -918,13 +916,11 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		/// <exception cref="DynamicError"> </exception>
 		/// <returns> True if the two dates and times are represent the same exact
 		///         point in time. False otherwise. </returns>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public boolean eq(AnyType arg, org.eclipse.wst.xml.xpath2.api.DynamicContext dynamicContext) throws org.eclipse.wst.xml.xpath2.processor.DynamicError
 		public virtual bool eq(AnyType arg, DynamicContext dynamicContext)
 		{
 			XSDateTime val = (XSDateTime) NumericType.get_single_type(arg, typeof(XSDateTime));
-			DateTime thiscal = normalizeCalendar(calendar(), tz());
-			DateTime thatcal = normalizeCalendar(val.calendar(), val.tz());
+            Calendar thiscal = normalizeCalendar(calendar(), tz());
+            Calendar thatcal = normalizeCalendar(val.calendar(), val.tz());
 
 			return thiscal.Equals(thatcal);
 		}
@@ -938,15 +934,13 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		/// <exception cref="DynamicError"> </exception>
 		/// <returns> True if in time, this date and time lies before the date and time
 		///         supplied. False otherwise. </returns>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public boolean lt(AnyType arg, org.eclipse.wst.xml.xpath2.api.DynamicContext context) throws org.eclipse.wst.xml.xpath2.processor.DynamicError
 		public virtual bool lt(AnyType arg, DynamicContext context)
 		{
 			XSDateTime val = (XSDateTime) NumericType.get_single_type(arg, typeof(XSDateTime));
-			DateTime thiscal = normalizeCalendar(calendar(), tz());
-			DateTime thatcal = normalizeCalendar(val.calendar(), val.tz());
+            Calendar thiscal = normalizeCalendar(calendar(), tz());
+            Calendar thatcal = normalizeCalendar(val.calendar(), val.tz());
 
-			return thiscal < thatcal;
+			return thiscal.CompareTo(thatcal) < 0;
 		}
 
 		/// <summary>
@@ -958,15 +952,13 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		/// <exception cref="DynamicError"> </exception>
 		/// <returns> True if in time, this date and time lies after the date and time
 		///         supplied. False otherwise. </returns>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public boolean gt(AnyType arg, org.eclipse.wst.xml.xpath2.api.DynamicContext context) throws org.eclipse.wst.xml.xpath2.processor.DynamicError
 		public virtual bool gt(AnyType arg, DynamicContext context)
 		{
 			XSDateTime val = (XSDateTime) NumericType.get_single_type(arg, typeof(XSDateTime));
-			DateTime thiscal = normalizeCalendar(calendar(), tz());
-			DateTime thatcal = normalizeCalendar(val.calendar(), val.tz());
+            Calendar thiscal = normalizeCalendar(calendar(), tz());
+            Calendar thatcal = normalizeCalendar(val.calendar(), val.tz());
 
-			return thiscal > thatcal;
+			return thiscal.CompareTo(thatcal) > 0;
 		}
 
 		/// <summary>
@@ -986,7 +978,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		/// <returns> Number of milliseconds since the begining of the epoch </returns>
 		public virtual double value()
 		{
-			return calendar().Ticks / 1000.0;
+			return calendar().getTimeInMillis() / 1000.0;
 		}
 
 		// math
@@ -1005,8 +997,6 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		///            supplied. </param>
 		/// <returns> New ResultSequence consisting of the result of the mathematical
 		///         minus operation. </returns>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public org.eclipse.wst.xml.xpath2.api.ResultSequence minus(org.eclipse.wst.xml.xpath2.api.ResultSequence arg) throws org.eclipse.wst.xml.xpath2.processor.DynamicError
 		public virtual ResultSequence minus(ResultSequence arg)
 		{
 			if (arg.size() != 1)
@@ -1039,15 +1029,14 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 
 		}
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: private org.eclipse.wst.xml.xpath2.api.ResultSequence minusXSDateTime(org.eclipse.wst.xml.xpath2.api.ResultSequence arg) throws org.eclipse.wst.xml.xpath2.processor.DynamicError
 		private ResultSequence minusXSDateTime(ResultSequence arg)
 		{
 			XSDateTime val = (XSDateTime) NumericType.get_single_type(arg, typeof(XSDateTime));
 
 			Calendar thisCal = normalizeCalendar(calendar(), tz());
             Calendar thatCal = normalizeCalendar(val.calendar(), val.tz());
-			long duration = thisCal.Ticks - thatCal.Ticks;
+			long duration = thisCal.getTimeInMillis()
+                            - thatCal.getTimeInMillis();
 			Duration dtduration = _datatypeFactory.newDuration(duration);
 			return ResultSequenceFactory.create_new(XSDayTimeDuration.parseDTDuration(dtduration.ToString()));
 		}
@@ -1084,10 +1073,10 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 			{
 				XSDateTime res = (XSDateTime) clone();
 
-				res.calendar().AddMonths(val.monthValue() * -1);
+                res.calendar().add(Calendar.MONTH, val.monthValue() * -1);
 				return ResultSequenceFactory.create_new(res);
 			}
-			catch (CloneNotSupportedException)
+			catch 
 			{
 
 			}
@@ -1107,8 +1096,6 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		///            supplied. </param>
 		/// <returns> New ResultSequence consisting of the result of the mathematical
 		///         minus operation. </returns>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public org.eclipse.wst.xml.xpath2.api.ResultSequence plus(org.eclipse.wst.xml.xpath2.api.ResultSequence arg) throws org.eclipse.wst.xml.xpath2.processor.DynamicError
 		public virtual ResultSequence plus(ResultSequence arg)
 		{
 			if (arg.size() != 1)
@@ -1126,7 +1113,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 
 					XSDateTime res = (XSDateTime) clone();
 
-					res.calendar().AddMonths(val.monthValue());
+                    res.calendar().add(Calendar.MONTH, val.monthValue());
 					return ResultSequenceFactory.create_new(res);
 				}
 				else if (at is XSDayTimeDuration)
@@ -1147,7 +1134,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 					return null; // unreach
 				}
 			}
-			catch (CloneNotSupportedException)
+			catch
 			{
 				Debug.Assert(false);
 				return null;

@@ -57,14 +57,20 @@ namespace java.util
     public class GregorianCalendar : Calendar
     {
         public static int BC;
+        public static int AD;
 
         public GregorianCalendar(object getTimeZone)
         {
             throw new NotImplementedException();
         }
+
+        public GregorianCalendar()
+        {
+            throw new NotImplementedException();
+        }
     }
 
-    public abstract class Calendar
+    public abstract class Calendar : IComparable
     {
         public static int MINUTE;
         public static int SECOND;
@@ -127,6 +133,21 @@ namespace java.util
             throw new NotImplementedException();
         }
         public void set(int field, int value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int getActualMinimum(int item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int getActualMaximum(int item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int CompareTo(object obj)
         {
             throw new NotImplementedException();
         }
