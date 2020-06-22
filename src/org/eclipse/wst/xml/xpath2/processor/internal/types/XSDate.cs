@@ -411,7 +411,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
             Calendar thiscal = normalizeCalendar(calendar(), tz());
             Calendar thatcal = normalizeCalendar(val.calendar(), val.tz());
 
-			return thiscal < thatcal;
+			return thiscal.CompareTo(thatcal) < 0;
 		}
 
 		/// <summary>
@@ -422,15 +422,13 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		/// <exception cref="DynamicError"> </exception>
 		/// <returns> True if in time, this date lies after the date supplied. False
 		///         otherwise. </returns>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public boolean gt(AnyType arg, org.eclipse.wst.xml.xpath2.api.DynamicContext context) throws org.eclipse.wst.xml.xpath2.processor.DynamicError
 		public virtual bool gt(AnyType arg, DynamicContext context)
 		{
 			XSDate val = (XSDate) NumericType.get_single_type((Item)arg, typeof(XSDate));
             Calendar thiscal = normalizeCalendar(calendar(), tz());
             Calendar thatcal = normalizeCalendar(val.calendar(), val.tz());
 
-			return thiscal > thatcal;
+			return thiscal.CompareTo(thatcal) > 0;
 		}
 
 		// XXX this is incorrect [epoch]
@@ -459,8 +457,6 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		///            the current date minus the duration of time supplied. </param>
 		/// <returns> New ResultSequence consisting of the result of the mathematical
 		///         minus operation. </returns>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public org.eclipse.wst.xml.xpath2.api.ResultSequence minus(org.eclipse.wst.xml.xpath2.api.ResultSequence arg) throws org.eclipse.wst.xml.xpath2.processor.DynamicError
 		public virtual ResultSequence minus(ResultSequence arg)
 		{
 			if (arg.size() != 1)
@@ -508,7 +504,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 				res = new XSDate(xmlCal.toGregorianCalendar(), res.tz());
 				return ResultSequenceFactory.create_new(res);
 			}
-			catch (CloneNotSupportedException)
+			catch 
 			{
 			}
 			return null;
@@ -524,7 +520,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
                 res.calendar().add(Calendar.MONTH, val.monthValue() * -1);
 				return ResultSequenceFactory.create_new(res);
 			}
-			catch (CloneNotSupportedException)
+			catch 
 			{
 
 			}
@@ -603,7 +599,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 					return null; // unreach
 				}
 			}
-			catch (CloneNotSupportedException)
+			catch 
 			{
 				Debug.Assert(false);
 				return null;

@@ -336,7 +336,10 @@ namespace org.apache.xerces.xs
 
 namespace org.apache.xerces.dom
 {
-    public class PSVIElementNSImpl { }
+    public class PSVIElementNSImpl
+    {
+        public bool Nil { get; set; }
+    }
 }
 
 namespace org.w3c.dom
@@ -398,6 +401,8 @@ namespace org.w3c.dom
     {
         object getAttributeNS(string sCHEMA_INSTANCE, string nIL_ATTRIBUTE);
         NamedNodeMap Attributes { get; set; }
+        string Prefix { get; set; }
+        TypeInfo SchemaTypeInfo { get; set; }
         string lookupNamespaceURI(string prefix);
         bool isDefaultNamespace(object elementNamespaceUri);
     }
@@ -413,7 +418,10 @@ namespace org.w3c.dom
         Node item(int i);
     }
 
-    public interface Text { }
+    public interface Text
+    {
+        string Data { get; set; }
+    }
 
     public interface TypeInfo
     {
