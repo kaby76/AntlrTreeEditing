@@ -20,7 +20,9 @@ using java.text;
 
 namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 {
-
+	using DecimalFormat = java.text.DecimalFormat;
+	using DecimalFormatSymbols = java.text.DecimalFormatSymbols;
+	using Locale = java.util.Locale;
 
 	/// <summary>
 	/// This is an XPath specific implementation of DecimalFormat to handle
@@ -56,7 +58,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		private string formatXPath(object obj)
 		{
 			string curPattern = toPattern();
-			string newPattern = curPattern.replaceAll("E0", "");
+			string newPattern = curPattern.Replace("E0", "");
 			if (obj is float?)
 			{
 				return formatFloatValue(obj, curPattern, newPattern);
@@ -85,16 +87,16 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 
 		private void doubleXPathPattern(object obj, string curPattern, string newPattern)
 		{
-			decimal doubValue = new decimal((((double?) obj)).doubleValue());
-			decimal minValue = new decimal("-1E6");
-			decimal maxValue = new decimal("1E6");
+			decimal doubValue = new decimal((((double) obj)));
+            decimal.TryParse("-1E6", out decimal minValue);
+            decimal.TryParse("1E6", out decimal maxValue);
 			if (doubValue.CompareTo(minValue) > 0 && doubValue.CompareTo(maxValue) < 0)
 			{
 				applyPattern(newPattern);
 			}
 			else
 			{ //if (doubValue.compareTo(minValue) < 0) {
-				applyPattern(curPattern.replaceAll("0\\.#", "0.0"));
+				applyPattern(curPattern.Replace("0\\.#", "0.0"));
 			}
 		}
 
@@ -142,7 +144,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 			}
 			else if (floatValue.Value <= -1E6f)
 			{
-				applyPattern(curPattern.replaceAll("0\\.#", "0.0"));
+				applyPattern(curPattern.Replace("0\\.#", "0.0"));
 			}
 		}
 

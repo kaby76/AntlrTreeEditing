@@ -60,7 +60,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		{
 			get
 			{
-				return _value.NodeValue;
+				return (string)_value.NodeValue;
 			}
 		}
 

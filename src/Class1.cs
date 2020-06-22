@@ -43,7 +43,39 @@ namespace java.text
 {
     public class DecimalFormat
     {
+        public DecimalFormat(String pattern, DecimalFormatSymbols symbols)
+        {}
 
+        public string toPattern()
+        {
+            return null;
+        }
+
+        public void applyPattern(String pattern) { }
+
+        protected StringBuilder format(object o, StringBuilder stringBuilder, FieldPosition fieldPosition)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class DecimalFormatSymbols
+    {
+        private Locale uS;
+
+        public DecimalFormatSymbols(Locale uS)
+        {
+            this.uS = uS;
+        }
+    }
+    public class FieldPosition
+    {
+        private int v;
+
+        public FieldPosition(int v)
+        {
+            this.v = v;
+        }
     }
 }
 
@@ -54,6 +86,10 @@ namespace java.time
 
 namespace java.util
 {
+    public class Locale
+    {
+        public static Locale US;
+    }
     public class GregorianCalendar : Calendar
     {
         public static int BC;
@@ -381,8 +417,13 @@ namespace org.w3c.dom
         bool hasAttributes();
     }
 
+    public interface CharacterData : Node
+    {
+        string Data { get; set; }
+    }
     public interface Attr : Node
     {
+        string Prefix { get; set; }
         object Name { get; set; }
         string Value { get; set; }
         Node OwnerElement { get; set; }
@@ -418,9 +459,8 @@ namespace org.w3c.dom
         Node item(int i);
     }
 
-    public interface Text
+    public interface Text : CharacterData
     {
-        string Data { get; set; }
     }
 
     public interface TypeInfo
@@ -434,7 +474,7 @@ namespace org.w3c.dom
         string Target { get; set; }
     }
 
-    public interface Comment
+    public interface Comment : CharacterData
     {
 
     }
