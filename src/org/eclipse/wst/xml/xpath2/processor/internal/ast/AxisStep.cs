@@ -89,7 +89,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
 
         public IEnumerator GetEnumerator()
         {
-            throw new System.NotImplementedException();
+            return _exprs.GetEnumerator();
         }
     }
 

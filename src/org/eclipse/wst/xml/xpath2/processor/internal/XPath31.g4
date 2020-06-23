@@ -164,11 +164,13 @@ typename : eqname ;
 functiontest : anyfunctiontest | typedfunctiontest ;
 anyfunctiontest : KW_FUNCTION OP STAR CP ;
 typedfunctiontest : KW_FUNCTION OP (sequencetype ( COMMA sequencetype)*)? CP KW_AS sequencetype ;
+// [105]
 maptest : anymaptest | typedmaptest ;
 anymaptest : KW_MAP OP STAR CP ;
 typedmaptest : KW_MAP OP atomicoruniontype COMMA sequencetype CP ;
 arraytest : anyarraytest | typedarraytest ;
 anyarraytest : KW_ARRAY OP STAR CP ;
+// [110]
 typedarraytest : KW_ARRAY OP sequencetype CP ;
 parenthesizeditemtype : OP itemtype CP ;
 

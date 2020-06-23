@@ -1230,10 +1230,66 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             return VisitEqname(ctx.eqname());
         }
 
-        // [102] missing
+        // [102]
+        public override object VisitFunctiontest(XPath31Parser.FunctiontestContext ctx)
+        {
+            if (ctx.anyfunctiontest() != null)
+                return VisitAnyfunctiontest(ctx.anyfunctiontest());
+            else
+                return VisitTypedfunctiontest(ctx.typedfunctiontest());
+        }
 
         // [103]
+        public override object VisitAnyfunctiontest(XPath31Parser.AnyfunctiontestContext ctx)
+        {
+            return base.VisitAnyfunctiontest(ctx);
+        }
 
+        // [104]
+        public override object VisitTypedfunctiontest(XPath31Parser.TypedfunctiontestContext ctx)
+        {
+            return base.VisitTypedfunctiontest(ctx);
+        }
+
+        // [105]
+        public override object VisitMaptest(XPath31Parser.MaptestContext ctx)
+        {
+            if (ctx.anymaptest() != null)
+                return VisitAnymaptest(ctx.anymaptest());
+            else
+                return VisitTypedmaptest(ctx.typedmaptest());
+        }
+
+        // [106]
+        public override object /* ? */ VisitAnymaptest(XPath31Parser.AnymaptestContext ctx)
+        {
+            return null;
+        }
+
+        // [112]
+        public override object /* String */ VisitEqname(XPath31Parser.EqnameContext ctx)
+        {
+            if (ctx.QName() != null)
+            {
+                var name = ctx.GetText();
+                var index_of_colon = name.IndexOf(':');
+                if (index_of_colon < 0)
+                {
+                    return new QName(name);
+                }
+                else
+                {
+                    var p1 = name.Substring(0, index_of_colon);
+                    var p2 = name.Substring(index_of_colon + 1);
+                    return new QName(p1, p2);
+                }
+            }
+            else
+            {
+                var name = ctx.GetText();
+                return new QName(name);
+            }
+        }
 
         //public override object /* String */ VisitPrefix(XPath31Parser. PrefixContext ctx)
         //{
