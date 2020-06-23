@@ -97,12 +97,10 @@ namespace java.util
 
         public GregorianCalendar(object getTimeZone)
         {
-            throw new NotImplementedException();
         }
 
         public GregorianCalendar()
         {
-            throw new NotImplementedException();
         }
     }
 
@@ -191,9 +189,16 @@ namespace java.util
 
     public class TimeZone
     {
+        private static TimeZone Instance;
+
         public static object getTimeZone(string gmt)
         {
-            throw new NotImplementedException();
+            if (Instance == null)
+            {
+                Instance = new TimeZone();
+            }
+
+            return Instance;
         }
 
         public static TimeZone Default { get; set; }

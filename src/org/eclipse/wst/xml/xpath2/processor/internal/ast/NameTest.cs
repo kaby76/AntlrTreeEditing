@@ -14,6 +14,8 @@
 /// ******************************************************************************
 /// </summary>
 
+using System.Diagnostics;
+
 namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
 {
 
@@ -26,6 +28,10 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
 	{
 		private QName _name;
 
+        private NameTest()
+        {
+        }
+
 		/// <summary>
 		/// Constructor for NameTest.
 		/// </summary>
@@ -33,6 +39,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
 		///            QName to test. </param>
 		public NameTest(QName name)
 		{
+			Debug.Assert(name != null);
 			_name = name;
 		}
 

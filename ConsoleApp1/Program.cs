@@ -1,5 +1,6 @@
 ﻿using System;
 using org.eclipse.wst.xml.xpath2.processor;
+using org.eclipse.wst.xml.xpath2.processor.util;
 
 namespace ConsoleApp1
 {
@@ -8,7 +9,7 @@ namespace ConsoleApp1
         static void Main(string[] args)
         {
             org.eclipse.wst.xml.xpath2.processor.Engine engine = new Engine();
-            var expression = engine.parseExpression("//a/b/c", null);
+            var expression = engine.parseExpression("//a/b/c", new StaticContextBuilder());
         }
     }
 }
