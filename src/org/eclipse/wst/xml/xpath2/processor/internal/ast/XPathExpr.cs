@@ -14,6 +14,8 @@
 /// ******************************************************************************
 /// </summary>
 
+using System.Text;
+
 namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
 {
 
@@ -101,6 +103,15 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
 			return _slashes;
 		}
 
-	}
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("XPathExpr");
+            sb.AppendLine(_expr?.ToString());
+            if (_next != null)
+                sb.AppendLine(_next.ToString());
+            return sb.ToString();
+        }
+    }
 
 }

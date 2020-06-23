@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using javax.xml.@namespace;
 using org.eclipse.wst.xml.xpath2.processor.@internal.ast;
 
@@ -22,160 +23,161 @@ using org.eclipse.wst.xml.xpath2.processor.@internal.ast;
 
 namespace org.eclipse.wst.xml.xpath2.processor.ast
 {
-	using QName = javax.xml.@namespace.QName;
+    using QName = javax.xml.@namespace.QName;
     using DynamicContext = org.eclipse.wst.xml.xpath2.api.DynamicContext;
-	using ResultSequence = org.eclipse.wst.xml.xpath2.api.ResultSequence;
-	using StaticContext = org.eclipse.wst.xml.xpath2.api.StaticContext;
-	using XPath2Expression = org.eclipse.wst.xml.xpath2.api.XPath2Expression;
-	using XPathNode = org.eclipse.wst.xml.xpath2.processor.@internal.ast.XPathNode;
-	using XPathVisitor = org.eclipse.wst.xml.xpath2.processor.@internal.ast.XPathVisitor;
+    using ResultSequence = org.eclipse.wst.xml.xpath2.api.ResultSequence;
+    using StaticContext = org.eclipse.wst.xml.xpath2.api.StaticContext;
+    using XPath2Expression = org.eclipse.wst.xml.xpath2.api.XPath2Expression;
+    using XPathNode = org.eclipse.wst.xml.xpath2.processor.@internal.ast.XPathNode;
+    using XPathVisitor = org.eclipse.wst.xml.xpath2.processor.@internal.ast.XPathVisitor;
 
-	/// <summary>
-	/// Support for XPath.
-	/// </summary>
-	/// @deprecated This is only for internal use, use XPath2Expression instead 
-	public class XPath : XPathNode, XPath2Expression, IEnumerable
-	{
-		private ICollection<Expr> _exprs;
-		private StaticContext _staticContext;
-		private ICollection<QName> _resolvedFunctions;
-		private ICollection<string> _axes;
-		private ICollection<QName> _freeVariables;
-		private bool _rootUsed;
+    /// <summary>
+    /// Support for XPath.
+    /// </summary>
+    /// @deprecated This is only for internal use, use XPath2Expression instead 
+    public class XPath : XPathNode, XPath2Expression, IEnumerable
+    {
+        private ICollection<Expr> _exprs;
+        private StaticContext _staticContext;
+        private ICollection<QName> _resolvedFunctions;
+        private ICollection<string> _axes;
+        private ICollection<QName> _freeVariables;
+        private bool _rootUsed;
 
-		/// <summary>
-		/// Constructor for XPath.
-		/// </summary>
-		/// <param name="exprs">
-		///            XPath expressions. </param>
-		public XPath(ICollection<Expr> exprs)
-		{
-			_exprs = exprs;
-		}
+        /// <summary>
+        /// Constructor for XPath.
+        /// </summary>
+        /// <param name="exprs">
+        ///            XPath expressions. </param>
+        public XPath(ICollection<Expr> exprs)
+        {
+            _exprs = exprs;
+        }
 
-		/// <summary>
-		/// Support for Visitor interface.
-		/// </summary>
-		/// <returns> Result of Visitor operation. </returns>
-		public override object accept(XPathVisitor v)
-		{
-			return v.visit(this);
-		}
+        /// <summary>
+        /// Support for Visitor interface.
+        /// </summary>
+        /// <returns> Result of Visitor operation. </returns>
+        public override object accept(XPathVisitor v)
+        {
+            return v.visit(this);
+        }
 
-		/// <summary>
-		/// Support for Iterator interface.
-		/// </summary>
-		/// <returns> Result of Iterator operation. </returns>
-		public virtual IEnumerator<Expr> iterator()
-		{
-			return _exprs.GetEnumerator();
-		}
+        /// <summary>
+        /// Support for Iterator interface.
+        /// </summary>
+        /// <returns> Result of Iterator operation. </returns>
+        public virtual IEnumerator<Expr> iterator()
+        {
+            return _exprs.GetEnumerator();
+        }
 
-		/// <summary>
-		/// @since 2.0
-		/// </summary>
-		public virtual ICollection<QName> FreeVariables
-		{
-			get
-			{
-				return _freeVariables;
-			}
-			set
-			{
-				this._freeVariables = value;
-			}
-		}
+        /// <summary>
+        /// @since 2.0
+        /// </summary>
+        public virtual ICollection<QName> FreeVariables
+        {
+            get { return _freeVariables; }
+            set { this._freeVariables = value; }
+        }
 
 
-		/// <summary>
-		/// @since 2.0
-		/// </summary>
-		public virtual ICollection<QName> ResolvedFunctions
-		{
-			get
-			{
-				return _resolvedFunctions;
-			}
-			set
-			{
-				this._resolvedFunctions = value;
-			}
-		}
+        /// <summary>
+        /// @since 2.0
+        /// </summary>
+        public virtual ICollection<QName> ResolvedFunctions
+        {
+            get { return _resolvedFunctions; }
+            set { this._resolvedFunctions = value; }
+        }
 
 
-		/// <summary>
-		/// @since 2.0
-		/// </summary>
-		public virtual ICollection<string> Axes
-		{
-			get
-			{
-				return _axes;
-			}
-			set
-			{
-				this._axes = value;
-			}
-		}
+        /// <summary>
+        /// @since 2.0
+        /// </summary>
+        public virtual ICollection<string> Axes
+        {
+            get { return _axes; }
+            set { this._axes = value; }
+        }
 
 
-		/// <summary>
-		/// @since 2.0
-		/// </summary>
-		public virtual bool RootPathUsed
-		{
-			get
-			{
-				return _rootUsed;
-			}
-		}
+        /// <summary>
+        /// @since 2.0
+        /// </summary>
+        public virtual bool RootPathUsed
+        {
+            get { return _rootUsed; }
+        }
 
-		/// <summary>
-		/// @since 2.0
-		/// </summary>
-		public virtual bool RootUsed
-		{
-			set
-			{
-				this._rootUsed = value;
-			}
-		}
+        /// <summary>
+        /// @since 2.0
+        /// </summary>
+        public virtual bool RootUsed
+        {
+            set { this._rootUsed = value; }
+        }
 
-		/// <summary>
-		/// @since 2.0
-		/// </summary>
-		public virtual ResultSequence evaluate(DynamicContext dynamicContext, object[] contextItems)
-		{
-			if (_staticContext == null)
-			{
-				throw new System.InvalidOperationException("Static Context not set yet!");
-			}
-			return (new DefaultEvaluator(_staticContext, dynamicContext, contextItems)).evaluate2(this);
-		}
+        /// <summary>
+        /// @since 2.0
+        /// </summary>
+        public virtual ResultSequence evaluate(DynamicContext dynamicContext, object[] contextItems)
+        {
+            if (_staticContext == null)
+            {
+                throw new System.InvalidOperationException("Static Context not set yet!");
+            }
 
-		/// <summary>
-		/// @since 2.0
-		/// </summary>
-		public virtual StaticContext StaticContext
-		{
-			get
-			{
-				return _staticContext;
-			}
-			set
-			{
-				if (_staticContext != null)
-				{
-					throw new System.InvalidOperationException("Static Context already set!");
-				}
-				this._staticContext = value;
-			}
-		}
+            return (new DefaultEvaluator(_staticContext, dynamicContext, contextItems)).evaluate2(this);
+        }
+
+        /// <summary>
+        /// @since 2.0
+        /// </summary>
+        public virtual StaticContext StaticContext
+        {
+            get { return _staticContext; }
+            set
+            {
+                if (_staticContext != null)
+                {
+                    throw new System.InvalidOperationException("Static Context already set!");
+                }
+
+                this._staticContext = value;
+            }
+        }
 
         public IEnumerator GetEnumerator()
         {
             return _exprs.GetEnumerator();
         }
-    }
 
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("Exprs:");
+            if (_exprs != null)
+                foreach (var e in _exprs)
+                    sb.AppendLine(e.ToString());
+            sb.AppendLine("Static Context:");
+            sb.AppendLine(_staticContext?.ToString());
+            sb.AppendLine("Resolved functions:");
+            if (_resolvedFunctions != null)
+                foreach (var q in _resolvedFunctions)
+                    sb.AppendLine(q.ToString());
+            sb.AppendLine("Axes:");
+            if (_axes != null)
+                foreach (var a in _axes)
+                    sb.AppendLine(a.ToString());
+            sb.AppendLine("Free variables:");
+            if (_resolvedFunctions != null)
+                foreach (var q in _freeVariables)
+                    sb.AppendLine(q.ToString());
+            sb.AppendLine("Root used:");
+            sb.AppendLine(_rootUsed.ToString());
+            return sb.ToString();
+        }
+    }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 
 /// <summary>
 ///*****************************************************************************
@@ -90,6 +91,22 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
         public IEnumerator GetEnumerator()
         {
             return _exprs.GetEnumerator();
+        }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("Axis:");
+            sb.AppendLine("Step");
+            sb.AppendLine(_step.ToString());
+            sb.AppendLine("Expr collections:");
+            foreach (var col in _exprs)
+            {
+                sb.AppendLine("Collecton--");
+                foreach (var e in col)
+                    sb.AppendLine(e.ToString());
+            }
+            return sb.ToString();
         }
     }
 
