@@ -11,7 +11,7 @@ namespace ConsoleApp1
         static void Main(string[] args)
         {
             org.eclipse.wst.xml.xpath2.processor.Engine engine = new Engine();
-            var expression = engine.parseExpression("//a/b/c", new StaticContextBuilder());
+            var expression = engine.parseExpression("/ruleSpec", new StaticContextBuilder());
             System.Console.WriteLine(expression.ToString());
             var input = System.IO.File.ReadAllText(
                 @"C:\Users\kenne\Documents\xpath-csharp\ClassLibrary1\ANTLRv4Parser.g4");

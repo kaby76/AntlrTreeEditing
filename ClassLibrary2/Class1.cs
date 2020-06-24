@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using Antlr4.Runtime.Tree;
 using java.net;
 using java.util;
@@ -38,7 +39,13 @@ namespace ClassLibrary2
             else
             {
                 var result = new AntlrElement();
-                result.LocalName = tree.GetType().Name;
+                var fixed_name = tree.GetType().ToString()
+                    .Replace("Antlr4.Runtime.Tree.", "");
+                fixed_name = Regex.Replace(fixed_name, "^.*[+]", "");
+                fixed_name = fixed_name.Substring(0, fixed_name.Length - "Context".Length);
+                fixed_name = fixed_name[0].ToString().ToLower()
+                             + fixed_name.Substring(1);
+                result.LocalName = fixed_name;
                 var nl = new AntlrNodeList();
                 for (int i = 0; i < tree.ChildCount; ++i)
                 {
