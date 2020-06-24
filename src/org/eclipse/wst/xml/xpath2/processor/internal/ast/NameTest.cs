@@ -60,6 +60,11 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
 		{
 			return _name;
 		}
-	}
+
+        public override string ToString()
+        {
+            return _name.ToString();
+        }
+    }
 
 }

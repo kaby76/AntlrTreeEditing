@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Text;
 
 /// <summary>
 ///*****************************************************************************
@@ -148,8 +149,6 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		///            The ResultSequence to extract from </param>
 		/// <returns> New ResultSequence consisting of the QName supplied </returns>
 		/// <exception cref="DynamicError"> </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public org.eclipse.wst.xml.xpath2.api.ResultSequence constructor(org.eclipse.wst.xml.xpath2.api.ResultSequence arg) throws org.eclipse.wst.xml.xpath2.processor.DynamicError
 		public override ResultSequence constructor(ResultSequence arg)
 		{
 			if (arg.empty())
@@ -392,17 +391,10 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		///            The QName to compare with </param>
 		/// <returns> True if the two represent the same node. False otherwise </returns>
 		/// <exception cref="DynamicError"> </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public boolean eq(AnyType arg, org.eclipse.wst.xml.xpath2.api.DynamicContext dynamicContext) throws org.eclipse.wst.xml.xpath2.processor.DynamicError
 		public virtual bool eq(AnyType arg, DynamicContext dynamicContext)
 		{
 			QName val = (QName) NumericType.get_single_type(arg, typeof(QName));
 			return Equals(val);
-		}
-
-		public override string ToString()
-		{
-			return @string();
 		}
 
 		public override TypeDefinition TypeDefinition
@@ -427,6 +419,11 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 				return asQName();
 			}
 		}
+
+        public override string ToString()
+        {
+            return @string();
+        }
 	}
 
 }

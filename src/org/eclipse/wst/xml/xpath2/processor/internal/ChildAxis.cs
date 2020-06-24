@@ -16,6 +16,8 @@
 /// ******************************************************************************
 /// </summary>
 
+using System.Text;
+
 namespace org.eclipse.wst.xml.xpath2.processor.@internal
 {
 
@@ -81,6 +83,6 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 		{
 			return "child";
 		}
-	}
+    }
 
 }
