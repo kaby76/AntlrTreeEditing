@@ -5,9 +5,9 @@
 
     public class Parse
     {
-        public static IParseTree Try(string ffn)
+        public static IParseTree Try(string input)
         {
-            var str = new AntlrFileStream(ffn);
+            var str = new AntlrInputStream(input);
             var lexer = new ANTLRv4Lexer(str);
             var tokens = new CommonTokenStream(lexer);
             var parser = new ANTLRv4Parser(tokens);
