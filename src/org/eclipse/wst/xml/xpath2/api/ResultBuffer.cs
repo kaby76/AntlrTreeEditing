@@ -82,7 +82,6 @@ namespace org.eclipse.wst.xml.xpath2.api
 				value_Renamed = at;
 			}
 
-//JAVA TO C# CONVERTER NOTE: Fields cannot have the same name as methods:
 			internal readonly Item value_Renamed;
 
 			/* (non-Javadoc)
@@ -144,12 +143,12 @@ namespace org.eclipse.wst.xml.xpath2.api
 			/* (non-Javadoc)
 			 * @see org.eclipse.wst.xml.xpath2.api.ResultSequence#iterator()
 			 */
-			public IEnumerator iterator()
+			public IEnumerator<Item> iterator()
 			{
 				return new IteratorAnonymousInnerClass(this);
 			}
 
-			private class IteratorAnonymousInnerClass : IEnumerator
+			private class IteratorAnonymousInnerClass : IEnumerator<Item>
 			{
 				private readonly SingleResultSequence outerInstance;
 
@@ -161,9 +160,16 @@ namespace org.eclipse.wst.xml.xpath2.api
 
 				internal bool seenIt;
 
-                object IEnumerator.Current => throw new System.NotImplementedException();
+                object IEnumerator.Current
+                {
+                    get
+                    {
+                        seenIt = true;
+                        return outerInstance.value_Renamed;
+                    }
+                }
 
-                public void remove()
+				public void remove()
 				{
 					throw new System.NotSupportedException("ResultSequences are immutable");
 				}
@@ -185,12 +191,25 @@ namespace org.eclipse.wst.xml.xpath2.api
 
                 bool IEnumerator.MoveNext()
                 {
-                    throw new System.NotImplementedException();
+                    return !seenIt;
                 }
 
                 void IEnumerator.Reset()
                 {
                     throw new System.NotImplementedException();
+                }
+
+                public Item Current
+                {
+                    get
+                    {
+                        seenIt = true;
+                        return outerInstance.value_Renamed;
+                    }
+                }
+
+                public void Dispose()
+                {
                 }
             }
 
@@ -211,7 +230,7 @@ namespace org.eclipse.wst.xml.xpath2.api
 
             public IEnumerator<Item> GetEnumerator()
             {
-                throw new System.NotImplementedException();
+                return iterator();
             }
 
             IEnumerator IEnumerable.GetEnumerator()
