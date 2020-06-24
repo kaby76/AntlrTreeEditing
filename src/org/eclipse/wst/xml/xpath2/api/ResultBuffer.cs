@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 /// <summary>
 ///*****************************************************************************
@@ -296,54 +297,11 @@ namespace org.eclipse.wst.xml.xpath2.api
 			/* (non-Javadoc)
 			 * @see org.eclipse.wst.xml.xpath2.api.ResultSequence#iterator()
 			 */
-			public IEnumerator iterator()
-			{
-				return new IteratorAnonymousInnerClass(this);
-			}
-
-			private class IteratorAnonymousInnerClass : IEnumerator
-			{
-				private readonly ArrayResultSequence outerInstance;
-
-				public IteratorAnonymousInnerClass(ArrayResultSequence outerInstance)
-				{
-					this.outerInstance = outerInstance;
-					nextIndex = 0;
-				}
-
-				internal int nextIndex;
-
-                public object Current => throw new System.NotImplementedException();
-
-                public void remove()
-				{
-					throw new System.NotSupportedException("ResultSequences are immutable");
-				}
-
-				public object next()
-				{
-					if (nextIndex < outerInstance.results.Length)
-					{
-						return outerInstance.results[nextIndex++];
-					}
-					throw new System.InvalidOperationException("This iterator is at its end");
-				}
-
-				public bool hasNext()
-				{
-					return nextIndex < outerInstance.results.Length;
-				}
-
-                public bool MoveNext()
-                {
-                    throw new System.NotImplementedException();
-                }
-
-                public void Reset()
-                {
-                    throw new System.NotImplementedException();
-                }
+			public IEnumerator<Item> iterator()
+            {
+                return results.ToList().GetEnumerator();
             }
+
 
 			public ItemType itemType(int index)
 			{
@@ -366,15 +324,15 @@ namespace org.eclipse.wst.xml.xpath2.api
 
             IEnumerator<Item> ResultSequence.iterator()
             {
-                throw new System.NotImplementedException();
+                return results.ToList().GetEnumerator();
             }
 
             public IEnumerator<Item> GetEnumerator()
             {
-                throw new System.NotImplementedException();
+                return results.ToList().GetEnumerator();
             }
 
-            IEnumerator IEnumerable.GetEnumerator()
+			IEnumerator IEnumerable.GetEnumerator()
             {
                 return GetEnumerator();
             }
@@ -387,7 +345,6 @@ namespace org.eclipse.wst.xml.xpath2.api
 
 		public virtual IEnumerator iterator()
 		{
-//JAVA TO C# CONVERTER WARNING: Unlike Java's ListIterator, enumerators in .NET do not allow altering the collection:
 			return values.GetEnumerator();
 		}
 
@@ -396,8 +353,6 @@ namespace org.eclipse.wst.xml.xpath2.api
 			values.AddRange(collectionWrapper(rs));
 		}
 
-//JAVA TO C# CONVERTER WARNING: 'final' parameters are not available in .NET:
-//ORIGINAL LINE: private java.util.Collection<Item> collectionWrapper(final ResultSequence rs)
 		private ICollection<Item> collectionWrapper(ResultSequence rs)
 		{
 			// This is a dummy collections, solely exists for faster inserts into our array
@@ -631,7 +586,7 @@ namespace org.eclipse.wst.xml.xpath2.api
 
             public IEnumerator<Item> GetEnumerator()
             {
-                throw new System.NotImplementedException();
+                return new List<Item>().GetEnumerator();
             }
 
             IEnumerator IEnumerable.GetEnumerator()

@@ -15,11 +15,12 @@ namespace ClassLibrary2
 {
     public class ConvertToDom
     {
-        public static DynamicContext Try(IParseTree tree)
+        public static AntlrDynamicContext Try(IParseTree tree)
         {
             // Perform bottom up traversal to derive equivalent tree in "dom".
             var converted_tree = BottomUpConvert(tree);
             var document = new AntlrDocument();
+            document.NodeType = NodeConstants.DOCUMENT_NODE;
             AntlrNodeList nl = new AntlrNodeList();
             nl.Add(converted_tree);
             document.ChildNodes = nl;
@@ -33,12 +34,14 @@ namespace ClassLibrary2
             if (tree is TerminalNodeImpl)
             {
                 var result = new AntlrText();
+                result.NodeType = NodeConstants.TEXT_NODE;
                 result.Data = tree.GetText();
                 return result;
             }
             else
             {
                 var result = new AntlrElement();
+                result.NodeType = NodeConstants.ELEMENT_NODE;
                 var fixed_name = tree.GetType().ToString()
                     .Replace("Antlr4.Runtime.Tree.", "");
                 fixed_name = Regex.Replace(fixed_name, "^.*[+]", "");

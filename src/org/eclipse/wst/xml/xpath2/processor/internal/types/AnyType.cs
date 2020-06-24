@@ -139,13 +139,13 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 
         public IEnumerator<Item> GetEnumerator()
         {
-            throw new NotImplementedException();
+            return iterator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetEnumerator();
+            return iterator();
         }
-    }
+	}
 
 }

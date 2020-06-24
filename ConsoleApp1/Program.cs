@@ -16,8 +16,9 @@ namespace ConsoleApp1
             var input = System.IO.File.ReadAllText(
                 @"C:\Users\kenne\Documents\xpath-csharp\ClassLibrary1\ANTLRv4Parser.g4");
             var tree = Antlr.Parse.Try(input);
-            DynamicContext dynamicContext = ConvertToDom.Try(tree);
-            expression.evaluate(dynamicContext, Array.Empty<object>());
+            AntlrDynamicContext dynamicContext = ConvertToDom.Try(tree);
+            object[] contexts = new object[] { dynamicContext.Document };
+            var rs = expression.evaluate(dynamicContext, contexts);
         }
     }
 }
