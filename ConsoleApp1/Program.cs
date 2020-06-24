@@ -17,7 +17,7 @@ namespace ConsoleApp1
                 @"C:\Users\kenne\Documents\xpath-csharp\ClassLibrary1\ANTLRv4Parser.g4");
             var tree = Antlr.Parse.Try(input);
             DynamicContext dynamicContext = ConvertToDom.Try(tree);
-            expression.evaluate(dynamicContext, null);
+            expression.evaluate(dynamicContext, Array.Empty<object>());
         }
     }
 }

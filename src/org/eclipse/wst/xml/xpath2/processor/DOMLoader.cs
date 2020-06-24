@@ -33,8 +33,6 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		/// <exception cref="DOMLoaderException">
 		///             DOM loader exception. </exception>
 		/// <returns> The loaded document. The document is always loaded as namespace-aware </returns>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public org.w3c.dom.Document load(java.io.InputStream in) throws DOMLoaderException;
 		Document load(System.IO.Stream @in);
 
 		/// <summary>

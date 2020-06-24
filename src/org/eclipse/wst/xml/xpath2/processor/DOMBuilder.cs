@@ -52,8 +52,6 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		///             DOM loader exception. </exception>
 		/// <returns> The loaded document. </returns>
 		// XXX: fix error reporting
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public Document load(InputStream in) throws DOMLoaderException
 		public virtual Document load(System.IO.Stream @in)
 		{
 

@@ -424,6 +424,7 @@ namespace org.w3c.dom
     {
         string Data { get; set; }
     }
+
     public interface Attr : Node
     {
         string Prefix { get; set; }
