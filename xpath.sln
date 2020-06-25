@@ -3,13 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30204.135
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{6415BDF7-7C1A-43AB-9D52-C14CD5277530}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Driver", "Driver\Driver.csproj", "{6415BDF7-7C1A-43AB-9D52-C14CD5277530}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "xpath", "src\xpath.csproj", "{E5C6E1A6-4F4F-4F6F-A186-F038F48377F6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClassLibrary1", "ClassLibrary1\ClassLibrary1.csproj", "{3C32E0A2-5513-4A46-ADCF-B6BFC23D9127}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassLibrary2", "ClassLibrary2\ClassLibrary2.csproj", "{CBE2B569-63EF-4E20-8DA0-3895CCB24BA7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AntlrDOM", "AntlrDOM\AntlrDOM.csproj", "{3C32E0A2-5513-4A46-ADCF-B6BFC23D9127}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

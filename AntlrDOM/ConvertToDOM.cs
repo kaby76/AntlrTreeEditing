@@ -11,9 +11,9 @@ using org.eclipse.wst.xml.xpath2.processor.@internal.utils;
 using org.w3c.dom;
 using DynamicContext = org.eclipse.wst.xml.xpath2.api.DynamicContext;
 
-namespace ClassLibrary2
+namespace AntlrDOM
 {
-    public class ConvertToDom
+    public class ConvertToDOM
     {
         public static AntlrDynamicContext Try(IParseTree tree)
         {

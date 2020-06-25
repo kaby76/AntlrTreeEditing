@@ -18,3 +18,7 @@ ConsoleApp1/bin/
 ConsoleApp1/obj/
 src/obj/
 src/bin/
+AntlrDOM/obj/
+Driver/bin/
+Driver/obj/
+AntlrDOM/bin/

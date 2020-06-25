@@ -1,4 +1,4 @@
-﻿namespace Antlr
+﻿namespace AntlrDOM
 {
     using System.IO;
     using Antlr4.Runtime;

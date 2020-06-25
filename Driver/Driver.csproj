@@ -6,8 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ClassLibrary1\ClassLibrary1.csproj" />
-    <ProjectReference Include="..\ClassLibrary2\ClassLibrary2.csproj" />
+    <ProjectReference Include="..\AntlrDOM\AntlrDOM.csproj" />
     <ProjectReference Include="..\src\xpath.csproj" />
   </ItemGroup>
 

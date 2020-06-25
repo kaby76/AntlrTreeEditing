@@ -1,6 +1,6 @@
 ﻿using System;
 using Antlr4.Runtime;
-using ClassLibrary2;
+using AntlrDOM;
 using Microsoft.Build.Framework;
 using org.eclipse.wst.xml.xpath2.processor;
 using org.eclipse.wst.xml.xpath2.processor.util;
@@ -17,8 +17,8 @@ namespace ConsoleApp1
             System.Console.WriteLine(expression.ToString());
             var input = System.IO.File.ReadAllText(
                 @"C:\Users\kenne\Documents\xpath-csharp\ClassLibrary1\ANTLRv4Parser.g4");
-            var (tree, parser) = Antlr.Parse.Try(input);
-            AntlrDynamicContext dynamicContext = ConvertToDom.Try(tree);
+            var (tree, parser) = AntlrDOM.Parse.Try(input);
+            AntlrDynamicContext dynamicContext = AntlrDOM.ConvertToDOM.Try(tree);
             object[] contexts = new object[] { dynamicContext.Document };
             var rs = expression.evaluate(dynamicContext, contexts);
             foreach (var r in rs)
@@ -28,7 +28,7 @@ namespace ConsoleApp1
                 if (iparsetree is ParserRuleContext)
                 {
                     System.Console.WriteLine(
-                        Antlr.Output.OutputTree(iparsetree, parser.InputStream as CommonTokenStream).ToString());
+                        AntlrDOM.Output.OutputTree(iparsetree, parser.InputStream as CommonTokenStream).ToString());
                 }
             }
         }
