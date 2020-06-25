@@ -505,7 +505,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 
 		public static ResultBuffer linarize(ResultBuffer rs)
 		{
-			SortedSet<Item> all = new SortedSet<Item>();
+			HashSet<Item> all = new HashSet<Item>();
 			foreach (var x in rs.Collection) all.Add(x);
 			return (new ResultBuffer()).concat(all);
 		}

@@ -10,7 +10,7 @@ namespace Antlr
     using Antlr4.Runtime.Misc;
     using Antlr4.Runtime.Tree;
 
-    static class Output
+    public static class Output
     {
         private static int changed = 0;
         private static bool first_time = true;

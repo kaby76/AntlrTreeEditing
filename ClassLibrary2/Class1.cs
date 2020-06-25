@@ -34,6 +34,7 @@ namespace ClassLibrary2
             if (tree is TerminalNodeImpl)
             {
                 var result = new AntlrText();
+                result.AntlrIParseTree = tree;
                 result.NodeType = NodeConstants.TEXT_NODE;
                 result.Data = tree.GetText();
                 return result;
@@ -41,6 +42,7 @@ namespace ClassLibrary2
             else
             {
                 var result = new AntlrElement();
+                result.AntlrIParseTree = tree;
                 result.NodeType = NodeConstants.ELEMENT_NODE;
                 var fixed_name = tree.GetType().ToString()
                     .Replace("Antlr4.Runtime.Tree.", "");
@@ -159,6 +161,7 @@ namespace ClassLibrary2
 
     public class AntlrNode : Node
     {
+        public IParseTree AntlrIParseTree { get; set; }
         public short NodeType { get; set; }
         public string LocalName { get; set; }
         public Document OwnerDocument { get; set; }
