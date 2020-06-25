@@ -37,29 +37,51 @@ namespace AntlrDOM
             {
                 var result = new AntlrElement();
                 result.AntlrIParseTree = tree;
-                TerminalNodeImpl tok = tree as TerminalNodeImpl;
-                Interval interval = tok.SourceInterval;
+                TerminalNodeImpl t = tree as TerminalNodeImpl;
+                Interval interval = t.SourceInterval;
                 result.NodeType = NodeConstants.ELEMENT_NODE;
                 var common_token_stream = parser.InputStream as CommonTokenStream;
                 var lexer = common_token_stream.TokenSource as Lexer;
-                var fixed_name = parser.Vocabulary.GetSymbolicName(tok.Symbol.Type);
+                var fixed_name = parser.Vocabulary.GetSymbolicName(t.Symbol.Type);
                 result.LocalName = fixed_name;
                 var nl = new AntlrNodeList();
+                result.ChildNodes = nl;
 
                 var child = new AntlrText();
                 child.AntlrIParseTree = tree;
                 child.NodeType = NodeConstants.TEXT_NODE;
                 child.Data = Output.PerformEscapes(tree.GetText());
                 child.ParentNode = result;
-
                 nl.Add(child);
-                child.ChildNodes = nl;
+
+                {
+                    var attr = new AntlrAttr();
+                    var child_count = t.ChildCount;
+                    attr.NodeType = NodeConstants.ATTRIBUTE_NODE;
+                    attr.Name = "ChildCount";
+                    attr.Value = child_count.ToString();
+                    attr.ParentNode = result;
+                    nl.Add(attr);
+                }
+
+                {
+                    var attr = new AntlrAttr();
+                    attr.NodeType = NodeConstants.ATTRIBUTE_NODE;
+                    var source_interval = t.SourceInterval;
+                    var a = source_interval.a;
+                    var b = source_interval.b;
+                    attr.Name = "SourceInterval";
+                    attr.Value = "[" + a + "," + b + "]";
+                    attr.ParentNode = result;
+                    nl.Add(attr);
+                }
 
                 return result;
             }
             else
             {
                 var result = new AntlrElement();
+                var t = tree as ParserRuleContext;
                 result.AntlrIParseTree = tree;
                 result.NodeType = NodeConstants.ELEMENT_NODE;
                 var fixed_name = tree.GetType().ToString()
@@ -70,6 +92,30 @@ namespace AntlrDOM
                              + fixed_name.Substring(1);
                 result.LocalName = fixed_name;
                 var nl = new AntlrNodeList();
+                result.ChildNodes = nl;
+
+                {
+                    var attr = new AntlrAttr();
+                    var child_count = t.ChildCount;
+                    attr.NodeType = NodeConstants.ATTRIBUTE_NODE;
+                    attr.Name = "ChildCount";
+                    attr.Value = child_count.ToString();
+                    attr.ParentNode = result;
+                    nl.Add(attr);
+                }
+
+                {
+                    var attr = new AntlrAttr();
+                    attr.NodeType = NodeConstants.ATTRIBUTE_NODE;
+                    var source_interval = t.SourceInterval;
+                    var a = source_interval.a;
+                    var b = source_interval.b;
+                    attr.Name = "SourceInterval";
+                    attr.Value = "[" + a + "," + b + "]";
+                    attr.ParentNode = result;
+                    nl.Add(attr);
+                }
+
                 for (int i = 0; i < tree.ChildCount; ++i)
                 {
                     var child = tree.GetChild(i);
@@ -77,7 +123,7 @@ namespace AntlrDOM
                     nl.Add(convert);
                     convert.ParentNode = result;
                 }
-                result.ChildNodes = nl;
+
                 return result;
             }
         }

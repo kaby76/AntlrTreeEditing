@@ -556,7 +556,7 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
         // [37]
         public override object /* XPathExpr */ VisitRelativepathexpr(XPath31Parser.RelativepathexprContext ctx)
         {
-            StepExpr all = (StepExpr)VisitStepexpr((XPath31Parser.StepexprContext)ctx.GetChild(0));
+            StepExpr all = (StepExpr)VisitStepexpr(ctx.stepexpr()[0]);
             XPathExpr relativePathExpr = new XPathExpr(0, all);
             for (int i = 1; i < ctx.ChildCount; i += 2)
             {
@@ -581,11 +581,17 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
         {
             if (ctx.axisstep() != null)
             {
-                return VisitAxisstep(ctx.axisstep());
+                var r = VisitAxisstep(ctx.axisstep());
+                if (!(r is StepExpr))
+                    throw new Exception();
+                return r;
             }
             else
             {
-                return VisitPostfixexpr(ctx.postfixexpr());
+                var r = VisitPostfixexpr(ctx.postfixexpr());
+                if (!(r is StepExpr))
+                    throw new Exception();
+                return r;
             }
         }
 
