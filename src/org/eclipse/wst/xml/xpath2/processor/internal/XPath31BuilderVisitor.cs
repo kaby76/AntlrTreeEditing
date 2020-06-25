@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Numerics;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using Antlr4.Runtime;
 using Antlr4.Runtime.Misc;
@@ -89,25 +90,25 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
         // [2]
         public override object VisitParamlist(XPath31Parser.ParamlistContext context)
         {
-            return base.VisitParamlist(context);
+            throw new NotImplementedException();
         }
 
         // [3]
         public override object VisitParam(XPath31Parser.ParamContext context)
         {
-            return base.VisitParam(context);
+            throw new NotImplementedException();
         }
 
         // [4]
         public override object VisitFunctionbody(XPath31Parser.FunctionbodyContext context)
         {
-            return base.VisitFunctionbody(context);
+            throw new NotImplementedException();
         }
 
         // [5]
         public override object VisitEnclosedexpr(XPath31Parser.EnclosedexprContext context)
         {
-            return base.VisitEnclosedexpr(context);
+            throw new NotImplementedException();
         }
 
         // [6]
@@ -170,19 +171,19 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
         // [11]
         public override object VisitLetexpr(XPath31Parser.LetexprContext context)
         {
-            return base.VisitLetexpr(context);
+            throw new NotImplementedException();
         }
 
         // [12]
         public override object VisitSimpleletclause(XPath31Parser.SimpleletclauseContext context)
         {
-            return base.VisitSimpleletclause(context);
+            throw new NotImplementedException();
         }
 
         // [13]
         public override object VisitSimpleletbinding(XPath31Parser.SimpleletbindingContext context)
         {
-            return base.VisitSimpleletbinding(context);
+            throw new NotImplementedException();
         }
 
         // [14]
@@ -281,6 +282,14 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             }
         }
 
+        // [19]
+        public override object VisitStringconcatexpr(XPath31Parser.StringconcatexprContext ctx)
+        {
+            var rangeexpr = ctx.rangeexpr();
+            if (rangeexpr.Length > 1)
+                throw new NotImplementedException();
+            return VisitRangeexpr(rangeexpr[0]);
+        }
 
         // [20]
         public override object /* Expr */ VisitRangeexpr(XPath31Parser.RangeexprContext ctx)
@@ -434,6 +443,16 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             return new CastExpr(unaryExpr, (SingleType)VisitSingletype(ctx.singletype()));
         }
 
+        // [29]
+        public override object VisitArrowexpr(XPath31Parser.ArrowexprContext ctx)
+        {
+            var unaryexpr = ctx.unaryexpr();
+            var argumentlist = ctx.argumentlist();
+            if (argumentlist.Length > 0)
+                throw new NotImplementedException();
+            return VisitUnaryexpr(unaryexpr);
+        }
+
         // [30]
         public override object /* Expr */ VisitUnaryexpr(XPath31Parser.UnaryexprContext ctx)
         {
@@ -529,7 +548,14 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             }
         }
 
-        // [35] missing
+        // [35]
+        public override object VisitSimplemapexpr(XPath31Parser.SimplemapexprContext ctx)
+        {
+            var pathexpr = ctx.pathexpr();
+            if (pathexpr.Length > 1)
+                throw new NotImplementedException();
+            return VisitPathexpr(pathexpr[0]);
+        }
 
         // [36]
         public override object /* Expr */ VisitPathexpr(XPath31Parser.PathexprContext ctx)
@@ -750,9 +776,17 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             else throw new Exception("bad expr");
         }
 
-        // [49] missing
+        // [49]
+        public override object VisitPostfixexpr(XPath31Parser.PostfixexprContext context)
+        {
+            throw new NotImplementedException();
+        }
 
-        // [50] missing
+        // [50]
+        public override object VisitArgumentlist(XPath31Parser.ArgumentlistContext context)
+        {
+            throw new NotImplementedException();
+        }
 
         // [51]
         public override object /* ICollection<ICollection<Expr>> */ VisitPredicatelist(XPath31Parser.PredicatelistContext ctx)
@@ -771,11 +805,23 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             return VisitExpr(ctx.expr());
         }
 
-        // [53] missing
+        // [53]
+        public override object VisitLookup(XPath31Parser.LookupContext context)
+        {
+            throw new NotImplementedException();
+        }
 
-        // [54] missing
+        // [54]
+        public override object VisitKeyspecifier(XPath31Parser.KeyspecifierContext context)
+        {
+            throw new NotImplementedException();
+        }
 
-        // [55] missing
+        // [55]
+        public override object VisitArrowfunctionspecifier(XPath31Parser.ArrowfunctionspecifierContext context)
+        {
+            throw new NotImplementedException();
+        }
 
         // [56]
         public override object /* PrimaryExpr */ VisitPrimaryexpr(XPath31Parser.PrimaryexprContext ctx)
@@ -890,31 +936,83 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             return new FunctionCall((QName)VisitEqname(ctx.eqname()), (ICollection<Expr>)VisitArgumentlist(ctx.argumentlist()));
         }
 
-        // [64] missing
+        // [64]
+        public override object VisitArgument(XPath31Parser.ArgumentContext context)
+        {
+            throw new NotImplementedException();
+        }
 
-        // [65] missing
+        // [65]
+        public override object VisitArgumentplaceholder(XPath31Parser.ArgumentplaceholderContext context)
+        {
+            throw new NotImplementedException();
+        }
 
-        // [66] missing
+        // [66]
+        public override object VisitFunctionitemexpr(XPath31Parser.FunctionitemexprContext context)
+        {
+            throw new NotImplementedException();
+        }
 
-        // [67] missing
+        // [67]
+        public override object VisitNamedfunctionref(XPath31Parser.NamedfunctionrefContext context)
+        {
+            throw new NotImplementedException();
+        }
 
-        // [68] missing
+        // [68]
+        public override object VisitInlinefunctionexpr(XPath31Parser.InlinefunctionexprContext context)
+        {
+            throw new NotImplementedException();
+        }
 
-        // [69] missing
+        // [69]
+        public override object VisitMapconstructor(XPath31Parser.MapconstructorContext context)
+        {
+            throw new NotImplementedException();
+        }
 
-        // [70] missing
+        // [70]
+        public override object VisitMapconstructorentry(XPath31Parser.MapconstructorentryContext context)
+        {
+            throw new NotImplementedException();
+        }
 
-        // [71] missing
+        // [71]
+        public override object VisitMapkeyexpr(XPath31Parser.MapkeyexprContext context)
+        {
+            throw new NotImplementedException();
+        }
 
-        // [72] missing
+        // [72]
+        public override object VisitMapvalueexpr(XPath31Parser.MapvalueexprContext context)
+        {
+            throw new NotImplementedException();
+        }
 
-        // [73] missing
+        // [73]
+        public override object VisitArrayconstructor(XPath31Parser.ArrayconstructorContext context)
+        {
+            throw new NotImplementedException();
+        }
 
-        // [74] missing
+        // [74]
+        public override object VisitSquarearrayconstructor(XPath31Parser.SquarearrayconstructorContext context)
+        {
+            throw new NotImplementedException();
+        }
 
-        // [75] missing
+        // [75]
+        public override object VisitCurlyarrayconstructor(XPath31Parser.CurlyarrayconstructorContext context)
+        {
+            throw new NotImplementedException();
+        }
 
-        // [76] missing
+        // [76]
+        public override object VisitUnarylookup(XPath31Parser.UnarylookupContext context)
+        {
+            throw new NotImplementedException();
+        }
 
         // [77]
         public override object /* SingleType */ VisitSingletype(XPath31Parser.SingletypeContext ctx)
@@ -930,7 +1028,11 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             }
         }
 
-        // [78] missing
+        // [78]
+        public override object VisitTypedeclaration(XPath31Parser.TypedeclarationContext context)
+        {
+            throw new NotImplementedException();
+        }
 
         // [79]
         public override object /* SequenceType */ VisitSequencetype(XPath31Parser.SequencetypeContext ctx)
@@ -1005,7 +1107,11 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             else throw new Exception();
         }
 
-        // [82] missing
+        // [82]
+        public override object VisitAtomicoruniontype(XPath31Parser.AtomicoruniontypeContext context)
+        {
+            throw new NotImplementedException();
+        }
 
         // [83]
         public override object /* KindTest */ VisitKindtest(XPath31Parser.KindtestContext ctx)
@@ -1091,7 +1197,11 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             return new CommentTest();
         }
 
-        // [88] missing
+        // [88]
+        public override object VisitNamespacenodetest(XPath31Parser.NamespacenodetestContext context)
+        {
+            throw new NotImplementedException();
+        }
 
         // [89]
         public override object /* PITest */ VisitPitest(XPath31Parser.PitestContext ctx)
@@ -1270,6 +1380,36 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
         public override object /* ? */ VisitAnymaptest(XPath31Parser.AnymaptestContext ctx)
         {
             return null;
+        }
+
+        // [107]
+        public override object VisitTypedmaptest(XPath31Parser.TypedmaptestContext context)
+        {
+            throw new NotImplementedException();
+        }
+
+        // [108]
+        public override object VisitArraytest(XPath31Parser.ArraytestContext context)
+        {
+            throw new NotImplementedException();
+        }
+
+        // [109]
+        public override object VisitAnyarraytest(XPath31Parser.AnyarraytestContext context)
+        {
+            throw new NotImplementedException();
+        }
+
+        // [110]
+        public override object VisitTypedarraytest(XPath31Parser.TypedarraytestContext context)
+        {
+            throw new NotImplementedException();
+        }
+
+        // [111]
+        public override object VisitParenthesizeditemtype(XPath31Parser.ParenthesizeditemtypeContext context)
+        {
+            throw new NotImplementedException();
         }
 
         // [112]
