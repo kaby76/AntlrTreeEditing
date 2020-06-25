@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Antlr4.Runtime;
+using Antlr4.Runtime.Misc;
 using Antlr4.Runtime.Tree;
 using java.net;
 using java.util;
@@ -15,10 +17,10 @@ namespace AntlrDOM
 {
     public class ConvertToDOM
     {
-        public static AntlrDynamicContext Try(IParseTree tree)
+        public static AntlrDynamicContext Try(IParseTree tree, Parser parser)
         {
             // Perform bottom up traversal to derive equivalent tree in "dom".
-            var converted_tree = BottomUpConvert(tree);
+            var converted_tree = BottomUpConvert(tree, parser);
             var document = new AntlrDocument();
             document.NodeType = NodeConstants.DOCUMENT_NODE;
             AntlrNodeList nl = new AntlrNodeList();
@@ -29,14 +31,30 @@ namespace AntlrDOM
             return result;
         }
 
-        private static AntlrNode BottomUpConvert(IParseTree tree)
+        private static AntlrNode BottomUpConvert(IParseTree tree, Parser parser)
         {
             if (tree is TerminalNodeImpl)
             {
-                var result = new AntlrText();
+                var result = new AntlrElement();
                 result.AntlrIParseTree = tree;
-                result.NodeType = NodeConstants.TEXT_NODE;
-                result.Data = tree.GetText();
+                TerminalNodeImpl tok = tree as TerminalNodeImpl;
+                Interval interval = tok.SourceInterval;
+                result.NodeType = NodeConstants.ELEMENT_NODE;
+                var common_token_stream = parser.InputStream as CommonTokenStream;
+                var lexer = common_token_stream.TokenSource as Lexer;
+                var fixed_name = parser.Vocabulary.GetSymbolicName(tok.Symbol.Type);
+                result.LocalName = fixed_name;
+                var nl = new AntlrNodeList();
+
+                var child = new AntlrText();
+                child.AntlrIParseTree = tree;
+                child.NodeType = NodeConstants.TEXT_NODE;
+                child.Data = Output.PerformEscapes(tree.GetText());
+                child.ParentNode = result;
+
+                nl.Add(child);
+                child.ChildNodes = nl;
+
                 return result;
             }
             else
@@ -55,8 +73,9 @@ namespace AntlrDOM
                 for (int i = 0; i < tree.ChildCount; ++i)
                 {
                     var child = tree.GetChild(i);
-                    var convert = BottomUpConvert(child);
+                    var convert = BottomUpConvert(child, parser);
                     nl.Add(convert);
+                    convert.ParentNode = result;
                 }
                 result.ChildNodes = nl;
                 return result;
