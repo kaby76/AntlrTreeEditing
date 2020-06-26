@@ -13,6 +13,8 @@
 /// ******************************************************************************
 /// </summary>
 
+using xpath.org.eclipse.wst.xml.xpath2.processor.@internal.ast;
+
 namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
 {
 
@@ -272,6 +274,10 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
 		/// Visit FilterExpr.
 		/// </summary>
 		object visit(FilterExpr e);
+
+
+        object visit(PostfixExpr fex);
+
 	}
 
 }

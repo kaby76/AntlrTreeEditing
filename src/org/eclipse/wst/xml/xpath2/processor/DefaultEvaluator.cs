@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using org.w3c.dom;
+using xpath.org.eclipse.wst.xml.xpath2.processor.@internal.ast;
 
 /// <summary>
 ///*****************************************************************************
@@ -2509,6 +2510,10 @@ namespace org.eclipse.wst.xml.xpath2.processor
 			return rs;
 		}
 
-	}
+        public object visit(PostfixExpr fex)
+        {
+            throw new NotImplementedException();
+        }
+    }
 
 }

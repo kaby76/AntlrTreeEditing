@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using java.xml;
+using xpath.org.eclipse.wst.xml.xpath2.processor.@internal.ast;
 
 /// <summary>
 ///*****************************************************************************
@@ -1224,7 +1225,12 @@ namespace org.eclipse.wst.xml.xpath2.processor
 			return null;
 		}
 
-		/// <summary>
+        public object visit(PostfixExpr fex)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
 		/// @since 2.0
 		/// </summary>
 		public virtual bool RootUsed

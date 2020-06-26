@@ -18,7 +18,8 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal.ast
 
         public override object accept(XPathVisitor v)
         {
-            throw new NotImplementedException();
+            return v.visit(this);
         }
+
     }
 }

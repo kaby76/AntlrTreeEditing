@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using xpath.org.eclipse.wst.xml.xpath2.processor.@internal.ast;
 
 /// <summary>
 ///*****************************************************************************
@@ -1057,6 +1058,11 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 			printCollExprs(e.GetEnumerator());
 			return e;
 		}
-	}
+
+        public object visit(PostfixExpr fex)
+        {
+            throw new NotImplementedException();
+        }
+    }
 
 }
