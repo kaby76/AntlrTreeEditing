@@ -11,6 +11,7 @@ using Antlr4.Runtime.Misc;
 using Antlr4.Runtime.Tree;
 using Antlr4.Runtime.Tree.Xpath;
 using org.eclipse.wst.xml.xpath2.processor.@internal.ast;
+using xpath.org.eclipse.wst.xml.xpath2.processor.@internal.ast;
 using XPath = org.eclipse.wst.xml.xpath2.processor.ast.XPath;
 using AddExpr = org.eclipse.wst.xml.xpath2.processor.@internal.ast.AddExpr;
 using AndExpr = org.eclipse.wst.xml.xpath2.processor.@internal.ast.AndExpr;
@@ -777,13 +778,36 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
         }
 
         // [49]
-        public override object VisitPostfixexpr(XPath31Parser.PostfixexprContext context)
+        public override object VisitPostfixexpr(XPath31Parser.PostfixexprContext ctx)
         {
-            throw new NotImplementedException();
+            var primaryexpr = VisitPrimaryexpr(ctx.primaryexpr());
+            var rest = new List<Expr>();
+            for (int i = 1; i < ctx.ChildCount; ++i)
+            {
+                var c = ctx.GetChild(i);
+                if (c is XPath31Parser.PredicateContext)
+                {
+                    var predicate = (Expr)VisitPredicate(c as XPath31Parser.PredicateContext);
+                    rest.Add(predicate);
+                }
+                else if (c is XPath31Parser.ArgumentlistContext)
+                {
+                    var predicate = (Expr)VisitArgumentlist(c as XPath31Parser.ArgumentlistContext);
+                    rest.Add(predicate);
+                }
+                else if (c is XPath31Parser.LookupContext)
+                {
+                    var predicate = (Expr)VisitLookup(c as XPath31Parser.LookupContext);
+                    rest.Add(predicate);
+                }
+                else throw new Exception();
+            }
+            var result = new PostfixExpr(primaryexpr, rest);
+            return result;
         }
 
         // [50]
-        public override object VisitArgumentlist(XPath31Parser.ArgumentlistContext context)
+        public override object VisitArgumentlist(XPath31Parser.ArgumentlistContext ctx)
         {
             throw new NotImplementedException();
         }
