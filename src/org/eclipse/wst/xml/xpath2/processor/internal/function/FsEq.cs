@@ -387,8 +387,8 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
             // make sure arugments are comparable by equality
             IEnumerator argi = cargs.GetEnumerator();
             argi.MoveNext();
-
             Item arg = ((ResultSequence) argi.Current).first();
+            argi.MoveNext();
             ResultSequence arg2 = (ResultSequence) argi.Current;
 
             if (arg2.size() != 1)
