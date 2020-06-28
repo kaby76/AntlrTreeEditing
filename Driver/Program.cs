@@ -60,7 +60,13 @@ namespace ConsoleApp1
             }
 
             {
-                var expression = engine.parseExpression("//*[@SourceInterval='444']", new StaticContextBuilder());
+                var expression = engine.parseExpression("//*[@SourceInterval]", new StaticContextBuilder());
+                object[] contexts = new object[] { dynamicContext.Document };
+                var rs = expression.evaluate(dynamicContext, contexts);
+            }
+
+            {
+                var expression = engine.parseExpression("//*[@SourceInterval='[444,444]']", new StaticContextBuilder());
                 object[] contexts = new object[] { dynamicContext.Document };
                 var rs = expression.evaluate(dynamicContext, contexts);
                 if (rs.size() != 111) throw new Exception();

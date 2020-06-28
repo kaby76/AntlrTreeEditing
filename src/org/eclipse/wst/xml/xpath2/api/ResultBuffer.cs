@@ -71,7 +71,11 @@ namespace org.eclipse.wst.xml.xpath2.api
 
 		public virtual ResultBuffer concat(ResultSequence rs)
 		{
-			values.AddRange(collectionWrapper(rs));
+            foreach (var s in rs)
+            {
+                values.Add(s);
+            }
+			// KED KED values.AddRange(collectionWrapper(rs));
 			return this;
 		}
 
@@ -404,7 +408,10 @@ namespace org.eclipse.wst.xml.xpath2.api
 				}
 			}
 
-            public int Count => throw new System.NotImplementedException();
+            public int Count
+            {
+                get { return rs.size(); }
+            }
 
             public bool IsReadOnly => throw new System.NotImplementedException();
 

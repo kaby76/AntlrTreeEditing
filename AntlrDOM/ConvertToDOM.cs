@@ -102,6 +102,7 @@ namespace AntlrDOM
                     var child_count = t.ChildCount;
                     attr.NodeType = NodeConstants.ATTRIBUTE_NODE;
                     attr.Name = "ChildCount";
+                    attr.LocalName = "ChildCount";
                     attr.Value = child_count.ToString();
                     attr.ParentNode = result;
                     nl.Add(attr);
@@ -115,6 +116,7 @@ namespace AntlrDOM
                     var a = source_interval.a;
                     var b = source_interval.b;
                     attr.Name = "SourceInterval";
+                    attr.LocalName = "SourceInterval";
                     attr.Value = "[" + a + "," + b + "]";
                     attr.ParentNode = result;
                     nl.Add(attr);
