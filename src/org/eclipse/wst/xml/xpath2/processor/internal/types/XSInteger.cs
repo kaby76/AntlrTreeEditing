@@ -278,7 +278,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		private ResultSequence convertResultSequence(ResultSequence arg)
 		{
 			ResultSequence carg = arg;
-			IEnumerator it = carg.GetEnumerator();
+			var it = carg.iterator();
 			while (it.MoveNext())
 			{
 				AnyType type = (AnyType) it.Current;

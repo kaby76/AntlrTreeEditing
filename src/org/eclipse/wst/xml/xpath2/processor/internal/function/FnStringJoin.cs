@@ -97,7 +97,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 
 			StringBuilder buf = new StringBuilder();
             bool first = false;
-			for (IEnumerator i = arg1.GetEnumerator(); i.MoveNext();)
+			for (var i = arg1.iterator(); i.MoveNext();)
             {
                 if (!first)
                 {

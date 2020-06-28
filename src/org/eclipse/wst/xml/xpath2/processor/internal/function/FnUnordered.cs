@@ -79,7 +79,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 
 			// XXX lame
 			ArrayList tmp = new ArrayList();
-			for (IEnumerator i = arg.GetEnumerator(); i.MoveNext();)
+			for (IEnumerator i = arg.iterator(); i.MoveNext();)
 			{
 				tmp.Add(i.Current);
 			}

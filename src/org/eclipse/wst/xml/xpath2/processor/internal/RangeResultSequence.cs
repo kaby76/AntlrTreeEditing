@@ -1,5 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Collections;
+using System.Collections.Generic;
+using org.eclipse.wst.xml.xpath2.api;
 
 /// <summary>
 ///*****************************************************************************
@@ -82,7 +84,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 		/// interate through range.
 		/// </summary>
 		/// <returns> tail </returns>
-		public override IEnumerator iterator()
+		public override IEnumerator<Item> iterator()
 		{
 			// XXX life is getting hard...
 			if (_size != 0)
@@ -104,7 +106,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 
 			}
 
-			return _tail.GetEnumerator();
+			return _tail.iterator();
 		}
 
 		/// <returns> item from range </returns>

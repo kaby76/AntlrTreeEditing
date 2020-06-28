@@ -101,7 +101,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 				collationURI = collation.StringValue;
 			}
 
-			for (IEnumerator iter = arg1.GetEnumerator(); iter.MoveNext();)
+			for (var iter = arg1.iterator(); iter.MoveNext();)
 			{
 				AnyAtomicType atomizedItem = (AnyAtomicType) FnData.atomize((Item) iter.Current);
 				if (!contains(rs, atomizedItem, context, collationURI))

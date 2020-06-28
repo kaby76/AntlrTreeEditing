@@ -120,7 +120,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 
 			int curpos = 1;
 
-			for (IEnumerator i = target.GetEnumerator(); i.MoveNext();)
+			for (var i = target.iterator(); i.MoveNext();)
 			{
 				at = (AnyType) i.Current;
 

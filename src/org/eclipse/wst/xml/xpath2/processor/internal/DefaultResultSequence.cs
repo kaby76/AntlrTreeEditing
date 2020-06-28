@@ -1,5 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Collections;
+using System.Collections.Generic;
+using org.eclipse.wst.xml.xpath2.api;
 
 /// <summary>
 ///*****************************************************************************
@@ -33,7 +35,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 	public class DefaultResultSequence : ResultSequence
 	{
 
-		private IList _seq;
+		private IList<Item>_seq;
 
 		/// <summary>
 		/// Constructor.
@@ -42,7 +44,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 		/// </summary>
 		public DefaultResultSequence()
 		{
-			_seq = new ArrayList();
+			_seq = new List<Item>();
 		}
 
 		/// <param name="item">
@@ -64,18 +66,17 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 		///            ResultSequence </param>
 		public override void concat(ResultSequence rs)
 		{
-			for (IEnumerator i = rs.GetEnumerator(); i.MoveNext();)
+			for (var i = rs.iterator(); i.MoveNext();)
 			{
 				_seq.Add(i.Current);
 			}
 		}
 
 		/// <returns> the next iteration of array _seq </returns>
-		public override IEnumerator iterator()
-		{
-//JAVA TO C# CONVERTER WARNING: Unlike Java's ListIterator, enumerators in .NET do not allow altering the collection:
-			return _seq.GetEnumerator();
-		}
+		public override IEnumerator<Item> iterator()
+        {
+            return _seq.GetEnumerator();
+        }
 
 		/// <returns> integer of the size of array _seq </returns>
 		public override int size()

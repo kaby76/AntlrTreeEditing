@@ -249,8 +249,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
             ResultSequence result = null;
             try
             {
-                var r = comparator.Invoke(null, margs);
-                // result = (ResultSequence) comparator.Compare(args, ec);
+                result = (ResultSequence) comparator.Invoke(null, margs);
             }
             catch (Exception ex)
             {
@@ -401,18 +400,24 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
             {
                 DynamicError.throw_type_error();
             }
-            throw new Exception();
             try
-            {
-                //Type[] margsdef = new Type[] {typeof(AnyType), typeof(DynamicContext)};
-                //IComparer method = null;
+			{
 
-                //method = type.GetMethod(mname, margsdef);
+				Type[] margsdef = new Type[] { type };
+				Type[] margsdef2 = new Type[] { typeof(AnyType), typeof(DynamicContext) };
+				object[] margs3 = new object[] { mname, margsdef2 };
+				var v1 = typeof(GenericIComparer)
+						 .GetMethod("GetComparer");
+				var v2 = v1.MakeGenericMethod(margsdef);
+				var method = (MethodBase)v2.Invoke(null, margs3);
 
-                //object[] margs = new object[] {arg2.first(), context};
-                //bool? cmpres = (bool?) method.Compare(arg, margs);
+                object[] margs = new object[] {arg2.first(), context};
 
-                //return ResultSequenceFactory.create_new(new XSBoolean(cmpres.Value));
+                object[] real_args = new object[] { arg, margs };
+
+                bool cmpres = (bool) method.Invoke(arg, margs);
+
+                return ResultSequenceFactory.create_new(new XSBoolean(cmpres));
             }
             catch 
             {

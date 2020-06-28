@@ -145,7 +145,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 
 			int index = 1;
 
-			for (IEnumerator i = arg1.GetEnumerator(); i.MoveNext();)
+			for (var i = arg1.iterator(); i.MoveNext();)
 			{
 				AnyType cmptype = (AnyType) i.Current;
 				get_comparable(cmptype);

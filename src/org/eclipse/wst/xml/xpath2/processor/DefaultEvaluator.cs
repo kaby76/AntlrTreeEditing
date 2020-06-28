@@ -1328,7 +1328,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
                 api.ResultSequence result = (api.ResultSequence) i.Current;
 
 				// make sure results are of same type, and add them in
-				for (IEnumerator j = result.GetEnumerator(); j.MoveNext();)
+				for (var j = result.iterator(); j.MoveNext();)
 				{
 					AnyType item = (AnyType) j.Current;
 
@@ -1407,7 +1407,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 			Axis axis = new DescendantOrSelfAxis();
 
 			// for all nodes, get descendant or self nodes
-			for (IEnumerator i = rs.GetEnumerator(); i.MoveNext();)
+			for (var i = rs.iterator(); i.MoveNext();)
 			{
 				NodeType item = (NodeType) i.Current;
 
@@ -1450,7 +1450,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 
 						// make sure result of previous step are
 						// nodes!
-						for (IEnumerator i = rs.GetEnumerator(); i.MoveNext();)
+						for (var i = rs.iterator(); i.MoveNext();)
 						{
 							AnyType item = (AnyType) i.Current;
 
@@ -1720,7 +1720,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 
 			ResultBuffer rb = new ResultBuffer();
 
-			for (IEnumerator i = rs.GetEnumerator(); i.MoveNext();)
+			for (var i = rs.iterator(); i.MoveNext();)
 			{
 				NodeType nt = (NodeType) i.Current;
 
@@ -1947,7 +1947,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		private api.ResultSequence item_test(api.ResultSequence rs, QName qname)
 		{
 			ResultBuffer rb = new ResultBuffer();
-			for (IEnumerator i = rs.GetEnumerator(); i.MoveNext();)
+			for (var i = rs.iterator(); i.MoveNext();)
 			{
 				AnyType item = (AnyType) i.Current;
 
@@ -1985,7 +1985,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		private api.ResultSequence kind_test(api.ResultSequence rs, Type kind)
 		{
 			ResultBuffer rb = new ResultBuffer();
-			for (IEnumerator i = rs.GetEnumerator(); i.MoveNext();)
+			for (var i = rs.iterator(); i.MoveNext();)
 			{
 				Item item = (Item) i.Current;
 				if (kind.IsInstanceOfType(item))
@@ -2030,7 +2030,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 
 			// for all docs, find the ones with exactly one element, and do
 			// the element test
-			for (IEnumerator i = rs.GetEnumerator(); i.MoveNext();)
+			for (var i = rs.iterator(); i.MoveNext();)
 			{
 				DocType doc = (DocType) i.Current;
 				int elem_count = 0;
@@ -2140,7 +2140,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 			}
 
 			ResultBuffer rb = new ResultBuffer();
-			for (IEnumerator i = arg.GetEnumerator(); i.MoveNext();)
+			for (var i = arg.iterator(); i.MoveNext();)
 			{
 				AnyType item = (AnyType) i.Current;
 
@@ -2177,7 +2177,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 			QName name = e.name();
 			QName type = e.type();
 
-			for (IEnumerator i = rs.GetEnumerator(); i.MoveNext();)
+			for (var i = rs.iterator(); i.MoveNext();)
 			{
 				NodeType node = (NodeType) i.Current;
 				// match the name if it's not a wild card
@@ -2216,7 +2216,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 
 			// match the name
 			QName name = e.arg();
-			for (IEnumerator i = rs.GetEnumerator(); i.MoveNext();)
+			for (var i = rs.iterator(); i.MoveNext();)
 			{
 				if (!name_test((NodeType) i.Current, name, "attribute"))
 				{
@@ -2227,7 +2227,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 
 			// check the type
 			TypeDefinition et = _sc.TypeModel.lookupAttributeDeclaration(name.@namespace(), name.local());
-			for (IEnumerator i = rs.GetEnumerator(); i.MoveNext();)
+			for (var i = rs.iterator(); i.MoveNext();)
 			{
 				NodeType node = (NodeType) i.Current;
 
@@ -2256,7 +2256,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 			ResultBuffer rb = new ResultBuffer();
 			QName nameTest = e.name();
 			QName typeTest = e.type();
-			for (IEnumerator i = rs.GetEnumerator(); i.MoveNext();)
+			for (var i = rs.iterator(); i.MoveNext();)
 			{
 				NodeType node = (NodeType) i.Current;
 
@@ -2306,7 +2306,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 			// match the name
 			// XXX substitution groups
 			QName name = e.name();
-			for (IEnumerator i = rs.GetEnumerator(); i.MoveNext();)
+			for (var i = rs.iterator(); i.MoveNext();)
 			{
 				if (!name_test((ElementType) i.Current, name, "element"))
 				{
@@ -2317,7 +2317,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 
 			// check the type
 			TypeDefinition et = _sc.TypeModel.lookupElementDeclaration(name.@namespace(), name.local());
-			for (IEnumerator i = rs.GetEnumerator(); i.MoveNext();)
+			for (var i = rs.iterator(); i.MoveNext();)
 			{
 				NodeType node = (NodeType) i.Current;
 

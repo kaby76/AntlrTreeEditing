@@ -103,7 +103,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 			}
 
 			// convert sequence
-			for (IEnumerator i = actual.GetEnumerator(); i.MoveNext();)
+			for (var i = actual.iterator(); i.MoveNext();)
 			{
 				AnyType item = (AnyType) i.Current;
 

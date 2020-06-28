@@ -98,7 +98,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 
 			int[] codePointArray = new int[arg1.size()];
 			int codePointIndex = 0;
-			for (IEnumerator i = arg1.GetEnumerator(); i.MoveNext();)
+			for (var i = arg1.iterator(); i.MoveNext();)
 			{
 				XSInteger code = (XSInteger) i.Current;
 

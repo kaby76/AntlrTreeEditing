@@ -126,8 +126,8 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 				return false;
 			}
 
-			IEnumerator onei = one.GetEnumerator();
-			IEnumerator twoi = two.GetEnumerator();
+			var onei = one.iterator();
+			var twoi = two.iterator();
 
 			while (onei.MoveNext())
 			{

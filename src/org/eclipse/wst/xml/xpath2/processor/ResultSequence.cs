@@ -31,7 +31,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 	/// <summary>
 	/// Interface to the methods of range of result sequence </summary>
 	/// @deprecated Use org.eclipse.wst.xml.xpath2.api.ResultSequence instead 
-	public abstract class ResultSequence : org.eclipse.wst.xml.xpath2.api.ResultSequence
+	public abstract class ResultSequence : api.ResultSequence
 	{
 		public abstract ItemType sequenceType();
 		public abstract object firstValue();
@@ -53,7 +53,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		/// <summary>
 		/// List Iterator.
 		/// </summary>
-		public abstract IEnumerator iterator();
+		public abstract IEnumerator<Item> iterator();
 
 		/// <summary>
 		/// get item in index i
@@ -179,25 +179,12 @@ namespace org.eclipse.wst.xml.xpath2.processor
 			return get(index).NativeValue;
 		}
 
-        IEnumerator<Item> api.ResultSequence.iterator()
-        {
-            throw new System.NotImplementedException();
-        }
 
         Item api.ResultSequence.first()
         {
-            throw new System.NotImplementedException();
+            return get(0);
         }
 
-        IEnumerator<Item> IEnumerable<Item>.GetEnumerator()
-        {
-            throw new NotImplementedException();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            throw new NotImplementedException();
-        }
-    }
+	}
 
 }

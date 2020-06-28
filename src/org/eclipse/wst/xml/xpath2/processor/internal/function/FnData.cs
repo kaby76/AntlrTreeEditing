@@ -78,7 +78,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 
 			ResultBuffer rs = new ResultBuffer();
 
-			for (IEnumerator i = arg.GetEnumerator(); i.MoveNext();)
+			for (var i = arg.iterator(); i.MoveNext();)
 			{
 				AnyType at = (AnyType) i.Current;
 

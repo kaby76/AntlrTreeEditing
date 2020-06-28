@@ -251,7 +251,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 
 			int arg_count = 0;
 
-			for (IEnumerator i = args.GetEnumerator(); i.MoveNext();)
+			for (var i = args.iterator(); i.MoveNext();)
 			{
 				AnyType arg = (AnyType) i.Current;
 

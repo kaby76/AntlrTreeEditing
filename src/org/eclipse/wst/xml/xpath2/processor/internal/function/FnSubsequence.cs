@@ -152,7 +152,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 			int addedItems = 0;
 			if (effectiveNoItems > 0)
 			{
-				for (IEnumerator seqIter = seq.GetEnumerator(); seqIter.MoveNext();)
+				for (var seqIter = seq.iterator(); seqIter.MoveNext();)
 				{
 					at = (AnyType) seqIter.Current;
 					if (start <= pos && addedItems < effectiveNoItems)

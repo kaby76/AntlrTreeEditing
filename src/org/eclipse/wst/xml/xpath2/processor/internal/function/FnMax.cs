@@ -91,7 +91,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 			TypePromoter tp = new ComparableTypePromoter();
 			tp.considerSequence(arg);
 
-			for (IEnumerator i = arg.GetEnumerator(); i.MoveNext();)
+			for (var i = arg.iterator(); i.MoveNext();)
 			{
 				AnyAtomicType conv = tp.promote((AnyType) i.Current);
 

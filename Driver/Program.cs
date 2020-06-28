@@ -46,7 +46,7 @@ namespace ConsoleApp1
                 object[] contexts = new object[] { dynamicContext.Document };
                 var rs = expression.evaluate(dynamicContext, contexts);
                 if (rs.size() != 111) throw new Exception();
-                var first = rs.First();
+                var first = rs.first();
                 var ant = first.NativeValue as AntlrDOM.AntlrElement;
                 if (!(ant.AntlrIParseTree is ANTLRv4Parser.AtomContext)) throw new Exception();
                 //NewMethod(rs, parser);
@@ -69,19 +69,15 @@ namespace ConsoleApp1
                 var expression = engine.parseExpression("//*[@SourceInterval='[444,444]']", new StaticContextBuilder());
                 object[] contexts = new object[] { dynamicContext.Document };
                 var rs = expression.evaluate(dynamicContext, contexts);
-                if (rs.size() != 111) throw new Exception();
-                var first = rs.First();
-                var ant = first.NativeValue as AntlrDOM.AntlrElement;
-                if (!(ant.AntlrIParseTree is ANTLRv4Parser.AtomContext)) throw new Exception();
-                //NewMethod(rs, parser);
             }
 
         }
 
         private static void NewMethod(ResultSequence rs, Parser parser)
         {
-            foreach (var r in rs)
+            for (var i = rs.iterator(); i.MoveNext();)
             {
+                var r = i.Current;
                 var node = r.NativeValue as AntlrNode;
                 var iparsetree = node?.AntlrIParseTree;
                 if (iparsetree is ParserRuleContext)

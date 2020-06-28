@@ -71,8 +71,9 @@ namespace org.eclipse.wst.xml.xpath2.api
 
 		public virtual ResultBuffer concat(ResultSequence rs)
 		{
-            foreach (var s in rs)
+            for (var i = rs.iterator(); i.MoveNext(); )
             {
+                var s = i.Current;
                 values.Add(s);
             }
 			// KED KED values.AddRange(collectionWrapper(rs));
@@ -237,11 +238,6 @@ namespace org.eclipse.wst.xml.xpath2.api
             {
                 return iterator();
             }
-
-            IEnumerator IEnumerable.GetEnumerator()
-            {
-                return GetEnumerator();
-            }
         }
 
 		public sealed class ArrayResultSequence : ResultSequence
@@ -335,11 +331,6 @@ namespace org.eclipse.wst.xml.xpath2.api
             {
                 return results.ToList().GetEnumerator();
             }
-
-			IEnumerator IEnumerable.GetEnumerator()
-            {
-                return GetEnumerator();
-            }
         }
 
 		public virtual int size()
@@ -417,7 +408,7 @@ namespace org.eclipse.wst.xml.xpath2.api
 
             public virtual IEnumerator iterator()
 			{
-				return rs.GetEnumerator();
+				return rs.iterator();
 			}
 
 			public virtual bool remove(object arg0)
@@ -550,7 +541,7 @@ namespace org.eclipse.wst.xml.xpath2.api
 
             IEnumerator<Item> ResultSequence.iterator()
             {
-                throw new System.NotImplementedException();
+                return new List<Item>().GetEnumerator();
             }
 
             private class IteratorAnonymousInnerClass : IEnumerator
@@ -594,11 +585,6 @@ namespace org.eclipse.wst.xml.xpath2.api
             public IEnumerator<Item> GetEnumerator()
             {
                 return new List<Item>().GetEnumerator();
-            }
-
-            IEnumerator IEnumerable.GetEnumerator()
-            {
-                return GetEnumerator();
             }
         }
 

@@ -83,13 +83,13 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 			ResultSequence two = (ResultSequence) iter.Current;
 
 			// XXX lame
-			for (IEnumerator i = one.GetEnumerator(); i.MoveNext();)
+			for (IEnumerator i = one.iterator(); i.MoveNext();)
 			{
 				NodeType node = (NodeType) i.Current;
 				bool found = false;
 
 				// death
-				for (IEnumerator j = two.GetEnumerator(); j.MoveNext();)
+				for (var j = two.iterator(); j.MoveNext();)
 				{
 					NodeType node2 = (NodeType) j.Current;
 
