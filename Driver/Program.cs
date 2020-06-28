@@ -51,9 +51,16 @@ namespace ConsoleApp1
                 if (!(ant.AntlrIParseTree is ANTLRv4Parser.AtomContext)) throw new Exception();
                 //NewMethod(rs, parser);
             }
+            {
+                // Selects all nodes.
+                var expression = engine.parseExpression("//*", new StaticContextBuilder());
+                object[] contexts = new object[] { dynamicContext.Document };
+                var rs = expression.evaluate(dynamicContext, contexts);
+                if (rs.size() != 2053) throw new Exception();
+            }
 
             {
-                var expression = engine.parseExpression("//*[SourceInterval=444]", new StaticContextBuilder());
+                var expression = engine.parseExpression("//*[@SourceInterval='444']", new StaticContextBuilder());
                 object[] contexts = new object[] { dynamicContext.Document };
                 var rs = expression.evaluate(dynamicContext, contexts);
                 if (rs.size() != 111) throw new Exception();

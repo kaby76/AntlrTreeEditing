@@ -1,6 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Collections;
+using System.Dynamic;
+using System.Globalization;
+using System.Reflection;
+using System.Runtime.CompilerServices;
+using xpath.org.eclipse.wst.xml.xpath2.processor.@internal.function;
 
 /// <summary>
 ///*****************************************************************************
@@ -293,8 +298,6 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 		/// <exception cref="DynamicError">
 		///             Dynamic error. </exception>
 		/// <returns> Result of the operation. </returns>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static org.eclipse.wst.xml.xpath2.api.ResultSequence do_cmp_general_op(java.util.Collection args, Class type, String mname, org.eclipse.wst.xml.xpath2.api.DynamicContext dc) throws org.eclipse.wst.xml.xpath2.processor.DynamicError
 		public static ResultSequence do_cmp_general_op(ICollection args, Type type, string mname, DynamicContext dc)
 		{
 
@@ -303,11 +306,10 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 
 			try
 			{
+
 				Type[] margsdef = new Type[] {typeof(ICollection), typeof(DynamicContext)};
-
-//				comparator = type.GetMethod(mname, margsdef);
-
-			}
+                comparator = GenericIComparer<FsEq>.GetComparer<FsEq>(mname, margsdef);
+            }
 			catch
 			{
 				throw new Exception("Can't find method : " + mname);

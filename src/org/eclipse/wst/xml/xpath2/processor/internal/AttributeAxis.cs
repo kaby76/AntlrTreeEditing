@@ -50,6 +50,8 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 			ElementType elem = (ElementType) node;
 			NamedNodeMap attrs = elem.value().Attributes;
 
+            if (attrs == null) return;
+
 			// add attributes
 			for (int i = 0; i < attrs.Length; i++)
 			{

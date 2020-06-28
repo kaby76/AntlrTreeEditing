@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using xpath.org.eclipse.wst.xml.xpath2.processor.@internal.ast;
 
 /// <summary>
@@ -596,10 +597,15 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 			return e;
 		}
 
-        public object visit(PostfixExpr fex)
+        public object visit(PostfixExpr e)
         {
-            throw new System.NotImplementedException();
+            e.primary().accept(this);
+            for (IEnumerator<Expr> i = e.iterator(); i.MoveNext();)
+            {
+                i.Current.accept(this);
+            }
+            return e;
         }
-    }
+	}
 
 }

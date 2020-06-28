@@ -1225,12 +1225,14 @@ namespace org.eclipse.wst.xml.xpath2.processor
 			return null;
 		}
 
-        public object visit(PostfixExpr fex)
+        public object visit(PostfixExpr e)
         {
-            throw new NotImplementedException();
+            e.primary().accept(this);
+            visitCollExprs(e.GetEnumerator());
+            return null;
         }
 
-        /// <summary>
+		/// <summary>
 		/// @since 2.0
 		/// </summary>
 		public virtual bool RootUsed

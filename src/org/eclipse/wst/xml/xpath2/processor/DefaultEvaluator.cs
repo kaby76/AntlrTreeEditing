@@ -2510,10 +2510,36 @@ namespace org.eclipse.wst.xml.xpath2.processor
 			return rs;
 		}
 
-        public object visit(PostfixExpr fex)
+        public object visit(PostfixExpr e)
         {
-            throw new NotImplementedException();
+            api.ResultSequence rs = (api.ResultSequence)e.primary().accept(this);
+
+            // if no predicates are present, then the result is the same as
+            // the primary expression
+            if (e.predicate_count() == 0)
+            {
+                return rs;
+            }
+
+            Focus original_focus = focus();
+
+            // go through all predicates
+            for (IEnumerator i = e.GetEnumerator(); i.MoveNext();)
+            {
+                if (rs.size() == 0)
+                {
+                    break;
+                }
+
+                set_focus(new Focus(rs));
+                rs = do_predicate((ICollection)i.Current);
+
+            }
+
+            // restore focus [context switching ;D ]
+            set_focus(original_focus);
+            return rs;
         }
-    }
+	}
 
 }
