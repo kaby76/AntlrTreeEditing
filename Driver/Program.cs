@@ -60,13 +60,29 @@ namespace ConsoleApp1
             }
 
             {
-                var expression = engine.parseExpression("//*[@SourceInterval]", new StaticContextBuilder());
+                var expression = engine.parseExpression("//*[@Start]", new StaticContextBuilder());
                 object[] contexts = new object[] { dynamicContext.Document };
                 var rs = expression.evaluate(dynamicContext, contexts);
             }
 
             {
-                var expression = engine.parseExpression("//*[@SourceInterval='[222,222]']", new StaticContextBuilder());
+                var expression = engine.parseExpression("//*[@Start='222']", new StaticContextBuilder());
+                object[] contexts = new object[] { dynamicContext.Document };
+                var rs = expression.evaluate(dynamicContext, contexts);
+                int num = rs.size();
+                if (num != 3) throw new Exception();
+                // atom and ruleref nodes in the parse tree.
+            }
+            {
+                var expression = engine.parseExpression("//*[@End='222']", new StaticContextBuilder());
+                object[] contexts = new object[] { dynamicContext.Document };
+                var rs = expression.evaluate(dynamicContext, contexts);
+                int num = rs.size();
+                if (num != 2) throw new Exception();
+                // atom and ruleref nodes in the parse tree.
+            }
+            {
+                var expression = engine.parseExpression("//*[@Start='222' and @End='222']", new StaticContextBuilder());
                 object[] contexts = new object[] { dynamicContext.Document };
                 var rs = expression.evaluate(dynamicContext, contexts);
                 int num = rs.size();

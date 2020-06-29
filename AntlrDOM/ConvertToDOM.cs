@@ -115,9 +115,22 @@ namespace AntlrDOM
                     var source_interval = t.SourceInterval;
                     var a = source_interval.a;
                     var b = source_interval.b;
-                    attr.Name = "SourceInterval";
-                    attr.LocalName = "SourceInterval";
-                    attr.Value = "[" + a + "," + b + "]";
+                    attr.Name = "Start";
+                    attr.LocalName = "Start";
+                    attr.Value = a.ToString();
+                    attr.ParentNode = result;
+                    nl.Add(attr);
+                    map.Add(attr);
+                }
+                {
+                    var attr = new AntlrAttr();
+                    attr.NodeType = NodeConstants.ATTRIBUTE_NODE;
+                    var source_interval = t.SourceInterval;
+                    var a = source_interval.a;
+                    var b = source_interval.b;
+                    attr.Name = "End";
+                    attr.LocalName = "End";
+                    attr.Value = b.ToString();
                     attr.ParentNode = result;
                     nl.Add(attr);
                     map.Add(attr);
