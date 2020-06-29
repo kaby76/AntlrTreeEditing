@@ -809,7 +809,13 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
         // [50]
         public override object VisitArgumentlist(XPath31Parser.ArgumentlistContext ctx)
         {
-            throw new NotImplementedException();
+            var list = new List<Expr>();
+            foreach (var arg in ctx.argument())
+            {
+                var r = VisitArgument(arg);
+                list.Add((Expr)r);
+            }
+            return list;
         }
 
         // [51]
@@ -961,9 +967,16 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
         }
 
         // [64]
-        public override object VisitArgument(XPath31Parser.ArgumentContext context)
+        public override object VisitArgument(XPath31Parser.ArgumentContext ctx)
         {
-            throw new NotImplementedException();
+            if (ctx.argumentplaceholder() != null)
+            {
+                return VisitArgumentplaceholder(ctx.argumentplaceholder());
+            }
+            else
+            {
+                return VisitExprsingle(ctx.exprsingle());
+            }
         }
 
         // [65]

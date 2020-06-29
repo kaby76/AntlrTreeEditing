@@ -97,7 +97,7 @@ namespace ConsoleApp1
                 int num = rs.size();
             }
             {
-                var expression = engine.parseExpression("//!OR", new StaticContextBuilder());
+                var expression = engine.parseExpression("//*[not(self::OR)]", new StaticContextBuilder());
                 object[] contexts = new object[] { dynamicContext.Document };
                 var rs = expression.evaluate(dynamicContext, contexts);
                 int num = rs.size();

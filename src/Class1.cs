@@ -292,23 +292,18 @@ namespace javax.xml.@namespace
 
     public class QName
     {
-        private string v1;
-        private string v2;
-        private string v3;
-        private string xS_NS;
-        private string name;
 
-        public QName(string xS_NS, string name)
+        public QName(string namespaceURI, string localPart)
         {
-            this.xS_NS = xS_NS;
-            this.name = name;
+            this.NamespaceURI = namespaceURI;
+            this.LocalPart = localPart;
         }
 
-        public QName(string v1, string v2, string v3)
+        public QName(string namespaceURI, string localPart, string prefix)
         {
-            this.v1 = v1;
-            this.v2 = v2;
-            this.v3 = v3;
+            this.NamespaceURI = namespaceURI;
+            this.LocalPart = localPart;
+            this.Prefix = prefix;
         }
 
         public string NamespaceURI { get; set; }
