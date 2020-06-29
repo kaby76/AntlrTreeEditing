@@ -7,17 +7,15 @@
 	<ItemGroup>
 		<Antlr4 Include="ANTLRv4Parser.g4">
 			<Package>AntlrDOM</Package>
-			<AntOutDir>$(IntermediateOutputPath)</AntOutDir>
 		</Antlr4>
 		<Antlr4 Include="ANTLRv4Lexer.g4">
 			<Package>AntlrDOM</Package>
-			<AntOutDir>$(IntermediateOutputPath)</AntOutDir>
 		</Antlr4>
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Antlr4.Runtime.Standard" Version="4.8.0" />
-		<PackageReference Include="Antlr4BuildTasks" Version="7.5" />
+		<PackageReference Include="Antlr4.Runtime.Standard" Version="4.8" />
+		<PackageReference Include="Antlr4BuildTasks" Version="8.0" />
 		<ProjectReference Include="..\src\xpath.csproj" />
 	</ItemGroup>
 

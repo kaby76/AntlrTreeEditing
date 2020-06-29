@@ -31,7 +31,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		public virtual XPath2Expression parseExpression(string expression, api.StaticContext context)
 		{
 
-			XPath xPath = (new JFlexCupParser()).parse(expression);
+			XPath xPath = (new XPathParserInAntlr()).parse(expression);
 			xPath.StaticContext = context;
 			StaticNameResolver name_check = new StaticNameResolver(context);
 			name_check.check(xPath);

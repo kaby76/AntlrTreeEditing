@@ -23,7 +23,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 	/// <summary>
 	/// JFlexCupParser parses the xpath expression
 	/// </summary>
-	public class JFlexCupParser : XPathParser
+	public class XPathParserInAntlr : XPathParser
 	{
 
 		/// <summary>

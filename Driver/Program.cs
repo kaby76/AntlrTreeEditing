@@ -73,6 +73,35 @@ namespace ConsoleApp1
                 if (num != 2) throw new Exception();
                 // atom and ruleref nodes in the parse tree.
             }
+            {
+                var expression = engine.parseExpression("//ruleSpec//OR", new StaticContextBuilder());
+                object[] contexts = new object[] { dynamicContext.Document };
+                var rs = expression.evaluate(dynamicContext, contexts);
+                int num = rs.size();
+                if (num != 51) throw new Exception();
+                // atom and ruleref nodes in the parse tree.
+            }
+            if (false)
+            { // Not working.
+                var expression = engine.parseExpression("//ruleSpec//'|'", new StaticContextBuilder());
+                object[] contexts = new object[] { dynamicContext.Document };
+                var rs = expression.evaluate(dynamicContext, contexts);
+                int num = rs.size();
+                if (num != 51) throw new Exception();
+                // atom and ruleref nodes in the parse tree.
+            }
+            {
+                var expression = engine.parseExpression("//OR", new StaticContextBuilder());
+                object[] contexts = new object[] { dynamicContext.Document };
+                var rs = expression.evaluate(dynamicContext, contexts);
+                int num = rs.size();
+            }
+            {
+                var expression = engine.parseExpression("//!OR", new StaticContextBuilder());
+                object[] contexts = new object[] { dynamicContext.Document };
+                var rs = expression.evaluate(dynamicContext, contexts);
+                int num = rs.size();
+            }
 
         }
 
