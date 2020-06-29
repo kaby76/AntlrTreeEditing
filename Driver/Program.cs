@@ -95,12 +95,14 @@ namespace ConsoleApp1
                 object[] contexts = new object[] { dynamicContext.Document };
                 var rs = expression.evaluate(dynamicContext, contexts);
                 int num = rs.size();
+                if (num != 51) throw new Exception();
             }
             {
                 var expression = engine.parseExpression("//*[not(self::OR)]", new StaticContextBuilder());
                 object[] contexts = new object[] { dynamicContext.Document };
                 var rs = expression.evaluate(dynamicContext, contexts);
                 int num = rs.size();
+                if (num != 2053 - 51) throw new Exception();
             }
 
         }
