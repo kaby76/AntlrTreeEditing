@@ -47,8 +47,6 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 		///            argument expressions. </param>
 		/// <returns> Result of evaluation. </returns>
 		/// <exception cref="DynamicError">  </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public org.eclipse.wst.xml.xpath2.api.ResultSequence evaluate(java.util.Collection args, org.eclipse.wst.xml.xpath2.api.EvaluationContext ec) throws org.eclipse.wst.xml.xpath2.processor.DynamicError
 		public override ResultSequence evaluate(ICollection args, org.eclipse.wst.xml.xpath2.api.EvaluationContext ec)
 		{
 			// 1 argument only!
@@ -68,8 +66,6 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 		///            Result from the expressions evaluation. </param>
 		/// <returns> Result of fn:note operation. </returns>
 		/// <exception cref="DynamicError">  </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static org.eclipse.wst.xml.xpath2.api.ResultSequence fn_not(org.eclipse.wst.xml.xpath2.api.ResultSequence arg) throws org.eclipse.wst.xml.xpath2.processor.DynamicError
 		public static ResultSequence fn_not(ResultSequence arg)
 		{
 			XSBoolean ret = FnBoolean.fn_boolean(arg);

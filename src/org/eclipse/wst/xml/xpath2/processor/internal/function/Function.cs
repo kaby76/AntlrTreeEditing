@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 /// <summary>
 ///*****************************************************************************
@@ -214,8 +215,6 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 		/// <exception cref="DynamicError">
 		///             Dynamic error. </exception>
 		/// <returns> Result of evaluation. </returns>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public org.eclipse.wst.xml.xpath2.processor.ResultSequence evaluate(java.util.Collection args) throws org.eclipse.wst.xml.xpath2.processor.DynamicError
 		public virtual ResultSequence evaluate(ICollection args)
 		{
 			throw new System.NotSupportedException();
@@ -232,8 +231,6 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 		/// <exception cref="DynamicError">
 		///             Dynamic error. </exception>
 		/// <returns> Converted argument. </returns>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static org.eclipse.wst.xml.xpath2.api.ResultSequence convert_argument(org.eclipse.wst.xml.xpath2.api.ResultSequence arg, org.eclipse.wst.xml.xpath2.processor.internal.SeqType expected) throws org.eclipse.wst.xml.xpath2.processor.DynamicError
 		public static org.eclipse.wst.xml.xpath2.api.ResultSequence convert_argument(org.eclipse.wst.xml.xpath2.api.ResultSequence arg, SeqType expected)
 		{
 			ResultBuffer result = new ResultBuffer();
@@ -317,8 +314,6 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 		/// <exception cref="DynamicError">
 		///             Dynamic error. </exception>
 		/// <returns> Converted arguments. </returns>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public static java.util.Collection convert_arguments(java.util.Collection args, java.util.Collection expected) throws org.eclipse.wst.xml.xpath2.processor.DynamicError
 		public static ICollection convert_arguments(ICollection args, ICollection expected)
 		{
 			var result = new ArrayList();
@@ -331,7 +326,6 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 			// convert all arguments
 			while (argi.MoveNext() && expi.MoveNext())
 			{
-//JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
 				result.Add(convert_argument(
                     (org.eclipse.wst.xml.xpath2.api.ResultSequence) argi.Current,
                     (SeqType) expi.Current));
@@ -340,8 +334,6 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 			return result;
 		}
 
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: protected static org.eclipse.wst.xml.xpath2.processor.ResultSequence getResultSetForArityZero(org.eclipse.wst.xml.xpath2.api.EvaluationContext ec) throws org.eclipse.wst.xml.xpath2.processor.DynamicError
 		protected internal static ResultSequence getResultSetForArityZero(EvaluationContext ec)
 		{
 			ResultSequence rs = ResultSequenceFactory.create_new();
@@ -422,7 +414,9 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
 
         public api.ResultSequence evaluate(ICollection<api.ResultSequence> args, EvaluationContext evaluationContext)
         {
-            throw new NotImplementedException();
+            var collection = args.ToList();
+            var result = this.evaluate((ICollection)collection, evaluationContext);
+            return result;
         }
 
         public TypeDefinition computeReturnType(ICollection<TypeDefinition> args, api.StaticContext sc)
