@@ -1,20 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
-using Antlr4.Runtime;
-using Antlr4.Runtime.Misc;
-using Antlr4.Runtime.Tree;
-using java.net;
-using java.util;
-using javax.xml.datatype;
-using javax.xml.@namespace;
-using org.eclipse.wst.xml.xpath2.api;
-using org.eclipse.wst.xml.xpath2.processor.@internal.utils;
-using org.w3c.dom;
-using DynamicContext = org.eclipse.wst.xml.xpath2.api.DynamicContext;
-
+﻿
 namespace AntlrDOM
 {
+    using Antlr4.Runtime;
+    using Antlr4.Runtime.Misc;
+    using Antlr4.Runtime.Tree;
+    using java.net;
+    using java.util;
+    using javax.xml.datatype;
+    using javax.xml.@namespace;
+    using org.eclipse.wst.xml.xpath2.api;
+    using org.w3c.dom;
+    using System;
+    using System.Collections.Generic;
+    using System.Text.RegularExpressions;
+    using DynamicContext = org.eclipse.wst.xml.xpath2.api.DynamicContext;
+
     public class ConvertToDOM
     {
         public static AntlrDynamicContext Try(IParseTree tree, Parser parser)
@@ -50,7 +50,7 @@ namespace AntlrDOM
                 var child = new AntlrText();
                 child.AntlrIParseTree = tree;
                 child.NodeType = NodeConstants.TEXT_NODE;
-                child.Data = Output.PerformEscapes(tree.GetText());
+                child.Data = Output.PerformEscapes(/*"'" + */ tree.GetText() /*+ "'"*/);
                 child.ParentNode = result;
                 nl.Add(child);
 

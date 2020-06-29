@@ -303,7 +303,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 			return expandQName(name, _sc.DefaultNamespace, false);
 		}
 
-		// the problem is that visistor interface does not throw exceptions...
+		// the problem is that visitor interface does not throw exceptions...
 		// so we get around it ;D
 		private void reportError(StaticNameError err)
 		{

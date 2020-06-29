@@ -48,11 +48,18 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 
             try
             {
-                var p = new XPath31Parser(new CommonTokenStream(lexer));
-                p.ErrorHandler = new BailErrorStrategy();
-                XPath31Parser.XpathContext context = p.xpath();
+                var tokens = new CommonTokenStream(lexer);
+				var parser = new XPath31Parser(tokens);
+                parser.ErrorHandler = new BailErrorStrategy();
+                XPath31Parser.XpathContext parse_tree = parser.xpath();
+                var sb = Output.OutputTree(parse_tree, tokens);
+                System.Console.WriteLine("Parse tree for expression \""
+                    + xpath + "\"");
+				System.Console.WriteLine(sb.ToString());
+				System.Console.WriteLine();
+                // Compute AST representation of XPath expression.
                 var visitor = XPathBuilderVisitor.INSTANCE;
-                var xPath2 = (XPath)visitor.VisitXpath(context);
+                var xPath2 = (XPath)visitor.VisitXpath(parse_tree);
                 if (isRootlessAccess)
                 {
                 }

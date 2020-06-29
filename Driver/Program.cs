@@ -120,6 +120,21 @@ namespace ConsoleApp1
                 int num = rs.size();
                 if (num != 2053 - 51) throw new Exception();
             }
+            {
+                var expression = engine.parseExpression("//*[text()]", new StaticContextBuilder());
+                object[] contexts = new object[] { dynamicContext.Document };
+                var rs = expression.evaluate(dynamicContext, contexts);
+                int num = rs.size();
+                if (num != 598) throw new Exception();
+            }
+            {
+                var expression = engine.parseExpression("//*[text()='RBRACE']", new StaticContextBuilder());
+                object[] contexts = new object[] { dynamicContext.Document };
+                var rs = expression.evaluate(dynamicContext, contexts);
+                int num = rs.size();
+                if (num != 3) throw new Exception();
+            }
+
 
         }
 
