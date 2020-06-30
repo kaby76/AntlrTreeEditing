@@ -1,3 +1,6 @@
+// This grammar is identical to the grammar in https://github.com/antlr/grammars-v4/tree/master/antlr/antlr4
+// with one additional rule that is unused, but has direct left recursion.
+
 /*
  * [The "BSD license"]
  *  Copyright (c) 2012-2014 Terence Parr
@@ -379,3 +382,4 @@ identifier
    | TOKEN_REF
    ;
 
+left_recursion_rule : left_recursion_rule RULE_REF | RULE_REF ;

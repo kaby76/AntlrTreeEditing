@@ -25,14 +25,14 @@ namespace ConsoleApp1
                 System.Console.WriteLine(expression.ToString());
                 object[] contexts = new object[] { dynamicContext.Document };
                 var rs = expression.evaluate(dynamicContext, contexts);
-                if (rs.size() != 64) throw new Exception();
+                if (rs.size() != 65) throw new Exception();
                 NewMethod(rs, parser);
             }
             {
                 var expression = engine.parseExpression("//atom", new StaticContextBuilder());
                 object[] contexts = new object[] { dynamicContext.Document };
                 var rs = expression.evaluate(dynamicContext, contexts);
-                if (rs.size() != 241) throw new Exception();
+                if (rs.size() != 244) throw new Exception();
             }
             {
                 var expression = engine.parseExpression("//ASSIGN", new StaticContextBuilder());
@@ -45,7 +45,7 @@ namespace ConsoleApp1
                 var expression = engine.parseExpression("//terminal/ancestor::atom", new StaticContextBuilder());
                 object[] contexts = new object[] { dynamicContext.Document };
                 var rs = expression.evaluate(dynamicContext, contexts);
-                if (rs.size() != 111) throw new Exception();
+                if (rs.size() != 113) throw new Exception();
                 var first = rs.first();
                 var ant = first.NativeValue as AntlrDOM.AntlrElement;
                 if (!(ant.AntlrIParseTree is ANTLRv4Parser.AtomContext)) throw new Exception();
@@ -56,7 +56,7 @@ namespace ConsoleApp1
                 var expression = engine.parseExpression("//*", new StaticContextBuilder());
                 object[] contexts = new object[] { dynamicContext.Document };
                 var rs = expression.evaluate(dynamicContext, contexts);
-                if (rs.size() != 2053) throw new Exception();
+                if (rs.size() != 2078) throw new Exception();
             }
 
             {
@@ -70,7 +70,7 @@ namespace ConsoleApp1
                 object[] contexts = new object[] { dynamicContext.Document };
                 var rs = expression.evaluate(dynamicContext, contexts);
                 int num = rs.size();
-                if (num != 3) throw new Exception();
+                if (num != 7) throw new Exception();
                 // atom and ruleref nodes in the parse tree.
             }
             {
@@ -78,7 +78,7 @@ namespace ConsoleApp1
                 object[] contexts = new object[] { dynamicContext.Document };
                 var rs = expression.evaluate(dynamicContext, contexts);
                 int num = rs.size();
-                if (num != 2) throw new Exception();
+                if (num != 3) throw new Exception();
                 // atom and ruleref nodes in the parse tree.
             }
             {
@@ -86,7 +86,7 @@ namespace ConsoleApp1
                 object[] contexts = new object[] { dynamicContext.Document };
                 var rs = expression.evaluate(dynamicContext, contexts);
                 int num = rs.size();
-                if (num != 2) throw new Exception();
+                if (num != 3) throw new Exception();
                 // atom and ruleref nodes in the parse tree.
             }
             {
@@ -94,7 +94,7 @@ namespace ConsoleApp1
                 object[] contexts = new object[] { dynamicContext.Document };
                 var rs = expression.evaluate(dynamicContext, contexts);
                 int num = rs.size();
-                if (num != 51) throw new Exception();
+                if (num != 52) throw new Exception();
                 // atom and ruleref nodes in the parse tree.
             }
             if (false)
@@ -111,21 +111,21 @@ namespace ConsoleApp1
                 object[] contexts = new object[] { dynamicContext.Document };
                 var rs = expression.evaluate(dynamicContext, contexts);
                 int num = rs.size();
-                if (num != 51) throw new Exception();
+                if (num != 52) throw new Exception();
             }
             {
                 var expression = engine.parseExpression("//*[not(self::OR)]", new StaticContextBuilder());
                 object[] contexts = new object[] { dynamicContext.Document };
                 var rs = expression.evaluate(dynamicContext, contexts);
                 int num = rs.size();
-                if (num != 2053 - 51) throw new Exception();
+                if (num != 2078 - 52) throw new Exception();
             }
             {
                 var expression = engine.parseExpression("//*[text()]", new StaticContextBuilder());
                 object[] contexts = new object[] { dynamicContext.Document };
                 var rs = expression.evaluate(dynamicContext, contexts);
                 int num = rs.size();
-                if (num != 598) throw new Exception();
+                if (num != 605) throw new Exception();
             }
             {
                 var expression = engine.parseExpression("//*[text()='RBRACE']", new StaticContextBuilder());
@@ -134,7 +134,34 @@ namespace ConsoleApp1
                 int num = rs.size();
                 if (num != 3) throw new Exception();
             }
-
+            
+            {
+                // Select first RHS parser rule symbol of rule.
+                var expression = engine.parseExpression("//parserRuleSpec/ruleBlock/ruleAltList/labeledAlt/alternative/*[name()='element'][1]/atom/ruleref/*[1]", new StaticContextBuilder());
+                object[] contexts = new object[] { dynamicContext.Document };
+                var rs = expression.evaluate(dynamicContext, contexts);
+                int num = rs.size();
+                if (num != 55) throw new Exception();
+                NewMethod(rs, parser);
+            }
+            {
+                // Select rules that have LHS name = 'atom'.
+                var expression = engine.parseExpression("//parserRuleSpec[RULE_REF/text() = 'atom']", new StaticContextBuilder());
+                object[] contexts = new object[] { dynamicContext.Document };
+                var rs = expression.evaluate(dynamicContext, contexts);
+                int num = rs.size();
+                if (num != 1) throw new Exception();
+                NewMethod(rs, parser);
+            }
+            {
+                // Check for any rules that have direct left recursion!
+                var expression = engine.parseExpression("//parserRuleSpec[RULE_REF/text() = ruleBlock/ruleAltList/labeledAlt/alternative/*[name()='element'][1]/atom/ruleref/*[1]/text()]", new StaticContextBuilder());
+                object[] contexts = new object[] { dynamicContext.Document };
+                var rs = expression.evaluate(dynamicContext, contexts);
+                int num = rs.size();
+                if (num != 1) throw new Exception();
+                NewMethod(rs, parser);
+            }
 
         }
 
@@ -145,7 +172,7 @@ namespace ConsoleApp1
                 var r = i.Current;
                 var node = r.NativeValue as AntlrNode;
                 var iparsetree = node?.AntlrIParseTree;
-                if (iparsetree is ParserRuleContext)
+                //if (iparsetree is ParserRuleContext)
                 {
                     System.Console.WriteLine(
                         AntlrDOM.Output.OutputTree(iparsetree, parser.InputStream as CommonTokenStream).ToString());
