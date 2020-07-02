@@ -1,15 +1,12 @@
-﻿using System;
-using System.Linq;
-using Antlr4.Runtime;
-using AntlrDOM;
-using Microsoft.Build.Framework;
-using org.eclipse.wst.xml.xpath2.processor;
-using org.eclipse.wst.xml.xpath2.processor.util;
-using DynamicContext = org.eclipse.wst.xml.xpath2.api.DynamicContext;
-using ResultSequence = org.eclipse.wst.xml.xpath2.api.ResultSequence;
-
-namespace ConsoleApp1
+﻿namespace ConsoleApp1
 {
+    using Antlr4.Runtime;
+    using AntlrDOM;
+    using org.eclipse.wst.xml.xpath2.processor;
+    using org.eclipse.wst.xml.xpath2.processor.util;
+    using System;
+    using ResultSequence = org.eclipse.wst.xml.xpath2.api.ResultSequence;
+
     class Program
     {
         static void Main(string[] args)

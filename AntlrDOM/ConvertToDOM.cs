@@ -1,5 +1,4 @@
-﻿
-namespace AntlrDOM
+﻿namespace AntlrDOM
 {
     using Antlr4.Runtime;
     using Antlr4.Runtime.Misc;
