@@ -142,6 +142,10 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
             return iterator();
         }
 
-	}
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+    }
 
 }

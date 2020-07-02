@@ -231,12 +231,17 @@ namespace org.eclipse.wst.xml.xpath2.api
 
             IEnumerator<Item> ResultSequence.iterator()
             {
-                throw new System.NotImplementedException();
+                return GetEnumerator();
             }
 
             public IEnumerator<Item> GetEnumerator()
             {
                 return iterator();
+            }
+
+            IEnumerator IEnumerable.GetEnumerator()
+            {
+                return GetEnumerator();
             }
         }
 
@@ -330,6 +335,11 @@ namespace org.eclipse.wst.xml.xpath2.api
             public IEnumerator<Item> GetEnumerator()
             {
                 return results.ToList().GetEnumerator();
+            }
+
+            IEnumerator IEnumerable.GetEnumerator()
+            {
+                return GetEnumerator();
             }
         }
 
@@ -585,6 +595,11 @@ namespace org.eclipse.wst.xml.xpath2.api
             public IEnumerator<Item> GetEnumerator()
             {
                 return new List<Item>().GetEnumerator();
+            }
+
+            IEnumerator IEnumerable.GetEnumerator()
+            {
+                return GetEnumerator();
             }
         }
 

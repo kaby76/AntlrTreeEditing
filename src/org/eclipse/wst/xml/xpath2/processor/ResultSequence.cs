@@ -185,6 +185,15 @@ namespace org.eclipse.wst.xml.xpath2.processor
             return get(0);
         }
 
-	}
+        IEnumerator<Item> IEnumerable<Item>.GetEnumerator()
+        {
+            throw new NotImplementedException();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            throw new NotImplementedException();
+        }
+    }
 
 }

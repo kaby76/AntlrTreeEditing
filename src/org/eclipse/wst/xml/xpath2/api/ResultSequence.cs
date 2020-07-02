@@ -27,7 +27,7 @@ namespace org.eclipse.wst.xml.xpath2.api
 	/// 
 	/// @since 2.0
 	/// </summary>
-	public interface ResultSequence
+	public interface ResultSequence : IEnumerable<Item>
 	{
 		/// <summary>
 		/// Return the size of the result set. Only call this if you need it, since it may require that the entire result
@@ -88,6 +88,6 @@ namespace org.eclipse.wst.xml.xpath2.api
 		/// </summary>
 		/// <returns> Item type definition. </returns>
 		ItemType sequenceType();
-	}
+    }
 
 }
