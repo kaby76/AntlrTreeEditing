@@ -121,6 +121,12 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
             else
 				return new List<XPathNode>() { _expr };
 		}
+
+        public override string QuickInfo()
+        {
+            return _slashes.ToString() + " slashes";
+
+        }
     }
 
 }

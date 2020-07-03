@@ -31,6 +31,8 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
 		public abstract object accept(XPathVisitor v);
 
         public abstract ICollection<XPathNode> GetAllChildren();
+
+        public abstract string QuickInfo();
     }
 
 }

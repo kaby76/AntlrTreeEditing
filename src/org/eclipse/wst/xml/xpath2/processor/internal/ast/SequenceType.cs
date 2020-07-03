@@ -115,6 +115,11 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
         {
             throw new System.NotImplementedException();
         }
-	}
+
+        public override string QuickInfo()
+        {
+            throw new System.NotImplementedException();
+        }
+    }
 
 }

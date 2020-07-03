@@ -24,63 +24,72 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
 
 	using org.eclipse.wst.xml.xpath2.processor.@internal;
 
-	/// <summary>
-	/// Class for Reverse stepping support for Step operations.
-	/// </summary>
-	public class ReverseStep : Step, IEnumerable
-	{
-		/// <summary>
-		/// Set internal value for PARENT.
-		/// </summary>
-		public const int PARENT = 0;
-		/// <summary>
-		/// Set internal value for ANCESTOR.
-		/// </summary>
-		public const int ANCESTOR = 1;
-		/// <summary>
-		/// Set internal value for PRECEDING_SIBLING.
-		/// </summary>
-		public const int PRECEDING_SIBLING = 2;
-		/// <summary>
-		/// Set internal value for PRECEDING.
-		/// </summary>
-		public const int PRECEDING = 3;
-		/// <summary>
-		/// Set internal value for ANCESTOR_OR_SELF.
-		/// </summary>
-		public const int ANCESTOR_OR_SELF = 4;
-		/// <summary>
-		/// Set internal value for DOTDOT.
-		/// </summary>
-		public const int DOTDOT = 5;
+    /// <summary>
+    /// Class for Reverse stepping support for Step operations.
+    /// </summary>
+    public class ReverseStep : Step, IEnumerable
+    {
+        public enum Type
+        {
 
-		private int _axis;
+            /// <summary>
+            /// Set internal value for PARENT.
+            /// </summary>
+            PARENT = 0,
+
+            /// <summary>
+            /// Set internal value for ANCESTOR.
+            /// </summary>
+            ANCESTOR = 1,
+
+            /// <summary>
+            /// Set internal value for PRECEDING_SIBLING.
+            /// </summary>
+            PRECEDING_SIBLING = 2,
+
+            /// <summary>
+            /// Set internal value for PRECEDING.
+            /// </summary>
+            PRECEDING = 3,
+
+            /// <summary>
+            /// Set internal value for ANCESTOR_OR_SELF.
+            /// </summary>
+            ANCESTOR_OR_SELF = 4,
+
+            /// <summary>
+            /// Set internal value for DOTDOT.
+            /// </summary>
+            DOTDOT = 5
+        }
+
+        private Type _axis;
 		private ReverseAxis _iterator;
 
 		private void update_iterator()
 		{
 			switch (_axis)
 			{
-			case PARENT:
+			case Type.PARENT:
 				_iterator = new ParentAxis();
 				break;
-			case ANCESTOR:
+			case Type.ANCESTOR:
 				_iterator = new AncestorAxis();
 				break;
 
-			case PRECEDING_SIBLING:
+			case Type.PRECEDING_SIBLING:
 				_iterator = new PrecedingSiblingAxis();
 				break;
 
-			case PRECEDING:
+			case Type.PRECEDING:
 				_iterator = new PrecedingAxis();
 				break;
 
-			case ANCESTOR_OR_SELF:
+			case Type.ANCESTOR_OR_SELF:
 				_iterator = new AncestorOrSelfAxis();
 				break;
 
-			case DOTDOT:
+			case Type.DOTDOT:
 				_iterator = null;
 				break;
 
@@ -97,7 +106,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
 		///            Axis number. </param>
 		/// <param name="node_test">
 		///            Node test. </param>
-		public ReverseStep(int axis, NodeTest node_test) : base(node_test)
+		public ReverseStep(ReverseStep.Type axis, NodeTest node_test) : base(node_test)
 		{
 
 			_axis = axis;
@@ -117,7 +126,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
 		/// Support for Axis interface.
 		/// </summary>
 		/// <returns> Result of Axis operation. </returns>
-		public virtual int axis()
+		public virtual ReverseStep.Type axis()
 		{
 			return _axis;
 		}
@@ -138,7 +147,12 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
 
         public override ICollection<XPathNode> GetAllChildren()
         {
-            throw new System.NotImplementedException();
+			return new List<XPathNode>();
+        }
+
+        public override string QuickInfo()
+        {
+            return "_axis " + _axis;
         }
     }
 

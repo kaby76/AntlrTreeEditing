@@ -46,7 +46,15 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal.ast
 
         public override ICollection<XPathNode> GetAllChildren()
         {
-            return _exprs.Select(t => (XPathNode) t).ToList();
+            var list = new List<XPathNode>();
+            list.Add(_pexpr);
+            list.AddRange(_exprs.Select(t => (XPathNode) t).ToList());
+            return list;
+        }
+
+        public override string QuickInfo()
+        {
+            return "";
         }
     }
 }

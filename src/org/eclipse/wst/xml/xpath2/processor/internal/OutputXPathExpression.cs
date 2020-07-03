@@ -37,6 +37,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
                 fixed_name = fixed_name.Substring(ind + 1);
                 StartLine(sb, tree, level);
                 sb.Append("( " + fixed_name);
+                sb.Append(" " + tree.QuickInfo());
                 sb.AppendLine();
             }
             foreach (var c in tree.GetAllChildren())

@@ -113,12 +113,18 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
         public override ICollection<XPathNode> GetAllChildren()
         {
             var list = new List<XPathNode>();
+            list.Add(_step);
             foreach (var col in _exprs)
             {
                 foreach (var e in col)
                     list.Add((XPathNode)e);
             }
             return list;
+        }
+
+        public override string QuickInfo()
+        {
+            return "";
         }
     }
 

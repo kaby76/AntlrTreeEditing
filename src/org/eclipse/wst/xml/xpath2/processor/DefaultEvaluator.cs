@@ -1593,7 +1593,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 
 			ResultBuffer result = new ResultBuffer();
 			// short for "gimme da parent"
-			if (e.axis() == ReverseStep.DOTDOT)
+			if (e.axis() == ReverseStep.Type.DOTDOT)
 			{
 				(new ParentAxis()).iterate(cn, result, _dc.LimitNode);
 				return result.Sequence;

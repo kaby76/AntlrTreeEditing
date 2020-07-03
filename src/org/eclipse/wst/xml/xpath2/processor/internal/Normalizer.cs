@@ -758,16 +758,16 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 		// XXX: normalzie!
 		public virtual object visit(ForwardStep e)
 		{
-			int axis = e.axis();
+			var axis = e.axis();
 
 			switch (axis)
 			{
-			case ForwardStep.AT_SYM:
-				e.set_axis(ForwardStep.ATTRIBUTE);
+			case ForwardStep.Type.AT_SYM:
+				e.set_axis(ForwardStep.Type.ATTRIBUTE);
 				break;
 
-			case ForwardStep.NONE:
-				e.set_axis(ForwardStep.CHILD);
+			case ForwardStep.Type.NONE:
+				e.set_axis(ForwardStep.Type.CHILD);
 				break;
 
 			}

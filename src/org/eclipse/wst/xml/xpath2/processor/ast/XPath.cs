@@ -185,5 +185,10 @@ namespace org.eclipse.wst.xml.xpath2.processor.ast
         {
             return _exprs.Select(t => (XPathNode)t).ToList();
         }
+
+        public override string QuickInfo()
+        {
+            return "";
+        }
     }
 }

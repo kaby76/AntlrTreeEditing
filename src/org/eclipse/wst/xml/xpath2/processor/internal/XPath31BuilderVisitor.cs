@@ -640,7 +640,7 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
         {
             if (ctx.forwardaxis() != null)
             {
-                return new ForwardStep((int)VisitForwardaxis(ctx.forwardaxis()), (NodeTest)VisitNodetest(ctx.nodetest()));
+                return new ForwardStep((ForwardStep.Type)VisitForwardaxis(ctx.forwardaxis()), (NodeTest)VisitNodetest(ctx.nodetest()));
             }
             else
             {
@@ -654,24 +654,24 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             switch ((ctx.GetChild(0) as TerminalNodeImpl).Symbol.Type)
             {
                 case XPath31Lexer.KW_CHILD:
-                    return ForwardStep.CHILD;
+                    return ForwardStep.Type.CHILD;
                 case XPath31Lexer.KW_DESCENDANT:
-                    return ForwardStep.DESCENDANT;
+                    return ForwardStep.Type.DESCENDANT;
                 case XPath31Lexer.KW_ATTRIBUTE:
-                    return ForwardStep.ATTRIBUTE;
+                    return ForwardStep.Type.ATTRIBUTE;
                 case XPath31Lexer.KW_SELF:
-                    return ForwardStep.SELF;
+                    return ForwardStep.Type.SELF;
                 case XPath31Lexer.KW_DESCENDANT_OR_SELF:
-                    return ForwardStep.DESCENDANT_OR_SELF;
+                    return ForwardStep.Type.DESCENDANT_OR_SELF;
                 case XPath31Lexer.KW_FOLLOWING_SIBLING:
-                    return ForwardStep.FOLLOWING_SIBLING;
+                    return ForwardStep.Type.FOLLOWING_SIBLING;
                 case XPath31Lexer.KW_FOLLOWING:
-                    return ForwardStep.FOLLOWING;
+                    return ForwardStep.Type.FOLLOWING;
                 case XPath31Lexer.KW_NAMESPACE:
-                    return ForwardStep.NAMESPACE;
+                    return ForwardStep.Type.NAMESPACE;
                 default:
                     Debug.Assert(false);
-                    return ForwardStep.NONE;
+                    return ForwardStep.Type.NONE;
             }
         }
 
@@ -681,11 +681,11 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             NodeTest nodeTest = (NodeTest)VisitNodetest(ctx.nodetest());
             if (ctx.AT() != null)
             {
-                return new ForwardStep(ForwardStep.AT_SYM, nodeTest);
+                return new ForwardStep(ForwardStep.Type.AT_SYM, nodeTest);
             }
             else
             {
-                return new ForwardStep(ForwardStep.NONE, nodeTest);
+                return new ForwardStep(ForwardStep.Type.NONE, nodeTest);
             }
         }
 
@@ -694,7 +694,7 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
         {
             if (ctx.reverseaxis() != null)
             {
-                return new ReverseStep((int)VisitReverseaxis(ctx.reverseaxis()), (NodeTest)VisitNodetest(ctx.nodetest()));
+                return new ReverseStep((ReverseStep.Type)VisitReverseaxis(ctx.reverseaxis()), (NodeTest)VisitNodetest(ctx.nodetest()));
             }
             else
             {
@@ -708,25 +708,25 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             switch ((ctx.GetChild(0) as TerminalNodeImpl).Symbol.Type)
             {
                 case XPath31Lexer.KW_PARENT:
-                    return ReverseStep.PARENT;
+                    return ReverseStep.Type.PARENT;
                 case XPath31Lexer.KW_ANCESTOR:
-                    return ReverseStep.ANCESTOR;
+                    return ReverseStep.Type.ANCESTOR;
                 case XPath31Lexer.KW_PRECEDING_SIBLING:
-                    return ReverseStep.PRECEDING_SIBLING;
+                    return ReverseStep.Type.PRECEDING_SIBLING;
                 case XPath31Lexer.KW_PRECEDING:
-                    return ReverseStep.PRECEDING;
+                    return ReverseStep.Type.PRECEDING;
                 case XPath31Lexer.KW_ANCESTOR_OR_SELF:
-                    return ReverseStep.ANCESTOR_OR_SELF;
+                    return ReverseStep.Type.ANCESTOR_OR_SELF;
                 default:
                     Debug.Assert(false);
-                    return ReverseStep.DOTDOT;
+                    return ReverseStep.Type.DOTDOT;
             }
         }
      
         // [45]
         public override object /* ReverseStep */ VisitAbbrevreversestep(XPath31Parser.AbbrevreversestepContext ctx)
         {
-            return new ReverseStep(ReverseStep.DOTDOT, null);
+            return new ReverseStep(ReverseStep.Type.DOTDOT, null);
         }
 
         // [46]
