@@ -2382,43 +2382,45 @@ namespace org.eclipse.wst.xml.xpath2.processor
 
 			// optimization
 			// check if predicate is single numeric constant
-			if (exprs.Count == 1)
+			//if (exprs.Count == 1)
+   //         {
+   //             var x = exprs.GetEnumerator();
+   //             x.MoveNext();
+			//	Expr expr = (Expr) x.Current;
+
+			//	if (expr is XPathExpr)
+			//	{
+			//		XPathExpr xpe = (XPathExpr) expr;
+			//		if (xpe.next() == null && xpe.slashes() == 0 && xpe.expr() is FilterExpr)
+			//		{
+			//			FilterExpr fex = (FilterExpr) xpe.expr();
+			//			if (fex.primary() is IntegerLiteral)
+			//			{
+			//				int pos = (int) (((IntegerLiteral) fex.primary()).value().int_value());
+
+			//				if (pos <= xfocus.last() && pos > 0)
+			//				{
+			//					xfocus.set_position(pos);
+			//					rs.add(xfocus.context_item());
+			//				}
+			//				xfocus.set_position(original_cp);
+			//				return rs.Sequence;
+			//			}
+			//		}
+			//	}
+			//}
+
+			// go through all items in focus.
+            while (true)
             {
-                var x = exprs.GetEnumerator();
-                x.MoveNext();
-				Expr expr = (Expr) x.Current;
+				// ALL THIS CODE IS WRONG. "//title" is a set of title.
+				// "//title[@lang]" is a set of title that also happen to have an attribute "lang".
+				api.ResultSequence res = do_expr(exprs.GetEnumerator());
 
-				if (expr is XPathExpr)
-				{
-					XPathExpr xpe = (XPathExpr) expr;
-					if (xpe.next() == null && xpe.slashes() == 0 && xpe.expr() is FilterExpr)
-					{
-						FilterExpr fex = (FilterExpr) xpe.expr();
-						if (fex.primary() is IntegerLiteral)
-						{
-							int pos = (int) (((IntegerLiteral) fex.primary()).value().int_value());
+                if (res.size() > 1)
+                {}
 
-							if (pos <= xfocus.last() && pos > 0)
-							{
-								xfocus.set_position(pos);
-								rs.add(xfocus.context_item());
-							}
-							xfocus.set_position(original_cp);
-							return rs.Sequence;
-						}
-					}
-				}
-			}
-
-			// go through all elements
-			while (true)
-			{
-				// do the predicate
-				// XXX saxon doesn't allow for predicates to have
-				// commas... but XPath 2.0 spec seems to do
-                api.ResultSequence res = do_expr(exprs.GetEnumerator());
-
-				// if predicate is true, the context item is definitely
+                // if predicate is true, the context item is definitely
 				// in the sequence
 				if (predicate_truth(res))
 				{
