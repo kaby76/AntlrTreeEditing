@@ -250,8 +250,9 @@ namespace org.eclipse.wst.xml.xpath2.processor
 				{
 					rs.add(NodeType.dom_to_xpath((Node)obj, _sc.TypeModel));
 				}
+				else throw new Exception("I have no clue what context you are passing here.");
 			}
-
+			if (rs.size() == 0) throw new Exception("I got no context here!");
 			set_focus(new Focus(rs.Sequence));
 			_param = null;
 		}
