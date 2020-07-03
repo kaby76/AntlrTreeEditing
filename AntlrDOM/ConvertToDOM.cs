@@ -150,6 +150,8 @@
 
     public class AntlrDynamicContext : DynamicContext
     {
+        public AntlrDynamicContext() { }
+
         public Node LimitNode { get; }
         public Document Document { get; set; }
         public ResultSequence getVariable(QName name)

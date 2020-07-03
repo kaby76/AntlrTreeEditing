@@ -1,10 +1,13 @@
-﻿namespace ConsoleApp1
+﻿using System.Collections.Generic;
+
+namespace ConsoleApp1
 {
     using Antlr4.Runtime;
     using AntlrDOM;
     using org.eclipse.wst.xml.xpath2.processor;
     using org.eclipse.wst.xml.xpath2.processor.util;
     using System;
+    using System.Linq;
     using ResultSequence = org.eclipse.wst.xml.xpath2.api.ResultSequence;
 
     class Program
@@ -15,6 +18,56 @@
             var input = System.IO.File.ReadAllText(args[0]);
             var (tree, parser) = AntlrDOM.Parse.Try(input);
             AntlrDynamicContext dynamicContext = AntlrDOM.ConvertToDOM.Try(tree, parser);
+
+
+            if (true) // does not work.
+            {
+                // Find parserRuleSpec, picking all, then find RULE_REF under each parserRuleSpec.
+                var e1 = engine.parseExpression("//parserRuleSpec", new StaticContextBuilder());
+                object[] c1 = new object[] { dynamicContext.Document };
+                var rs1 = e1.evaluate(dynamicContext, c1);
+                object[] contexts = new object[] { rs1.First().NativeValue };
+                var expression = engine.parseExpression(".", new StaticContextBuilder());
+                var rs = expression.evaluate(dynamicContext, contexts);
+                int num = rs.size();
+                NewMethod(rs, parser);
+            }
+            if (true) // does not work.
+            {
+                // Find parserRuleSpec, picking all, then find RULE_REF under each parserRuleSpec.
+                var e1 = engine.parseExpression("//parserRuleSpec", new StaticContextBuilder());
+                object[] c1 = new object[] { dynamicContext.Document };
+                var rs1 = e1.evaluate(dynamicContext, c1);
+                object[] contexts = new object[] { rs1.First().NativeValue };
+                // Starts way back at the top of the whole tree, not parserRuleSpec!
+                var expression = engine.parseExpression("/", new StaticContextBuilder());
+                var rs = expression.evaluate(dynamicContext, contexts);
+                int num = rs.size();
+                NewMethod(rs, parser);
+            }
+            if (true) // does not work.
+            {
+                // Find parserRuleSpec, picking all, then find RULE_REF under each parserRuleSpec.
+                var e1 = engine.parseExpression("//parserRuleSpec", new StaticContextBuilder());
+                object[] c1 = new object[] { dynamicContext.Document };
+                var rs1 = e1.evaluate(dynamicContext, c1);
+                object[] contexts = new object[] { rs1.First().NativeValue };
+                var expression = engine.parseExpression("RULE_REF", new StaticContextBuilder());
+                var rs = expression.evaluate(dynamicContext, contexts);
+                int num = rs.size();
+                NewMethod(rs, parser);
+            }
+            {
+                // Find parserRuleSpec, picking all, then find RULE_REF under each parserRuleSpec.
+                var e1 = engine.parseExpression("//parserRuleSpec", new StaticContextBuilder());
+                object[] c1 = new object[] { dynamicContext.Document };
+                var rs1 = e1.evaluate(dynamicContext, c1);
+                object[] contexts = rs1.Select(t => (object)(t.NativeValue)).ToArray();
+                var expression = engine.parseExpression("RULE_REF", new StaticContextBuilder());
+                var rs = expression.evaluate(dynamicContext, contexts);
+                int num = rs.size();
+                NewMethod(rs, parser);
+            }
 
             // Tests.
             {
@@ -66,8 +119,9 @@
                 var expression = engine.parseExpression("//*[@Start='222']", new StaticContextBuilder());
                 object[] contexts = new object[] { dynamicContext.Document };
                 var rs = expression.evaluate(dynamicContext, contexts);
+                NewMethod(rs, parser);
                 int num = rs.size();
-                if (num != 7) throw new Exception();
+                //if (num != 7) throw new Exception();
                 // atom and ruleref nodes in the parse tree.
             }
             {
@@ -75,7 +129,7 @@
                 object[] contexts = new object[] { dynamicContext.Document };
                 var rs = expression.evaluate(dynamicContext, contexts);
                 int num = rs.size();
-                if (num != 3) throw new Exception();
+                //if (num != 3) throw new Exception();
                 // atom and ruleref nodes in the parse tree.
             }
             {
@@ -83,7 +137,7 @@
                 object[] contexts = new object[] { dynamicContext.Document };
                 var rs = expression.evaluate(dynamicContext, contexts);
                 int num = rs.size();
-                if (num != 3) throw new Exception();
+                //if (num != 3) throw new Exception();
                 // atom and ruleref nodes in the parse tree.
             }
             {
@@ -159,21 +213,68 @@
                 if (num != 1) throw new Exception();
                 NewMethod(rs, parser);
             }
+            {
+                // Find parserRuleSpec, pick the first, then find RULE_REF under parserRuleSpec.
+                var e1 = engine.parseExpression("//parserRuleSpec", new StaticContextBuilder());
+                object[] c1 = new object[] { dynamicContext.Document };
+                var rs1 = e1.evaluate(dynamicContext, c1);
+                object[] contexts = (new List<object>() { rs1.Select(t => (object)(t.NativeValue)).First() }).ToArray();
+                var expression = engine.parseExpression("RULE_REF", new StaticContextBuilder());
+                var rs = expression.evaluate(dynamicContext, contexts);
+                int num = rs.size();
+                if (num != 1) throw new Exception();
+                NewMethod(rs, parser);
+            }
+            {
+                // Find parserRuleSpec, picking all, then find RULE_REF under each parserRuleSpec.
+                var e1 = engine.parseExpression("//parserRuleSpec", new StaticContextBuilder());
+                object[] c1 = new object[] { dynamicContext.Document };
+                var rs1 = e1.evaluate(dynamicContext, c1);
+
+                object[] contexts = rs1.Select(t => (object)(t.NativeValue)).ToArray();
+                var expression = engine.parseExpression("RULE_REF", new StaticContextBuilder());
+                var rs = expression.evaluate(dynamicContext, contexts);
+                // Expect 1 item.
+                NewMethod(rs, parser);
+            }
+            {
+                // Find parserRuleSpec, picking all, then find RULE_REF under each parserRuleSpec.
+                var e1 = engine.parseExpression("//parserRuleSpec", new StaticContextBuilder());
+                object[] c1 = new object[] { dynamicContext.Document };
+                var rs1 = e1.evaluate(dynamicContext, c1);
+                object[] contexts = rs1.Select(t => (object)(t.NativeValue)).ToArray();
+                var expression = engine.parseExpression("/RULE_REF", new StaticContextBuilder());
+                var rs = expression.evaluate(dynamicContext, contexts);
+                int num = rs.size();
+                if (num != 4) throw new Exception();
+                NewMethod(rs, parser);
+            }
+            {
+                // Check for any rules that have direct left recursion!
+                var e1 = engine.parseExpression("//parserRuleSpec", new StaticContextBuilder());
+                object[] c1 = new object[] { dynamicContext.Document };
+                var rs1 = e1.evaluate(dynamicContext, c1);
+                object[] contexts = rs1.Select(t => (object)(t.NativeValue)).ToArray();
+                var expression = engine.parseExpression("/*[RULE_REF/text() = ruleBlock/ruleAltList/labeledAlt/alternative/*[name()='element'][1]/atom/ruleref/*[1]/text()]", new StaticContextBuilder());
+                var rs = expression.evaluate(dynamicContext, contexts);
+                int num = rs.size();
+                if (num != 1) throw new Exception();
+                NewMethod(rs, parser);
+            }
 
         }
 
         private static void NewMethod(ResultSequence rs, Parser parser)
         {
+            System.Console.WriteLine();
+            System.Console.WriteLine("==============================");
             for (var i = rs.iterator(); i.MoveNext();)
             {
                 var r = i.Current;
                 var node = r.NativeValue as AntlrNode;
                 var iparsetree = node?.AntlrIParseTree;
-                //if (iparsetree is ParserRuleContext)
-                {
-                    System.Console.WriteLine(
-                        AntlrDOM.Output.OutputTree(iparsetree, parser.InputStream as CommonTokenStream).ToString());
-                }
+                System.Console.WriteLine(
+                    AntlrDOM.Output.OutputTree(iparsetree, parser.InputStream as CommonTokenStream).ToString());
             }
         }
     }

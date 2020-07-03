@@ -1508,7 +1508,9 @@ namespace org.eclipse.wst.xml.xpath2.processor
 						}
 						else
 						{
-							rs = (api.ResultSequence) se.accept(this);
+
+                            rs = do_step(se);
+						//	rs = (api.ResultSequence) se.accept(this);
 						}
 					}
 				}
