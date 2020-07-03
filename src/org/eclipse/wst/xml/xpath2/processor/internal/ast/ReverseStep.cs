@@ -147,10 +147,12 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
 
         public override ICollection<XPathNode> GetAllChildren()
         {
-			return new List<XPathNode>();
+            var list = new List<XPathNode>();
+            list.Add(this.node_test());
+            return list;
         }
 
-        public override string QuickInfo()
+		public override string QuickInfo()
         {
             return "_axis " + _axis;
         }

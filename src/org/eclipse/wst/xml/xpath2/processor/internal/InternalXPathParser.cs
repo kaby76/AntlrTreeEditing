@@ -63,7 +63,8 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 
                 var o = new org.eclipse.wst.xml.xpath2.processor.@internal.OutputXPathExpression();
                 var sb2 = o.OutputTree(xPath2);
-				System.Console.WriteLine(sb2.ToString());
+                System.Console.WriteLine("Expression \"" + xpath + "\"");
+                System.Console.WriteLine(sb2.ToString());
 
 				if (isRootlessAccess)
                 {
