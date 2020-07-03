@@ -14,6 +14,7 @@
 /// ******************************************************************************
 /// </summary>
 
+using System.Collections.Generic;
 using System.Text;
 
 namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
@@ -112,6 +113,14 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
                 sb.AppendLine(_next.ToString());
             return sb.ToString();
         }
+
+        public override ICollection<XPathNode> GetAllChildren()
+        {
+			if (_next != null)
+    			return new List<XPathNode>() {_expr, _next};
+            else
+				return new List<XPathNode>() { _expr };
+		}
     }
 
 }

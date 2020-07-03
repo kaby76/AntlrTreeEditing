@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 
 /// <summary>
 ///*****************************************************************************
@@ -131,6 +132,11 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
 		{
 			return _var_expr_pairs;
 		}
+
+        public override ICollection<XPathNode> GetAllChildren()
+        {
+            throw new System.NotImplementedException();
+        }
 	}
 
 }

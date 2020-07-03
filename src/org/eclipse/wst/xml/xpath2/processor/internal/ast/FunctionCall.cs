@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 
 /// <summary>
 ///*****************************************************************************
@@ -94,6 +95,11 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
         public IEnumerator GetEnumerator()
         {
             return _args.GetEnumerator();
+        }
+
+        public override ICollection<XPathNode> GetAllChildren()
+        {
+            throw new System.NotImplementedException();
         }
     }
 

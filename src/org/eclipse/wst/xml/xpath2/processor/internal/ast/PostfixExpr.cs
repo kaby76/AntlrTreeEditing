@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using org.eclipse.wst.xml.xpath2.processor.@internal.ast;
 
@@ -42,5 +43,10 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal.ast
             return _exprs.Count;
         }
 
+
+        public override ICollection<XPathNode> GetAllChildren()
+        {
+            return _exprs.Select(t => (XPathNode) t).ToList();
+        }
     }
 }

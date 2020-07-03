@@ -13,8 +13,12 @@
 /// ******************************************************************************
 /// </summary>
 
+using System.Collections.Generic;
+
 namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
 {
+    using System.Text;
+
 
 	/// <summary>
 	/// Class for a XPathNode object.
@@ -25,6 +29,8 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
 		/// Support for Visitor interface.
 		/// </summary>
 		public abstract object accept(XPathVisitor v);
-	}
+
+        public abstract ICollection<XPathNode> GetAllChildren();
+    }
 
 }

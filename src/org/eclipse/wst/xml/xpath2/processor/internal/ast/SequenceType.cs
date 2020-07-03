@@ -1,4 +1,6 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
+using System.Text;
 
 /// <summary>
 ///*****************************************************************************
@@ -108,6 +110,11 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
 				return false;
 			}
 		}
+
+        public override ICollection<XPathNode> GetAllChildren()
+        {
+            throw new System.NotImplementedException();
+        }
 	}
 
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 using javax.xml.@namespace;
 using org.eclipse.wst.xml.xpath2.processor.@internal.ast;
 
@@ -178,6 +179,11 @@ namespace org.eclipse.wst.xml.xpath2.processor.ast
             sb.AppendLine("Root used:");
             sb.AppendLine(_rootUsed.ToString());
             return sb.ToString();
+        }
+
+        public override ICollection<XPathNode> GetAllChildren()
+        {
+            return _exprs.Select(t => (XPathNode)t).ToList();
         }
     }
 }

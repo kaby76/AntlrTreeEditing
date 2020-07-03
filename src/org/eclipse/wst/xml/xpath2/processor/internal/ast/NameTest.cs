@@ -14,7 +14,9 @@
 /// ******************************************************************************
 /// </summary>
 
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Text;
 
 namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
 {
@@ -64,6 +66,11 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
         public override string ToString()
         {
             return _name.ToString();
+        }
+
+        public override ICollection<XPathNode> GetAllChildren()
+        {
+            throw new System.NotImplementedException();
         }
     }
 

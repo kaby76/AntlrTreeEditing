@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 /// <summary>
@@ -107,6 +108,17 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
                     sb.AppendLine(e.ToString());
             }
             return sb.ToString();
+        }
+
+        public override ICollection<XPathNode> GetAllChildren()
+        {
+            var list = new List<XPathNode>();
+            foreach (var col in _exprs)
+            {
+                foreach (var e in col)
+                    list.Add((XPathNode)e);
+            }
+            return list;
         }
     }
 

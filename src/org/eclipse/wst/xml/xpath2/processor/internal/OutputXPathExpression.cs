@@ -1,7 +1,9 @@
-﻿using org.eclipse.wst.xml.xpath2.processor.@internal.ast;
+﻿using Antlr4.Runtime.Tree.Xpath;
+using org.eclipse.wst.xml.xpath2.processor.@internal.ast;
 using org.w3c.dom;
+using xpath.org.eclipse.wst.xml.xpath2.processor.@internal.ast;
 
-namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
+namespace org.eclipse.wst.xml.xpath2.processor.@internal
 {
     using System;
     using System.Text;
@@ -12,63 +14,35 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
     using Antlr4.Runtime.Misc;
     using Antlr4.Runtime.Tree;
 
-    internal static class OutputXPathExpression
+    public class OutputXPathExpression
     {
         private static int changed = 0;
         private static bool first_time = true;
 
-        public static StringBuilder OutputTree(XPathNode tree)
+        public StringBuilder OutputTree(XPathNode tree)
         {
             var sb = new StringBuilder();
             changed = 0;
             first_time = true;
-            ParenthesizedAST(tree, sb);
+            ParenthesizedAST(tree, sb, 0);
             return sb;
         }
 
-        private static void ParenthesizedAST(XPathNode tree, StringBuilder sb, int level = 0)
+        public void ParenthesizedAST(XPathNode tree, StringBuilder sb, int level = 0)
         {
+            if (tree == null) return;
             {
                 var fixed_name = tree.GetType().ToString();
-                fixed_name = Regex.Replace(fixed_name, "^.*[+]", "");
-                fixed_name = fixed_name.Substring(0, fixed_name.Length - "Context".Length);
-                fixed_name = fixed_name[0].ToString().ToLower()
-                             + fixed_name.Substring(1);
+                var ind = fixed_name.LastIndexOf('.');
+                fixed_name = fixed_name.Substring(ind + 1);
                 StartLine(sb, tree, level);
                 sb.Append("( " + fixed_name);
                 sb.AppendLine();
             }
-            switch (tree)
+            foreach (var c in tree.GetAllChildren())
             {
-                case AxisStep n:
-                    break;
-                case StepExpr n:
-                    break;
-                case Expr n:
-                    break;
-                case ForwardStep n:
-                    break;
-                case ItemType n:
-                    break;
-                case NodeTest n:
-                    break;
-                case PrimaryExpr n:
-                    break;
-                case ReverseStep n:
-                    break;
-                case SingleType n:
-                    break;
-                case SequenceType n:
-                    break;
-
-
+                ParenthesizedAST(c, sb, level + 1);
             }
-
-            //for (int i = 0; i < tree; ++i)
-            //{
-            //    var c = tree.GetChild(i);
-            //    c.ParenthesizedAST(sb, stream, level + 1);
-            //}
             if (level == 0)
             {
                 for (int k = 0; k < 1 + changed - level; ++k) sb.Append(") ");
@@ -77,7 +51,7 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             }
         }
 
-        private static void StartLine(StringBuilder sb, XPathNode tree, int level = 0)
+        private void StartLine(StringBuilder sb, XPathNode tree, int level = 0)
         {
             if (changed - level >= 0)
             {
@@ -94,7 +68,7 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             for (int j = 0; j < level; ++j) sb.Append("  ");
         }
 
-        private static string ToLiteral(this string input)
+        private string ToLiteral(string input)
         {
             using (var writer = new StringWriter())
             {

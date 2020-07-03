@@ -60,7 +60,12 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
                 // Compute AST representation of XPath expression.
                 var visitor = XPathBuilderVisitor.INSTANCE;
                 var xPath2 = (XPath)visitor.VisitXpath(parse_tree);
-                if (isRootlessAccess)
+
+                var o = new org.eclipse.wst.xml.xpath2.processor.@internal.OutputXPathExpression();
+                var sb2 = o.OutputTree(xPath2);
+				System.Console.WriteLine(sb2.ToString());
+
+				if (isRootlessAccess)
                 {
                 }
                 return xPath2;

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 using org.w3c.dom;
 
 /// <summary>
@@ -237,6 +239,11 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
 
 		}
 
+
+        public override ICollection<XPathNode> GetAllChildren()
+        {
+            throw new System.NotImplementedException();
+        }
 	}
 
 }
