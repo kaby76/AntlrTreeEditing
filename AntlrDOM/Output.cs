@@ -27,6 +27,8 @@
         public static StringBuilder OutputTree(this IParseTree tree, CommonTokenStream stream)
         {
             var sb = new StringBuilder();
+            changed = 0;
+            first_time = true;
             tree.ParenthesizedAST(sb, stream);
             return sb;
         }
