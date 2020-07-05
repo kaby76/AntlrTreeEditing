@@ -415,7 +415,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 		private XPathExpr make_xpathexpr(PrimaryExpr pex)
 		{
 			FilterExpr fe = new FilterExpr(pex, new List<Expr>());
-			return new XPathExpr(0, fe);
+			return new XPathExpr(0, false, fe);
 		}
 
 		private XPathExpr make_int_lit(int i)
@@ -644,7 +644,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 
 			FunctionCall fc = new FunctionCall(name, args);
 			FilterExpr fe = new FilterExpr(fc, new List<Expr>());
-			return new XPathExpr(0, fe);
+			return new XPathExpr(0, false, fe);
 
 		}
 

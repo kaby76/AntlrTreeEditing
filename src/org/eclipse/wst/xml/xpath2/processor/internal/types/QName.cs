@@ -419,11 +419,6 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 				return asQName();
 			}
 		}
-
-        public override string ToString()
-        {
-            return @string();
-        }
-	}
+    }
 
 }

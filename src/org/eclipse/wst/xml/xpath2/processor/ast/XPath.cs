@@ -73,6 +73,8 @@ namespace org.eclipse.wst.xml.xpath2.processor.ast
             return _exprs.GetEnumerator();
         }
 
+        public string Expression { get; set; }
+
         /// <summary>
         /// @since 2.0
         /// </summary>
@@ -154,32 +156,6 @@ namespace org.eclipse.wst.xml.xpath2.processor.ast
             return _exprs.GetEnumerator();
         }
 
-
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.AppendLine("Exprs:");
-            if (_exprs != null)
-                foreach (var e in _exprs)
-                    sb.AppendLine(e.ToString());
-            sb.AppendLine("Static Context:");
-            sb.AppendLine(_staticContext?.ToString());
-            sb.AppendLine("Resolved functions:");
-            if (_resolvedFunctions != null)
-                foreach (var q in _resolvedFunctions)
-                    sb.AppendLine(q.ToString());
-            sb.AppendLine("Axes:");
-            if (_axes != null)
-                foreach (var a in _axes)
-                    sb.AppendLine(a.ToString());
-            sb.AppendLine("Free variables:");
-            if (_resolvedFunctions != null)
-                foreach (var q in _freeVariables)
-                    sb.AppendLine(q.ToString());
-            sb.AppendLine("Root used:");
-            sb.AppendLine(_rootUsed.ToString());
-            return sb.ToString();
-        }
 
         public override ICollection<XPathNode> GetAllChildren()
         {

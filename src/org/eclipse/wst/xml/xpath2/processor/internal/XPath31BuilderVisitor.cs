@@ -269,17 +269,17 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             if (ctx.valuecomp() != null)
             {
                 return new CmpExpr((Expr)VisitStringconcatexpr(ctx.stringconcatexpr(0)), (Expr)VisitStringconcatexpr(ctx.stringconcatexpr(1)),
-                    (int)VisitValuecomp(ctx.valuecomp()));
+                    (CmpExpr.Type)VisitValuecomp(ctx.valuecomp()));
             }
             else if (ctx.generalcomp() != null)
             {
                 return new CmpExpr((Expr)VisitStringconcatexpr(ctx.stringconcatexpr(0)), (Expr)VisitStringconcatexpr(ctx.stringconcatexpr(1)),
-                    (int)VisitGeneralcomp(ctx.generalcomp()));
+                    (CmpExpr.Type)VisitGeneralcomp(ctx.generalcomp()));
             }
             else
             {
                 return new CmpExpr((Expr)VisitStringconcatexpr(ctx.stringconcatexpr(0)), (Expr)VisitStringconcatexpr(ctx.stringconcatexpr(1)),
-                    (int)VisitNodecomp(ctx.nodecomp()));
+                    (CmpExpr.Type)VisitNodecomp(ctx.nodecomp()));
             }
         }
 
@@ -488,17 +488,17 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             switch ((ctx.GetChild(0) as TerminalNodeImpl)?.Symbol.Type)
             {
                 case XPath31Lexer.EQ:
-                    return CmpExpr.EQUALS;
+                    return CmpExpr.Type.EQUALS;
                 case XPath31Lexer.NE:
-                    return CmpExpr.NOTEQUALS;
+                    return CmpExpr.Type.NOTEQUALS;
                 case XPath31Lexer.LT:
-                    return CmpExpr.LESSTHAN;
+                    return CmpExpr.Type.LESSTHAN;
                 case XPath31Lexer.LE:
-                    return CmpExpr.LESSEQUAL;
+                    return CmpExpr.Type.LESSEQUAL;
                 case XPath31Lexer.GT:
-                    return CmpExpr.GREATER;
+                    return CmpExpr.Type.GREATER;
                 case XPath31Lexer.GE:
-                    return CmpExpr.GREATEREQUAL;
+                    return CmpExpr.Type.GREATEREQUAL;
                 default:
                     Debug.Assert(false);
                     return 0;
@@ -511,17 +511,17 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             switch ((ctx.GetChild(0) as TerminalNodeImpl)?.Symbol.Type)
             {
                 case XPath31Lexer.EQ:
-                    return CmpExpr.EQ;
+                    return CmpExpr.Type.EQ;
                 case XPath31Lexer.NE:
-                    return CmpExpr.NE;
+                    return CmpExpr.Type.NE;
                 case XPath31Lexer.LT:
-                    return CmpExpr.LT;
+                    return CmpExpr.Type.LT;
                 case XPath31Lexer.LE:
-                    return CmpExpr.LE;
+                    return CmpExpr.Type.LE;
                 case XPath31Lexer.GT:
-                    return CmpExpr.GT;
+                    return CmpExpr.Type.GT;
                 case XPath31Lexer.GE:
-                    return CmpExpr.GE;
+                    return CmpExpr.Type.GE;
                 default:
                     Debug.Assert(false);
                     return 0;
@@ -533,15 +533,15 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
         {
             if (ctx.KW_IS() != null)
             {
-                return CmpExpr.IS;
+                return CmpExpr.Type.IS;
             }
             else if (ctx.LL() != null)
             {
-                return CmpExpr.LESS_LESS;
+                return CmpExpr.Type.LESS_LESS;
             }
             else if (ctx.GG() != null)
             {
-                return CmpExpr.GREATER_GREATER;
+                return CmpExpr.Type.GREATER_GREATER;
             }
             else
             {
@@ -576,7 +576,7 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
             }
             else
             {
-                return new XPathExpr(1, null);
+                return new XPathExpr(1, false, null);
             }
         }
 
@@ -584,7 +584,7 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
         public override object /* XPathExpr */ VisitRelativepathexpr(XPath31Parser.RelativepathexprContext ctx)
         {
             StepExpr all = (StepExpr)VisitStepexpr(ctx.stepexpr()[0]);
-            XPathExpr relativePathExpr = new XPathExpr(0, all);
+            XPathExpr relativePathExpr = new XPathExpr(0, false, all);
             for (int i = 1; i < ctx.ChildCount; i += 2)
             {
                 var o = ctx.GetChild(i);
@@ -832,7 +832,8 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
         // [52]
         public override object /* ICollection<Expr> */ VisitPredicate(XPath31Parser.PredicateContext ctx)
         {
-            return VisitExpr(ctx.expr());
+            var result = VisitExpr(ctx.expr());
+            return result;
         }
 
         // [53]

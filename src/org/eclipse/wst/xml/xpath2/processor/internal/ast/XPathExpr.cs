@@ -26,6 +26,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
 	public class XPathExpr : Expr
 	{
 		private int _slashes;
+        private bool _predicate;
 		private StepExpr _expr;
 
 		// single linked list
@@ -35,9 +36,10 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
 		///            is copied to _slashes </param>
 		/// <param name="expr">
 		///            is copied to _expr _next is made null as a result. </param>
-		public XPathExpr(int slashes, StepExpr expr)
+		public XPathExpr(int slashes, bool is_predicate, StepExpr expr)
 		{
 			_slashes = slashes;
+            _predicate = is_predicate;
 			_expr = expr;
 			_next = null;
 		}
@@ -66,7 +68,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
 				next = last.next();
 			}
 
-			XPathExpr item = new XPathExpr(slashes, expr);
+			XPathExpr item = new XPathExpr(slashes, false, expr);
 			last.set_next(item);
 
 		}
@@ -103,16 +105,6 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
 		{
 			return _slashes;
 		}
-
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.AppendLine("XPathExpr");
-            sb.AppendLine(_expr?.ToString());
-            if (_next != null)
-                sb.AppendLine(_next.ToString());
-            return sb.ToString();
-        }
 
         public override ICollection<XPathNode> GetAllChildren()
         {

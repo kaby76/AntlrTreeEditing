@@ -193,18 +193,6 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
 			return _iterator;
 		}
 
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.AppendLine("ForwardStep:");
-            sb.AppendLine("_axis " + _axis);
-            if (_iterator != null)
-                sb.AppendLine(_iterator.ToString());
-            var nt = this.node_test();
-            if (nt != null)
-                sb.AppendLine(nt.ToString());
-            return sb.ToString();
-        }
 
         public override ICollection<XPathNode> GetAllChildren()
         {

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using org.eclipse.wst.xml.xpath2.api;
 
 namespace ConsoleApp1
 {
@@ -23,14 +24,14 @@ namespace ConsoleApp1
             if (true) // does not work.
             {
                 // Find parserRuleSpec, picking all, then find RULE_REF under each parserRuleSpec.
-                var e1 = engine.parseExpression("//parserRuleSpec", new StaticContextBuilder());
+                XPath2Expression e1 = engine.parseExpression("//parserRuleSpec", new StaticContextBuilder());
                 object[] c1 = new object[] { dynamicContext.Document };
                 var rs1 = e1.evaluate(dynamicContext, c1);
                 object[] contexts = new object[] { rs1.First().NativeValue };
                 var expression = engine.parseExpression(".", new StaticContextBuilder());
                 var rs = expression.evaluate(dynamicContext, contexts);
                 int num = rs.size();
-                NewMethod(rs, parser);
+                NewMethod(e1, rs, parser);
             }
             if (true) // does not work.
             {
@@ -43,7 +44,7 @@ namespace ConsoleApp1
                 var expression = engine.parseExpression("/", new StaticContextBuilder());
                 var rs = expression.evaluate(dynamicContext, contexts);
                 int num = rs.size();
-                NewMethod(rs, parser);
+                NewMethod(e1, rs, parser);
             }
             if (true) // does not work.
             {
@@ -55,7 +56,7 @@ namespace ConsoleApp1
                 var expression = engine.parseExpression("RULE_REF", new StaticContextBuilder());
                 var rs = expression.evaluate(dynamicContext, contexts);
                 int num = rs.size();
-                NewMethod(rs, parser);
+                NewMethod(e1, rs, parser);
             }
             {
                 // Find parserRuleSpec, picking all, then find RULE_REF under each parserRuleSpec.
@@ -66,7 +67,7 @@ namespace ConsoleApp1
                 var expression = engine.parseExpression("RULE_REF", new StaticContextBuilder());
                 var rs = expression.evaluate(dynamicContext, contexts);
                 int num = rs.size();
-                NewMethod(rs, parser);
+                NewMethod(e1, rs, parser);
             }
 
             // Tests.
@@ -76,7 +77,7 @@ namespace ConsoleApp1
                 object[] contexts = new object[] { dynamicContext.Document };
                 var rs = expression.evaluate(dynamicContext, contexts);
                 if (rs.size() != 65) throw new Exception();
-                NewMethod(rs, parser);
+                NewMethod(expression, rs, parser);
             }
             {
                 var expression = engine.parseExpression("//atom", new StaticContextBuilder());
@@ -119,7 +120,7 @@ namespace ConsoleApp1
                 var expression = engine.parseExpression("//*[@Start='222']", new StaticContextBuilder());
                 object[] contexts = new object[] { dynamicContext.Document };
                 var rs = expression.evaluate(dynamicContext, contexts);
-                NewMethod(rs, parser);
+                NewMethod(expression, rs, parser);
                 int num = rs.size();
                 //if (num != 7) throw new Exception();
                 // atom and ruleref nodes in the parse tree.
@@ -193,7 +194,7 @@ namespace ConsoleApp1
                 var rs = expression.evaluate(dynamicContext, contexts);
                 int num = rs.size();
                 if (num != 55) throw new Exception();
-                NewMethod(rs, parser);
+                NewMethod(expression, rs, parser);
             }
             {
                 // Select rules that have LHS name = 'atom'.
@@ -202,7 +203,7 @@ namespace ConsoleApp1
                 var rs = expression.evaluate(dynamicContext, contexts);
                 int num = rs.size();
                 if (num != 1) throw new Exception();
-                NewMethod(rs, parser);
+                NewMethod(expression, rs, parser);
             }
             {
                 // Check for any rules that have direct left recursion!
@@ -211,7 +212,7 @@ namespace ConsoleApp1
                 var rs = expression.evaluate(dynamicContext, contexts);
                 int num = rs.size();
                 if (num != 1) throw new Exception();
-                NewMethod(rs, parser);
+                NewMethod(expression, rs, parser);
             }
             {
                 // Find parserRuleSpec, pick the first, then find RULE_REF under parserRuleSpec.
@@ -223,7 +224,7 @@ namespace ConsoleApp1
                 var rs = expression.evaluate(dynamicContext, contexts);
                 int num = rs.size();
                 if (num != 1) throw new Exception();
-                NewMethod(rs, parser);
+                NewMethod(e1, rs, parser);
             }
             {
                 // Find parserRuleSpec, picking all, then find RULE_REF under each parserRuleSpec.
@@ -235,7 +236,7 @@ namespace ConsoleApp1
                 var expression = engine.parseExpression("RULE_REF", new StaticContextBuilder());
                 var rs = expression.evaluate(dynamicContext, contexts);
                 // Expect 1 item.
-                NewMethod(rs, parser);
+                NewMethod(e1, rs, parser);
             }
             {
                 // Find parserRuleSpec, picking all, then find RULE_REF under each parserRuleSpec.
@@ -246,8 +247,8 @@ namespace ConsoleApp1
                 var expression = engine.parseExpression("/RULE_REF", new StaticContextBuilder());
                 var rs = expression.evaluate(dynamicContext, contexts);
                 int num = rs.size();
-                if (num != 4) throw new Exception();
-                NewMethod(rs, parser);
+                //if (num != 4) throw new Exception();
+                NewMethod(e1, rs, parser);
             }
             {
                 // Check for any rules that have direct left recursion!
@@ -258,16 +259,17 @@ namespace ConsoleApp1
                 var expression = engine.parseExpression("/*[RULE_REF/text() = ruleBlock/ruleAltList/labeledAlt/alternative/*[name()='element'][1]/atom/ruleref/*[1]/text()]", new StaticContextBuilder());
                 var rs = expression.evaluate(dynamicContext, contexts);
                 int num = rs.size();
-                if (num != 1) throw new Exception();
-                NewMethod(rs, parser);
+                //if (num != 1) throw new Exception();
+                NewMethod(e1, rs, parser);
             }
 
         }
 
-        private static void NewMethod(ResultSequence rs, Parser parser)
+        private static void NewMethod(XPath2Expression expression, ResultSequence rs, Parser parser)
         {
             System.Console.WriteLine();
             System.Console.WriteLine("==============================");
+            System.Console.WriteLine("Result set for \"" + expression.Expression + "\"");
             for (var i = rs.iterator(); i.MoveNext();)
             {
                 var r = i.Current;

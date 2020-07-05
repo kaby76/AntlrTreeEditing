@@ -63,11 +63,6 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
 			return _name;
 		}
 
-        public override string ToString()
-        {
-            return _name.ToString();
-        }
-
         public override ICollection<XPathNode> GetAllChildren()
         {
             return new List<XPathNode>();

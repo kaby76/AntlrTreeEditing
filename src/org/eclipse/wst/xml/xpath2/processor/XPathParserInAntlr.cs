@@ -35,8 +35,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		/// <returns> the xpath value. </returns>
 		public virtual XPath parse(string xpath)
 		{
-
-			return (new InternalXPathParser()).parse(xpath, false);
+            return (new InternalXPathParser()).parse(xpath, false);
 		}
 
 		/// <summary>

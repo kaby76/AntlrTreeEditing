@@ -700,7 +700,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 			return ResultSequenceFactory.create_new(new XSBoolean(res[0] && res[1]));
 		}
 
-		private api.ResultSequence node_cmp(int type, ICollection args)
+		private api.ResultSequence node_cmp(CmpExpr.Type type, ICollection args)
 		{
 			Debug.Assert(args.Count == 2);
 
@@ -741,15 +741,15 @@ namespace org.eclipse.wst.xml.xpath2.processor
 			// do comparison
 			switch (type)
 			{
-			case CmpExpr.IS:
+			case CmpExpr.Type.IS:
 				answer = nt_one.node_value() == nt_two.node_value();
 				break;
 
-			case CmpExpr.LESS_LESS:
+			case CmpExpr.Type.LESS_LESS:
 				answer = nt_one.before(nt_two);
 				break;
 
-			case CmpExpr.GREATER_GREATER:
+			case CmpExpr.Type.GREATER_GREATER:
 				answer = nt_one.after(nt_two);
 				break;
 
@@ -775,45 +775,45 @@ namespace org.eclipse.wst.xml.xpath2.processor
 
 				switch (cmpex.type())
 				{
-				case CmpExpr.EQ:
+				case CmpExpr.Type.EQ:
 					return FsEq.fs_eq_value(args, _dc);
 
-				case CmpExpr.NE:
+				case CmpExpr.Type.NE:
 					return FsNe.fs_ne_value(args, _dc);
 
-				case CmpExpr.GT:
+				case CmpExpr.Type.GT:
 					return FsGt.fs_gt_value(args, _dc);
 
-				case CmpExpr.LT:
+				case CmpExpr.Type.LT:
 					return FsLt.fs_lt_value(args, _dc);
 
-				case CmpExpr.GE:
+				case CmpExpr.Type.GE:
 					return FsGe.fs_ge_value(args, _dc);
 
-				case CmpExpr.LE:
+				case CmpExpr.Type.LE:
 					return FsLe.fs_le_value(args, _dc);
 
-				case CmpExpr.EQUALS:
+				case CmpExpr.Type.EQUALS:
 					return FsEq.fs_eq_general(args, _dc);
 
-				case CmpExpr.NOTEQUALS:
+				case CmpExpr.Type.NOTEQUALS:
 					return FsNe.fs_ne_general(args, _dc);
 
-				case CmpExpr.GREATER:
+				case CmpExpr.Type.GREATER:
 					return FsGt.fs_gt_general(args, _dc);
 
-				case CmpExpr.LESSTHAN:
+				case CmpExpr.Type.LESSTHAN:
 					return FsLt.fs_lt_general(args, _dc);
 
-				case CmpExpr.GREATEREQUAL:
+				case CmpExpr.Type.GREATEREQUAL:
 					return FsGe.fs_ge_general(args, _dc);
 
-				case CmpExpr.LESSEQUAL:
+				case CmpExpr.Type.LESSEQUAL:
 					return FsLe.fs_le_general(args, _dc);
 
-				case CmpExpr.IS:
-				case CmpExpr.LESS_LESS:
-				case CmpExpr.GREATER_GREATER:
+				case CmpExpr.Type.IS:
+				case CmpExpr.Type.LESS_LESS:
+				case CmpExpr.Type.GREATER_GREATER:
 					return node_cmp(cmpex.type(), args);
 
 				default:
@@ -1509,8 +1509,8 @@ namespace org.eclipse.wst.xml.xpath2.processor
 						else
 						{
 
-                            rs = do_step(se);
-						//	rs = (api.ResultSequence) se.accept(this);
+                       //     rs = do_step(se);
+						rs = (api.ResultSequence) se.accept(this);
 						}
 					}
 				}

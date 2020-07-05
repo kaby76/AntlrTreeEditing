@@ -99,12 +99,14 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
 
         public override ICollection<XPathNode> GetAllChildren()
         {
-            throw new System.NotImplementedException();
+            var result = new List<XPathNode>();
+            foreach (var c in _args) result.Add(c);
+            return result;
         }
 
         public override string QuickInfo()
         {
-            throw new System.NotImplementedException();
+            return _name.ToString();
         }
     }
 

@@ -44,14 +44,6 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
 		{
 			return _node_test;
 		}
-
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.AppendLine("Step:");
-            sb.AppendLine(_node_test?.ToString());
-            return sb.ToString();
-        }
     }
 
 }
