@@ -71,6 +71,13 @@ namespace ConsoleApp1
             }
 
             {
+                var expression = engine.parseExpression("//*[@Start]//atom", new StaticContextBuilder());
+                object[] contexts = new object[] { dynamicContext.Document };
+                var rs = expression.evaluate(dynamicContext, contexts);
+                OutputResultSet(expression, rs, parser);
+            }
+
+            {
                 var expression = engine.parseExpression("//*[@Start='222']", new StaticContextBuilder());
                 object[] contexts = new object[] { dynamicContext.Document };
                 var rs = expression.evaluate(dynamicContext, contexts);

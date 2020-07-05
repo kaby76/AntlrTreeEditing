@@ -70,7 +70,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
 
         public override string QuickInfo()
         {
-            return _name.ToString();
+            return _name.StringValue;
         }
 	}
 
