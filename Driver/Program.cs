@@ -182,16 +182,13 @@ namespace ConsoleApp1
                 if (num != 1) throw new Exception();
             }
             {
-                // Find parserRuleSpec, pick the first, then find RULE_REF under parserRuleSpec.
-                var e1 = engine.parseExpression("//parserRuleSpec", new StaticContextBuilder());
-                object[] c1 = new object[] { dynamicContext.Document };
-                var rs1 = e1.evaluate(dynamicContext, c1);
-                object[] contexts = (new List<object>() { rs1.Select(t => (object)(t.NativeValue)).First() }).ToArray();
-                var expression = engine.parseExpression("RULE_REF", new StaticContextBuilder());
+                // Find parserRuleSpec, picking all, then find RULE_REF under each parserRuleSpec.
+                var expression = engine.parseExpression("//parserRuleSpec/RULE_REF", new StaticContextBuilder());
+                object[] contexts = new object[] { dynamicContext.Document };
                 var rs = expression.evaluate(dynamicContext, contexts);
                 OutputResultSet(expression, rs, parser);
                 int num = rs.size();
-                if (num != 1) throw new Exception();
+                if (num != 65) throw new Exception();
             }
             {
                 // Find parserRuleSpec, picking all, then find RULE_REF under each parserRuleSpec.
@@ -202,7 +199,8 @@ namespace ConsoleApp1
                 var expression = engine.parseExpression("RULE_REF", new StaticContextBuilder());
                 var rs = expression.evaluate(dynamicContext, contexts);
                 OutputResultSet(expression, rs, parser);
-                // Expect 1 item.
+                int num = rs.size();
+                if (num != 65) throw new Exception();
             }
             {
                 // Find parserRuleSpec, picking all, then find RULE_REF under each parserRuleSpec.
