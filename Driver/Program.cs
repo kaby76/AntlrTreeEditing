@@ -204,6 +204,18 @@ namespace ConsoleApp1
             }
             {
                 // Find parserRuleSpec, picking all, then find RULE_REF under each parserRuleSpec.
+                XPath2Expression e1 = engine.parseExpression("//parserRuleSpec", new StaticContextBuilder());
+                object[] c1 = new object[] { dynamicContext.Document };
+                var rs1 = e1.evaluate(dynamicContext, c1);
+                object[] contexts = rs1.Select(t => (object)(t.NativeValue)).ToArray();
+                var expression = engine.parseExpression(".", new StaticContextBuilder());
+                var rs = expression.evaluate(dynamicContext, contexts);
+                OutputResultSet(expression, rs, parser);
+                int num = rs.size();
+                if (num != 65) throw new Exception();
+            }
+            {
+                // Find parserRuleSpec, picking all, then find RULE_REF under each parserRuleSpec.
                 var e1 = engine.parseExpression("//parserRuleSpec", new StaticContextBuilder());
                 object[] c1 = new object[] { dynamicContext.Document };
                 var rs1 = e1.evaluate(dynamicContext, c1);
@@ -220,61 +232,12 @@ namespace ConsoleApp1
                 object[] c1 = new object[] { dynamicContext.Document };
                 var rs1 = e1.evaluate(dynamicContext, c1);
                 object[] contexts = rs1.Select(t => (object)(t.NativeValue)).ToArray();
-                var expression = engine.parseExpression("/*[RULE_REF/text() = ruleBlock/ruleAltList/labeledAlt/alternative/*[name()='element'][1]/atom/ruleref/*[1]/text()]", new StaticContextBuilder());
+                var expression = engine.parseExpression("*[RULE_REF/text() = ruleBlock/ruleAltList/labeledAlt/alternative/*[name()='element'][1]/atom/ruleref/*[1]/text()]", new StaticContextBuilder());
                 var rs = expression.evaluate(dynamicContext, contexts);
                 OutputResultSet(expression, rs, parser);
                 int num = rs.size();
                 //if (num != 1) throw new Exception();
             }
-            if (true) // does not work.
-            {
-                // Find parserRuleSpec, picking all, then find RULE_REF under each parserRuleSpec.
-                XPath2Expression e1 = engine.parseExpression("//parserRuleSpec", new StaticContextBuilder());
-                object[] c1 = new object[] { dynamicContext.Document };
-                var rs1 = e1.evaluate(dynamicContext, c1);
-                object[] contexts = new object[] { rs1.First().NativeValue };
-                var expression = engine.parseExpression(".", new StaticContextBuilder());
-                var rs = expression.evaluate(dynamicContext, contexts);
-                OutputResultSet(expression, rs, parser);
-                int num = rs.size();
-            }
-            if (true) // does not work.
-            {
-                // Find parserRuleSpec, picking all, then find RULE_REF under each parserRuleSpec.
-                var e1 = engine.parseExpression("//parserRuleSpec", new StaticContextBuilder());
-                object[] c1 = new object[] { dynamicContext.Document };
-                var rs1 = e1.evaluate(dynamicContext, c1);
-                object[] contexts = new object[] { rs1.First().NativeValue };
-                // Starts way back at the top of the whole tree, not parserRuleSpec!
-                var expression = engine.parseExpression("/", new StaticContextBuilder());
-                var rs = expression.evaluate(dynamicContext, contexts);
-                OutputResultSet(expression, rs, parser);
-                int num = rs.size();
-            }
-            if (true) // does not work.
-            {
-                // Find parserRuleSpec, picking all, then find RULE_REF under each parserRuleSpec.
-                var e1 = engine.parseExpression("//parserRuleSpec", new StaticContextBuilder());
-                object[] c1 = new object[] { dynamicContext.Document };
-                var rs1 = e1.evaluate(dynamicContext, c1);
-                object[] contexts = new object[] { rs1.First().NativeValue };
-                var expression = engine.parseExpression("RULE_REF", new StaticContextBuilder());
-                var rs = expression.evaluate(dynamicContext, contexts);
-                OutputResultSet(expression, rs, parser);
-                int num = rs.size();
-            }
-            {
-                // Find parserRuleSpec, picking all, then find RULE_REF under each parserRuleSpec.
-                var e1 = engine.parseExpression("//parserRuleSpec", new StaticContextBuilder());
-                object[] c1 = new object[] { dynamicContext.Document };
-                var rs1 = e1.evaluate(dynamicContext, c1);
-                object[] contexts = rs1.Select(t => (object)(t.NativeValue)).ToArray();
-                var expression = engine.parseExpression("RULE_REF", new StaticContextBuilder());
-                var rs = expression.evaluate(dynamicContext, contexts);
-                OutputResultSet(expression, rs, parser);
-                int num = rs.size();
-            }
-
         }
 
         private static void OutputResultSet(XPath2Expression expression, ResultSequence rs, Parser parser)

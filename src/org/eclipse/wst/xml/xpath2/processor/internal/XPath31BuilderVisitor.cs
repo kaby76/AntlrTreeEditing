@@ -787,18 +787,18 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
                 var c = ctx.GetChild(i);
                 if (c is XPath31Parser.PredicateContext)
                 {
-                    var predicate = (Expr)VisitPredicate(c as XPath31Parser.PredicateContext);
-                    rest.Add(predicate);
+                    var predicate = (ICollection<Expr>)VisitPredicate(c as XPath31Parser.PredicateContext);
+                    rest.AddRange(predicate);
                 }
                 else if (c is XPath31Parser.ArgumentlistContext)
                 {
-                    var predicate = (Expr)VisitArgumentlist(c as XPath31Parser.ArgumentlistContext);
-                    rest.Add(predicate);
+                    var predicate = (ICollection<Expr>)VisitArgumentlist(c as XPath31Parser.ArgumentlistContext);
+                    rest.AddRange(predicate);
                 }
                 else if (c is XPath31Parser.LookupContext)
                 {
-                    var predicate = (Expr)VisitLookup(c as XPath31Parser.LookupContext);
-                    rest.Add(predicate);
+                    var predicate = (ICollection<Expr>)VisitLookup(c as XPath31Parser.LookupContext);
+                    rest.AddRange(predicate);
                 }
                 else throw new Exception();
             }
@@ -837,7 +837,7 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
         }
 
         // [53]
-        public override object VisitLookup(XPath31Parser.LookupContext context)
+        public override object /* ICollection<Expr> */ VisitLookup(XPath31Parser.LookupContext context)
         {
             throw new NotImplementedException();
         }
