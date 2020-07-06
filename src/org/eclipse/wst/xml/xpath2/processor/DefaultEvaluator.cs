@@ -400,8 +400,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 
 		// basically the comma operator...
 		private api.ResultSequence do_expr(IEnumerator i)
-		{
-
+        {
             api.ResultSequence rs = null;
 			ResultBuffer buffer = null;
 
@@ -449,9 +448,93 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		/// <returns> result sequence. </returns>
 		public virtual object visit(XPath xp)
 		{
-            api.ResultSequence rs = do_expr(xp.GetEnumerator());
+			ResultBuffer rs = new ResultBuffer();
+            ArrayList results = new ArrayList();
+			int type = 0; // 0: don't know yet
+            // 1: atomic
+            // 2: node
+            Focus xfocus = focus();
+            int original_pos = xfocus.position();
 
-			return rs;
+            // execute step for all items in focus
+            while (true)
+            {
+                api.ResultSequence one_rs = do_expr(xp.GetEnumerator());
+				foreach (var c in one_rs)
+                    results.Add(c);
+
+                // go to next
+                if (!xfocus.advance_cp())
+                {
+                    break;
+                }
+            }
+
+            // make sure we didn't change focus
+            xfocus.set_position(original_pos);
+            bool node_types = false;
+
+            // check the results
+            for (IEnumerator i = results.GetEnumerator(); i.MoveNext();)
+            {
+                api.ResultSequence result = (api.ResultSequence)i.Current;
+
+                // make sure results are of same type, and add them in
+                for (var j = result.iterator(); j.MoveNext();)
+                {
+                    AnyType item = (AnyType)j.Current;
+
+                    // first item
+                    if (type == 0)
+                    {
+                        if (item is AnyAtomicType)
+                        {
+                            type = 1;
+                        }
+                        else if (item is NodeType)
+                        {
+                            type = 2;
+                        }
+                        else
+                        {
+                            Debug.Assert(false);
+                        }
+
+                    }
+
+                    // make sure we got coherent types
+                    switch (type)
+                    {
+                        // atomic... just concat
+                        case 1:
+                            if (!(item is AnyAtomicType))
+                            {
+                                report_error(TypeError.mixed_vals(null));
+                            }
+                            rs.add(item);
+                            break;
+
+                        case 2:
+                            node_types = true;
+                            if (!(item is NodeType))
+                            {
+                                report_error(TypeError.mixed_vals(null));
+                            }
+                            rs.add(item);
+                            break;
+
+                        default:
+                            Debug.Assert(false);
+                            break;
+                    }
+                }
+            }
+            // XXX lame
+            if (node_types)
+            {
+                rs = NodeType.linarize(rs);
+            }
+            return rs.Sequence;
 		}
 
 		private void do_for_each(IEnumerator iter, Expr finalexpr, ResultBuffer destination)
@@ -1508,9 +1591,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 						}
 						else
 						{
-
-                       //     rs = do_step(se);
-						rs = (api.ResultSequence) se.accept(this);
+                            rs = (api.ResultSequence) se.accept(this);
 						}
 					}
 				}
@@ -2413,8 +2494,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 			// go through all items in focus.
             while (true)
             {
-				// ALL THIS CODE IS WRONG. "//title" is a set of title.
-				// "//title[@lang]" is a set of title that also happen to have an attribute "lang".
+				// do_expr only takes one item, but could result in a set of more than one thing.
 				api.ResultSequence res = do_expr(exprs.GetEnumerator());
 
                 if (res.size() > 1)
