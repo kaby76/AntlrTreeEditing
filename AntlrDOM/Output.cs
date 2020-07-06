@@ -19,7 +19,9 @@
             var sb = new StringBuilder();
             foreach (var token in stream.GetTokens())
             {
-                sb.AppendLine("Token " + token.TokenIndex + " " + token.Type + " " + "channel " + ((Lexer)stream.TokenSource).ChannelNames[token.Channel] + " " + Output.PerformEscapes(token.Text));
+                sb.AppendLine("Token " + token.TokenIndex + " " + token.Type
+                              + " " + "channel " + ((Lexer)stream.TokenSource).ChannelNames[token.Channel]
+                              + " " + new xpath.org.eclipse.wst.xml.xpath2.processor.@internal.OutputParseTree().PerformEscapes(token.Text));
             }
             return sb;
         }

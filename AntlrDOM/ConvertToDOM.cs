@@ -49,7 +49,7 @@
                 var child = new AntlrText();
                 child.AntlrIParseTree = tree;
                 child.NodeType = NodeConstants.TEXT_NODE;
-                child.Data = Output.PerformEscapes(/*"'" + */ tree.GetText() /*+ "'"*/);
+                child.Data = new xpath.org.eclipse.wst.xml.xpath2.processor.@internal.OutputParseTree().PerformEscapes(/*"'" + */ tree.GetText() /*+ "'"*/);
                 child.ParentNode = result;
                 nl.Add(child);
 

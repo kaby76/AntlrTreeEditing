@@ -9,31 +9,32 @@
     using Antlr4.Runtime.Misc;
     using Antlr4.Runtime.Tree;
 
-    internal static class Output
+    public class OutputParseTree
     {
-        private static int changed = 0;
-        private static bool first_time = true;
+        private int changed = 0;
+        private bool first_time = true;
 
-        public static StringBuilder OutputTokens(this CommonTokenStream stream)
+        public StringBuilder OutputTokens(CommonTokenStream stream)
         {
             var sb = new StringBuilder();
             foreach (var token in stream.GetTokens())
             {
-                sb.AppendLine("Token " + token.TokenIndex + " " + token.Type + " " + "channel " + ((Lexer)stream.TokenSource).ChannelNames[token.Channel] + " " + Output.PerformEscapes(token.Text));
+                sb.AppendLine("Token " + token.TokenIndex + " " + token.Type + " " + "channel " + ((Lexer)stream.TokenSource).ChannelNames[token.Channel]
+                              + " " + new OutputParseTree().PerformEscapes(token.Text));
             }
             return sb;
         }
 
-        public static StringBuilder OutputTree(this IParseTree tree, CommonTokenStream stream)
+        public StringBuilder OutputTree(IParseTree tree, CommonTokenStream stream, bool do_hidden_tokens)
         {
             var sb = new StringBuilder();
             changed = 0;
             first_time = true;
-            tree.ParenthesizedAST(sb, stream);
+            ParenthesizedAST(tree, sb, stream, do_hidden_tokens);
             return sb;
         }
 
-        private static void ParenthesizedAST(this IParseTree tree, StringBuilder sb, CommonTokenStream stream, int level = 0)
+        private void ParenthesizedAST(IParseTree tree, StringBuilder sb, CommonTokenStream stream, bool do_hidden_tokens, int level = 0)
         {
             // Antlr always names a non-terminal with first letter lowercase,
             // but renames it when creating the type in C#. So, remove the prefix,
@@ -43,18 +44,22 @@
             {
                 TerminalNodeImpl tok = tree as TerminalNodeImpl;
                 Interval interval = tok.SourceInterval;
-                IList<IToken> inter = null;
-                if (tok.Symbol.TokenIndex >= 0)
-                    inter = stream.GetHiddenTokensToLeft(tok.Symbol.TokenIndex);
-                if (inter != null)
-                    foreach (var t in inter)
-                    {
-                        StartLine(sb, tree, stream, level);
-                        sb.AppendLine("( " + ((Lexer)stream.TokenSource).ChannelNames[t.Channel] + " text=" + t.Text.PerformEscapes());
-                    }
+                if (do_hidden_tokens)
+                {
+                    IList<IToken> inter = null;
+                    if (tok.Symbol.TokenIndex >= 0)
+                        inter = stream.GetHiddenTokensToLeft(tok.Symbol.TokenIndex);
+                    if (inter != null)
+                        foreach (var t in inter)
+                        {
+                            StartLine(sb, tree, stream, level);
+                            sb.AppendLine("( " + ((Lexer) stream.TokenSource).ChannelNames[t.Channel] + " text=" +
+                                          PerformEscapes(t.Text));
+                        }
+                }
                 StartLine(sb, tree, stream, level);
                 sb.AppendLine("( " + ((Lexer)stream.TokenSource).ChannelNames[tok.Symbol.Channel] + " i=" + tree.SourceInterval.a
-                    + " txt=" + tree.GetText().PerformEscapes()
+                    + " txt=" + PerformEscapes(tree.GetText())
                     + " tt=" + tok.Symbol.Type);
             }
             else
@@ -72,7 +77,7 @@
             for (int i = 0; i < tree.ChildCount; ++i)
             {
                 var c = tree.GetChild(i);
-                c.ParenthesizedAST(sb, stream, level + 1);
+                ParenthesizedAST(c, sb, stream, do_hidden_tokens, level + 1);
             }
             if (level == 0)
             {
@@ -82,7 +87,7 @@
             }
         }
 
-        private static void StartLine(StringBuilder sb, IParseTree tree, CommonTokenStream stream, int level = 0)
+        private void StartLine(StringBuilder sb, IParseTree tree, CommonTokenStream stream, int level = 0)
         {
             if (changed - level >= 0)
             {
@@ -99,7 +104,7 @@
             for (int j = 0; j < level; ++j) sb.Append("  ");
         }
 
-        private static string ToLiteral(this string input)
+        private string ToLiteral(string input)
         {
             using (var writer = new StringWriter())
             {
@@ -116,10 +121,10 @@
             }
         }
 
-        public static string PerformEscapes(this string s)
+        public string PerformEscapes(string s)
         {
             StringBuilder new_s = new StringBuilder();
-            new_s.Append(s.ToLiteral());
+            new_s.Append(ToLiteral(s));
             return new_s.ToString();
         }
     }

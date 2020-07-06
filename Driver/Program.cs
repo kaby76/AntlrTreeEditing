@@ -291,7 +291,7 @@ namespace ConsoleApp1
                 var node = r.NativeValue as AntlrNode;
                 var iparsetree = node?.AntlrIParseTree;
                 System.Console.WriteLine(
-                    AntlrDOM.Output.OutputTree(iparsetree, parser.InputStream as CommonTokenStream).ToString());
+                    new xpath.org.eclipse.wst.xml.xpath2.processor.@internal.OutputParseTree().OutputTree(iparsetree, parser.InputStream as CommonTokenStream, false).ToString());
             }
         }
     }

@@ -1,23 +1,14 @@
-﻿using Antlr4.Runtime.Tree.Xpath;
-using org.eclipse.wst.xml.xpath2.processor.@internal.ast;
-using org.w3c.dom;
-using xpath.org.eclipse.wst.xml.xpath2.processor.@internal.ast;
-
-namespace org.eclipse.wst.xml.xpath2.processor.@internal
+﻿namespace org.eclipse.wst.xml.xpath2.processor.@internal
 {
+    using ast;
     using System;
-    using System.Text;
-    using System.Collections.Generic;
     using System.IO;
-    using System.Text.RegularExpressions;
-    using Antlr4.Runtime;
-    using Antlr4.Runtime.Misc;
-    using Antlr4.Runtime.Tree;
+    using System.Text;
 
     public class OutputXPathExpression
     {
-        private static int changed = 0;
-        private static bool first_time = true;
+        private int changed = 0;
+        private bool first_time = true;
 
         public StringBuilder OutputTree(XPathNode tree)
         {

@@ -52,7 +52,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 				var parser = new XPath31Parser(tokens);
                 parser.ErrorHandler = new BailErrorStrategy();
                 XPath31Parser.XpathContext parse_tree = parser.xpath();
-                var sb = Output.OutputTree(parse_tree, tokens);
+                var sb = new OutputParseTree().OutputTree(parse_tree, tokens, true);
                 System.Console.WriteLine("==============================");
                 System.Console.WriteLine("Parse tree for expression \"" + xpath + "\"");
 				System.Console.WriteLine(sb.ToString());
