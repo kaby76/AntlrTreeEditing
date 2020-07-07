@@ -10,7 +10,7 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal.ast
     public class PostfixExpr : StepExpr
     {
         private PrimaryExpr _pexpr;
-        private ICollection<Expr> _exprs;
+        private ICollection<ICollection<Expr>> _exprs;
 
         public virtual PrimaryExpr primary()
         {
@@ -22,7 +22,7 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal.ast
             return _exprs.GetEnumerator();
         }
 
-        public PostfixExpr(object pexpr, ICollection<Expr> exprs)
+        public PostfixExpr(object pexpr, ICollection<ICollection<Expr>> exprs)
         {
             _pexpr = (PrimaryExpr)pexpr;
             _exprs = exprs;
@@ -33,7 +33,7 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal.ast
             return v.visit(this);
         }
 
-        public virtual IEnumerator<Expr> iterator()
+        public virtual IEnumerator<ICollection<Expr>> iterator()
         {
             return _exprs.GetEnumerator();
         }
@@ -48,7 +48,11 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal.ast
         {
             var list = new List<XPathNode>();
             list.Add(_pexpr);
-            list.AddRange(_exprs.Select(t => (XPathNode) t).ToList());
+            foreach (var col in _exprs)
+            {
+                foreach (var e in col)
+                    list.Add((XPathNode)e);
+            }
             return list;
         }
 

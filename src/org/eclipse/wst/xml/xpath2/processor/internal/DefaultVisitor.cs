@@ -600,9 +600,11 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
         public object visit(PostfixExpr e)
         {
             e.primary().accept(this);
-            for (IEnumerator<Expr> i = e.iterator(); i.MoveNext();)
+            for (var i = e.iterator(); i.MoveNext();)
             {
-                i.Current.accept(this);
+                ICollection<Expr> x = i.Current;
+                foreach (Expr expr in x)
+                    expr.accept(this);
             }
             return e;
         }

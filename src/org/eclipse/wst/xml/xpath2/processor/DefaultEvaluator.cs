@@ -459,6 +459,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
             // execute step for all items in focus
             while (true)
             {
+				int current_pos = xfocus.position();
                 api.ResultSequence one_rs = do_expr(xp.GetEnumerator());
 				foreach (var c in one_rs)
                     results.Add(c);
@@ -2528,7 +2529,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		/// <returns> a result sequence </returns>
 		public virtual object visit(AxisStep e)
 		{
-            api.ResultSequence rs = (api.ResultSequence) e.step().accept(this);
+			api.ResultSequence rs = (api.ResultSequence) e.step().accept(this);
 
 			if (e.predicate_count() == 0)
 			{
@@ -2587,7 +2588,6 @@ namespace org.eclipse.wst.xml.xpath2.processor
 
 				set_focus(new Focus(rs));
 				rs = do_predicate((ICollection) i.Current);
-
 			}
 
 			// restore focus [context switching ;D ]
@@ -2618,12 +2618,11 @@ namespace org.eclipse.wst.xml.xpath2.processor
 
                 set_focus(new Focus(rs));
                 rs = do_predicate((ICollection)i.Current);
-
             }
 
             // restore focus [context switching ;D ]
             set_focus(original_focus);
-            return rs;
+			return rs;
         }
 	}
 

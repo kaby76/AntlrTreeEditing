@@ -1220,8 +1220,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 		public virtual object visit(FilterExpr e)
 		{
 			e.primary().accept(this);
-
-			visitCollExprs(e.GetEnumerator());
+            visitCollExprs(e.GetEnumerator());
 			return null;
 		}
 

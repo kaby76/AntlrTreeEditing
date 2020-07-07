@@ -781,24 +781,24 @@ namespace xpath.org.eclipse.wst.xml.xpath2.processor.@internal
         public override object VisitPostfixexpr(XPath31Parser.PostfixexprContext ctx)
         {
             var primaryexpr = VisitPrimaryexpr(ctx.primaryexpr());
-            var rest = new List<Expr>();
+            var rest = new List<ICollection<Expr>>();
             for (int i = 1; i < ctx.ChildCount; ++i)
             {
                 var c = ctx.GetChild(i);
                 if (c is XPath31Parser.PredicateContext)
                 {
                     var predicate = (ICollection<Expr>)VisitPredicate(c as XPath31Parser.PredicateContext);
-                    rest.AddRange(predicate);
+                    rest.Add(predicate);
                 }
                 else if (c is XPath31Parser.ArgumentlistContext)
                 {
                     var predicate = (ICollection<Expr>)VisitArgumentlist(c as XPath31Parser.ArgumentlistContext);
-                    rest.AddRange(predicate);
+                    rest.Add(predicate);
                 }
                 else if (c is XPath31Parser.LookupContext)
                 {
                     var predicate = (ICollection<Expr>)VisitLookup(c as XPath31Parser.LookupContext);
-                    rest.AddRange(predicate);
+                    rest.Add(predicate);
                 }
                 else throw new Exception();
             }
