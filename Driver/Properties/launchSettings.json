@@ -2,7 +2,7 @@
   "profiles": {
     "Driver": {
       "commandName": "Project",
-      "commandLineArgs": "$(ProjectDir)\\..\\AntlrDOM\\ANTLRv4Parser.g4"
+      "workingDirectory": "$(ProjectDir)"
     }
   }
 }
