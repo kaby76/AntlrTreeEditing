@@ -260,7 +260,40 @@ namespace ConsoleApp1
                 }
                 {
                     // Check for any rules that have direct left recursion!
-                    var e1 = engine.parseExpression("//(altList or labeledAlt)", new StaticContextBuilder());
+                    //               var e1 = engine.parseExpression("//.[node() = altList]", new StaticContextBuilder());
+                    var e1 = engine.parseExpression("//altList | //labeledAlt", new StaticContextBuilder());
+                    object[] c1 = new object[] { dynamicContext.Document };
+                    var rs1 = e1.evaluate(dynamicContext, c1);
+                    OutputResultSet(e1, rs1, parser);
+                    //object[] contexts = rs1.Select(t => (object)(t.NativeValue)).ToArray();
+                    //var expression = engine.parseExpression(
+                    //    ".[RULE_REF/text() = ruleBlock/ruleAltList/labeledAlt/alternative/*[name()='element'][1]/atom/ruleref/*[1]/text()]",
+                    //    new StaticContextBuilder());
+                    //var rs = expression.evaluate(dynamicContext, contexts);
+                    //OutputResultSet(expression, rs, parser);
+                    //int num = rs.size();
+                    //if (num != 1) throw new Exception();
+                }
+                {
+                    // Check for any rules that have direct left recursion!
+                    //               var e1 = engine.parseExpression("//.[node() = altList]", new StaticContextBuilder());
+                    var e1 = engine.parseExpression("(//altList | //labeledAlt)", new StaticContextBuilder());
+                    object[] c1 = new object[] { dynamicContext.Document };
+                    var rs1 = e1.evaluate(dynamicContext, c1);
+                    OutputResultSet(e1, rs1, parser);
+                    //object[] contexts = rs1.Select(t => (object)(t.NativeValue)).ToArray();
+                    //var expression = engine.parseExpression(
+                    //    ".[RULE_REF/text() = ruleBlock/ruleAltList/labeledAlt/alternative/*[name()='element'][1]/atom/ruleref/*[1]/text()]",
+                    //    new StaticContextBuilder());
+                    //var rs = expression.evaluate(dynamicContext, contexts);
+                    //OutputResultSet(expression, rs, parser);
+                    //int num = rs.size();
+                    //if (num != 1) throw new Exception();
+                }
+                {
+                    // Check for any rules that have direct left recursion!
+                    //               var e1 = engine.parseExpression("//.[node() = altList]", new StaticContextBuilder());
+                    var e1 = engine.parseExpression("(//altList | //labeledAlt)[@ChildCount = 1]", new StaticContextBuilder());
                     object[] c1 = new object[] { dynamicContext.Document };
                     var rs1 = e1.evaluate(dynamicContext, c1);
                     OutputResultSet(e1, rs1, parser);
