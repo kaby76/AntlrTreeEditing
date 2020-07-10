@@ -18,8 +18,15 @@ namespace ConsoleApp1
             {
                 org.eclipse.wst.xml.xpath2.processor.Engine engine = new Engine();
                 var input = System.IO.File.ReadAllText("../AntlrDOM/ANTLRv4Parser.g4");
-                var (tree, parser) = AntlrDOM.Parse.Try(input);
+                var (tree, parser, lexer) = AntlrDOM.Parse.Try(input);
                 AntlrDynamicContext dynamicContext = AntlrDOM.ConvertToDOM.Try(tree, parser);
+
+
+                {
+                    var c1 = new CTree.Class1(parser, lexer);
+                    var c2 = c1.ParseExpression("( ruleAltList ( labeledAlt ( alternative )))");
+                }
+
 
                 // Tests.
                 {
@@ -310,7 +317,7 @@ namespace ConsoleApp1
             {
                 org.eclipse.wst.xml.xpath2.processor.Engine engine = new Engine();
                 var input = System.IO.File.ReadAllText("../AntlrDOM/ANTLRv4Lexer.g4");
-                var (tree, parser) = AntlrDOM.Parse.Try(input);
+                var (tree, parser, lexer) = AntlrDOM.Parse.Try(input);
                 AntlrDynamicContext dynamicContext = AntlrDOM.ConvertToDOM.Try(tree, parser);
                 {
                     //  ( rules

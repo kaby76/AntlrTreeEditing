@@ -5,7 +5,7 @@
 
     public class Parse
     {
-        public static (IParseTree, Parser) Try(string input)
+        public static (IParseTree, Parser, Lexer) Try(string input)
         {
             var str = new AntlrInputStream(input);
             var lexer = new ANTLRv4Lexer(str);
@@ -24,7 +24,7 @@
             }
             System.Console.WriteLine(tokens.OutputTokens());
             System.Console.WriteLine(tree.OutputTree(tokens));
-            return (tree, parser);
+            return (tree, parser, lexer);
         }
     }
 }

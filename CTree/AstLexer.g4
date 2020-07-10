@@ -8,6 +8,8 @@ DELIMITED_COMMENT:       '/*'  .*? '*/'           -> channel(COMMENTS_CHANNEL);
 
 OPEN_PAREN      :       '(';
 CLOSE_PAREN     :       ')';
+OPEN_CURLY      :       '{';
+CLOSE_CURLY     :       '}';
 EQUALS          :       '=';
 StringLiteral   :       '"' ( Escape | ~('"' | '\n' | '\r') )* '"';
 ID              :       [a-zA-Z_1234567890.]+ ;
