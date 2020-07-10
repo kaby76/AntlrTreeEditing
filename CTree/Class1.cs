@@ -2,6 +2,7 @@
 using Antlr4.Runtime.Tree;
 using Runtime;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
@@ -11,14 +12,16 @@ namespace CTree
     {
         private Parser _parser;
         private Lexer _lexer;
+        private Dictionary<string, IParseTree> _env;
 
-        public Class1(Parser parser, Lexer lexer)
+        public Class1(Parser parser, Lexer lexer, Dictionary<string, IParseTree> env)
         {
             _parser = parser;
             _lexer = lexer;
+            _env = env;
         }
 
-        public IParseTree ParseExpression(string ast_string)
+        public IParseTree CreateTree(string ast_string)
         {
             IParseTree result = null;
             var ast_stream = CharStreams.fromstring(ast_string);
@@ -78,7 +81,8 @@ namespace CTree
         public override ParserRuleContext VisitVal(AstParserParser.ValContext context)
         {
             var id = context.ID();
-            return null;
+            var id_name = id.GetText();
+            return (ParserRuleContext)_env[id_name];
         }
     }
 }

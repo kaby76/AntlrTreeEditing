@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Antlr4.Runtime.Tree;
 using org.eclipse.wst.xml.xpath2.api;
 
 namespace ConsoleApp1
@@ -23,8 +24,8 @@ namespace ConsoleApp1
 
 
                 {
-                    var c1 = new CTree.Class1(parser, lexer);
-                    var c2 = c1.ParseExpression("( ruleAltList ( labeledAlt ( alternative )))");
+                    var c1 = new CTree.Class1(parser, lexer, new Dictionary<string, IParseTree>());
+                    var c2 = c1.CreateTree("( ruleAltList ( labeledAlt ( alternative )))");
                 }
 
 
