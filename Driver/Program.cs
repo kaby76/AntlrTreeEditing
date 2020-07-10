@@ -247,9 +247,9 @@ namespace ConsoleApp1
                 {
                     // Check for any rules that have direct left recursion!
                     var e1 = engine.parseExpression("//parserRuleSpec", new StaticContextBuilder());
-                    object[] c1 = new object[] {dynamicContext.Document};
+                    object[] c1 = new object[] { dynamicContext.Document };
                     var rs1 = e1.evaluate(dynamicContext, c1);
-                    object[] contexts = rs1.Select(t => (object) (t.NativeValue)).ToArray();
+                    object[] contexts = rs1.Select(t => (object)(t.NativeValue)).ToArray();
                     var expression = engine.parseExpression(
                         ".[RULE_REF/text() = ruleBlock/ruleAltList/labeledAlt/alternative/*[name()='element'][1]/atom/ruleref/*[1]/text()]",
                         new StaticContextBuilder());
@@ -257,6 +257,21 @@ namespace ConsoleApp1
                     OutputResultSet(expression, rs, parser);
                     int num = rs.size();
                     if (num != 1) throw new Exception();
+                }
+                {
+                    // Check for any rules that have direct left recursion!
+                    var e1 = engine.parseExpression("//(altList or labeledAlt)", new StaticContextBuilder());
+                    object[] c1 = new object[] { dynamicContext.Document };
+                    var rs1 = e1.evaluate(dynamicContext, c1);
+                    OutputResultSet(e1, rs1, parser);
+                    //object[] contexts = rs1.Select(t => (object)(t.NativeValue)).ToArray();
+                    //var expression = engine.parseExpression(
+                    //    ".[RULE_REF/text() = ruleBlock/ruleAltList/labeledAlt/alternative/*[name()='element'][1]/atom/ruleref/*[1]/text()]",
+                    //    new StaticContextBuilder());
+                    //var rs = expression.evaluate(dynamicContext, contexts);
+                    //OutputResultSet(expression, rs, parser);
+                    //int num = rs.size();
+                    //if (num != 1) throw new Exception();
                 }
             }
             {
@@ -321,7 +336,7 @@ namespace ConsoleApp1
                     //  ) ) ) )
                     // Find lexer rules with RHS symbol that is only keyword chars.
                     var e1 = engine.parseExpression("//lexerRuleSpec//lexerRuleBlock//STRING_LITERAL", new StaticContextBuilder());
-                    object[] c1 = new object[] {dynamicContext.Document};
+                    object[] c1 = new object[] { dynamicContext.Document };
                     var rs1 = e1.evaluate(dynamicContext, c1);
 
                     foreach (var t in rs1)
@@ -340,6 +355,18 @@ namespace ConsoleApp1
                         }
                         if (ok) System.Console.WriteLine(native.AntlrIParseTree.Parent.Parent.Parent.Parent.Parent.Parent.Parent.Parent.GetText());
                     }
+                }
+                {
+                    var e1 = engine.parseExpression("//lexerRuleSpec/lexerRuleBlock/lexerAltList[count(*) = 1]/lexerAlt/lexerElements[count(*) = 1]/lexerElement[count(*) = 1]/lexerAtom/terminal/STRING_LITERAL", new StaticContextBuilder());
+                    object[] c1 = new object[] { dynamicContext.Document };
+                    var rs1 = e1.evaluate(dynamicContext, c1);
+                    object[] contexts = rs1.Select(t => (object)(t.NativeValue)).ToArray();
+                    var expression = engine.parseExpression(
+                        "./../../../../../../../../TOKEN_REF",
+                        new StaticContextBuilder());
+                    var rs = expression.evaluate(dynamicContext, contexts);
+                    OutputResultSet(expression, rs, parser);
+                    int num = rs.size();
                 }
             }
         }

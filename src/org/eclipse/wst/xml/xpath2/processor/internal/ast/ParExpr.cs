@@ -58,17 +58,22 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.ast
 
         public IEnumerator GetEnumerator()
         {
-            throw new System.NotImplementedException();
+            return _exprs.GetEnumerator();
         }
 
-        public override ICollection<XPathNode> GetAllChildren()
+		public override ICollection<XPathNode> GetAllChildren()
         {
-            throw new System.NotImplementedException();
+			var list = new List<XPathNode>();
+            foreach (var x in _exprs)
+            {
+				list.Add(x);
+            }
+            return list;
         }
 
         public override string QuickInfo()
         {
-            throw new System.NotImplementedException();
+            return "";
         }
     }
 
