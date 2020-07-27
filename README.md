@@ -1,3 +1,3 @@
-# XPath-CSharp
+# XPath-Antlr
 
-Port of Eclipse XPath to C#.
+Port of Eclipse XPath2 to C# for Antlr.
