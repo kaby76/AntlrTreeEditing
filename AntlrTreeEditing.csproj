@@ -2,6 +2,21 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+	  <RootNamespace>AntlrTreeEditing</RootNamespace>
+	  <AssemblyName>AntlrTreeEditing</AssemblyName>
+	  <PackageId>AntlrTreeEditing</PackageId>
+	  <Version>1.0</Version>
+	  <Authors>Ken Domino</Authors>
+	  <Product />
+	  <Description></Description>
+	  <Copyright>Copyright © 2020</Copyright>
+	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
+	  <PackageProjectUrl>https://github.com/kaby76/AntlrTreeEditing</PackageProjectUrl>
+	  <RepositoryUrl>https://github.com/kaby76/AntlrTreeEditing</RepositoryUrl>
+	  <RepositoryType>Git</RepositoryType>
+	  <PackageTags>Antlr</PackageTags>
+	  <PackageReleaseNotes>For further information, see https://github.com/kaby76/AntlrTreeEditing.</PackageReleaseNotes>
+	  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>

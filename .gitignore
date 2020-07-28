@@ -25,3 +25,5 @@ Driver/obj/
 AntlrDOM/bin/
 CTree/bin/
 CTree/obj/
+bin/
+obj/
