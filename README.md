@@ -8,9 +8,9 @@ trees was not necessary because the focus was parsing, information
 extraction, and translation. For information extraction, Antlr
 includes a rudimentary XPath engine, but it's a far cry from
 XPath v1 let alone XPath v3. For translation, Parr assumes you would
-be using string templates, and something like ASF+SDF in the future.
+be using string templates, or possibly something like ASF+SDF in the future.
 Antlr does itself perform some tree rewriting, but it does so
-"manually".
+"manually". The methods are cumbersome and error-prone when used.
 
 This library tries to fill in some practical methods for
 searching and editing parse trees. It contains:
