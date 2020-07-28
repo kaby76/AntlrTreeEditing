@@ -18,7 +18,8 @@ ASF+SDF with a few practical routines. It contains:
 
 * a repurposed and clean up port of the Eclipse XPath v2 for use with
 Antlr parse trees;
-* a tree construction method from a s-expression abbreviation;
+* a tree construction method from an s-expression notation and
+an Antlr parser and lexer;
 * node replace and delete methods.
 * an observer parse tree node so as to allow notification of observers
 when a parse tree changes.
