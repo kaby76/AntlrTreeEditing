@@ -1,7 +1,8 @@
 # AntlrTreeEditing
 
 This library contains a collection of routines for editing
-Antlr parse trees. As noted by Parr, Antlr4 does not have
+Antlr parse trees. [As noted by Parr](https://theantlrguy.atlassian.net/wiki/spaces/~admin/blog/2012/12/08/524353/Tree+rewriting+in+ANTLR+v4),
+Antlr4 does not have
 methods to do tree transformations. Parr felt that editing
 trees was not necessary because the focus was parsing, information
 extraction, and translation. For information extraction, Antlr
