@@ -12,8 +12,9 @@ be using string templates, or possibly something like ASF+SDF in the future.
 Antlr does itself perform some tree rewriting, but it does so
 "manually". The methods are cumbersome and error-prone when used.
 
-This library tries to fill in some practical methods for
-searching and editing parse trees. It contains:
+This library tries to fill in the gap slightly between the very low-level 
+parse node editing methods and a full-blown transformation system like
+ASF+SDF with a few practical routines. It contains:
 
 * a repurposed and clean up port of the Eclipse XPath v2 for use with
 Antlr parse trees;
