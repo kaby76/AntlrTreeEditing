@@ -229,4 +229,4 @@ eqname : QName | URIQualifiedName
  | KW_UNION
  ;
 
-auxilary : (expr NL+ )+ EOF;
+auxilary : (expr SEMI )+ EOF;

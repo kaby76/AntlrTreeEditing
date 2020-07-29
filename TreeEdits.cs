@@ -184,6 +184,39 @@ namespace LanguageServer
             }
         }
 
+        public static void Delete(IParseTree tree)
+        {
+            var n = tree;
+            IParseTree parent = n.Parent;
+            var c = parent as ParserRuleContext;
+            if (c != null)
+            {
+                for (int i = 0; i < c.ChildCount; ++i)
+                {
+                    var child = c.children[i];
+                    if (child == n)
+                    {
+                        var temp = c.children[i];
+                        if (temp is TerminalNodeImpl)
+                        {
+                            var t = temp as TerminalNodeImpl;
+                            t.Parent = null;
+                            c.children.RemoveAt(i);
+                        }
+                        else if (temp is ParserRuleContext)
+                        {
+                            var t = temp as ParserRuleContext;
+                            t.Parent = null;
+                            c.children.RemoveAt(i);
+                        }
+                        else
+                            throw new Exception("Tree contains something other than TerminalNodeImpl or ParserRuleContext");
+                        break;
+                    }
+                }
+            }
+        }
+
         public static TerminalNodeImpl LeftMostToken(IParseTree tree)
         {
             if (tree is TerminalNodeImpl)

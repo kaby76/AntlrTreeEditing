@@ -168,6 +168,7 @@ fragment FragChar : '\u0009' | '\u000a' | '\u000d'
   | '\u{10000}'..'\u{10ffff}'
  ;
 
-NL : ('\u000d' | '\u000a')+;
-
 Whitespace :  ('\u000d' | '\u000a' | '\u0020' | '\u0009')+ -> skip ;
+
+// Not per spec. Specified for testing.
+SEMI : ';' ;
