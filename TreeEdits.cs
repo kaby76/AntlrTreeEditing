@@ -38,6 +38,7 @@ namespace LanguageServer
 
         public static void Replace(IParseTree tree, Fun find)
         {
+            if (tree == null) return;
             Stack<IParseTree> stack = new Stack<IParseTree>();
             stack.Push(tree);
             while (stack.Any())
@@ -92,6 +93,45 @@ namespace LanguageServer
             }
         }
 
+        public static void Replace(IParseTree tree, IParseTree found)
+        {
+            if (tree == null) return;
+            if (found == null) return;
+            var n = tree;
+            IParseTree parent = n.Parent;
+            var c = parent as ParserRuleContext;
+            if (c != null)
+            {
+                for (int i = 0; i < c.ChildCount; ++i)
+                {
+                    var child = c.children[i];
+                    if (child == n)
+                    {
+                        var temp = c.children[i];
+                        if (temp is TerminalNodeImpl)
+                        {
+                            var t = temp as TerminalNodeImpl;
+                            t.Parent = null;
+                            c.children[i] = found;
+                            var r = found as TerminalNodeImpl;
+                            r.Parent = c;
+                        }
+                        else if (temp is ParserRuleContext)
+                        {
+                            var t = temp as ParserRuleContext;
+                            t.Parent = null;
+                            c.children[i] = found;
+                            var r = found as ParserRuleContext;
+                            r.Parent = c;
+                        }
+                        else
+                            throw new Exception("Tree contains something other than TerminalNodeImpl or ParserRuleContext");
+                        break;
+                    }
+                }
+            }
+        }
+
         public static bool InsertAfter(IParseTree tree, Func<IParseTree, IParseTree> insert_point)
         {
             var insert_this = insert_point(tree);
@@ -134,6 +174,7 @@ namespace LanguageServer
 
         public static void Delete(IParseTree tree, Fun find)
         {
+            if (tree == null) return;
             Stack<IParseTree> stack = new Stack<IParseTree>();
             stack.Push(tree);
             while (stack.Any())
@@ -186,6 +227,7 @@ namespace LanguageServer
 
         public static void Delete(IParseTree tree)
         {
+            if (tree == null) return;
             var n = tree;
             IParseTree parent = n.Parent;
             var c = parent as ParserRuleContext;
