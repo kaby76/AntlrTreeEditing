@@ -259,6 +259,11 @@ namespace LanguageServer
             }
         }
 
+        public static void Delete(IEnumerable<IParseTree> trees)
+        {
+            foreach (var t in trees) Delete(t);
+        }
+
         public static TerminalNodeImpl LeftMostToken(IParseTree tree)
         {
             if (tree is TerminalNodeImpl)
