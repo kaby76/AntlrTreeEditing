@@ -136,6 +136,18 @@
                     convert.ParentNode = result;
                 }
 
+
+                for (int i = 0; i < nl.Length; ++i)
+                {
+                    var x = nl._node_list[i];
+                    if (i > 0)
+                    {
+                        var pre = nl._node_list[i - 1];
+                        x.PreviousSibling = pre;
+                        pre.NextSibling = x;
+                    }
+                }
+
                 return result;
             }
         }
