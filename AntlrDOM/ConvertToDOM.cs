@@ -73,7 +73,7 @@
             {
                 var result = new AntlrElement();
                 var t = tree as ObserverParserRuleContext;
-                t.Subscribe(result);
+                if (t != null) t.Subscribe(result);
                 result.AntlrIParseTree = tree;
                 result.NodeType = NodeConstants.ELEMENT_NODE;
                 var fixed_name = tree.GetType().ToString()

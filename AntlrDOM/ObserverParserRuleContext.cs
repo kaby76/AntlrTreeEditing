@@ -10,6 +10,11 @@
     {
         private List<IAntlrObserver> observers;
 
+        public IEnumerable<IAntlrObserver> Observers
+        {
+            get { return observers; }
+        }
+
         public ObserverParserRuleContext(ParserRuleContext parent, int invokingState)
             : base(parent, invokingState)
         {
