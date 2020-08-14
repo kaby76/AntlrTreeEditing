@@ -437,5 +437,48 @@ namespace LanguageServer
                 }
             }
         }
+
+        public static void AddChildren(IParseTree parent, List<IParseTree> list)
+        {
+            foreach (var mc in list)
+            {
+                if (mc is TerminalNodeImpl)
+                {
+                    var _mc = mc as TerminalNodeImpl;
+                    var _mapped_node = parent as ParserRuleContext;
+                    _mc.Parent = _mapped_node;
+                    _mapped_node.AddChild(_mc);
+                }
+                else
+                {
+                    var _mc = mc as ParserRuleContext;
+                    var _mapped_node = parent as ParserRuleContext;
+                    _mc.Parent = _mapped_node;
+                    _mapped_node.AddChild(_mc);
+                }
+            }
+
+        }
+
+        public static void AddChildren(IParseTree parent, IParseTree child)
+        {
+            var mc = child;
+            {
+                if (mc is TerminalNodeImpl)
+                {
+                    var _mc = mc as TerminalNodeImpl;
+                    var _mapped_node = parent as ParserRuleContext;
+                    _mc.Parent = _mapped_node;
+                    _mapped_node.AddChild(_mc);
+                }
+                else
+                {
+                    var _mc = mc as ParserRuleContext;
+                    var _mapped_node = parent as ParserRuleContext;
+                    _mc.Parent = _mapped_node;
+                    _mapped_node.AddChild(_mc);
+                }
+            }
+        }
     }
 }
