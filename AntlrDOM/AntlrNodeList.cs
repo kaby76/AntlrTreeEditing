@@ -23,5 +23,12 @@
         {
             _node_list.Add(e);
         }
+
+        public void Delete(AntlrNode e)
+        {
+            if (_node_list.Contains(e))
+                _node_list.Remove(e);
+        }
+
     }
 }

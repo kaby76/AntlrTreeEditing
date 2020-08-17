@@ -91,13 +91,6 @@
             }
         }
 
-        public IDisposable Subscribe(IAntlrObserver observer)
-        {
-            if (!observers.Contains(observer))
-                observers.Add(observer);
-            return new Unsubscriber(observers, observer);
-        }
-
         private class Unsubscriber : IDisposable
         {
             private List<IAntlrObserver> _observers;
@@ -165,9 +158,80 @@
             observers.Clear();
         }
 
+        public IDisposable Subscribe(IAntlrObserver observer)
+        {
+            if (!observers.Contains(observer))
+            {
+                observers.Add(observer);
+            }
+            return new Unsubscriber(observers, observer);
+        }
+
+        public void Unsubscribe(IAntlrObserver observer)
+        {
+            if (observers.Contains(observer))
+            {
+                observers.Remove(observer);
+            }
+        }
+
         public IDisposable Subscribe(IObserver<ObserverParserRuleContext> observer)
         {
             throw new NotImplementedException();
+        }
+    }
+
+    public class ObserverTerminalNodeImpl : TerminalNodeImpl, IAntlrObservable
+    {
+        private List<IAntlrObserver> observers;
+
+        public IEnumerable<IAntlrObserver> Observers
+        {
+            get { return observers; }
+        }
+
+        public ObserverTerminalNodeImpl(IToken token) : base(token)
+        {
+            observers = new List<IAntlrObserver>();
+        }
+
+        public IDisposable Subscribe(IAntlrObserver observer)
+        {
+            if (!observers.Contains(observer))
+            {
+                observers.Add(observer);
+            }
+            return new Unsubscriber(observers, observer);
+        }
+
+        public void Unsubscribe(IAntlrObserver observer)
+        {
+            if (observers.Contains(observer))
+            {
+                observers.Remove(observer);
+            }
+        }
+        public IDisposable Subscribe(IObserver<ObserverParserRuleContext> observer)
+        {
+            throw new NotImplementedException();
+        }
+
+        private class Unsubscriber : IDisposable
+        {
+            private List<IAntlrObserver> _observers;
+            private IAntlrObserver _observer;
+
+            public Unsubscriber(List<IAntlrObserver> observers, IAntlrObserver observer)
+            {
+                this._observers = observers;
+                this._observer = observer;
+            }
+
+            public void Dispose()
+            {
+                if (_observer != null && _observers.Contains(_observer))
+                    _observers.Remove(_observer);
+            }
         }
     }
 }

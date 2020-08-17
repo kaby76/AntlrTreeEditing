@@ -5,7 +5,7 @@ using System.Text;
 
 namespace AntlrTreeEditing.AntlrDOM
 {
-    public interface IAntlrObserver : IObserver<ObserverParserRuleContext>
+    public interface IAntlrObserver : IObserver<ObserverParserRuleContext>, IDisposable
     {
         void OnParentDisconnect(IParseTree value);
         void OnParentConnect(IParseTree value);

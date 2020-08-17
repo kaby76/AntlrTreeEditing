@@ -144,7 +144,7 @@ namespace LanguageServer
                     var child = c.children[i];
                     if (child == tree)
                     {
-                        c.children.Insert(i+1, insert_this);
+                        c.children.Insert(i + 1, insert_this);
                         var r = insert_this as ParserRuleContext;
                         r.Parent = c;
                         break;
@@ -479,6 +479,31 @@ namespace LanguageServer
                     _mapped_node.AddChild(_mc);
                 }
             }
+        }
+
+        public static TerminalNodeImpl Find(IToken token, IParseTree tree)
+        {
+            if (tree == null) return null;
+            Stack<IParseTree> stack = new Stack<IParseTree>();
+            stack.Push(tree);
+            while (stack.Any())
+            {
+                var n = stack.Pop();
+                if (n is TerminalNodeImpl term)
+                {
+                    if (term.Symbol == token)
+                        return term;
+                }
+                else
+                {
+                    for (int i = n.ChildCount - 1; i >= 0; --i)
+                    {
+                        var c = n.GetChild(i);
+                        stack.Push(c);
+                    }
+                }
+            }
+            return null;
         }
     }
 }

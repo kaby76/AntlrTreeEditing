@@ -4,7 +4,7 @@
     using org.w3c.dom;
     using System;
 
-    public class AntlrNode : Node
+    public class AntlrNode : Node, IAntlrObserver
     {
         public IParseTree AntlrIParseTree { get; set; }
         public short NodeType { get; set; }
@@ -42,6 +42,61 @@
         public bool hasAttributes()
         {
             throw new NotImplementedException();
+        }
+
+        public void OnParentDisconnect(IParseTree value)
+        {
+            if (ParentNode != null)
+            {
+                AntlrNodeList children = ParentNode.ChildNodes as AntlrNodeList;
+                children.Delete(this);
+            }
+            ParentNode = null;
+        }
+
+        public void OnParentConnect(IParseTree value)
+        {
+        }
+
+        public void OnChildDisconnect(IParseTree value)
+        {
+        }
+
+        public void OnChildConnect(IParseTree value)
+        {
+        }
+
+        public void OnCompleted()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnError(Exception error)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnNext(ObserverParserRuleContext value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Dispose()
+        {
+            var tree = AntlrIParseTree as ObserverParserRuleContext;
+            if (tree != null)
+            {
+                tree.Unsubscribe(this);
+            }
+            if (ChildNodes != null)
+            {
+                for (int i = 0; i < ChildNodes.Length; ++i)
+                {
+                    Node c = ChildNodes.item(i);
+                    var cc = c as AntlrNode;
+                    cc?.Dispose();
+                }
+            }
         }
     }
 }
