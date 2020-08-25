@@ -505,5 +505,87 @@ namespace LanguageServer
             }
             return null;
         }
+
+        // Insert the string as a token, with the expectation that the entire tree
+        // will be printed and re-parsed in the target language.
+        public static void InsertBefore(IParseTree node, string arbitrary_string)
+        {
+            var token = new CommonToken(0) { Line = -1, Column = -1, Text = arbitrary_string };
+            var leaf = new TerminalNodeImpl(token);
+
+            IParseTree parent = node.Parent;
+            var c = parent as ParserRuleContext;
+            for (int i = 0; i < c.ChildCount; ++i)
+            {
+                var child = c.children[i];
+                if (child == node)
+                {
+                    c.children.Insert(i, leaf);
+                    var r = leaf as TerminalNodeImpl;
+                    r.Parent = c;
+                    break;
+                }
+            }
+        }
+
+        // Insert the string as a token, with the expectation that the entire tree
+        // will be printed and re-parsed in the target language.
+        public static void InsertAfter(IParseTree node, string arbitrary_string)
+        {
+            var token = new CommonToken(0) { Line = -1, Column = -1, Text = arbitrary_string };
+            var leaf = new TerminalNodeImpl(token);
+
+            IParseTree parent = node.Parent;
+            var c = parent as ParserRuleContext;
+            for (int i = 0; i < c.ChildCount; ++i)
+            {
+                var child = c.children[i];
+                if (child == node)
+                {
+                    c.children.Insert(i + 1, leaf);
+                    var r = leaf as TerminalNodeImpl;
+                    r.Parent = c;
+                    break;
+                }
+            }
+        }
+
+        // Insert the string as a token, with the expectation that the entire tree
+        // will be printed and re-parsed in the target language.
+        public static void Replace(IParseTree node, string arbitrary_string)
+        {
+            var token = new CommonToken(0) { Line = -1, Column = -1, Text = arbitrary_string };
+            var leaf = new TerminalNodeImpl(token);
+
+            IParseTree parent = node.Parent;
+            var c = parent as ParserRuleContext;
+            for (int i = 0; i < c.ChildCount; ++i)
+            {
+                var child = c.children[i];
+                if (child == node)
+                {
+                    var temp = c.children[i];
+                    if (temp is TerminalNodeImpl)
+                    {
+                        var t = temp as TerminalNodeImpl;
+                        t.Parent = null;
+                        c.children[i] = leaf;
+                        var r = leaf;
+                        r.Parent = c;
+                    }
+                    else if (temp is ParserRuleContext)
+                    {
+                        var t = temp as ParserRuleContext;
+                        t.Parent = null;
+                        c.children[i] = leaf;
+                        var r = leaf;
+                        r.Parent = c;
+                    }
+                    else
+                        throw new Exception("Tree contains something other than TerminalNodeImpl or ParserRuleContext");
+                    break;
+                }
+            }
+        }
     }
 }
