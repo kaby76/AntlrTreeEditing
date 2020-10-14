@@ -587,5 +587,46 @@ namespace LanguageServer
                 }
             }
         }
+
+        // Insert the tree after another given node.
+        public static void InsertAfter(IParseTree node, IParseTree node_to_insert)
+        {
+            IParseTree parent = node.Parent;
+            var c = parent as ParserRuleContext;
+            for (int i = 0; i < c.ChildCount; ++i)
+            {
+                var child = c.children[i];
+                if (child == node)
+                {
+                    c.children.Insert(i + 1, node_to_insert);
+                    var r1 = node_to_insert as TerminalNodeImpl;
+                    var r2 = node_to_insert as ParserRuleContext;
+                    if (r1 != null) r1.Parent = c;
+                    else if (r2 != null) r2.Parent = c;
+                    break;
+                }
+            }
+        }
+
+        // Insert the tree after another given node.
+        public static void InsertBefore(IParseTree node, IParseTree node_to_insert)
+        {
+            IParseTree parent = node.Parent;
+            var c = parent as ParserRuleContext;
+            for (int i = 0; i < c.ChildCount; ++i)
+            {
+                var child = c.children[i];
+                if (child == node)
+                {
+                    c.children.Insert(i, node_to_insert);
+                    var r1 = node_to_insert as TerminalNodeImpl;
+                    var r2 = node_to_insert as ParserRuleContext;
+                    if (r1 != null) r1.Parent = c;
+                    else if (r2 != null) r2.Parent = c;
+                    break;
+                }
+            }
+        }
+
     }
 }
