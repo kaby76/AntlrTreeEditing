@@ -6,6 +6,8 @@
 
     public class AntlrNode : Node, IAntlrObserver
     {
+        private AntlrNode() { }
+        public AntlrNode(IParseTree n) { AntlrIParseTree = n; }
         public IParseTree AntlrIParseTree { get; set; }
         public short NodeType { get; set; }
         public string LocalName { get; set; }

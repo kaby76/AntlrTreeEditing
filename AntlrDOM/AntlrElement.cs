@@ -6,9 +6,8 @@
 
     public class AntlrElement : AntlrNode, Element
     {
-        public AntlrElement()
-        {
-        }
+        private AntlrElement() : base(null) { }
+        public AntlrElement(IParseTree n) : base(n) { }
 
         public object getAttributeNS(string sCHEMA_INSTANCE, string nIL_ATTRIBUTE)
         {
