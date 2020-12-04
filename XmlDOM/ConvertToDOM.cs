@@ -81,13 +81,10 @@ namespace XmlDOM
                 var t = tree as ParserRuleContext;
                 result.AntlrIParseTree = tree;
                 result.NodeType = NodeConstants.ELEMENT_NODE;
-                var fixed_name = tree.GetType().ToString()
-                    .Replace("Antlr4.Runtime.Tree.", "");
-                fixed_name = Regex.Replace(fixed_name, "^.*[+]", "");
-                fixed_name = fixed_name.Substring(0, fixed_name.Length - "Context".Length);
-                fixed_name = fixed_name[0].ToString().ToLower()
-                             + fixed_name.Substring(1);
-                result.LocalName = fixed_name;
+                var x = tree as RuleContext;
+                var ri = x.RuleIndex;
+                var name = parser.RuleNames[ri];
+                result.LocalName = name;
                 var nl = new AntlrNodeList();
                 result.ChildNodes = nl;
 

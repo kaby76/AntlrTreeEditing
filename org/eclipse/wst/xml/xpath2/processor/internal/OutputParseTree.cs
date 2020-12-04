@@ -25,16 +25,16 @@
             return sb;
         }
 
-        public StringBuilder OutputTree(IParseTree tree, CommonTokenStream stream, bool do_hidden_tokens)
+        public StringBuilder OutputTree(IParseTree tree, CommonTokenStream stream, Parser parser, bool do_hidden_tokens)
         {
             var sb = new StringBuilder();
             changed = 0;
             first_time = true;
-            ParenthesizedAST(tree, sb, stream, do_hidden_tokens);
+            ParenthesizedAST(tree, parser, sb, stream, do_hidden_tokens);
             return sb;
         }
 
-        private void ParenthesizedAST(IParseTree tree, StringBuilder sb, CommonTokenStream stream, bool do_hidden_tokens, int level = 0)
+        private void ParenthesizedAST(IParseTree tree, Parser parser, StringBuilder sb, CommonTokenStream stream, bool do_hidden_tokens, int level = 0)
         {
             // Antlr always names a non-terminal with first letter lowercase,
             // but renames it when creating the type in C#. So, remove the prefix,
@@ -64,20 +64,16 @@
             }
             else
             {
-                var fixed_name = tree.GetType().ToString()
-                    .Replace("Antlr4.Runtime.Tree.", "");
-                fixed_name = Regex.Replace(fixed_name, "^.*[+]", "");
-                fixed_name = fixed_name.Substring(0, fixed_name.Length - "Context".Length);
-                fixed_name = fixed_name[0].ToString().ToLower()
-                             + fixed_name.Substring(1);
+                var t = tree as RuleContext;
+                var name = parser.RuleNames[t.RuleIndex];
                 StartLine(sb, tree, stream, level);
-                sb.Append("( " + fixed_name);
+                sb.Append("( " + name);
                 sb.AppendLine();
             }
             for (int i = 0; i < tree.ChildCount; ++i)
             {
                 var c = tree.GetChild(i);
-                ParenthesizedAST(c, sb, stream, do_hidden_tokens, level + 1);
+                ParenthesizedAST(c, parser, sb, stream, do_hidden_tokens, level + 1);
             }
             if (level == 0)
             {

@@ -95,13 +95,8 @@
                 if (t != null) t.Subscribe(result);
                 //result.AntlrIParseTree = tree;
                 result.NodeType = NodeConstants.ELEMENT_NODE;
-                var fixed_name = tree.GetType().ToString()
-                    .Replace("Antlr4.Runtime.Tree.", "");
-                fixed_name = Regex.Replace(fixed_name, "^.*[+]", "");
-                fixed_name = fixed_name.Substring(0, fixed_name.Length - "Context".Length);
-                fixed_name = fixed_name[0].ToString().ToLower()
-                             + fixed_name.Substring(1);
-                result.LocalName = fixed_name;
+                var name = parser.RuleNames[(tree as RuleContext).RuleIndex];
+                result.LocalName = name;
                 var nl = new AntlrNodeList();
                 result.ChildNodes = nl;
                 var map = new AntlrNamedNodeMap();

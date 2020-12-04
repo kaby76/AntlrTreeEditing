@@ -52,7 +52,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 				var parser = new XPath31Parser(tokens);
                 parser.ErrorHandler = new BailErrorStrategy();
                 XPath31Parser.XpathContext parse_tree = parser.xpath();
-                var sb = new OutputParseTree().OutputTree(parse_tree, tokens, true);
+                var sb = new OutputParseTree().OutputTree(parse_tree, tokens, parser, true);
                 //System.Console.WriteLine("==============================");
                 //System.Console.WriteLine("Parse tree for expression \"" + xpath + "\"");
 				//System.Console.WriteLine(sb.ToString());
@@ -61,7 +61,6 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
                 var visitor = XPathBuilderVisitor.INSTANCE;
                 var xPath2 = (XPath)visitor.VisitXpath(parse_tree);
                 xPath2.Expression = xpath;
-
                 var o = new org.eclipse.wst.xml.xpath2.processor.@internal.OutputXPathExpression();
                 var sb2 = o.OutputTree(xPath2);
                 //System.Console.WriteLine("==============================");
