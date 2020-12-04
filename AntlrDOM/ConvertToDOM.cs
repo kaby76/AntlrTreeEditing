@@ -56,8 +56,6 @@
                 TerminalNodeImpl t = tree as TerminalNodeImpl;
                 Interval interval = t.SourceInterval;
                 result.NodeType = NodeConstants.ELEMENT_NODE;
-                var common_token_stream = parser.InputStream as CommonTokenStream;
-                var lexer = common_token_stream.TokenSource as Lexer;
                 var fixed_name = parser.Vocabulary.GetSymbolicName(t.Symbol.Type);
                 result.LocalName = fixed_name;
                 var nl = new AntlrNodeList();
@@ -110,7 +108,7 @@
                 result.Attributes = map;
                 {
                     var attr = new AntlrAttr(null);
-                    var child_count = t.ChildCount;
+                    var child_count = tree.ChildCount;
                     attr.NodeType = NodeConstants.ATTRIBUTE_NODE;
                     attr.Name = "ChildCount";
                     attr.LocalName = "ChildCount";
@@ -122,7 +120,7 @@
                 {
                     var attr = new AntlrAttr(null);
                     attr.NodeType = NodeConstants.ATTRIBUTE_NODE;
-                    var source_interval = t.SourceInterval;
+                    var source_interval = tree.SourceInterval;
                     var a = source_interval.a;
                     var b = source_interval.b;
                     attr.Name = "Start";
@@ -135,7 +133,7 @@
                 {
                     var attr = new AntlrAttr(null);
                     attr.NodeType = NodeConstants.ATTRIBUTE_NODE;
-                    var source_interval = t.SourceInterval;
+                    var source_interval = tree.SourceInterval;
                     var a = source_interval.a;
                     var b = source_interval.b;
                     attr.Name = "End";
