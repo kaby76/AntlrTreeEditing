@@ -1062,7 +1062,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 			//{
 
 			//}
-			return null;
+			//return null;
 		}
 
 		private ResultSequence minusXSYearMonthDuration(Item at)

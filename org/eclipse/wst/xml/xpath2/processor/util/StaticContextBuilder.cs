@@ -139,7 +139,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.util
 				return null;
 			}
 
-			public virtual string getNamespaceURI(string prefix)
+			public override string getNamespaceURI(string prefix)
 			{
 				string ns = outerInstance._namespaces[prefix];
 				if (string.ReferenceEquals(ns, null))

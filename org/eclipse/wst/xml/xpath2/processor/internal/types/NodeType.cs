@@ -155,7 +155,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 
 			// for unknown unsupported implementations
             throw new Exception();  // KED you should not have this.
-            return null;
+            //return null;
 		}
 
 //		public static org.eclipse.wst.xml.xpath2.processor.ResultSequence eliminate_dups(org.eclipse.wst.xml.xpath2.processor.ResultSequence rs)

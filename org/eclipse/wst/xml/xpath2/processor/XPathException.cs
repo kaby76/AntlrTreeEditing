@@ -48,7 +48,7 @@ namespace org.eclipse.wst.xml.xpath2.processor
 			return _reason;
 		}
 
-		public virtual string Message
+		public override string Message
 		{
 			get
 			{

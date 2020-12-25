@@ -261,8 +261,6 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		///            The duration of time to compare with </param>
 		/// <returns> True if they both represent the duration of time. False otherwise </returns>
 		/// <exception cref="DynamicError"> </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public boolean eq(AnyType arg, org.eclipse.wst.xml.xpath2.api.DynamicContext dynamicContext) throws org.eclipse.wst.xml.xpath2.processor.DynamicError
 		public virtual bool eq(AnyType arg, DynamicContext dynamicContext)
 		{
 			XSDuration val = (XSDuration) NumericType.get_single_type(arg, typeof(XSDuration));
@@ -278,8 +276,6 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		/// <returns> True if the supplied time represents a larger duration than that
 		///         stored. False otherwise </returns>
 		/// <exception cref="DynamicError"> </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public boolean lt(AnyType arg, org.eclipse.wst.xml.xpath2.api.DynamicContext context) throws org.eclipse.wst.xml.xpath2.processor.DynamicError
 		public virtual bool lt(AnyType arg, DynamicContext context)
 		{
 			XSDuration val = (XSDuration) NumericType.get_single_type(arg, typeof(XSDayTimeDuration));
@@ -295,8 +291,6 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		/// <returns> True if the supplied time represents a smaller duration than that
 		///         stored. False otherwise </returns>
 		/// <exception cref="DynamicError"> </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public boolean gt(AnyType arg, org.eclipse.wst.xml.xpath2.api.DynamicContext context) throws org.eclipse.wst.xml.xpath2.processor.DynamicError
 		public virtual bool gt(AnyType arg, DynamicContext context)
 		{
 			XSDuration val = (XSDuration) NumericType.get_single_type(arg, typeof(XSDayTimeDuration));
@@ -359,8 +353,6 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		///            The ResultSequence from which to extract </param>
 		/// <returns> New ResultSequence consisting of the time duration extracted </returns>
 		/// <exception cref="DynamicError"> </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: public org.eclipse.wst.xml.xpath2.api.ResultSequence constructor(org.eclipse.wst.xml.xpath2.api.ResultSequence arg) throws org.eclipse.wst.xml.xpath2.processor.DynamicError
 		public override ResultSequence constructor(ResultSequence arg)
 		{
 			if (arg.empty())

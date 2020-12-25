@@ -284,7 +284,7 @@ namespace javax.xml.@namespace
 {
     public class NamespaceContext
     {
-        public string getNamespaceURI(string prefix)
+        public virtual string getNamespaceURI(string prefix)
         {
             throw new NotImplementedException();
         }
@@ -432,7 +432,6 @@ namespace org.w3c.dom
     public interface Document : Node
     {
         string DocumentURI { get; set; }
-        NodeList ChildNodes { get; set; }
         NodeList getElementsByTagNameNS(string ns, string local);
         bool isSupported(string core, string s);
     }
@@ -440,7 +439,6 @@ namespace org.w3c.dom
     public interface Element : Node
     {
         object getAttributeNS(string sCHEMA_INSTANCE, string nIL_ATTRIBUTE);
-        NamedNodeMap Attributes { get; set; }
         string Prefix { get; set; }
         TypeInfo SchemaTypeInfo { get; set; }
         string lookupNamespaceURI(string prefix);

@@ -11,7 +11,7 @@ namespace CTree
     public class Class1 : AstParserBaseVisitor<List<IParseTree>>
     {
         private Parser _parser;
-        private Lexer _lexer;
+        //private Lexer _lexer;
         private Dictionary<string, object> _env;
 
         public Class1(Parser parser, Dictionary<string, object> env)
@@ -22,7 +22,6 @@ namespace CTree
 
         public IParseTree CreateTree(string ast_string)
         {
-            IParseTree result = null;
             var ast_stream = CharStreams.fromstring(ast_string);
             var ast_lexer = new AstLexer(ast_stream);
             var ast_tokens = new CommonTokenStream(ast_lexer);

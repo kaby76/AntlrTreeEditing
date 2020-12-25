@@ -149,7 +149,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		/// <param name="str">
 		///            String represented duration of time </param>
 		/// <returns> New XSDayTimeDuration representing the duration of time supplied </returns>
-		public static XSDuration parseDTDuration(string str)
+		public new static XSDuration parseDTDuration(string str)
 		{
 			bool negative = false;
 			int days = 0;

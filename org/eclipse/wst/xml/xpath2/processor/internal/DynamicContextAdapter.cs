@@ -91,7 +91,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 				{
 					return DatatypeFactory.newInstance().newDuration(!tz.negative(), 0, 0, 0, tz.hours(), tz.minutes(), 0);
 				}
-				catch (DatatypeConfigurationException e)
+				catch (DatatypeConfigurationException)
 				{
 					throw;
 				}

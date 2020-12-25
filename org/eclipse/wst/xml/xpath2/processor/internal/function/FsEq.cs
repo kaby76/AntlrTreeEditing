@@ -251,7 +251,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
             {
                 result = (ResultSequence) comparator.Invoke(null, margs);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }

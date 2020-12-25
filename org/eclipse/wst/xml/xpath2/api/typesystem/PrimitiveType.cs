@@ -57,9 +57,6 @@ namespace org.eclipse.wst.xml.xpath2.api.typesystem
 		/// <returns>              the actual value (QName, Boolean) of the string value </returns>
 		Type InterfaceClass {get;}
 
-		/// <returns>              The expected native type (class or interface) to expect when calling getValue.  </returns>
-		Type NativeType {get;}
-
 		/// <summary>
 		/// Check whether two actual values are equal.
 		/// </summary>

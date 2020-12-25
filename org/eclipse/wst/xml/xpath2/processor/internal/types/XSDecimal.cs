@@ -105,7 +105,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 				// strip trailing zeros
 				//_value = new decimal((_value.ToString()).replaceFirst("0*", ""));
                 throw new Exception();
-				return format.xpathFormat(_value);
+				//return format.xpathFormat(_value);
 			}
 		}
 

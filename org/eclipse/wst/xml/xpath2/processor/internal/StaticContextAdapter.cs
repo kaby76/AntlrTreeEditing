@@ -229,7 +229,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 				return "x";
 			}
 
-			public virtual string getNamespaceURI(string prefix)
+			public override string getNamespaceURI(string prefix)
 			{
 				string ns = outerInstance.sc.resolve_prefix(prefix);
 				return !string.ReferenceEquals(ns, null) ? ns : XMLConstants.NULL_NS_URI;

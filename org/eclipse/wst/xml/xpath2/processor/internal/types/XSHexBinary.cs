@@ -192,7 +192,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 		public virtual bool eq(AnyType arg, DynamicContext dynamicContext)
         {
             throw new Exception();
-		  string valToCompare = arg.StringValue;
+		  //string valToCompare = arg.StringValue;
 
 		 // sbyte[] value1 = HexBin.decode(_value);
 		 // sbyte[] value2 = HexBin.decode(valToCompare);

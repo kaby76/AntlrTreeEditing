@@ -87,13 +87,13 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.function
             throw new Exception();
 			//Collections.shuffle(tmp);
 
-			ResultBuffer rb = new ResultBuffer();
-			for (IEnumerator i = tmp.GetEnumerator(); i.MoveNext();)
-			{
-				rb.add((AnyType) i.Current);
-			}
+			//ResultBuffer rb = new ResultBuffer();
+			//for (IEnumerator i = tmp.GetEnumerator(); i.MoveNext();)
+			//{
+			//	rb.add((AnyType) i.Current);
+			//}
 
-			return rb.Sequence;
+			//return rb.Sequence;
 		}
 	}
 
