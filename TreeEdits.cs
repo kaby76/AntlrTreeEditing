@@ -1,19 +1,41 @@
-﻿using Antlr4.Runtime;
-using Antlr4.Runtime.Tree;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace LanguageServer
+﻿namespace LanguageServer
 {
+    using Antlr4.Runtime;
+    using Antlr4.Runtime.Tree;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+
     // Class to offer Antlr tree edits, both in-place and out-of-place,
     // and tree copying.
     public class TreeEdits
     {
         public delegate IParseTree Fun(in IParseTree arg1, out bool arg2);
 
-        public static System.Collections.Generic.IEnumerable<IParseTree> FindTopDown(IParseTree tree, Fun find)
+        public static IEnumerable<TerminalNodeImpl> Frontier(IParseTree tree)
+        {
+            Stack<IParseTree> stack = new Stack<IParseTree>();
+            stack.Push(tree);
+            while (stack.Any())
+            {
+                var n = stack.Pop();
+                if (n is TerminalNodeImpl term)
+                {
+                    yield return term;
+                }
+                else
+                {
+                    for (int i = n.ChildCount - 1; i >= 0; --i)
+                    {
+                        var c = n.GetChild(i);
+                        stack.Push(c);
+                    }
+                }
+            }
+        }
+
+        public static IEnumerable<IParseTree> FindTopDown(IParseTree tree, Fun find)
         {
             Stack<IParseTree> stack = new Stack<IParseTree>();
             stack.Push(tree);
