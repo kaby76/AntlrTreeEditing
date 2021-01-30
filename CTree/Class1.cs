@@ -22,7 +22,7 @@ namespace CTree
 
         public IParseTree CreateTree(string ast_string)
         {
-            var ast_stream = CharStreams.fromstring(ast_string);
+            var ast_stream = CharStreams.fromString(ast_string);
             var ast_lexer = new AstLexer(ast_stream);
             var ast_tokens = new CommonTokenStream(ast_lexer);
             var ast_parser = new AstParserParser(ast_tokens);
