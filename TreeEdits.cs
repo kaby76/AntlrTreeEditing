@@ -358,7 +358,7 @@
             return sb.ToString();
         }
 
-        public static (Dictionary<TerminalNodeImpl, string>, List<string>) TextToLeftOfLeaves(CommonTokenStream stream, IParseTree tree)
+        public static (Dictionary<TerminalNodeImpl, string>, List<string>) TextToLeftOfLeaves(BufferedTokenStream stream, IParseTree tree)
         {
             var result = new Dictionary<TerminalNodeImpl, string>();
             var result2 = new List<string>();

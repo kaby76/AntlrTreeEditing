@@ -5,7 +5,7 @@
 	  <RootNamespace>AntlrTreeEditing</RootNamespace>
 	  <AssemblyName>AntlrTreeEditing</AssemblyName>
 	  <PackageId>AntlrTreeEditing</PackageId>
-	  <Version>2.5.0</Version>
+	  <Version>2.6.0</Version>
 	  <Authors>Ken Domino</Authors>
 	  <Product />
 	  <Description></Description>
