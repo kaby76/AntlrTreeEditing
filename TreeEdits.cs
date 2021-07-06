@@ -375,9 +375,12 @@
                         var pp1 = p1.SourceInterval;
                         var pp2 = p1.Payload;
                         var index = pp2.TokenIndex;
-                        var p2 = stream.GetHiddenTokensToLeft(index);
-                        var p3 = TreeEdits.GetText(p2);
-                        result.Add(nn, p3);
+                        if (index >= 0)
+                        {
+                            var p2 = stream.GetHiddenTokensToLeft(index);
+                            var p3 = TreeEdits.GetText(p2);
+                            result.Add(nn, p3);
+                        }
                         result2.Add(nn.GetText());
                     }
                 }
