@@ -179,7 +179,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal.types
 
 			if (aat is XSDecimal || aat is XSFloat || aat is XSDouble)
 			{
-				var s1 = aat.ToString();
+				var s1 = aat.StringValue;
                 BigInteger.TryParse(s1, out BigInteger v1);
                 return v1;
 			}

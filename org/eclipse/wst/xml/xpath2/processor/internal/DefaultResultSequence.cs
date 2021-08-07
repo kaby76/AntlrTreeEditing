@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using org.eclipse.wst.xml.xpath2.api;
+using System;
 
 /// <summary>
 ///*****************************************************************************
@@ -32,7 +33,7 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 	/// <summary>
 	/// Default implementation of a result sequence. </summary>
 	/// @deprecated use ResultBuffer instead 
-	public class DefaultResultSequence : ResultSequence
+	public class DefaultResultSequence : ResultSequence, IEnumerable<Item>
 	{
 
 		private IList<Item>_seq;
@@ -138,6 +139,22 @@ namespace org.eclipse.wst.xml.xpath2.processor.@internal
 		public override ResultSequence create_new()
 		{
 			return new DefaultResultSequence();
+		}
+
+
+		internal new IEnumerator GetEnumerator()
+		{
+			return _seq.GetEnumerator();
+		}
+
+		IEnumerator<Item> IEnumerable<Item>.GetEnumerator()
+		{
+			return _seq.GetEnumerator();
+		}
+
+		IEnumerator IEnumerable.GetEnumerator()
+		{
+			return _seq.GetEnumerator();
 		}
 
 	}
