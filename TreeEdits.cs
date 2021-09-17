@@ -536,7 +536,7 @@
 
         // Insert the string as a token, with the expectation that the entire tree
         // will be printed and re-parsed in the target language.
-        public static void InsertBefore(IParseTree node, string arbitrary_string)
+        public static TerminalNodeImpl InsertBefore(IParseTree node, string arbitrary_string)
         {
             var token = new CommonToken(0) { Line = -1, Column = -1, Text = arbitrary_string };
             var leaf = new TerminalNodeImpl(token);
@@ -553,12 +553,13 @@
                     r.Parent = c;
                     break;
                 }
-            }
+	    }
+	    return leaf;
         }
 
         // Insert the string as a token, with the expectation that the entire tree
         // will be printed and re-parsed in the target language.
-        public static void InsertAfter(IParseTree node, string arbitrary_string)
+        public static TerminalNodeImpl InsertAfter(IParseTree node, string arbitrary_string)
         {
             var token = new CommonToken(0) { Line = -1, Column = -1, Text = arbitrary_string };
             var leaf = new TerminalNodeImpl(token);
@@ -575,12 +576,13 @@
                     r.Parent = c;
                     break;
                 }
-            }
+	    }
+	    return leaf;
         }
 
         // Insert the string as a token, with the expectation that the entire tree
         // will be printed and re-parsed in the target language.
-        public static void Replace(IParseTree node, string arbitrary_string)
+        public static TerminalNodeImpl Replace(IParseTree node, string arbitrary_string)
         {
             var token = new CommonToken(0) { Line = -1, Column = -1, Text = arbitrary_string };
             var leaf = new TerminalNodeImpl(token);
@@ -613,11 +615,12 @@
                         throw new Exception("Tree contains something other than TerminalNodeImpl or ParserRuleContext");
                     break;
                 }
-            }
+	    }
+	    return leaf;
         }
 
         // Insert the tree after another given node.
-        public static void InsertAfter(IParseTree node, IParseTree node_to_insert)
+        public static IParseTree InsertAfter(IParseTree node, IParseTree node_to_insert)
         {
             IParseTree parent = node.Parent;
             var c = parent as ParserRuleContext;
@@ -633,11 +636,12 @@
                     else if (r2 != null) r2.Parent = c;
                     break;
                 }
-            }
+	    }
+	    return node_to_insert;
         }
 
         // Insert the tree after another given node.
-        public static void InsertBefore(IParseTree node, IParseTree node_to_insert)
+        public static IParseTree InsertBefore(IParseTree node, IParseTree node_to_insert)
         {
             IParseTree parent = node.Parent;
             var c = parent as ParserRuleContext;
@@ -653,7 +657,8 @@
                     else if (r2 != null) r2.Parent = c;
                     break;
                 }
-            }
+	    }
+	    return node_to_insert;
         }
 
     }
