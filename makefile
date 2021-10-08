@@ -4,7 +4,7 @@ build:
 	dotnet build
 
 publish:
-	dotnet nuget push bin/Debug/AntlrTreeEditing.2.9.0.nupkg --api-key ${trashkey} --source https://api.nuget.org/v3/index.json
+	dotnet nuget push bin/Debug/AntlrTreeEditing.3.1.0.nupkg --api-key ${trashkey} --source https://api.nuget.org/v3/index.json
 
 clean:
 	rm -rf */obj */bin
