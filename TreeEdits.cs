@@ -553,8 +553,8 @@
                     r.Parent = c;
                     break;
                 }
-	    }
-	    return leaf;
+            }
+            return leaf;
         }
 
         // Insert the string as a token, with the expectation that the entire tree
@@ -576,8 +576,8 @@
                     r.Parent = c;
                     break;
                 }
-	    }
-	    return leaf;
+            }
+            return leaf;
         }
 
         // Insert the string as a token, with the expectation that the entire tree
@@ -615,8 +615,8 @@
                         throw new Exception("Tree contains something other than TerminalNodeImpl or ParserRuleContext");
                     break;
                 }
-	    }
-	    return leaf;
+            }
+            return leaf;
         }
 
         public static IParseTree InsertAfter(IParseTree node, IParseTree node_to_insert)
@@ -659,105 +659,108 @@
             return node_to_insert;
         }
 
-        public static IParseTree MoveAfter(IParseTree from, IParseTree to)
+        public static void MoveAfter(IEnumerable<IParseTree> from_list, IParseTree to)
         {
-            if (from == null) return from;
-            if (to == null) return from;
-            IParseTree parent_from = from.Parent;
-            var ctx_parent_from = parent_from as ParserRuleContext;
-            if (ctx_parent_from != null)
+            if (from_list == null) return;
+            if (to == null) return;
+            foreach (var from in from_list)
             {
-                for (int i = 0; i < ctx_parent_from.ChildCount; ++i)
+                IParseTree parent_from = from.Parent;
+                var ctx_parent_from = parent_from as ParserRuleContext;
+                if (ctx_parent_from != null)
                 {
-                    var child = ctx_parent_from.children[i];
-                    if (child == from)
+                    for (int i = 0; i < ctx_parent_from.ChildCount; ++i)
                     {
-                        var temp = ctx_parent_from.children[i];
-                        if (temp is TerminalNodeImpl)
+                        var child = ctx_parent_from.children[i];
+                        if (child == from)
                         {
-                            var t = temp as TerminalNodeImpl;
-                            t.Parent = null;
-                            ctx_parent_from.children.RemoveAt(i);
+                            var temp = ctx_parent_from.children[i];
+                            if (temp is TerminalNodeImpl)
+                            {
+                                var t = temp as TerminalNodeImpl;
+                                t.Parent = null;
+                                ctx_parent_from.children.RemoveAt(i);
+                            }
+                            else if (temp is ParserRuleContext)
+                            {
+                                var t = temp as ParserRuleContext;
+                                t.Parent = null;
+                                ctx_parent_from.children.RemoveAt(i);
+                            }
+                            else
+                                throw new Exception("Tree contains something other than TerminalNodeImpl or ParserRuleContext");
+                            break;
                         }
-                        else if (temp is ParserRuleContext)
-                        {
-                            var t = temp as ParserRuleContext;
-                            t.Parent = null;
-                            ctx_parent_from.children.RemoveAt(i);
-                        }
-                        else
-                            throw new Exception("Tree contains something other than TerminalNodeImpl or ParserRuleContext");
+                    }
+                }
+                IParseTree parent_to = to.Parent;
+                var ctx_parent_to = parent_to as ParserRuleContext;
+                for (int i = 0; i < ctx_parent_to.ChildCount; ++i)
+                {
+                    var child = ctx_parent_to.children[i];
+                    if (child == to)
+                    {
+                        ctx_parent_to.children.Insert(i + 1, from);
+                        var r1 = from as TerminalNodeImpl;
+                        var r2 = from as ParserRuleContext;
+                        if (r1 != null) r1.Parent = ctx_parent_to;
+                        else if (r2 != null) r2.Parent = ctx_parent_to;
                         break;
                     }
                 }
             }
-            IParseTree parent_to = to.Parent;
-            var ctx_parent_to = parent_to as ParserRuleContext;
-            for (int i = 0; i < ctx_parent_to.ChildCount; ++i)
-            {
-                var child = ctx_parent_to.children[i];
-                if (child == to)
-                {
-                    ctx_parent_to.children.Insert(i + 1, from);
-                    var r1 = from as TerminalNodeImpl;
-                    var r2 = from as ParserRuleContext;
-                    if (r1 != null) r1.Parent = ctx_parent_to;
-                    else if (r2 != null) r2.Parent = ctx_parent_to;
-                    break;
-                }
-            }
-            return from;
         }
 
-        public static IParseTree MoveBefore(IParseTree from, IParseTree to)
+        public static void MoveBefore(IEnumerable<IParseTree> from_list, IParseTree to)
         {
-            if (from == null) return from;
-            if (to == null) return from;
-            IParseTree parent_from = from.Parent;
-            var ctx_parent_from = parent_from as ParserRuleContext;
-            if (ctx_parent_from != null)
+            if (from_list == null) return;
+            if (to == null) return;
+            foreach (var from in from_list)
             {
-                for (int i = 0; i < ctx_parent_from.ChildCount; ++i)
+                IParseTree parent_from = from.Parent;
+                var ctx_parent_from = parent_from as ParserRuleContext;
+                if (ctx_parent_from != null)
                 {
-                    var child = ctx_parent_from.children[i];
-                    if (child == from)
+                    for (int i = 0; i < ctx_parent_from.ChildCount; ++i)
                     {
-                        var temp = ctx_parent_from.children[i];
-                        if (temp is TerminalNodeImpl)
+                        var child = ctx_parent_from.children[i];
+                        if (child == from)
                         {
-                            var t = temp as TerminalNodeImpl;
-                            t.Parent = null;
-                            ctx_parent_from.children.RemoveAt(i);
+                            var temp = ctx_parent_from.children[i];
+                            if (temp is TerminalNodeImpl)
+                            {
+                                var t = temp as TerminalNodeImpl;
+                                t.Parent = null;
+                                ctx_parent_from.children.RemoveAt(i);
+                            }
+                            else if (temp is ParserRuleContext)
+                            {
+                                var t = temp as ParserRuleContext;
+                                t.Parent = null;
+                                ctx_parent_from.children.RemoveAt(i);
+                            }
+                            else
+                                throw new Exception("Tree contains something other than TerminalNodeImpl or ParserRuleContext");
+                            break;
                         }
-                        else if (temp is ParserRuleContext)
-                        {
-                            var t = temp as ParserRuleContext;
-                            t.Parent = null;
-                            ctx_parent_from.children.RemoveAt(i);
-                        }
-                        else
-                            throw new Exception("Tree contains something other than TerminalNodeImpl or ParserRuleContext");
+                    }
+                }
+                IParseTree parent_to = to.Parent;
+                var ctx_parent_to = parent_to as ParserRuleContext;
+                for (int i = 0; i < ctx_parent_to.ChildCount; ++i)
+                {
+                    var child = ctx_parent_to.children[i];
+                    if (child == to)
+                    {
+                        ctx_parent_to.children.Insert(i, from);
+                        var r1 = from as TerminalNodeImpl;
+                        var r2 = from as ParserRuleContext;
+                        if (r1 != null) r1.Parent = ctx_parent_to;
+                        else if (r2 != null) r2.Parent = ctx_parent_to;
                         break;
                     }
                 }
             }
-            IParseTree parent_to = to.Parent;
-            var ctx_parent_to = parent_to as ParserRuleContext;
-            for (int i = 0; i < ctx_parent_to.ChildCount; ++i)
-            {
-                var child = ctx_parent_to.children[i];
-                if (child == to)
-                {
-                    ctx_parent_to.children.Insert(i, from);
-                    var r1 = from as TerminalNodeImpl;
-                    var r2 = from as ParserRuleContext;
-                    if (r1 != null) r1.Parent = ctx_parent_to;
-                    else if (r2 != null) r2.Parent = ctx_parent_to;
-                    break;
-                }
-            }
-            return from;
         }
-
     }
 }
