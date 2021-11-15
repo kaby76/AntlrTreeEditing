@@ -116,12 +116,12 @@ KW_UNION : 'union' ;
 IntegerLiteral : FragDigits ;
 DecimalLiteral : ('.' FragDigits) | (FragDigits '.' [0-9]*) ;
 DoubleLiteral : (('.' FragDigits) | (FragDigits ('.' [0-9]*)?)) [eE] [+-]? FragDigits ;
-StringLiteral : ('"' (FragEscapeQuot | ~[^"])*? '"') | ('\'' (FragEscapeApos | ~['])*? '\'') ;
+StringLiteral : ('"' (~["] | FragEscapeQuot)* '"') | ('\'' (~['] | FragEscapeApos)* '\'') ;
 URIQualifiedName : BracedURILiteral NCName ;
 BracedURILiteral : 'Q' '{' [^{}]* '}' ;
 // Error in spec: EscapeQuot and EscapeApos are not terminals!
 fragment FragEscapeQuot : '""' ; 
-fragment FragEscapeApos : '\'';
+fragment FragEscapeApos : '\'\'';
 // Error in spec: Comment isn't really a terminal, but an off-channel object.
 Comment : '(:' (Comment | CommentContents)*? ':)' -> skip ;
 QName  : FragQName ;

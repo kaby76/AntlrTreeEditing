@@ -63,8 +63,9 @@
                 var child = new AntlrText(tree);
                 //child.AntlrIParseTree = tree;
                 child.NodeType = NodeConstants.TEXT_NODE;
-                child.Data = new xpath.org.eclipse.wst.xml.xpath2.processor.@internal.OutputParseTree().PerformEscapes(/*"'" + */ tree.GetText() /*+ "'"*/);
-                child.ParentNode = result;
+//                child.Data = new xpath.org.eclipse.wst.xml.xpath2.processor.@internal.OutputParseTree().PerformEscapes(/*"'" + */ tree.GetText() /*+ "'"*/);
+		child.Data = tree.GetText();
+		child.ParentNode = result;
                 nl.Add(child);
                 {
                     var attr = new AntlrAttr(null);
