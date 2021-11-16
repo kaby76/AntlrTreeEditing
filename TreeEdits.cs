@@ -662,8 +662,8 @@
         public static void MoveAfter(IEnumerable<IParseTree> from_list, IParseTree to)
         {
             if (from_list == null) return;
-            if (to == null) return;
-            foreach (var from in from_list)
+			if (to == null) return;
+            foreach (var from in from_list.Reverse())
             {
                 IParseTree parent_from = from.Parent;
                 var ctx_parent_from = parent_from as ParserRuleContext;
