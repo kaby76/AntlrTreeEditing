@@ -60,6 +60,8 @@
                 result.LocalName = fixed_name;
                 var nl = new AntlrNodeList();
                 result.ChildNodes = nl;
+		var map = new AntlrNamedNodeMap();
+		result.Attributes = map;
                 var child = new AntlrText(tree);
                 //child.AntlrIParseTree = tree;
                 child.NodeType = NodeConstants.TEXT_NODE;
@@ -72,10 +74,23 @@
                     var child_count = t.ChildCount;
                     attr.NodeType = NodeConstants.ATTRIBUTE_NODE;
                     attr.Name = "ChildCount";
+		    attr.LocalName = "ChildCount";
                     attr.Value = child_count.ToString();
                     attr.ParentNode = result;
                     nl.Add(attr);
+		    map.Add(attr);
                 }
+		{
+			var attr = new AntlrAttr(null);
+			var text = t.Symbol.Text;
+			attr.NodeType = NodeConstants.ATTRIBUTE_NODE;
+			attr.Name = "Text";
+			attr.LocalName = "Text";
+			attr.Value = text;
+			attr.ParentNode = result;
+			nl.Add(attr);
+			map.Add(attr);
+		}
                 {
                     var attr = new AntlrAttr(null);
                     attr.NodeType = NodeConstants.ATTRIBUTE_NODE;
@@ -83,10 +98,35 @@
                     var a = source_interval.a;
                     var b = source_interval.b;
                     attr.Name = "SourceInterval";
+		    attr.LocalName = "SourceInterval";
                     attr.Value = "[" + a + "," + b + "]";
                     attr.ParentNode = result;
                     nl.Add(attr);
+		    map.Add(attr);
                 }
+		{
+			var attr = new AntlrAttr(null);
+			attr.NodeType = NodeConstants.ATTRIBUTE_NODE;
+			var a = t.SourceInterval.a;
+			attr.Name = "SourceIntervalA";
+			attr.LocalName = "SourceIntervalA";
+			attr.Value = a.ToString();
+			attr.ParentNode = result;
+			nl.Add(attr);
+			map.Add(attr);
+		}
+		{
+			var attr = new AntlrAttr(null);
+			attr.NodeType = NodeConstants.ATTRIBUTE_NODE;
+			var source_interval = t.SourceInterval;
+			var b = t.SourceInterval.b;
+			attr.Name = "SourceIntervalB";
+			attr.LocalName = "SourceIntervalB";
+			attr.Value = b.ToString();
+			attr.ParentNode = result;
+			nl.Add(attr);
+			map.Add(attr);
+		}
                 return result;
             }
             else
@@ -113,6 +153,16 @@
                     nl.Add(attr);
                     map.Add(attr);
                 }
+		{
+			var attr = new AntlrAttr(null);
+			attr.NodeType = NodeConstants.ATTRIBUTE_NODE;
+			attr.Name = "Text";
+			attr.LocalName = "Text";
+			attr.Value = tree.GetText();
+			attr.ParentNode = result;
+			nl.Add(attr);
+			map.Add(attr);
+		}
                 {
                     var attr = new AntlrAttr(null);
                     attr.NodeType = NodeConstants.ATTRIBUTE_NODE;
@@ -139,6 +189,26 @@
                     nl.Add(attr);
                     map.Add(attr);
                 }
+		{
+			var attr = new AntlrAttr(null);
+			attr.NodeType = NodeConstants.ATTRIBUTE_NODE;
+			var a = tree.SourceInterval.a;
+			attr.Name = "SourceIntervalA";
+			attr.LocalName = "SourceIntervalA";
+			attr.Value = a.ToString();
+			attr.ParentNode = result;
+			nl.Add(attr);
+		}
+		{
+			var attr = new AntlrAttr(null);
+			attr.NodeType = NodeConstants.ATTRIBUTE_NODE;
+			var b = tree.SourceInterval.b;
+			attr.Name = "SourceIntervalB";
+			attr.LocalName = "SourceIntervalB";
+			attr.Value = b.ToString();
+			attr.ParentNode = result;
+			nl.Add(attr);
+		}
                 for (int i = 0; i < tree.ChildCount; ++i)
                 {
                     var child = tree.GetChild(i);
