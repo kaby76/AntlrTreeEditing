@@ -56,7 +56,7 @@ public class Focus {
 
 		// check if we can advance
 		size = _rs.size();
-		if (_cp == size)
+		if (_cp >= size)
 			return false;
 
 		_cp++;
