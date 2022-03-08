@@ -8,5 +8,6 @@
         private AntlrText() : base(null) { }
         public AntlrText(IParseTree n) : base(n) { }
         public string Data { get; set; }
+        public override object NodeValue { get { return Data; } set { Data = (string)value; } }
     }
 }

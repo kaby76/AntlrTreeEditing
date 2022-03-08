@@ -10,23 +10,23 @@
         public AntlrNode(IParseTree n) { AntlrIParseTree = n; }
         public IParseTree AntlrIParseTree { get; set; }
         public short NodeType { get; set; }
-        public string LocalName { get; set; }
-        public Document OwnerDocument { get; set; }
-        public NodeList ChildNodes { get; set; }
-        public Node NextSibling { get; set; }
-        public string BaseURI { get; set; }
-        public NamedNodeMap Attributes { get; set; }
-        public object NodeValue { get; set; }
-        public string NamespaceURI { get; set; }
-        public object NodeName { get; set; }
-        public Node ParentNode { get; set; }
-        public Node PreviousSibling { get; set; }
-        public bool isSameNode(Node nodeValue)
+        public virtual string LocalName { get; set; }
+        public virtual Document OwnerDocument { get; set; }
+        public virtual NodeList ChildNodes { get; set; }
+        public virtual Node NextSibling { get; set; }
+        public virtual string BaseURI { get; set; }
+        public virtual NamedNodeMap Attributes { get; set; }
+        public virtual object NodeValue { get; set; }
+        public virtual string NamespaceURI { get; set; }
+        public virtual object NodeName { get; set; }
+        public virtual Node ParentNode { get; set; }
+        public virtual Node PreviousSibling { get; set; }
+        public virtual bool isSameNode(Node nodeValue)
         {
             throw new NotImplementedException();
         }
 
-        public short compareDocumentPosition(Node nodeB)
+        public virtual short compareDocumentPosition(Node nodeB)
         {
             throw new NotImplementedException();
         }
@@ -36,17 +36,17 @@
             throw new NotImplementedException();
         }
 
-        public bool hasChildNodes()
+        public virtual bool hasChildNodes()
         {
             throw new NotImplementedException();
         }
 
-        public bool hasAttributes()
+        public virtual bool hasAttributes()
         {
             throw new NotImplementedException();
         }
 
-        public void OnParentDisconnect(IParseTree value)
+        public virtual void OnParentDisconnect(IParseTree value)
         {
             if (ParentNode != null)
             {
@@ -56,34 +56,34 @@
             ParentNode = null;
         }
 
-        public void OnParentConnect(IParseTree value)
+        public virtual void OnParentConnect(IParseTree value)
         {
         }
 
-        public void OnChildDisconnect(IParseTree value)
+        public virtual void OnChildDisconnect(IParseTree value)
         {
         }
 
-        public void OnChildConnect(IParseTree value)
+        public virtual void OnChildConnect(IParseTree value)
         {
         }
 
-        public void OnCompleted()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void OnError(Exception error)
+        public virtual void OnCompleted()
         {
             throw new NotImplementedException();
         }
 
-        public void OnNext(ObserverParserRuleContext value)
+        public virtual void OnError(Exception error)
         {
             throw new NotImplementedException();
         }
 
-        public void Dispose()
+        public virtual void OnNext(ObserverParserRuleContext value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual void Dispose()
         {
             var tree = AntlrIParseTree as ObserverParserRuleContext;
             if (tree != null)
