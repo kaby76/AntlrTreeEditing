@@ -27,7 +27,6 @@
             while (stack.Any())
             {
                 var n = stack.Pop();
-                if (n.AntlrIParseTree != null) nodes[n.AntlrIParseTree] = n;
                 var l = n.ChildNodes;
                 if (l != null)
                 {
@@ -63,7 +62,8 @@
                 var map = new AntlrNamedNodeMap();
                 result.Attributes = map;
                 var child = new AntlrText(tree);
-                //child.AntlrIParseTree = tree;
+                child.AntlrIParseTree = tree;
+                nodes[tree] = child;
                 child.NodeType = NodeConstants.TEXT_NODE;
                 //                child.Data = new xpath.org.eclipse.wst.xml.xpath2.processor.@internal.OutputParseTree().PerformEscapes(/*"'" + */ tree.GetText() /*+ "'"*/);
                 child.Data = tree.GetText();
@@ -138,7 +138,8 @@
                 var t = tree as ParserRuleContext;
                 var t2 = tree as ObserverParserRuleContext;
                 if (t2 != null) t2.Subscribe(result);
-                //result.AntlrIParseTree = tree;
+                result.AntlrIParseTree = tree;
+                nodes[tree] = result;
                 result.NodeType = NodeConstants.ELEMENT_NODE;
                 var name = parser.RuleNames[(tree as RuleContext).RuleIndex];
                 result.LocalName = name;
