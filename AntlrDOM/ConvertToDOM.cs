@@ -18,6 +18,44 @@
             return result;
         }
 
+        public AntlrDynamicContext Try(IEnumerable<IParseTree> trees, Parser parser)
+        {
+            var document = new AntlrDocument(null);
+            document.NodeType = NodeConstants.DOCUMENT_NODE;
+            AntlrNodeList nl = new AntlrNodeList();
+            document.ChildNodes = nl;
+            AntlrDynamicContext result = new AntlrDynamicContext();
+            result.Document = document;
+            foreach (var tree in trees)
+            {
+                var node = FindDomNode(tree);
+                if (node == null)
+                {
+                    var converted_tree = BottomUpConvert(tree, parser);
+                    Stack<AntlrNode> stack = new Stack<AntlrNode>();
+                    stack.Push(converted_tree);
+                    while (stack.Any())
+                    {
+                        var n = stack.Pop();
+                        var l = n.ChildNodes;
+                        if (l != null)
+                        {
+                            for (int i = 0; i < l.Length; ++i)
+                            {
+                                stack.Push((AntlrNode)l.item(i));
+                            }
+                        }
+                    }
+                    nl.Add(converted_tree);
+                }
+                else
+                {
+                    nl.Add(node);
+                }
+            }
+            return result;
+        }
+
         public AntlrDynamicContext Try(IParseTree tree, Parser parser)
         {
             // Perform bottom up traversal to derive equivalent tree in "dom".

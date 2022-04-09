@@ -401,6 +401,52 @@
             return (result, result2);
         }
 
+        public static (Dictionary<TerminalNodeImpl, string>, List<string>) TextToLeftOfLeaves(BufferedTokenStream stream, IEnumerable<IParseTree> trees)
+        {
+            var result = new Dictionary<TerminalNodeImpl, string>();
+            var result2 = new List<string>();
+            Stack<IParseTree> stack = new Stack<IParseTree>();
+            foreach (var tree in trees)
+            {
+                stack.Push(tree);
+                while (stack.Any())
+                {
+                    var n = stack.Pop();
+                    if (n is TerminalNodeImpl)
+                    {
+                        var nn = n as TerminalNodeImpl;
+                        {
+                            var p1 = TreeEdits.LeftMostToken(nn);
+                            var pp1 = p1.SourceInterval;
+                            var pp2 = p1.Payload;
+                            var index = pp2.TokenIndex;
+                            if (index >= 0)
+                            {
+                                var p2 = stream.GetHiddenTokensToLeft(index);
+                                var p3 = TreeEdits.GetText(p2);
+                                result.Add(nn, p3);
+                            }
+                            result2.Add(nn.GetText());
+                        }
+                    }
+                    else
+                    {
+                        if (!(n is ParserRuleContext p))
+                            continue;
+                        if (p.children == null)
+                            continue;
+                        if (p.children.Count == 0)
+                            continue;
+                        foreach (var c in p.children.Reverse())
+                        {
+                            stack.Push(c);
+                        }
+                    }
+                }
+            }
+            return (result, result2);
+        }
+
         public static IParseTree CopyTreeRecursive(IParseTree original, IParseTree parent, Dictionary<TerminalNodeImpl, string> text_to_left)
         {
             if (original == null) return null;
@@ -440,6 +486,33 @@
                 return new_node;
             }
             else return null;
+        }
+
+        public static void Reconstruct(StringBuilder sb, IEnumerable<IParseTree> trees, Dictionary<TerminalNodeImpl, string> text_to_left)
+        {
+            foreach (var tree in trees)
+            {
+                if (tree as TerminalNodeImpl != null)
+                {
+                    TerminalNodeImpl tok = tree as TerminalNodeImpl;
+                    text_to_left.TryGetValue(tok, out string inter);
+                    if (inter == null)
+                        sb.Append(" ");
+                    else
+                        sb.Append(inter);
+                    if (tok.Symbol.Type == TokenConstants.EOF)
+                        return;
+                    sb.Append(tok.GetText());
+                }
+                else
+                {
+                    for (int i = 0; i < tree.ChildCount; ++i)
+                    {
+                        var c = tree.GetChild(i);
+                        Reconstruct(sb, c, text_to_left);
+                    }
+                }
+            }
         }
 
         public static void Reconstruct(StringBuilder sb, IParseTree tree, Dictionary<TerminalNodeImpl, string> text_to_left)
