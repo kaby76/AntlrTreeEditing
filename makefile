@@ -10,7 +10,7 @@ innuget:
 	dotnet nuget add source 'c:\Users\Kenne\Documents\GitHub\AntlrTreeEditing\bin\Debug\' --name nuget-tree
 
 publish:
-	dotnet nuget push bin/Debug/AntlrTreeEditing.4.2.0.nupkg --api-key ${trashkey} --source https://api.nuget.org/v3/index.json
+	dotnet nuget push bin/Debug/AntlrTreeEditing.5.0.0.nupkg --api-key ${trashkey} --source https://api.nuget.org/v3/index.json
 
 clean:
 	rm -rf obj bin
