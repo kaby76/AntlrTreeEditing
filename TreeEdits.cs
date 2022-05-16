@@ -84,16 +84,20 @@
                                     var t = temp as TerminalNodeImpl;
                                     t.Parent = null;
                                     c.children[i] = found;
-                                    var r = found as TerminalNodeImpl;
-                                    r.Parent = c;
+                                    var rt = found as TerminalNodeImpl;
+                                    if (rt != null) rt.Parent = c;
+                                    var rp = found as ParserRuleContext;
+                                    if (rp != null) rp.Parent = c;
                                 }
                                 else if (temp is ParserRuleContext)
                                 {
                                     var t = temp as ParserRuleContext;
                                     t.Parent = null;
                                     c.children[i] = found;
-                                    var r = found as ParserRuleContext;
-                                    r.Parent = c;
+                                    var rt = found as TerminalNodeImpl;
+                                    if (rt != null) rt.Parent = c;
+                                    var rp = found as ParserRuleContext;
+                                    if (rp != null) rp.Parent = c;
                                 }
                                 else
                                     throw new Exception("Tree contains something other than TerminalNodeImpl or ParserRuleContext");
@@ -135,16 +139,20 @@
                             var t = temp as TerminalNodeImpl;
                             t.Parent = null;
                             c.children[i] = found;
-                            var r = found as TerminalNodeImpl;
-                            r.Parent = c;
+                            var rt = found as TerminalNodeImpl;
+                            if (rt != null) rt.Parent = c;
+                            var rp = found as ParserRuleContext;
+                            if (rp != null) rp.Parent = c;
                         }
                         else if (temp is ParserRuleContext)
                         {
                             var t = temp as ParserRuleContext;
                             t.Parent = null;
                             c.children[i] = found;
-                            var r = found as ParserRuleContext;
-                            r.Parent = c;
+                            var rt = found as TerminalNodeImpl;
+                            if (rt != null) rt.Parent = c;
+                            var rp = found as ParserRuleContext;
+                            if (rp != null) rp.Parent = c;
                         }
                         else
                             throw new Exception("Tree contains something other than TerminalNodeImpl or ParserRuleContext");
